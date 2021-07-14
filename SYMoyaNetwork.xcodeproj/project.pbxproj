@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,8 @@
 		FB517AA4269EB74E00AE0882 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB517A9A269EB74E00AE0882 /* SYMoyaNetwork.framework */; };
 		FB517AA9269EB74E00AE0882 /* SYMoyaNetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB517AA8269EB74E00AE0882 /* SYMoyaNetworkTests.swift */; };
 		FB517AAB269EB74E00AE0882 /* SYMoyaNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = FB517A9D269EB74E00AE0882 /* SYMoyaNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FB517ABB269EC20800AE0882 /* NetworkConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB517ABA269EC20800AE0882 /* NetworkConfig.swift */; };
+		FB517ABD269EC22D00AE0882 /* SYMoyaTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB517ABC269EC22D00AE0882 /* SYMoyaTargetType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +39,8 @@
 		FB517AA3269EB74E00AE0882 /* SYMoyaNetworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SYMoyaNetworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB517AA8269EB74E00AE0882 /* SYMoyaNetworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYMoyaNetworkTests.swift; sourceTree = "<group>"; };
 		FB517AAA269EB74E00AE0882 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB517ABA269EC20800AE0882 /* NetworkConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfig.swift; sourceTree = "<group>"; };
+		FB517ABC269EC22D00AE0882 /* SYMoyaTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYMoyaTargetType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +81,6 @@
 				10E9FD6D9FDC4A7537998707 /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.debug.xcconfig */,
 				C837ABB4B5A9288F70F3BFC1 /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -106,6 +109,8 @@
 			children = (
 				FB517A9D269EB74E00AE0882 /* SYMoyaNetwork.h */,
 				FB517A9E269EB74E00AE0882 /* Info.plist */,
+				FB517ABA269EC20800AE0882 /* NetworkConfig.swift */,
+				FB517ABC269EC22D00AE0882 /* SYMoyaTargetType.swift */,
 			);
 			path = SYMoyaNetwork;
 			sourceTree = "<group>";
@@ -296,6 +301,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB517ABD269EC22D00AE0882 /* SYMoyaTargetType.swift in Sources */,
+				FB517ABB269EC20800AE0882 /* NetworkConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,6 +506,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 10E9FD6D9FDC4A7537998707 /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2PHV6T5L36;
 				INFOPLIST_FILE = SYMoyaNetworkTests/Info.plist;
@@ -518,6 +526,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C837ABB4B5A9288F70F3BFC1 /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2PHV6T5L36;
 				INFOPLIST_FILE = SYMoyaNetworkTests/Info.plist;
