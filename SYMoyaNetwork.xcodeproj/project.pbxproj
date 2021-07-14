@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3144533CD18181BD411227AB /* Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B936BDD77A92E4887DC95E4 /* Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework */; };
+		E4F6619B6322A73D1A80C4EF /* Pods_SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80A6507F8DA49178D15E17F6 /* Pods_SYMoyaNetwork.framework */; };
 		FB517AA4269EB74E00AE0882 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB517A9A269EB74E00AE0882 /* SYMoyaNetwork.framework */; };
 		FB517AA9269EB74E00AE0882 /* SYMoyaNetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB517AA8269EB74E00AE0882 /* SYMoyaNetworkTests.swift */; };
 		FB517AAB269EB74E00AE0882 /* SYMoyaNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = FB517A9D269EB74E00AE0882 /* SYMoyaNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -23,6 +25,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		10E9FD6D9FDC4A7537998707 /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYMoyaNetwork-SYMoyaNetworkTests.debug.xcconfig"; path = "Target Support Files/Pods-SYMoyaNetwork-SYMoyaNetworkTests/Pods-SYMoyaNetwork-SYMoyaNetworkTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4B1B0ED2211971EA0AACC0DC /* Pods-SYMoyaNetwork.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYMoyaNetwork.release.xcconfig"; path = "Target Support Files/Pods-SYMoyaNetwork/Pods-SYMoyaNetwork.release.xcconfig"; sourceTree = "<group>"; };
+		7B936BDD77A92E4887DC95E4 /* Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		80A6507F8DA49178D15E17F6 /* Pods_SYMoyaNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SYMoyaNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C837ABB4B5A9288F70F3BFC1 /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYMoyaNetwork-SYMoyaNetworkTests.release.xcconfig"; path = "Target Support Files/Pods-SYMoyaNetwork-SYMoyaNetworkTests/Pods-SYMoyaNetwork-SYMoyaNetworkTests.release.xcconfig"; sourceTree = "<group>"; };
+		EE0F54AEE5A074AD0556684B /* Pods-SYMoyaNetwork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYMoyaNetwork.debug.xcconfig"; path = "Target Support Files/Pods-SYMoyaNetwork/Pods-SYMoyaNetwork.debug.xcconfig"; sourceTree = "<group>"; };
 		FB517A9A269EB74E00AE0882 /* SYMoyaNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYMoyaNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB517A9D269EB74E00AE0882 /* SYMoyaNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYMoyaNetwork.h; sourceTree = "<group>"; };
 		FB517A9E269EB74E00AE0882 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -36,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4F6619B6322A73D1A80C4EF /* Pods_SYMoyaNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,18 +53,42 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB517AA4269EB74E00AE0882 /* SYMoyaNetwork.framework in Frameworks */,
+				3144533CD18181BD411227AB /* Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		098FF80065022A0568FF452C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				80A6507F8DA49178D15E17F6 /* Pods_SYMoyaNetwork.framework */,
+				7B936BDD77A92E4887DC95E4 /* Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B75673B2E1494B3B75A46B29 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EE0F54AEE5A074AD0556684B /* Pods-SYMoyaNetwork.debug.xcconfig */,
+				4B1B0ED2211971EA0AACC0DC /* Pods-SYMoyaNetwork.release.xcconfig */,
+				10E9FD6D9FDC4A7537998707 /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.debug.xcconfig */,
+				C837ABB4B5A9288F70F3BFC1 /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		FB517A90269EB74E00AE0882 = {
 			isa = PBXGroup;
 			children = (
 				FB517A9C269EB74E00AE0882 /* SYMoyaNetwork */,
 				FB517AA7269EB74E00AE0882 /* SYMoyaNetworkTests */,
 				FB517A9B269EB74E00AE0882 /* Products */,
+				B75673B2E1494B3B75A46B29 /* Pods */,
+				098FF80065022A0568FF452C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -104,6 +137,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB517AAE269EB74E00AE0882 /* Build configuration list for PBXNativeTarget "SYMoyaNetwork" */;
 			buildPhases = (
+				5FE3CD1E0F71925CB0BDA78D /* [CP] Check Pods Manifest.lock */,
 				FB517A95269EB74E00AE0882 /* Headers */,
 				FB517A96269EB74E00AE0882 /* Sources */,
 				FB517A97269EB74E00AE0882 /* Frameworks */,
@@ -122,9 +156,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB517AB1269EB74E00AE0882 /* Build configuration list for PBXNativeTarget "SYMoyaNetworkTests" */;
 			buildPhases = (
+				3B0FEDA54A3F58A9EDB172F2 /* [CP] Check Pods Manifest.lock */,
 				FB517A9F269EB74E00AE0882 /* Sources */,
 				FB517AA0269EB74E00AE0882 /* Frameworks */,
 				FB517AA1269EB74E00AE0882 /* Resources */,
+				44A62B5608655A431A247D7F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -190,6 +226,70 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3B0FEDA54A3F58A9EDB172F2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SYMoyaNetwork-SYMoyaNetworkTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		44A62B5608655A431A247D7F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SYMoyaNetwork-SYMoyaNetworkTests/Pods-SYMoyaNetwork-SYMoyaNetworkTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SYMoyaNetwork-SYMoyaNetworkTests/Pods-SYMoyaNetwork-SYMoyaNetworkTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SYMoyaNetwork-SYMoyaNetworkTests/Pods-SYMoyaNetwork-SYMoyaNetworkTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5FE3CD1E0F71925CB0BDA78D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SYMoyaNetwork-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FB517A96269EB74E00AE0882 /* Sources */ = {
@@ -342,6 +442,7 @@
 		};
 		FB517AAF269EB74E00AE0882 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EE0F54AEE5A074AD0556684B /* Pods-SYMoyaNetwork.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -369,6 +470,7 @@
 		};
 		FB517AB0269EB74E00AE0882 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B1B0ED2211971EA0AACC0DC /* Pods-SYMoyaNetwork.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -395,6 +497,7 @@
 		};
 		FB517AB2269EB74E00AE0882 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 10E9FD6D9FDC4A7537998707 /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2PHV6T5L36;
@@ -413,6 +516,7 @@
 		};
 		FB517AB3269EB74E00AE0882 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C837ABB4B5A9288F70F3BFC1 /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2PHV6T5L36;
