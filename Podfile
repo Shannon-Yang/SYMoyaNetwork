@@ -13,6 +13,9 @@ target 'SYMoyaNetwork' do
   # https://github.com/Moya/Moya
   pod 'Moya', '~> 14.0'
   
+  # https://github.com/kenshincui/AlamofireURLCache
+  pod 'AlamofireURLCache5'
+  
 
   target 'SYMoyaNetworkTests' do
     # Pods for testing
