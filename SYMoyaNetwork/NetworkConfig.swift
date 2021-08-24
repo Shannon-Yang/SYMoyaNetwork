@@ -7,3 +7,21 @@
 //
 
 import Foundation
+import Moya
+
+struct NetworkConfig {
+    
+    typealias LogConfiguration = Moya.NetworkLoggerPlugin.Configuration
+    
+    var debugLogEnabled: Bool = true
+    
+    
+    var logConfiguration: LogConfiguration
+    
+}
+
+
+//public extension NetworkLoggerPlugin.Configuration.LogOptions {
+//
+//
+//}

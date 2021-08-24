@@ -16,6 +16,8 @@ target 'SYMoyaNetwork' do
   # https://github.com/kenshincui/AlamofireURLCache
   pod 'AlamofireURLCache5'
   
+  # https://github.com/SwiftyJSON/SwiftyJSON
+  pod 'SwiftyJSON', '~> 5.0'
 
   target 'SYMoyaNetworkTests' do
     # Pods for testing

@@ -7,11 +7,13 @@ PODS:
   - Moya/Core (14.0.0):
     - Alamofire (~> 5.0)
   - ObjectMapper (4.2.0)
+  - SwiftyJSON (5.0.1)
 
 DEPENDENCIES:
   - AlamofireURLCache5
   - Moya (~> 14.0)
   - ObjectMapper (~> 4.0)
+  - SwiftyJSON (~> 5.0)
 
 SPEC REPOS:
   trunk:
@@ -19,13 +21,15 @@ SPEC REPOS:
     - AlamofireURLCache5
     - Moya
     - ObjectMapper
+    - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
   AlamofireURLCache5: b839c7db7c61bf40bdf467896eb587baecafb2c0
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
+  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: 3736fdb98a18260b34bf4ceda2d0598ed03121bb
+PODFILE CHECKSUM: ef9788074d105da78fd70c390d4e9ee901c148d6
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.10.2
