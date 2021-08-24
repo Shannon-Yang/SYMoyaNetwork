@@ -166,7 +166,7 @@ public extension NetworkLoggerPlugin.Configuration {
     }
     
 }
-
+/*
 extension SYMoyaNetworkLoggerPlugin: PluginType {
     /// Called to modify a request before sending.
     func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
@@ -187,13 +187,14 @@ extension SYMoyaNetworkLoggerPlugin: PluginType {
     func process(_ result: Result<Moya.Response, MoyaError>, target: TargetType) -> Result<Moya.Response, MoyaError> {
         
     }
-}
+}*/
 
 
 // MARK: - Private
 
 private extension SYMoyaNetworkLoggerPlugin {
     
+    /*
     func logNetworkRequest(_ request: RequestType, target: TargetType, completion: @escaping ([String]) -> Void) {
         //cURL formatting
         if configuration.logOptions.contains(.formatRequestAscURL) {
@@ -241,15 +242,8 @@ private extension SYMoyaNetworkLoggerPlugin {
         }
 
         completion(output)
-    }
+    }*/
 }
-
-
-
-
-
-
-
 
 
 func generateResponseDescription(_ target: TargetType, urlRequest: URLRequest?, response: HTTPURLResponse?, fileURL: URL? = nil, resumeData: Data? = nil, data: Data? = nil, error: Error?) -> String {
@@ -260,14 +254,15 @@ func generateResponseDescription(_ target: TargetType, urlRequest: URLRequest?, 
     
     description.append("  RequestMethod: \(urlRequest?.httpMethod ?? "")  RequestURL: \(urlRequest?.description ?? "")")
     
-    switch target.task {
-    case .requestPlain:
-        
-    case .
-    default:
-        <#code#>
-    }
-    
+//    switch target.task {
+//    case .requestPlain:
+//
+//    case .
+//    default:
+//        <#code#>
+//    }
+
+    /*
     let parameters = SYNetworkingConfig.sharedInstance.uniformParameters?.merged(with: request.parameters) ?? request.parameters
     var parametersString = ""
     if let jsonParameters = parameters,let string = JSON(data: jsonParameters).rawString() {
@@ -296,6 +291,7 @@ func generateResponseDescription(_ target: TargetType, urlRequest: URLRequest?, 
     }
     description.append("\nData: \(data?.count ?? 0) bytes\n\nResult: \(resultJSONString ?? "")\n")
     
-    return description
+    return description */
+    return ""
 }
 

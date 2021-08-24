@@ -14,7 +14,7 @@ import ObjectMapper
 
 extension Response {
     
-    var d: TimeInterval = 0
+   
 }
 
 public extension Response {

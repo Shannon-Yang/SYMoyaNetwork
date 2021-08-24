@@ -18,6 +18,10 @@ struct NetworkConfig {
     
     var logConfiguration: LogConfiguration
     
+    
+    var diskCacheConfig: DiskStorage.Config
+    
+    var memoryCacheConfig: MemoryStorage.Config
 }
 
 
@@ -25,3 +29,12 @@ struct NetworkConfig {
 //
 //
 //}
+
+// MARK: - Private
+
+private extension NetworkConfig {
+    
+    func defaultCacheConfig() {
+        // TODO: Shannon Yang 👺
+    }
+}

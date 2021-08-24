@@ -9,11 +9,18 @@
 import Foundation
 import Moya
 
+public enum ResponsePolicy {
+    case request
+    case cache
+    case cacheAndRequest
+}
+
 open class SYMoyaProvider<Target: TargetType>: Moya.MoyaProvider<Target> {
     
     override init(endpointClosure: @escaping MoyaProvider<Target>.EndpointClosure = SYMoyaProvider.syDefaultEndpointMapping, requestClosure: @escaping MoyaProvider<Target>.RequestClosure = MoyaProvider<Target>.defaultRequestMapping, stubClosure: @escaping MoyaProvider<Target>.StubClosure = MoyaProvider.neverStub, callbackQueue: DispatchQueue? = nil, session: Session = MoyaProvider<Target>.defaultAlamofireSession(), plugins: [PluginType] = [], trackInflights: Bool = false) {
         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, callbackQueue: callbackQueue, session: session, plugins: plugins, trackInflights: trackInflights)
     }
+    
 }
 
 public extension SYMoyaProvider {
