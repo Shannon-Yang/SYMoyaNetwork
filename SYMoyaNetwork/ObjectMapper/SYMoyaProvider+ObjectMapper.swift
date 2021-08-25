@@ -12,6 +12,15 @@ import ObjectMapper
 
 extension SYMoyaProvider {
     
+    func requestObjectFromCache<T: BaseMappable>(_ target: Target, completion: @escaping ((_ result: Result<T, MoyaError>) -> Void)) {
+        
+    }
+    
+    func requestObjectsFromCache<T: BaseMappable>(_ target: Target, completion: @escaping ((_ result: Result<[T], MoyaError>) -> Void)) {
+        
+    }
+    
+    
     /// 缓存策略，添加到方法传递里面，如果传了当前的缓存策略，那么忽略targettype的缓存策略
     
     open func requestObject<T: BaseMappable>(_ target: Target,keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping ((_ result: Result<T, MoyaError>) -> Void)) -> Cancellable {

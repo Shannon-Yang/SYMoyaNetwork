@@ -15,10 +15,34 @@ public enum ResponsePolicy {
     case cacheAndRequest
 }
 
-open class SYMoyaProvider<Target: TargetType>: Moya.MoyaProvider<Target> {
+open class SYMoyaProvider<Target: SYTargetType>: Moya.MoyaProvider<Target> {
     
-    override init(endpointClosure: @escaping MoyaProvider<Target>.EndpointClosure = SYMoyaProvider.syDefaultEndpointMapping, requestClosure: @escaping MoyaProvider<Target>.RequestClosure = MoyaProvider<Target>.defaultRequestMapping, stubClosure: @escaping MoyaProvider<Target>.StubClosure = MoyaProvider.neverStub, callbackQueue: DispatchQueue? = nil, session: Session = MoyaProvider<Target>.defaultAlamofireSession(), plugins: [PluginType] = [], trackInflights: Bool = false) {
+    override init(endpointClosure: @escaping EndpointClosure = SYMoyaProvider.syDefaultEndpointMapping, requestClosure: @escaping RequestClosure = SYMoyaProvider<SYTargetType>.defaultRequestMapping, stubClosure: @escaping SYMoyaProvider<SYTargetType>.StubClosure = MoyaProvider.neverStub, callbackQueue: DispatchQueue? = nil, session: Session = SYMoyaProvider<SYTargetType>.defaultAlamofireSession(), plugins: [PluginType] = [], trackInflights: Bool = false) {
         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, callbackQueue: callbackQueue, session: session, plugins: plugins, trackInflights: trackInflights)
+    }
+    
+    open override func request(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping Completion) -> Cancellable {
+        
+        switch target.networkCacheType {
+        case .urlRequestCache,.none:
+            break
+        case .syMoyaNetworkCache(let responseDataSourceType):
+            switch responseDataSourceType {
+            case .server:
+                super.request(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
+            case .cacheIfPossible:
+                // 取缓存
+                 
+            case .cacheAndServer:
+                
+            case .custom:
+            }
+        }
+        
+        
+        super.request(target, callbackQueue: callbackQueue, progress: progress) { result in
+            
+        }
     }
     
 }

@@ -9,7 +9,7 @@
 import Foundation
 import Moya
 
-public protocol TargetType: Moya.TargetType {
+public protocol SYTargetType: Moya.TargetType {
 
     var cdnURL: URL? { get }
     
@@ -81,6 +81,8 @@ public protocol TargetType: Moya.TargetType {
      */
     @available(iOS 4.0, *)
     var httpShouldUsePipelining: Bool { get }
+    
+    var networkCacheType: NetworkCacheType { get }
 }
 
 public extension TargetType {
@@ -136,6 +138,10 @@ public extension TargetType {
     
     var httpShouldUsePipelining: Bool {
         return true
+    }
+    
+    var networkCacheType: NetworkCacheType {
+        return .none
     }
 }
 

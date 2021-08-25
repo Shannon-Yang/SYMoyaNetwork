@@ -11,12 +11,6 @@ import Foundation
 import Moya
 import ObjectMapper
 
-
-extension Response {
-    
-   
-}
-
 public extension Response {
     
     /// Maps data received from the signal into an object which implements the Mappable protocol.

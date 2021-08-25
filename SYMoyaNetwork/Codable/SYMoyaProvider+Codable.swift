@@ -11,6 +11,10 @@ import Moya
 
 extension SYMoyaProvider {
     
+    func requestCodableObjectFromCache() {
+        
+    }
+    
     open func requestCodableObject<T: Decodable>(_ target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping ((_ result: Result<T, MoyaError>) -> Void)) -> Cancellable {
         return self.request(target, callbackQueue: callbackQueue, progress: progress, completion: { (result) in
             let codableResult = result.flatMap { response in
