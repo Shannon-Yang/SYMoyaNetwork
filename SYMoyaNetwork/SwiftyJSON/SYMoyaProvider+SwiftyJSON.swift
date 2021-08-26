@@ -12,7 +12,7 @@ import SwiftyJSON
 
 extension SYMoyaProvider {
     
-    func requestSwiftyJSONFromCache() {
+    func requestSwiftyJSONFromCache(_ target: Target,completion: @escaping ((_ result: Result<SwiftyJSON.JSON, MoyaError>) -> Void)) {
         
     }
     
@@ -20,6 +20,9 @@ extension SYMoyaProvider {
         return self.request(target, callbackQueue: callbackQueue, progress: progress, completion: { (result) in
             let swiftyJSONResult = result.flatMap { response in
                 Result<SwiftyJSON.JSON, Error>(catching: {
+                    
+                    
+                    
                     try response.mapSwiftyJSON(options: opt)
                 }).mapError { $0 as! MoyaError }
             }

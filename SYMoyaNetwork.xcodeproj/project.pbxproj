@@ -48,6 +48,8 @@
 		FBDEDF4A26D64CA60060D75A /* SYMoyaProvider+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDEDF4926D64CA60060D75A /* SYMoyaProvider+JSON.swift */; };
 		FBDEDF4E26D654B40060D75A /* SYMoyaProvider+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDEDF4D26D654B40060D75A /* SYMoyaProvider+String.swift */; };
 		FBDEDF5126D656120060D75A /* SYMoyaProvider+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDEDF5026D656120060D75A /* SYMoyaProvider+Image.swift */; };
+		FBDEDF5526D77D110060D75A /* SYMoyaNetworkOptionsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDEDF5426D77D110060D75A /* SYMoyaNetworkOptionsInfo.swift */; };
+		FBDEDF5C26D784110060D75A /* Response+CacheCostCalculable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDEDF5B26D784110060D75A /* Response+CacheCostCalculable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +131,8 @@
 		FBDEDF4926D64CA60060D75A /* SYMoyaProvider+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+JSON.swift"; sourceTree = "<group>"; };
 		FBDEDF4D26D654B40060D75A /* SYMoyaProvider+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+String.swift"; sourceTree = "<group>"; };
 		FBDEDF5026D656120060D75A /* SYMoyaProvider+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+Image.swift"; sourceTree = "<group>"; };
+		FBDEDF5426D77D110060D75A /* SYMoyaNetworkOptionsInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYMoyaNetworkOptionsInfo.swift; sourceTree = "<group>"; };
+		FBDEDF5B26D784110060D75A /* Response+CacheCostCalculable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Response+CacheCostCalculable.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,11 +229,11 @@
 				FBDEDF4F26D655FA0060D75A /* Image */,
 				FBDEDF4C26D654890060D75A /* String */,
 				FBDEDF4B26D64CA90060D75A /* JSON */,
-				FBDEDF2B26D4FD790060D75A /* Utility */,
-				FBDEDF1E26D4FBBF0060D75A /* Cache */,
 				FB83139C26CE5779001E4F73 /* Codable */,
 				FB83139526CE4E77001E4F73 /* SwiftyJSON */,
 				FB83139026CE28AE001E4F73 /* ObjectMapper */,
+				FBDEDF2B26D4FD790060D75A /* Utility */,
+				FBDEDF1E26D4FBBF0060D75A /* Cache */,
 				FB517A9D269EB74E00AE0882 /* SYMoyaNetwork.h */,
 				FB517A9E269EB74E00AE0882 /* Info.plist */,
 				FB517ABA269EC20800AE0882 /* NetworkConfig.swift */,
@@ -331,6 +335,7 @@
 				FBDEDF1F26D4FBBF0060D75A /* Storage.swift */,
 				FBDEDF2126D4FBBF0060D75A /* MemoryStorage.swift */,
 				FBDEDF2226D4FBBF0060D75A /* DiskStorage.swift */,
+				FBDEDF5426D77D110060D75A /* SYMoyaNetworkOptionsInfo.swift */,
 			);
 			path = Cache;
 			sourceTree = "<group>";
@@ -338,6 +343,7 @@
 		FBDEDF2B26D4FD790060D75A /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				FBDEDF5B26D784110060D75A /* Response+CacheCostCalculable.swift */,
 				FBDEDF2C26D4FDBE0060D75A /* Date+Extension.swift */,
 				FBDEDF2E26D4FEAD0060D75A /* String+MD5.swift */,
 				FBDEDF3826D5F4770060D75A /* CallbackQueue.swift */,
@@ -652,9 +658,11 @@
 				FB83137F26CBC960001E4F73 /* Response+ObjectMapper.swift in Sources */,
 				FBDEDF3126D501240060D75A /* SYMoyaNetworkError.swift in Sources */,
 				FB83139B26CE56EF001E4F73 /* SYMoyaProvider+Codable.swift in Sources */,
+				FBDEDF5526D77D110060D75A /* SYMoyaNetworkOptionsInfo.swift in Sources */,
 				FB766C1326D39EF200C803F5 /* SYMoyaNetworkLoggerPlugin.swift in Sources */,
 				FBDEDF3526D5E1300060D75A /* NetworkCache.swift in Sources */,
 				FB83139726CE4EA1001E4F73 /* SYMoyaProvider+SwiftyJSON.swift in Sources */,
+				FBDEDF5C26D784110060D75A /* Response+CacheCostCalculable.swift in Sources */,
 				FBDEDF2D26D4FDBE0060D75A /* Date+Extension.swift in Sources */,
 				FB8313A226CFB83C001E4F73 /* URL+SYMoya.swift in Sources */,
 				FB83137D26CBC8FE001E4F73 /* SYMoyaProvider+ObjectMapper.swift in Sources */,

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Moya
 
 /// Represents all the errors which can happen in Kingfisher framework.
 /// Kingfisher related methods always throw a `KingfisherError` or invoke the callback with `KingfisherError`
@@ -66,7 +67,7 @@ public enum SYMoyaNetworkError: Error {
         /// - image: The input image needs to be serialized to cache.
         /// - original: The original image data, if exists.
         /// - serializer: The `CacheSerializer` used for the image serializing.
-//        case cannotSerializeImage(image: KFCrossPlatformImage?, original: Data?, serializer: CacheSerializer)
+        case cannotSerializeResponse(response: Moya.Response?, serializer: CacheSerializer)
 
         /// Cannot create the cache file at a certain fileURL under a key. Code 3009.
         /// - fileURL: The url where the cache file should be created.
@@ -161,10 +162,10 @@ extension SYMoyaNetworkError.CacheErrorReason {
         case .cannotConvertToData(let object, let error):
             return "Cannot convert the input object to a `Data` object when storing it to disk cache. " +
                    "Object: \(object). Underlying error: \(error)"
-//        case .cannotSerializeImage(let image, let originalData, let serializer):
-//            return "Cannot serialize an image due to the cache serializer returning `nil`. " +
-//                   "Image: \(String(describing:image)), original data: \(String(describing: originalData)), " +
-//                   "serializer: \(serializer)."
+        case .cannotSerializeResponse(let response, let serializer):
+            return "Cannot serialize an image due to the cache serializer returning `nil`. " +
+                   "Image: \(String(describing:image)), original data: \(String(describing: originalData)), " +
+                   "serializer: \(serializer)."
         case .cannotCreateCacheFile(let fileURL, let key, let data, let error):
             return "Cannot create cache file at url: \(fileURL), key: \(key), data length: \(data.count). " +
                    "Underlying foundation error: \(error)."
@@ -186,7 +187,7 @@ extension SYMoyaNetworkError.CacheErrorReason {
         case .cannotCreateDirectory: return 30005
         case .imageNotExisting: return 30006
         case .cannotConvertToData: return 30007
-//        case .cannotSerializeImage: return 3008
+        case .cannotSerializeResponse: return 30008
         case .cannotCreateCacheFile: return 30009
         case .cannotSetCacheFileAttribute: return 30010
         case .diskStorageIsNotReady: return 30011

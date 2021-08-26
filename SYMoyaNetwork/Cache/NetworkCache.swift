@@ -1,50 +1,26 @@
 //
-//  ImageCache.swift
-//  Kingfisher
+//  NetworkCache.swift
+//  SYMoyaNetwork
 //
-//  Created by Wei Wang on 15/4/6.
+//  Created by ShannonYang on 2021/8/18.
+//  Copyright © 2021 Shannon Yang. All rights reserved.
 //
-//  Copyright (c) 2019 Wei Wang <onevcat@gmail.com>
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
 
 #if os(macOS)
 import AppKit
 #else
 import UIKit
 #endif
+import Moya
 
 extension Notification.Name {
-    /// This notification will be sent when the disk cache got cleaned either there are cached files expired or the
-    /// total size exceeding the max allowed size. The manually invoking of `clearDiskCache` method will not trigger
-    /// this notification.
-    ///
-    /// The `object` of this notification is the `ImageCache` object which sends the notification.
-    /// A list of removed hashes (files) could be retrieved by accessing the array under
-    /// `KingfisherDiskCacheCleanedHashKey` key in `userInfo` of the notification object you received.
-    /// By checking the array, you could know the hash codes of files are removed.
-    public static let KingfisherDidCleanDiskCache =
-        Notification.Name("com.onevcat.Kingfisher.KingfisherDidCleanDiskCache")
+
+    public static let SYMoyaNetworkDidCleanDiskCache =
+        Notification.Name("com.shannonyang.SYMoyaNetwork.SYMoyaNetworkDidCleanDiskCache")
 }
 
-/// Key for array of cleaned hashes in `userInfo` of `KingfisherDidCleanDiskCacheNotification`.
-public let KingfisherDiskCacheCleanedHashKey = "com.onevcat.Kingfisher.cleanedHash"
+/// Key for array of cleaned hashes in `userInfo` of `SYMoyaNetworkDidCleanDiskCacheNotification`.
+public let SYMoyaNetworkDiskCacheCleanedHashKey = "com.shannonyang.SYMoyaNetwork.cleanedHash"
 
 /// Cache type of a cached image.
 /// - none: The image is not cached yet when retrieving it.
@@ -75,12 +51,7 @@ public struct CacheStoreResult {
     
     /// The cache result for disk cache. If an error happens during caching operation,
     /// you can get it from `.failure` case of this `diskCacheResult`.
-    public let diskCacheResult: Result<(), KingfisherError>
-}
-
-extension KFCrossPlatformImage: CacheCostCalculable {
-    /// Cost of an image
-    public var cacheCost: Int { return kf.cost }
+    public let diskCacheResult: Result<(), SYMoyaNetworkError>
 }
 
 extension Data: DataTransformable {
@@ -101,23 +72,23 @@ extension Data: DataTransformable {
 /// - disk: The image can be retrieved from disk cache.
 /// - memory: The image can be retrieved memory cache.
 /// - none: The image does not exist in the cache.
-public enum ImageCacheResult {
+public enum NetworkCacheResult {
     
-    /// The image can be retrieved from disk cache.
-    case disk(KFCrossPlatformImage)
+    /// The Moya.Response can be retrieved from disk cache.
+    case disk(Moya.Response)
     
-    /// The image can be retrieved memory cache.
-    case memory(KFCrossPlatformImage)
+    /// The Moya.Response can be retrieved memory cache.
+    case memory(Moya.Response)
     
-    /// The image does not exist in the cache.
+    /// The Moya.Response does not exist in the cache.
     case none
     
-    /// Extracts the image from cache result. It returns the associated `Image` value for
+    /// Extracts the Moya.Response from cache result. It returns the associated `Response` value for
     /// `.disk` and `.memory` case. For `.none` case, `nil` is returned.
-    public var image: KFCrossPlatformImage? {
+    public var response: Moya.Response? {
         switch self {
-        case .disk(let image): return image
-        case .memory(let image): return image
+        case .disk(let response): return response
+        case .memory(let response): return response
         case .none: return nil
         }
     }
@@ -133,28 +104,28 @@ public enum ImageCacheResult {
 }
 
 /// Represents a hybrid caching system which is composed by a `MemoryStorage.Backend` and a `DiskStorage.Backend`.
-/// `ImageCache` is a high level abstract for storing an image as well as its data to disk memory and disk, and
+/// `NetworkCache` is a high level abstract for storing an Moya.Response as well as its data to disk memory and disk, and
 /// retrieving them back.
 ///
-/// While a default image cache object will be used if you prefer the extension methods of Kingfisher, you can create
+/// While a default Moya.Response cache object will be used if you prefer the extension methods of SYMoyaNetwork, you can create
 /// your own cache object and configure its storages as your need. This class also provide an interface for you to set
 /// the memory and disk storage config.
 open class NetworkCache {
 
     // MARK: Singleton
-    /// The default `ImageCache` object. Kingfisher will use this cache for its related methods if there is no
+    /// The default `NetworkCache` object. Kingfisher will use this cache for its related methods if there is no
     /// other cache specified. The `name` of this default cache is "default", and you should not use this name
     /// for any of your customize cache.
-    public static let `default` = ImageCache(name: "default")
+    public static let `default` = NetworkCache(name: "default")
 
 
     // MARK: Public Properties
-    /// The `MemoryStorage.Backend` object used in this cache. This storage holds loaded images in memory with a
+    /// The `MemoryStorage.Backend` object used in this cache. This storage holds loaded Moya.Response in memory with a
     /// reasonable expire duration and a maximum memory usage. To modify the configuration of a storage, just set
     /// the storage `config` and its properties.
-    public let memoryStorage: MemoryStorage.Backend<KFCrossPlatformImage>
+    public let memoryStorage: MemoryStorage.Backend<Moya.Response>
     
-    /// The `DiskStorage.Backend` object used in this cache. This storage stores loaded images in disk with a
+    /// The `DiskStorage.Backend` object used in this cache. This storage stores loaded Moya.Response in disk with a
     /// reasonable expire duration and a maximum disk usage. To modify the configuration of a storage, just set
     /// the storage `config` and its properties.
     public let diskStorage: DiskStorage.Backend<Data>
@@ -166,18 +137,18 @@ open class NetworkCache {
 
     // MARK: Initializers
 
-    /// Creates an `ImageCache` from a customized `MemoryStorage` and `DiskStorage`.
+    /// Creates an `NetworkCache` from a customized `MemoryStorage` and `DiskStorage`.
     ///
     /// - Parameters:
-    ///   - memoryStorage: The `MemoryStorage.Backend` object to use in the image cache.
-    ///   - diskStorage: The `DiskStorage.Backend` object to use in the image cache.
+    ///   - memoryStorage: The `MemoryStorage.Backend` object to use in the Moya.Response cache.
+    ///   - diskStorage: The `DiskStorage.Backend` object to use in the Moya.Response cache.
     public init(
-        memoryStorage: MemoryStorage.Backend<KFCrossPlatformImage>,
+        memoryStorage: MemoryStorage.Backend<Moya.Response>,
         diskStorage: DiskStorage.Backend<Data>)
     {
         self.memoryStorage = memoryStorage
         self.diskStorage = diskStorage
-        let ioQueueName = "com.onevcat.Kingfisher.ImageCache.ioQueue.\(UUID().uuidString)"
+        let ioQueueName = "com.shannonyang.SYMoyaNetwork.NetworkCache.ioQueue.\(UUID().uuidString)"
         ioQueue = DispatchQueue(label: ioQueueName)
 
         let notifications: [(Notification.Name, Selector)]
@@ -199,7 +170,7 @@ open class NetworkCache {
         }
     }
     
-    /// Creates an `ImageCache` with a given `name`. Both `MemoryStorage` and `DiskStorage` will be created
+    /// Creates an `NetworkCache` with a given `name`. Both `MemoryStorage` and `DiskStorage` will be created
     /// with a default config based on the `name`.
     ///
     /// - Parameter name: The name of cache object. It is used to setup disk cache directories and IO queue.
@@ -209,7 +180,7 @@ open class NetworkCache {
         self.init(noThrowName: name, cacheDirectoryURL: nil, diskCachePathClosure: nil)
     }
 
-    /// Creates an `ImageCache` with a given `name`, cache directory `path`
+    /// Creates an `NetworkCache` with a given `name`, cache directory `path`
     /// and a closure to modify the cache directory.
     ///
     /// - Parameters:
@@ -228,12 +199,12 @@ open class NetworkCache {
         cacheDirectoryURL: URL?,
         diskCachePathClosure: DiskCachePathClosure? = nil) throws {
         if name.isEmpty {
-            fatalError("[Kingfisher] You should specify a name for the cache. A cache with empty name is not permitted.")
+            fatalError("[SYMoyaNetwork] You should specify a name for the cache. A cache with empty name is not permitted.")
         }
 
-        let memoryStorage = ImageCache.createMemoryStorage()
+        let memoryStorage = NetworkCache.createMemoryStorage()
 
-        let config = ImageCache.createConfig(
+        let config = NetworkCache.createConfig(
             name: name, cacheDirectoryURL: cacheDirectoryURL, diskCachePathClosure: diskCachePathClosure
         )
         let diskStorage = try DiskStorage.Backend<Data>(config: config)
@@ -248,19 +219,19 @@ open class NetworkCache {
             fatalError("[Kingfisher] You should specify a name for the cache. A cache with empty name is not permitted.")
         }
 
-        let memoryStorage = ImageCache.createMemoryStorage()
+        let memoryStorage = NetworkCache.createMemoryStorage()
 
-        let config = ImageCache.createConfig(
+        let config = NetworkCache.createConfig(
             name: name, cacheDirectoryURL: cacheDirectoryURL, diskCachePathClosure: diskCachePathClosure
         )
         let diskStorage = DiskStorage.Backend<Data>(noThrowConfig: config, creatingDirectory: true)
         self.init(memoryStorage: memoryStorage, diskStorage: diskStorage)
     }
 
-    private static func createMemoryStorage() -> MemoryStorage.Backend<KFCrossPlatformImage> {
+    private static func createMemoryStorage() -> MemoryStorage.Backend<Moya.Response> {
         let totalMemory = ProcessInfo.processInfo.physicalMemory
         let costLimit = totalMemory / 4
-        let memoryStorage = MemoryStorage.Backend<KFCrossPlatformImage>(config:
+        let memoryStorage = MemoryStorage.Backend<Moya.Response>(config:
             .init(totalCostLimit: (costLimit > Int.max) ? Int.max : Int(costLimit)))
         return memoryStorage
     }
@@ -286,21 +257,18 @@ open class NetworkCache {
         NotificationCenter.default.removeObserver(self)
     }
 
-    // MARK: Storing Images
+    // MARK: Storing Response
 
-    open func store(_ image: KFCrossPlatformImage,
-                    original: Data? = nil,
+    open func store(_ response: Moya.Response,
                     forKey key: String,
-                    options: KingfisherParsedOptionsInfo,
+                    options: SYMoyaNetworkParsedOptionsInfo,
                     toDisk: Bool = true,
                     completionHandler: ((CacheStoreResult) -> Void)? = nil)
     {
-        let identifier = options.processor.identifier
         let callbackQueue = options.callbackQueue
-        
-        let computedKey = key.computedKey(with: identifier)
+
         // Memory storage should not throw.
-        memoryStorage.storeNoThrow(value: image, forKey: computedKey, expiration: options.memoryCacheExpiration)
+        memoryStorage.storeNoThrow(value: response, forKey: key, expiration: options.memoryCacheExpiration)
         
         guard toDisk else {
             if let completionHandler = completionHandler {
@@ -312,23 +280,24 @@ open class NetworkCache {
         
         ioQueue.async {
             let serializer = options.cacheSerializer
-            if let data = serializer.data(with: image, original: original) {
-                self.syncStoreToDisk(
-                    data,
-                    forKey: key,
-                    processorIdentifier: identifier,
-                    callbackQueue: callbackQueue,
-                    expiration: options.diskCacheExpiration,
-                    completionHandler: completionHandler)
-            } else {
+            let data = serializer.data(with: response)
+            if data.isEmpty {
                 guard let completionHandler = completionHandler else { return }
                 
-                let diskError = KingfisherError.cacheError(
-                    reason: .cannotSerializeImage(image: image, original: original, serializer: serializer))
+                let diskError = SYMoyaNetworkError.cacheError(
+                    reason: .cannotSerializeResponse(response: response, serializer: serializer))
                 let result = CacheStoreResult(
                     memoryCacheResult: .success(()),
                     diskCacheResult: .failure(diskError))
                 callbackQueue.execute { completionHandler(result) }
+            } else {
+                self.syncStoreToDisk(
+                    data,
+                    forKey: key,
+                    callbackQueue: callbackQueue,
+                    expiration: options.diskCacheExpiration,
+                    completionHandler: completionHandler)
+                
             }
         }
     }
@@ -354,28 +323,18 @@ open class NetworkCache {
     ///                    from an internal file IO queue. To change this behavior, specify another `CallbackQueue`
     ///                    value.
     ///   - completionHandler: A closure which is invoked when the cache operation finishes.
-    open func store(_ image: KFCrossPlatformImage,
-                      original: Data? = nil,
+    open func store(_ response: Moya.Response,
                       forKey key: String,
-                      processorIdentifier identifier: String = "",
                       cacheSerializer serializer: CacheSerializer = DefaultCacheSerializer.default,
                       toDisk: Bool = true,
                       callbackQueue: CallbackQueue = .untouch,
                       completionHandler: ((CacheStoreResult) -> Void)? = nil)
     {
-        struct TempProcessor: ImageProcessor {
-            let identifier: String
-            func process(item: ImageProcessItem, options: KingfisherParsedOptionsInfo) -> KFCrossPlatformImage? {
-                return nil
-            }
-        }
-        
-        let options = KingfisherParsedOptionsInfo([
-            .processor(TempProcessor(identifier: identifier)),
+        let options = SYMoyaNetworkParsedOptionsInfo([
             .cacheSerializer(serializer),
             .callbackQueue(callbackQueue)
         ])
-        store(image, original: original, forKey: key, options: options,
+        store(response, forKey: key, options: options,
               toDisk: toDisk, completionHandler: completionHandler)
     }
     
@@ -391,7 +350,6 @@ open class NetworkCache {
             self.syncStoreToDisk(
                 data,
                 forKey: key,
-                processorIdentifier: identifier,
                 callbackQueue: callbackQueue,
                 expiration: expiration,
                 completionHandler: completionHandler)
@@ -401,19 +359,18 @@ open class NetworkCache {
     private func syncStoreToDisk(
         _ data: Data,
         forKey key: String,
-        processorIdentifier identifier: String = "",
         callbackQueue: CallbackQueue = .untouch,
         expiration: StorageExpiration? = nil,
         completionHandler: ((CacheStoreResult) -> Void)? = nil)
     {
-        let computedKey = key.computedKey(with: identifier)
+//        let computedKey = key.computedKey(with: identifier)
         let result: CacheStoreResult
         do {
-            try self.diskStorage.store(value: data, forKey: computedKey, expiration: expiration)
+            try self.diskStorage.store(value: data, forKey: key, expiration: expiration)
             result = CacheStoreResult(memoryCacheResult: .success(()), diskCacheResult: .success(()))
         } catch {
-            let diskError: KingfisherError
-            if let error = error as? KingfisherError {
+            let diskError: SYMoyaNetworkError
+            if let error = error as? SYMoyaNetworkError {
                 diskError = error
             } else {
                 diskError = .cacheError(reason: .cannotConvertToData(object: data, error: error))
@@ -444,21 +401,18 @@ open class NetworkCache {
     ///   - callbackQueue: The callback queue on which `completionHandler` is invoked. Default is `.untouch`.
     ///   - completionHandler: A closure which is invoked when the cache removing operation finishes.
     open func removeImage(forKey key: String,
-                          processorIdentifier identifier: String = "",
                           fromMemory: Bool = true,
                           fromDisk: Bool = true,
                           callbackQueue: CallbackQueue = .untouch,
                           completionHandler: (() -> Void)? = nil)
     {
-        let computedKey = key.computedKey(with: identifier)
-
         if fromMemory {
-            memoryStorage.remove(forKey: computedKey)
+            memoryStorage.remove(forKey: key)
         }
         
         if fromDisk {
             ioQueue.async{
-                try? self.diskStorage.remove(forKey: computedKey)
+                try? self.diskStorage.remove(forKey: key)
                 if let completionHandler = completionHandler {
                     callbackQueue.execute { completionHandler() }
                 }
@@ -484,9 +438,9 @@ open class NetworkCache {
     ///                        with detail failing reason will be sent.
     open func retrieveImage(
         forKey key: String,
-        options: KingfisherParsedOptionsInfo,
+        options: SYMoyaNetworkParsedOptionsInfo,
         callbackQueue: CallbackQueue = .mainCurrentOrAsync,
-        completionHandler: ((Result<ImageCacheResult, KingfisherError>) -> Void)?)
+        completionHandler: ((Result<NetworkCacheResult, SYMoyaNetworkError>) -> Void)?)
     {
         // No completion handler. No need to start working and early return.
         guard let completionHandler = completionHandler else { return }
@@ -545,13 +499,13 @@ open class NetworkCache {
     /// Note: This method is marked as `open` for only compatible purpose. Do not overide this method. Instead, override
     ///       the version receives `KingfisherParsedOptionsInfo` instead.
     open func retrieveImage(forKey key: String,
-                               options: KingfisherOptionsInfo? = nil,
+                               options: SYMoyaNetworkOptionsInfo? = nil,
                         callbackQueue: CallbackQueue = .mainCurrentOrAsync,
-                     completionHandler: ((Result<ImageCacheResult, KingfisherError>) -> Void)?)
+                     completionHandler: ((Result<NetworkCacheResult, SYMoyaNetworkError>) -> Void)?)
     {
         retrieveImage(
             forKey: key,
-            options: KingfisherParsedOptionsInfo(options),
+            options: SYMoyaNetworkParsedOptionsInfo(options),
             callbackQueue: callbackQueue,
             completionHandler: completionHandler)
     }
@@ -565,10 +519,9 @@ open class NetworkCache {
     ///            has already expired, `nil` is returned.
     open func retrieveImageInMemoryCache(
         forKey key: String,
-        options: KingfisherParsedOptionsInfo) -> KFCrossPlatformImage?
+        options: SYMoyaNetworkParsedOptionsInfo) -> Moya.Response?
     {
-        let computedKey = key.computedKey(with: options.processor.identifier)
-        return memoryStorage.value(forKey: computedKey, extendingExpiration: options.memoryCacheAccessExtendingExpiration)
+        return memoryStorage.value(forKey: key, extendingExpiration: options.memoryCacheAccessExtendingExpiration)
     }
 
     /// Gets an image for a given key from the memory storage.
@@ -583,31 +536,30 @@ open class NetworkCache {
     ///       the version receives `KingfisherParsedOptionsInfo` instead.
     open func retrieveImageInMemoryCache(
         forKey key: String,
-        options: KingfisherOptionsInfo? = nil) -> KFCrossPlatformImage?
+        options: SYMoyaNetworkOptionsInfo? = nil) -> Moya.Response?
     {
-        return retrieveImageInMemoryCache(forKey: key, options: KingfisherParsedOptionsInfo(options))
+        return retrieveImageInMemoryCache(forKey: key, options: SYMoyaNetworkParsedOptionsInfo(options))
     }
 
     func retrieveImageInDiskCache(
         forKey key: String,
-        options: KingfisherParsedOptionsInfo,
+        options: SYMoyaNetworkParsedOptionsInfo,
         callbackQueue: CallbackQueue = .untouch,
-        completionHandler: @escaping (Result<KFCrossPlatformImage?, KingfisherError>) -> Void)
+        completionHandler: @escaping (Result<Moya.Response?, SYMoyaNetworkError>) -> Void)
     {
-        let computedKey = key.computedKey(with: options.processor.identifier)
         let loadingQueue: CallbackQueue = options.loadDiskFileSynchronously ? .untouch : .dispatch(ioQueue)
         loadingQueue.execute {
             do {
-                var image: KFCrossPlatformImage? = nil
-                if let data = try self.diskStorage.value(forKey: computedKey, extendingExpiration: options.diskCacheAccessExtendingExpiration) {
-                    image = options.cacheSerializer.image(with: data, options: options)
+                var response: Moya.Response? = nil
+                if let data = try self.diskStorage.value(forKey: key, extendingExpiration: options.diskCacheAccessExtendingExpiration) {
+                    response = options.cacheSerializer.response(with: <#T##Int#>, data: data, request: <#T##URLRequest?#>, response: <#T##HTTPURLResponse?#>, options: options)
                 }
-                callbackQueue.execute { completionHandler(.success(image)) }
+                callbackQueue.execute { completionHandler(.success(response)) }
             } catch {
-                if let error = error as? KingfisherError {
+                if let error = error as? SYMoyaNetworkError {
                     callbackQueue.execute { completionHandler(.failure(error)) }
                 } else {
-                    assertionFailure("The internal thrown error should be a `KingfisherError`.")
+                    assertionFailure("The internal thrown error should be a `SYMoyaNetworkError`.")
                 }
             }
         }
@@ -622,13 +574,13 @@ open class NetworkCache {
     ///   - completionHandler: A closure which is invoked when the operation finishes.
     open func retrieveImageInDiskCache(
         forKey key: String,
-        options: KingfisherOptionsInfo? = nil,
+        options: SYMoyaNetworkOptionsInfo? = nil,
         callbackQueue: CallbackQueue = .untouch,
-        completionHandler: @escaping (Result<KFCrossPlatformImage?, KingfisherError>) -> Void)
+        completionHandler: @escaping (Result<Moya.Response?, SYMoyaNetworkError>) -> Void)
     {
         retrieveImageInDiskCache(
             forKey: key,
-            options: KingfisherParsedOptionsInfo(options),
+            options: SYMoyaNetworkParsedOptionsInfo(options),
             callbackQueue: callbackQueue,
             completionHandler: completionHandler)
     }
@@ -697,9 +649,9 @@ open class NetworkCache {
                     DispatchQueue.main.async {
                         let cleanedHashes = removed.map { $0.lastPathComponent }
                         NotificationCenter.default.post(
-                            name: .KingfisherDidCleanDiskCache,
+                            name: .SYMoyaNetworkDidCleanDiskCache,
                             object: self,
-                            userInfo: [KingfisherDiskCacheCleanedHashKey: cleanedHashes])
+                            userInfo: [SYMoyaNetworkDiskCacheCleanedHashKey: cleanedHashes])
                     }
                 }
 
@@ -715,9 +667,7 @@ open class NetworkCache {
     /// In most cases, you should not call this method explicitly.
     /// It will be called automatically when `UIApplicationDidEnterBackgroundNotification` received.
     @objc public func backgroundCleanExpiredDiskCache() {
-        // if 'sharedApplication()' is unavailable, then return
-        guard let sharedApplication = KingfisherWrapper<UIApplication>.shared else { return }
-
+        let sharedApplication = UIApplication.shared
         func endBackgroundTask(_ task: inout UIBackgroundTaskIdentifier) {
             sharedApplication.endBackgroundTask(task)
             task = UIBackgroundTaskIdentifier.invalid
@@ -747,12 +697,10 @@ open class NetworkCache {
     /// - Returns: A `CacheType` instance which indicates the cache status.
     ///            `.none` means the image is not in cache or it is already expired.
     open func imageCachedType(
-        forKey key: String,
-        processorIdentifier identifier: String = DefaultImageProcessor.default.identifier) -> CacheType
+        forKey key: String) -> CacheType
     {
-        let computedKey = key.computedKey(with: identifier)
-        if memoryStorage.isCached(forKey: computedKey) { return .memory }
-        if diskStorage.isCached(forKey: computedKey) { return .disk }
+        if memoryStorage.isCached(forKey: key) { return .memory }
+        if diskStorage.isCached(forKey: key) { return .disk }
         return .none
     }
     
@@ -769,10 +717,9 @@ open class NetworkCache {
     /// To get the information about cache type according `CacheType`,
     /// use `imageCachedType(forKey:processorIdentifier:)` instead.
     public func isCached(
-        forKey key: String,
-        processorIdentifier identifier: String = DefaultImageProcessor.default.identifier) -> Bool
+        forKey key: String) -> Bool
     {
-        return imageCachedType(forKey: key, processorIdentifier: identifier).cached
+        return imageCachedType(forKey: key).cached
     }
     
     /// Gets the hash used as cache file name for the key.
@@ -788,24 +735,22 @@ open class NetworkCache {
     /// returned by this method as the cache file name. You can use this value to check and match cache file
     /// if you need.
     open func hash(
-        forKey key: String,
-        processorIdentifier identifier: String = DefaultImageProcessor.default.identifier) -> String
+        forKey key: String) -> String
     {
-        let computedKey = key.computedKey(with: identifier)
-        return diskStorage.cacheFileName(forKey: computedKey)
+        return diskStorage.cacheFileName(forKey: key)
     }
     
     /// Calculates the size taken by the disk storage.
     /// It is the total file size of all cached files in the `diskStorage` on disk in bytes.
     ///
     /// - Parameter handler: Called with the size calculating finishes. This closure is invoked from the main queue.
-    open func calculateDiskStorageSize(completion handler: @escaping ((Result<UInt, KingfisherError>) -> Void)) {
+    open func calculateDiskStorageSize(completion handler: @escaping ((Result<UInt, SYMoyaNetworkError>) -> Void)) {
         ioQueue.async {
             do {
                 let size = try self.diskStorage.totalSize()
                 DispatchQueue.main.async { handler(.success(size)) }
             } catch {
-                if let error = error as? KingfisherError {
+                if let error = error as? SYMoyaNetworkError {
                     DispatchQueue.main.async { handler(.failure(error)) }
                 } else {
                     assertionFailure("The internal thrown error should be a `KingfisherError`.")
@@ -832,38 +777,14 @@ open class NetworkCache {
     ///
     /// You could use `isCached(forKey:)` method to check whether the image is cached under that key in disk.
     open func cachePath(
-        forKey key: String,
-        processorIdentifier identifier: String = DefaultImageProcessor.default.identifier) -> String
+        forKey key: String) -> String
     {
-        let computedKey = key.computedKey(with: identifier)
-        return diskStorage.cacheFileURL(forKey: computedKey).path
+        return diskStorage.cacheFileURL(forKey: key).path
     }
 }
 
 extension Dictionary {
     func keysSortedByValue(_ isOrderedBefore: (Value, Value) -> Bool) -> [Key] {
         return Array(self).sorted{ isOrderedBefore($0.1, $1.1) }.map{ $0.0 }
-    }
-}
-
-#if !os(macOS) && !os(watchOS)
-// MARK: - For App Extensions
-extension UIApplication: KingfisherCompatible { }
-extension KingfisherWrapper where Base: UIApplication {
-    public static var shared: UIApplication? {
-        let selector = NSSelectorFromString("sharedApplication")
-        guard Base.responds(to: selector) else { return nil }
-        return Base.perform(selector).takeUnretainedValue() as? UIApplication
-    }
-}
-#endif
-
-extension String {
-    func computedKey(with identifier: String) -> String {
-        if identifier.isEmpty {
-            return self
-        } else {
-            return appending("@\(identifier)")
-        }
     }
 }

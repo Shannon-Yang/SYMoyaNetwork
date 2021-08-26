@@ -11,7 +11,7 @@ import Moya
 
 extension SYMoyaProvider {
     
-    func requestCodableObjectFromCache() {
+    func requestCodableObjectFromCache<T: Decodable>(_ target: Target, completion: @escaping ((_ result: Result<T, MoyaError>) -> Void)) {
         
     }
     
