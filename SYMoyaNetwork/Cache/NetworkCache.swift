@@ -22,19 +22,19 @@ extension Notification.Name {
 /// Key for array of cleaned hashes in `userInfo` of `SYMoyaNetworkDidCleanDiskCacheNotification`.
 public let SYMoyaNetworkDiskCacheCleanedHashKey = "com.shannonyang.SYMoyaNetwork.cleanedHash"
 
-/// Cache type of a cached image.
-/// - none: The image is not cached yet when retrieving it.
-/// - memory: The image is cached in memory.
-/// - disk: The image is cached in disk.
+/// Cache type of a cached Response.
+/// - none: The Response is not cached yet when retrieving it.
+/// - memory: The Response is cached in memory.
+/// - disk: The Response is cached in disk.
 public enum CacheType {
-    /// The image is not cached yet when retrieving it.
+    /// The Response is not cached yet when retrieving it.
     case none
-    /// The image is cached in memory.
+    /// The Response is cached in memory.
     case memory
-    /// The image is cached in disk.
+    /// The Response is cached in disk.
     case disk
     
-    /// Whether the cache type represents the image is already cached or not.
+    /// Whether the cache type represents the Response is already cached or not.
     public var cached: Bool {
         switch self {
         case .memory, .disk: return true
@@ -46,7 +46,7 @@ public enum CacheType {
 /// Represents the caching operation result.
 public struct CacheStoreResult {
     
-    /// The cache result for memory cache. Caching an image to memory will never fail.
+    /// The cache result for memory cache. Caching an Response to memory will never fail.
     public let memoryCacheResult: Result<(), Never>
     
     /// The cache result for disk cache. If an error happens during caching operation,
@@ -67,11 +67,11 @@ extension Data: DataTransformable {
 }
 
 
-/// Represents the getting image operation from the cache.
+/// Represents the getting Response operation from the cache.
 ///
-/// - disk: The image can be retrieved from disk cache.
-/// - memory: The image can be retrieved memory cache.
-/// - none: The image does not exist in the cache.
+/// - disk: The Response can be retrieved from disk cache.
+/// - memory: The Response can be retrieved memory cache.
+/// - none: The Response does not exist in the cache.
 public enum NetworkCacheResult {
     
     /// The Moya.Response can be retrieved from disk cache.
@@ -192,7 +192,7 @@ open class NetworkCache {
     ///                        directory under user domain mask will be used.
     ///   - diskCachePathClosure: Closure that takes in an optional initial path string and generates
     ///                           the final disk cache path. You could use it to fully customize your cache path.
-    /// - Throws: An error that happens during image cache creating, such as unable to create a directory at the given
+    /// - Throws: An error that happens during response cache creating, such as unable to create a directory at the given
     ///           path.
     public convenience init(
         name: String,
@@ -216,7 +216,7 @@ open class NetworkCache {
         cacheDirectoryURL: URL?,
         diskCachePathClosure: DiskCachePathClosure?){
         if name.isEmpty {
-            fatalError("[Kingfisher] You should specify a name for the cache. A cache with empty name is not permitted.")
+            fatalError("[SYMoyaNetwork] You should specify a name for the cache. A cache with empty name is not permitted.")
         }
 
         let memoryStorage = NetworkCache.createMemoryStorage()
@@ -302,20 +302,20 @@ open class NetworkCache {
         }
     }
 
-    /// Stores an image to the cache.
+    /// Stores an response to the cache.
     ///
     /// - Parameters:
-    ///   - image: The image to be stored.
-    ///   - original: The original data of the image. This value will be forwarded to the provided `serializer` for
-    ///               further use. By default, Kingfisher uses a `DefaultCacheSerializer` to serialize the image to
-    ///               data for caching in disk, it checks the image format based on `original` data to determine in
-    ///               which image format should be used. For other types of `serializer`, it depends on their
+    ///   - response: The response to be stored.
+    ///   - original: The original data of the response. This value will be forwarded to the provided `serializer` for
+    ///               further use. By default, Kingfisher uses a `DefaultCacheSerializer` to serialize the response to
+    ///               data for caching in disk, it checks the response format based on `original` data to determine in
+    ///               which response format should be used. For other types of `serializer`, it depends on their
     ///               implementation detail on how to use this original data.
-    ///   - key: The key used for caching the image.
+    ///   - key: The key used for caching the response.
     ///   - identifier: The identifier of processor being used for caching. If you are using a processor for the
-    ///                 image, pass the identifier of processor to this parameter.
+    ///                 response, pass the identifier of processor to this parameter.
     ///   - serializer: The `CacheSerializer`
-    ///   - toDisk: Whether this image should be cached to disk or not. If `false`, the image is only cached in memory.
+    ///   - toDisk: Whether this response should be cached to disk or not. If `false`, the response is only cached in memory.
     ///             Otherwise, it is cached in both memory storage and disk storage. Default is `true`.
     ///   - callbackQueue: The callback queue on which `completionHandler` is invoked. Default is `.untouch`. For case
     ///                    that `toDisk` is `false`, a `.untouch` queue means `callbackQueue` will be invoked from the
@@ -363,7 +363,6 @@ open class NetworkCache {
         expiration: StorageExpiration? = nil,
         completionHandler: ((CacheStoreResult) -> Void)? = nil)
     {
-//        let computedKey = key.computedKey(with: identifier)
         let result: CacheStoreResult
         do {
             try self.diskStorage.store(value: data, forKey: key, expiration: expiration)
@@ -388,19 +387,19 @@ open class NetworkCache {
 
     // MARK: Removing Images
 
-    /// Removes the image for the given key from the cache.
+    /// Removes the response for the given key from the cache.
     ///
     /// - Parameters:
-    ///   - key: The key used for caching the image.
+    ///   - key: The key used for caching the response.
     ///   - identifier: The identifier of processor being used for caching. If you are using a processor for the
-    ///                 image, pass the identifier of processor to this parameter.
-    ///   - fromMemory: Whether this image should be removed from memory storage or not.
-    ///                 If `false`, the image won't be removed from the memory storage. Default is `true`.
-    ///   - fromDisk: Whether this image should be removed from disk storage or not.
-    ///               If `false`, the image won't be removed from the disk storage. Default is `true`.
+    ///                 response, pass the identifier of processor to this parameter.
+    ///   - fromMemory: Whether this response should be removed from memory storage or not.
+    ///                 If `false`, the response won't be removed from the memory storage. Default is `true`.
+    ///   - fromDisk: Whether this response should be removed from disk storage or not.
+    ///               If `false`, the response won't be removed from the disk storage. Default is `true`.
     ///   - callbackQueue: The callback queue on which `completionHandler` is invoked. Default is `.untouch`.
     ///   - completionHandler: A closure which is invoked when the cache removing operation finishes.
-    open func removeImage(forKey key: String,
+    open func removeResponse(forKey key: String,
                           fromMemory: Bool = true,
                           fromDisk: Bool = true,
                           callbackQueue: CallbackQueue = .untouch,
@@ -426,17 +425,17 @@ open class NetworkCache {
 
     // MARK: Getting Images
 
-    /// Gets an image for a given key from the cache, either from memory storage or disk storage.
+    /// Gets an response for a given key from the cache, either from memory storage or disk storage.
     ///
     /// - Parameters:
-    ///   - key: The key used for caching the image.
-    ///   - options: The `KingfisherParsedOptionsInfo` options setting used for retrieving the image.
+    ///   - key: The key used for caching the response.
+    ///   - options: The `KingfisherParsedOptionsInfo` options setting used for retrieving the response.
     ///   - callbackQueue: The callback queue on which `completionHandler` is invoked. Default is `.mainCurrentOrAsync`.
-    ///   - completionHandler: A closure which is invoked when the image getting operation finishes. If the
-    ///                        image retrieving operation finishes without problem, an `ImageCacheResult` value
+    ///   - completionHandler: A closure which is invoked when the response getting operation finishes. If the
+    ///                        response retrieving operation finishes without problem, an `ImageCacheResult` value
     ///                        will be sent to this closure as result. Otherwise, a `KingfisherError` result
     ///                        with detail failing reason will be sent.
-    open func retrieveImage(
+    open func retrieveResponse(
         forKey key: String,
         options: SYMoyaNetworkParsedOptionsInfo,
         callbackQueue: CallbackQueue = .mainCurrentOrAsync,
@@ -445,38 +444,38 @@ open class NetworkCache {
         // No completion handler. No need to start working and early return.
         guard let completionHandler = completionHandler else { return }
 
-        // Try to check the image from memory cache first.
-        if let image = retrieveImageInMemoryCache(forKey: key, options: options) {
-            callbackQueue.execute { completionHandler(.success(.memory(image))) }
+        // Try to check the response from memory cache first.
+        if let response = retrieveResponseInMemoryCache(forKey: key, options: options) {
+            callbackQueue.execute { completionHandler(.success(.memory(response))) }
         } else if options.fromMemoryCacheOrRefresh {
             callbackQueue.execute { completionHandler(.success(.none)) }
         } else {
 
             // Begin to disk search.
-            self.retrieveImageInDiskCache(forKey: key, options: options, callbackQueue: callbackQueue) {
+            self.retrieveResponseInDiskCache(forKey: key, options: options, callbackQueue: callbackQueue) {
                 result in
                 switch result {
-                case .success(let image):
+                case .success(let response):
 
-                    guard let image = image else {
-                        // No image found in disk storage.
+                    guard let response = response else {
+                        // No response found in disk storage.
                         callbackQueue.execute { completionHandler(.success(.none)) }
                         return
                     }
 
-                    // Cache the disk image to memory.
+                    // Cache the disk response to memory.
                     // We are passing `false` to `toDisk`, the memory cache does not change
                     // callback queue, we can call `completionHandler` without another dispatch.
                     var cacheOptions = options
                     cacheOptions.callbackQueue = .untouch
                     self.store(
-                        image,
+                        response,
                         forKey: key,
                         options: cacheOptions,
                         toDisk: false)
                     {
                         _ in
-                        callbackQueue.execute { completionHandler(.success(.disk(image))) }
+                        callbackQueue.execute { completionHandler(.success(.disk(response))) }
                     }
                 case .failure(let error):
                     callbackQueue.execute { completionHandler(.failure(error)) }
@@ -485,63 +484,63 @@ open class NetworkCache {
         }
     }
 
-    /// Gets an image for a given key from the cache, either from memory storage or disk storage.
+    /// Gets an response for a given key from the cache, either from memory storage or disk storage.
     ///
     /// - Parameters:
-    ///   - key: The key used for caching the image.
-    ///   - options: The `KingfisherOptionsInfo` options setting used for retrieving the image.
+    ///   - key: The key used for caching the response.
+    ///   - options: The `KingfisherOptionsInfo` options setting used for retrieving the response.
     ///   - callbackQueue: The callback queue on which `completionHandler` is invoked. Default is `.mainCurrentOrAsync`.
-    ///   - completionHandler: A closure which is invoked when the image getting operation finishes. If the
-    ///                        image retrieving operation finishes without problem, an `ImageCacheResult` value
+    ///   - completionHandler: A closure which is invoked when the response getting operation finishes. If the
+    ///                        response retrieving operation finishes without problem, an `ImageCacheResult` value
     ///                        will be sent to this closure as result. Otherwise, a `KingfisherError` result
     ///                        with detail failing reason will be sent.
     ///
     /// Note: This method is marked as `open` for only compatible purpose. Do not overide this method. Instead, override
     ///       the version receives `KingfisherParsedOptionsInfo` instead.
-    open func retrieveImage(forKey key: String,
+    open func retrieveResponse(forKey key: String,
                                options: SYMoyaNetworkOptionsInfo? = nil,
                         callbackQueue: CallbackQueue = .mainCurrentOrAsync,
                      completionHandler: ((Result<NetworkCacheResult, SYMoyaNetworkError>) -> Void)?)
     {
-        retrieveImage(
+        retrieveResponse(
             forKey: key,
             options: SYMoyaNetworkParsedOptionsInfo(options),
             callbackQueue: callbackQueue,
             completionHandler: completionHandler)
     }
 
-    /// Gets an image for a given key from the memory storage.
+    /// Gets an response for a given key from the memory storage.
     ///
     /// - Parameters:
-    ///   - key: The key used for caching the image.
-    ///   - options: The `KingfisherParsedOptionsInfo` options setting used for retrieving the image.
-    /// - Returns: The image stored in memory cache, if exists and valid. Otherwise, if the image does not exist or
+    ///   - key: The key used for caching the response.
+    ///   - options: The `KingfisherParsedOptionsInfo` options setting used for retrieving the response.
+    /// - Returns: The response stored in memory cache, if exists and valid. Otherwise, if the response does not exist or
     ///            has already expired, `nil` is returned.
-    open func retrieveImageInMemoryCache(
+    open func retrieveResponseInMemoryCache(
         forKey key: String,
         options: SYMoyaNetworkParsedOptionsInfo) -> Moya.Response?
     {
         return memoryStorage.value(forKey: key, extendingExpiration: options.memoryCacheAccessExtendingExpiration)
     }
 
-    /// Gets an image for a given key from the memory storage.
+    /// Gets an response for a given key from the memory storage.
     ///
     /// - Parameters:
-    ///   - key: The key used for caching the image.
-    ///   - options: The `KingfisherOptionsInfo` options setting used for retrieving the image.
-    /// - Returns: The image stored in memory cache, if exists and valid. Otherwise, if the image does not exist or
+    ///   - key: The key used for caching the response.
+    ///   - options: The `KingfisherOptionsInfo` options setting used for retrieving the response.
+    /// - Returns: The response stored in memory cache, if exists and valid. Otherwise, if the response does not exist or
     ///            has already expired, `nil` is returned.
     ///
     /// Note: This method is marked as `open` for only compatible purpose. Do not overide this method. Instead, override
     ///       the version receives `KingfisherParsedOptionsInfo` instead.
-    open func retrieveImageInMemoryCache(
+    open func retrieveResponseInMemoryCache(
         forKey key: String,
         options: SYMoyaNetworkOptionsInfo? = nil) -> Moya.Response?
     {
-        return retrieveImageInMemoryCache(forKey: key, options: SYMoyaNetworkParsedOptionsInfo(options))
+        return retrieveResponseInMemoryCache(forKey: key, options: SYMoyaNetworkParsedOptionsInfo(options))
     }
 
-    func retrieveImageInDiskCache(
+    func retrieveResponseInDiskCache(
         forKey key: String,
         options: SYMoyaNetworkParsedOptionsInfo,
         callbackQueue: CallbackQueue = .untouch,
@@ -565,20 +564,20 @@ open class NetworkCache {
         }
     }
     
-    /// Gets an image for a given key from the disk storage.
+    /// Gets an response for a given key from the disk storage.
     ///
     /// - Parameters:
-    ///   - key: The key used for caching the image.
-    ///   - options: The `KingfisherOptionsInfo` options setting used for retrieving the image.
+    ///   - key: The key used for caching the response.
+    ///   - options: The `KingfisherOptionsInfo` options setting used for retrieving the response.
     ///   - callbackQueue: The callback queue on which `completionHandler` is invoked. Default is `.untouch`.
     ///   - completionHandler: A closure which is invoked when the operation finishes.
-    open func retrieveImageInDiskCache(
+    open func retrieveResponseInDiskCache(
         forKey key: String,
         options: SYMoyaNetworkOptionsInfo? = nil,
         callbackQueue: CallbackQueue = .untouch,
         completionHandler: @escaping (Result<Moya.Response?, SYMoyaNetworkError>) -> Void)
     {
-        retrieveImageInDiskCache(
+        retrieveResponseInDiskCache(
             forKey: key,
             options: SYMoyaNetworkParsedOptionsInfo(options),
             callbackQueue: callbackQueue,
@@ -615,23 +614,23 @@ open class NetworkCache {
         }
     }
     
-    /// Clears the expired images from memory & disk storage. This is an async operation.
+    /// Clears the expired response from memory & disk storage. This is an async operation.
     open func cleanExpiredCache(completion handler: (() -> Void)? = nil) {
         cleanExpiredMemoryCache()
         cleanExpiredDiskCache(completion: handler)
     }
 
-    /// Clears the expired images from disk storage.
+    /// Clears the expired response from disk storage.
     open func cleanExpiredMemoryCache() {
         memoryStorage.removeExpired()
     }
     
-    /// Clears the expired images from disk storage. This is an async operation.
+    /// Clears the expired response from disk storage. This is an async operation.
     @objc func cleanExpiredDiskCache() {
         cleanExpiredDiskCache(completion: nil)
     }
 
-    /// Clears the expired images from disk storage. This is an async operation.
+    /// Clears the expired response from disk storage. This is an async operation.
     ///
     /// - Parameter handler: A closure which is invoked when the cache clearing operation finishes.
     ///                      This `handler` will be called from the main queue.
@@ -663,7 +662,7 @@ open class NetworkCache {
     }
 
 #if !os(macOS) && !os(watchOS)
-    /// Clears the expired images from disk storage when app is in background. This is an async operation.
+    /// Clears the expired response from disk storage when app is in background. This is an async operation.
     /// In most cases, you should not call this method explicitly.
     /// It will be called automatically when `UIApplicationDidEnterBackgroundNotification` received.
     @objc public func backgroundCleanExpiredDiskCache() {
@@ -684,19 +683,19 @@ open class NetworkCache {
     }
 #endif
 
-    // MARK: Image Cache State
+    // MARK: Response Cache State
 
     /// Returns the cache type for a given `key` and `identifier` combination.
-    /// This method is used for checking whether an image is cached in current cache.
+    /// This method is used for checking whether an response is cached in current cache.
     /// It also provides information on which kind of cache can it be found in the return value.
     ///
     /// - Parameters:
-    ///   - key: The key used for caching the image.
-    ///   - identifier: Processor identifier which used for this image. Default is the `identifier` of
+    ///   - key: The key used for caching the response.
+    ///   - identifier: Processor identifier which used for this response. Default is the `identifier` of
     ///                 `DefaultImageProcessor.default`.
     /// - Returns: A `CacheType` instance which indicates the cache status.
-    ///            `.none` means the image is not in cache or it is already expired.
-    open func imageCachedType(
+    ///            `.none` means the response is not in cache or it is already expired.
+    open func responseCachedType(
         forKey key: String) -> CacheType
     {
         if memoryStorage.isCached(forKey: key) { return .memory }
@@ -707,26 +706,26 @@ open class NetworkCache {
     /// Returns whether the file exists in cache for a given `key` and `identifier` combination.
     ///
     /// - Parameters:
-    ///   - key: The key used for caching the image.
-    ///   - identifier: Processor identifier which used for this image. Default is the `identifier` of
+    ///   - key: The key used for caching the response.
+    ///   - identifier: Processor identifier which used for this response. Default is the `identifier` of
     ///                 `DefaultImageProcessor.default`.
     /// - Returns: A `Bool` which indicates whether a cache could match the given `key` and `identifier` combination.
     ///
     /// - Note:
     /// The return value does not contain information about from which kind of storage the cache matches.
     /// To get the information about cache type according `CacheType`,
-    /// use `imageCachedType(forKey:processorIdentifier:)` instead.
+    /// use `responseCachedType(forKey:processorIdentifier:)` instead.
     public func isCached(
         forKey key: String) -> Bool
     {
-        return imageCachedType(forKey: key).cached
+        return responseCachedType(forKey: key).cached
     }
     
     /// Gets the hash used as cache file name for the key.
     ///
     /// - Parameters:
-    ///   - key: The key used for caching the image.
-    ///   - identifier: Processor identifier which used for this image. Default is the `identifier` of
+    ///   - key: The key used for caching the response.
+    ///   - identifier: Processor identifier which used for this response. Default is the `identifier` of
     ///                 `DefaultImageProcessor.default`.
     /// - Returns: The hash which is used as the cache file name.
     ///
@@ -766,16 +765,16 @@ open class NetworkCache {
     /// i.e. Replacing the `<img src='path_for_key'>` tag in your HTML.
     ///
     /// - Parameters:
-    ///   - key: The key used for caching the image.
-    ///   - identifier: Processor identifier which used for this image. Default is the `identifier` of
+    ///   - key: The key used for caching the response.
+    ///   - identifier: Processor identifier which used for this response. Default is the `identifier` of
     ///                 `DefaultImageProcessor.default`.
-    /// - Returns: The disk path of cached image under the given `key` and `identifier`.
+    /// - Returns: The disk path of cached response under the given `key` and `identifier`.
     ///
     /// - Note:
-    /// This method does not guarantee there is an image already cached in the returned path. It just gives your
-    /// the path that the image should be, if it exists in disk storage.
+    /// This method does not guarantee there is an response already cached in the returned path. It just gives your
+    /// the path that the response should be, if it exists in disk storage.
     ///
-    /// You could use `isCached(forKey:)` method to check whether the image is cached under that key in disk.
+    /// You could use `isCached(forKey:)` method to check whether the response is cached under that key in disk.
     open func cachePath(
         forKey key: String) -> String
     {

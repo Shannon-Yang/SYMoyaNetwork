@@ -83,9 +83,17 @@ public protocol SYTargetType: Moya.TargetType {
     var httpShouldUsePipelining: Bool { get }
     
     var networkCacheType: NetworkCacheType { get }
+    
+    func requestCompleteFilter(_ response: Moya.Response)
+    
+    func requestFailedFilter(_ response: Moya.Response)
 }
 
-public extension TargetType {
+public extension SYTargetType {
+    
+    var method: Moya.Method {
+        return .post
+    }
     
     var cdnURL: URL? {
         return nil
@@ -143,5 +151,22 @@ public extension TargetType {
     var networkCacheType: NetworkCacheType {
         return .none
     }
+    
+    func requestCompleteFilter(_ response: Moya.Response) { }
+    
+    func requestFailedFilter(_ response: Moya.Response) { }
 }
 
+
+internal extension SYTargetType {
+    
+    func requestBaseURL() -> URL {
+        if self.useCDN {
+            if let cdnURL = self.cdnURL {
+                return cdnURL
+            }
+            return self.baseURL
+        }
+        return self.baseURL
+    }
+}

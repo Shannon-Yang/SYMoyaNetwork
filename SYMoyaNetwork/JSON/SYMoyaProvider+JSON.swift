@@ -24,14 +24,20 @@ extension SYMoyaProvider {
         case .syMoyaNetworkCache(let responseDataSourceType):
             switch responseDataSourceType {
             case .server:
-                return self.request(target, callbackQueue: callbackQueue, progress: progress, completion: { (response) in
-                    completion(jsonResult(response: response))
+                return self.request(target, callbackQueue: callbackQueue, progress: progress, completion: { (result) in
+                    
+                    
+                    
+                    
+                    completion(self.jsonResult(result, failsOnEmptyData: failsOnEmptyData))
                 })
+            case .cache:
+                self.cache.retrieveResponse(forKey: <#T##String#>, options: <#T##SYMoyaNetworkOptionsInfo?#>, callbackQueue: <#T##CallbackQueue#>, completionHandler: <#T##((Result<NetworkCacheResult, SYMoyaNetworkError>) -> Void)?##((Result<NetworkCacheResult, SYMoyaNetworkError>) -> Void)?##(Result<NetworkCacheResult, SYMoyaNetworkError>) -> Void#>)
             case .cacheIfPossible:
             // 取缓存
-            
+               
             case .cacheAndServer:
-                
+                 
             case .custom:
             }
         }
@@ -42,8 +48,8 @@ extension SYMoyaProvider {
 
 private extension SYMoyaProvider {
     
-    func jsonResult(response: Moya.Response, failsOnEmptyData: Bool) -> Result<Any, MoyaError> {
-        return response.flatMap { response in
+    func jsonResult(_ result: Result<Moya.Response, MoyaError>, failsOnEmptyData: Bool) -> Result<Any, MoyaError> {
+        return result.flatMap { response in
             Result<Any, Error>(catching: {
                 try response.mapJSON(failsOnEmptyData: failsOnEmptyData)
             }).mapError { $0 as! MoyaError }

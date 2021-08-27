@@ -20,9 +20,6 @@ extension SYMoyaProvider {
         return self.request(target, callbackQueue: callbackQueue, progress: progress, completion: { (result) in
             let swiftyJSONResult = result.flatMap { response in
                 Result<SwiftyJSON.JSON, Error>(catching: {
-                    
-                    
-                    
                     try response.mapSwiftyJSON(options: opt)
                 }).mapError { $0 as! MoyaError }
             }

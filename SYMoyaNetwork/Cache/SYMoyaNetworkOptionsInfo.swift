@@ -24,7 +24,7 @@ extension Array where Element == SYMoyaNetworkOptionsInfoItem {
 /// Represents the available option items could be used in `KingfisherOptionsInfo`.
 public enum SYMoyaNetworkOptionsInfoItem {
     
-    /// Kingfisher will use the associated `ImageCache` object when handling related operations,
+    /// Kingfisher will use the associated `NetworkCache` object when handling related operations,
     /// including trying to retrieve the cached images and store the downloaded image to it.
     case targetCache(NetworkCache)
 
@@ -47,6 +47,8 @@ public enum SYMoyaNetworkOptionsInfoItem {
     /// cache, the image retrieving will fail with the `KingfisherError.cacheError` with `.imageNotExisting` as its
     /// reason.
     case onlyFromCache
+    
+    case cacheMetadata: 
 
     /// The associated value will be used as the target queue of dispatch callbacks when retrieving images from
     /// cache. If not set, Kingfisher will use `.mainCurrentOrAsync` for callbacks.
@@ -102,23 +104,20 @@ public enum SYMoyaNetworkOptionsInfoItem {
 // Improve performance by parsing the input `KingfisherOptionsInfo` (self) first.
 // So we can prevent the iterating over the options array again and again.
 /// The parsed options info used across Kingfisher methods. Each property in this type corresponds a case member
-/// in `KingfisherOptionsInfoItem`. When a `KingfisherOptionsInfo` sent to Kingfisher related methods, it will be
+/// in `SYMoyaNetworkOptionsInfoItem`. When a `KingfisherOptionsInfo` sent to Kingfisher related methods, it will be
 /// parsed and converted to a `KingfisherParsedOptionsInfo` first, and pass through the internal methods.
 public struct SYMoyaNetworkParsedOptionsInfo {
 
     public var targetCache: NetworkCache? = nil
     public var forceRefresh = false
     public var fromMemoryCacheOrRefresh = false
-    public var forceTransition = false
     public var cacheMemoryOnly = false
     public var waitForCache = false
     public var onlyFromCache = false
     public var backgroundDecode = false
     public var preloadAllAnimationData = false
     public var callbackQueue: CallbackQueue = .mainCurrentOrAsync
-    public var scaleFactor: CGFloat = 1.0
     public var cacheSerializer: CacheSerializer = DefaultCacheSerializer.default
-    public var keepCurrentImageWhileLoading = false
     public var onlyLoadFirstFrame = false
     public var cacheOriginalImage = false
     public var alsoPrefetchToMemory = false
