@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import ObjectMapper
 
 /// Represents a set of conception related to storage which stores a certain type of value in disk.
 /// This is a namespace for the disk storage types. A `Backend` with a certain `Config` will be used to describe the
@@ -137,9 +136,9 @@ public enum DiskStorage {
             let now = Date()
             let attributes: [FileAttributeKey : Any] = [
                 // The last access date.
-                .creationDate: now.metaAttributeDate,
+                .creationDate: now.fileAttributeDate,
                 // The estimated expiration date.
-                .modificationDate: expiration.estimatedExpirationSinceNow.metaAttributeDate
+                .modificationDate: expiration.estimatedExpirationSinceNow.fileAttributeDate
             ]
             do {
                 try config.fileManager.setAttributes(attributes, ofItemAtPath: fileURL.path)
@@ -193,10 +192,10 @@ public enum DiskStorage {
                 return nil
             }
 
-            let meta: Meta
+            let meta: FileMeta
             do {
                 let resourceKeys: Set<URLResourceKey> = [.contentModificationDateKey, .creationDateKey]
-                meta = try Meta(fileURL: fileURL, resourceKeys: resourceKeys)
+                meta = try FileMeta(fileURL: fileURL, resourceKeys: resourceKeys)
             } catch {
                 throw SYMoyaNetworkError.cacheError(
                     reason: .invalidURLResource(error: error, key: key, url: fileURL))
@@ -281,12 +280,12 @@ public enum DiskStorage {
 
         /// The URL of the cached file with a given computed `key`.
         ///
-        /// - Parameter key: The final computed key used when caching the image. Please note that usually this is not
-        /// the `cacheKey` of an image `Source`. It is the computed key with processor identifier considered.
+        /// - Parameter key: The final computed key used when caching the response. Please note that usually this is not
+        /// the `cacheKey` of an response `Source`. It is the computed key with processor identifier considered.
         ///
         /// - Note:
-        /// This method does not guarantee there is an image already cached in the returned URL. It just gives your
-        /// the URL that the image should be if it exists in disk storage, with the give key.
+        /// This method does not guarantee there is an response already cached in the returned URL. It just gives your
+        /// the URL that the response should be if it exists in disk storage, with the give key.
         ///
         public func cacheFileURL(forKey key: String) -> URL {
             let fileName = cacheFileName(forKey: key)
@@ -434,7 +433,7 @@ extension DiskStorage {
         public var usesHashedFileName = true
 
         /// Default is `false`
-        /// If set to `true`, image extension will be extracted from original file name and append to
+        /// If set to `true`, response extension will be extracted from original file name and append to
         /// the hased file name and used as the cache key on disk.
         public var autoExtAfterHashedFileName = false
 
@@ -473,45 +472,45 @@ extension DiskStorage {
 }
 
 extension DiskStorage {
+    struct FileMeta {
     
-    struct Meta {
-        let networkCacheMeta: NetworkCacheMeta
-        let fileMeta: FileMeta
+        let url: URL
         
-        /// cachemetadate create data
-        let createDate: Date?
-        let lastUpdateDate: Date?
-        let estimatedExpirationDate: Date?
         let lastAccessDate: Date?
+        let estimatedExpirationDate: Date?
+        let isDirectory: Bool
+        let fileSize: Int
         
-        
-        init(networkCacheMeta: NetworkCacheMeta,fileURL: URL, resourceKeys: Set<URLResourceKey>) throws {
-            let meta = try fileURL.resourceValues(forKeys: resourceKeys)
-            self.init(networkCacheMeta: networkCacheMeta, fileMeta: try FileMeta(fileURL: fileURL, resourceKeys: resourceKeys), createDate: meta.creationDate, lastUpdateDate: meta.contentModificationDate, estimatedExpirationDate: meta.contentModificationDate, lastAccessDate: meta.creationDate)
-        }
-        
-        init(
-            networkCacheMeta: NetworkCacheMeta,
-            fileMeta: FileMeta,
-            createDate: Date?,
-            lastUpdateDate: Date?,
-            estimatedExpirationDate: Date?,
-            lastAccessDate: Date?)
-        {
-            self.networkCacheMeta = networkCacheMeta
-            self.fileMeta = fileMeta
-            self.createDate = createDate
-            self.lastUpdateDate = lastUpdateDate
-            self.estimatedExpirationDate = estimatedExpirationDate
-            self.lastAccessDate = lastAccessDate
-        }
-        
-        static func lastAccessDate(lhs: Meta, rhs: Meta) -> Bool {
+        static func lastAccessDate(lhs: FileMeta, rhs: FileMeta) -> Bool {
             return lhs.lastAccessDate ?? .distantPast > rhs.lastAccessDate ?? .distantPast
         }
         
+        init(fileURL: URL, resourceKeys: Set<URLResourceKey>) throws {
+            let meta = try fileURL.resourceValues(forKeys: resourceKeys)
+            self.init(
+                fileURL: fileURL,
+                lastAccessDate: meta.creationDate,
+                estimatedExpirationDate: meta.contentModificationDate,
+                isDirectory: meta.isDirectory ?? false,
+                fileSize: meta.fileSize ?? 0)
+        }
+        
+        init(
+            fileURL: URL,
+            lastAccessDate: Date?,
+            estimatedExpirationDate: Date?,
+            isDirectory: Bool,
+            fileSize: Int)
+        {
+            self.url = fileURL
+            self.lastAccessDate = lastAccessDate
+            self.estimatedExpirationDate = estimatedExpirationDate
+            self.isDirectory = isDirectory
+            self.fileSize = fileSize
+        }
+
         func expired(referenceDate: Date) -> Bool {
-            return self.estimatedExpirationDate?.isPast(referenceDate: referenceDate) ?? true
+            return estimatedExpirationDate?.isPast(referenceDate: referenceDate) ?? true
         }
         
         func extendExpiration(with fileManager: FileManager, extendingExpiration: ExpirationExtending) {
@@ -520,9 +519,9 @@ extension DiskStorage {
             {
                 return
             }
-            
+
             let attributes: [FileAttributeKey : Any]
-            
+
             switch extendingExpiration {
             case .none:
                 // not extending expiration time here
@@ -540,55 +539,8 @@ extension DiskStorage {
                     .modificationDate: expirationTime.estimatedExpirationSinceNow.fileAttributeDate
                 ]
             }
-            
+
             try? fileManager.setAttributes(attributes, ofItemAtPath: url.path)
-        }
-    }
-    
-    
-    struct NetworkCacheMeta {
-        public enum ProviderSerializerType {
-            case image
-            case string(keyPath: String?)
-            case json(failsOnEmptyData: Bool = true)
-            case codable(keyPath: String? = nil, decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true)
-            case swiftyjson(opt: JSONSerialization.ReadingOptions = [])
-            case objectmapper(keyPath: String? = nil, context: MapContext? = nil)
-        }
-        
-        /// can be used to identify and invalidate local cache
-        let cacheKey: String
-        
-        let serializerType: ProviderSerializerType
-        
-        init(cacheKey: String, serializerType: ProviderSerializerType) {
-            self.cacheKey = cacheKey
-            self.serializerType = serializerType
-        }
-    }
-    
-    
-    struct FileMeta {
-        let url: URL
-        let isDirectory: Bool
-        let fileSize: Int
-        
-        init(fileURL: URL, resourceKeys: Set<URLResourceKey>) throws {
-            let meta = try fileURL.resourceValues(forKeys: resourceKeys)
-            self.init(
-                fileURL: fileURL,
-                isDirectory: meta.isDirectory ?? false,
-                fileSize: meta.fileSize ?? 0)
-        }
-        
-        init(
-            fileURL: URL,
-            isDirectory: Bool,
-            fileSize: Int)
-        {
-            self.url = fileURL
-            self.isDirectory = isDirectory
-            self.fileSize = fileSize
         }
     }
 }

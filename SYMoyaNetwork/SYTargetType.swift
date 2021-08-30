@@ -11,8 +11,10 @@ import Moya
 
 public protocol SYTargetType: Moya.TargetType {
 
+    /// CDN  request url
     var cdnURL: URL? { get }
     
+    ///  Should use CDN when sending request.
     var useCDN: Bool { get }
     
     /// The cache policy of the receiver.
@@ -84,6 +86,9 @@ public protocol SYTargetType: Moya.TargetType {
     
     var networkCacheType: NetworkCacheType { get }
     
+    var responseDataSourceType: ResponseDataSourceType { get }
+    
+    
     func requestCompleteFilter(_ response: Moya.Response)
     
     func requestFailedFilter(_ response: Moya.Response)
@@ -150,6 +155,10 @@ public extension SYTargetType {
     
     var networkCacheType: NetworkCacheType {
         return .none
+    }
+    
+    var responseDataSourceType: ResponseDataSourceType {
+        return .server
     }
     
     func requestCompleteFilter(_ response: Moya.Response) { }

@@ -113,7 +113,7 @@ public enum NetworkCacheResult {
 open class NetworkCache {
 
     // MARK: Singleton
-    /// The default `NetworkCache` object. Kingfisher will use this cache for its related methods if there is no
+    /// The default `NetworkCache` object. SYMoyaNetwork will use this cache for its related methods if there is no
     /// other cache specified. The `name` of this default cache is "default", and you should not use this name
     /// for any of your customize cache.
     public static let `default` = NetworkCache(name: "default")
@@ -306,11 +306,6 @@ open class NetworkCache {
     ///
     /// - Parameters:
     ///   - response: The response to be stored.
-    ///   - original: The original data of the response. This value will be forwarded to the provided `serializer` for
-    ///               further use. By default, Kingfisher uses a `DefaultCacheSerializer` to serialize the response to
-    ///               data for caching in disk, it checks the response format based on `original` data to determine in
-    ///               which response format should be used. For other types of `serializer`, it depends on their
-    ///               implementation detail on how to use this original data.
     ///   - key: The key used for caching the response.
     ///   - identifier: The identifier of processor being used for caching. If you are using a processor for the
     ///                 response, pass the identifier of processor to this parameter.
@@ -385,7 +380,7 @@ open class NetworkCache {
         }
     }
 
-    // MARK: Removing Images
+    // MARK: Removing Responses
 
     /// Removes the response for the given key from the cache.
     ///
@@ -423,17 +418,17 @@ open class NetworkCache {
         }
     }
 
-    // MARK: Getting Images
+    // MARK: Getting Responses
 
     /// Gets an response for a given key from the cache, either from memory storage or disk storage.
     ///
     /// - Parameters:
     ///   - key: The key used for caching the response.
-    ///   - options: The `KingfisherParsedOptionsInfo` options setting used for retrieving the response.
+    ///   - options: The `SYMoyaNetworkParsedOptionsInfo` options setting used for retrieving the response.
     ///   - callbackQueue: The callback queue on which `completionHandler` is invoked. Default is `.mainCurrentOrAsync`.
     ///   - completionHandler: A closure which is invoked when the response getting operation finishes. If the
-    ///                        response retrieving operation finishes without problem, an `ImageCacheResult` value
-    ///                        will be sent to this closure as result. Otherwise, a `KingfisherError` result
+    ///                        response retrieving operation finishes without problem, an `NetworkCacheResult` value
+    ///                        will be sent to this closure as result. Otherwise, a `SYMoyaNetworkError` result
     ///                        with detail failing reason will be sent.
     open func retrieveResponse(
         forKey key: String,
@@ -488,15 +483,15 @@ open class NetworkCache {
     ///
     /// - Parameters:
     ///   - key: The key used for caching the response.
-    ///   - options: The `KingfisherOptionsInfo` options setting used for retrieving the response.
+    ///   - options: The `SYMoyaNetworkOptionsInfo` options setting used for retrieving the response.
     ///   - callbackQueue: The callback queue on which `completionHandler` is invoked. Default is `.mainCurrentOrAsync`.
     ///   - completionHandler: A closure which is invoked when the response getting operation finishes. If the
-    ///                        response retrieving operation finishes without problem, an `ImageCacheResult` value
-    ///                        will be sent to this closure as result. Otherwise, a `KingfisherError` result
+    ///                        response retrieving operation finishes without problem, an `NetworkCacheResult` value
+    ///                        will be sent to this closure as result. Otherwise, a `SYMoyaNetworkError` result
     ///                        with detail failing reason will be sent.
     ///
     /// Note: This method is marked as `open` for only compatible purpose. Do not overide this method. Instead, override
-    ///       the version receives `KingfisherParsedOptionsInfo` instead.
+    ///       the version receives `SYMoyaNetworkParsedOptionsInfo` instead.
     open func retrieveResponse(forKey key: String,
                                options: SYMoyaNetworkOptionsInfo? = nil,
                         callbackQueue: CallbackQueue = .mainCurrentOrAsync,
@@ -513,7 +508,7 @@ open class NetworkCache {
     ///
     /// - Parameters:
     ///   - key: The key used for caching the response.
-    ///   - options: The `KingfisherParsedOptionsInfo` options setting used for retrieving the response.
+    ///   - options: The `SYMoyaNetworkParsedOptionsInfo` options setting used for retrieving the response.
     /// - Returns: The response stored in memory cache, if exists and valid. Otherwise, if the response does not exist or
     ///            has already expired, `nil` is returned.
     open func retrieveResponseInMemoryCache(
@@ -527,12 +522,12 @@ open class NetworkCache {
     ///
     /// - Parameters:
     ///   - key: The key used for caching the response.
-    ///   - options: The `KingfisherOptionsInfo` options setting used for retrieving the response.
+    ///   - options: The `SYMoyaNetworkOptionsInfo` options setting used for retrieving the response.
     /// - Returns: The response stored in memory cache, if exists and valid. Otherwise, if the response does not exist or
     ///            has already expired, `nil` is returned.
     ///
     /// Note: This method is marked as `open` for only compatible purpose. Do not overide this method. Instead, override
-    ///       the version receives `KingfisherParsedOptionsInfo` instead.
+    ///       the version receives `SYMoyaNetworkParsedOptionsInfo` instead.
     open func retrieveResponseInMemoryCache(
         forKey key: String,
         options: SYMoyaNetworkOptionsInfo? = nil) -> Moya.Response?
@@ -551,7 +546,7 @@ open class NetworkCache {
             do {
                 var response: Moya.Response? = nil
                 if let data = try self.diskStorage.value(forKey: key, extendingExpiration: options.diskCacheAccessExtendingExpiration) {
-                    response = options.cacheSerializer.response(with: <#T##Int#>, data: data, request: <#T##URLRequest?#>, response: <#T##HTTPURLResponse?#>, options: options)
+                    response = options.cacheSerializer.response(with: 0, data: data, request: nil, response: nil, options: options)
                 }
                 callbackQueue.execute { completionHandler(.success(response)) }
             } catch {
@@ -568,7 +563,7 @@ open class NetworkCache {
     ///
     /// - Parameters:
     ///   - key: The key used for caching the response.
-    ///   - options: The `KingfisherOptionsInfo` options setting used for retrieving the response.
+    ///   - options: The `SYMoyaNetworkOptionsInfo` options setting used for retrieving the response.
     ///   - callbackQueue: The callback queue on which `completionHandler` is invoked. Default is `.untouch`.
     ///   - completionHandler: A closure which is invoked when the operation finishes.
     open func retrieveResponseInDiskCache(
@@ -691,8 +686,6 @@ open class NetworkCache {
     ///
     /// - Parameters:
     ///   - key: The key used for caching the response.
-    ///   - identifier: Processor identifier which used for this response. Default is the `identifier` of
-    ///                 `DefaultImageProcessor.default`.
     /// - Returns: A `CacheType` instance which indicates the cache status.
     ///            `.none` means the response is not in cache or it is already expired.
     open func responseCachedType(
@@ -703,13 +696,11 @@ open class NetworkCache {
         return .none
     }
     
-    /// Returns whether the file exists in cache for a given `key` and `identifier` combination.
+    /// Returns whether the file exists in cache for a given `key` combination.
     ///
     /// - Parameters:
     ///   - key: The key used for caching the response.
-    ///   - identifier: Processor identifier which used for this response. Default is the `identifier` of
-    ///                 `DefaultImageProcessor.default`.
-    /// - Returns: A `Bool` which indicates whether a cache could match the given `key` and `identifier` combination.
+    /// - Returns: A `Bool` which indicates whether a cache could match the given `key` combination.
     ///
     /// - Note:
     /// The return value does not contain information about from which kind of storage the cache matches.
@@ -725,12 +716,10 @@ open class NetworkCache {
     ///
     /// - Parameters:
     ///   - key: The key used for caching the response.
-    ///   - identifier: Processor identifier which used for this response. Default is the `identifier` of
-    ///                 `DefaultImageProcessor.default`.
     /// - Returns: The hash which is used as the cache file name.
     ///
     /// - Note:
-    /// By default, for a given combination of `key` and `identifier`, `ImageCache` will use the value
+    /// By default, for a given combination of `key`, `NetworkCache` will use the value
     /// returned by this method as the cache file name. You can use this value to check and match cache file
     /// if you need.
     open func hash(
@@ -752,7 +741,7 @@ open class NetworkCache {
                 if let error = error as? SYMoyaNetworkError {
                     DispatchQueue.main.async { handler(.failure(error)) }
                 } else {
-                    assertionFailure("The internal thrown error should be a `KingfisherError`.")
+                    assertionFailure("The internal thrown error should be a `SYMoyaNetworkError`.")
                 }
                 
             }
@@ -760,15 +749,9 @@ open class NetworkCache {
     }
     
     /// Gets the cache path for the key.
-    /// It is useful for projects with web view or anyone that needs access to the local file path.
-    ///
-    /// i.e. Replacing the `<img src='path_for_key'>` tag in your HTML.
-    ///
     /// - Parameters:
     ///   - key: The key used for caching the response.
-    ///   - identifier: Processor identifier which used for this response. Default is the `identifier` of
-    ///                 `DefaultImageProcessor.default`.
-    /// - Returns: The disk path of cached response under the given `key` and `identifier`.
+    /// - Returns: The disk path of cached response under the given `key`
     ///
     /// - Note:
     /// This method does not guarantee there is an response already cached in the returned path. It just gives your

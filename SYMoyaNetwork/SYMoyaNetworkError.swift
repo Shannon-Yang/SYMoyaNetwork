@@ -9,24 +9,24 @@
 import Foundation
 import Moya
 
-/// Represents all the errors which can happen in Kingfisher framework.
-/// Kingfisher related methods always throw a `KingfisherError` or invoke the callback with `KingfisherError`
-/// as its error type. To handle errors from Kingfisher, you switch over the error to get a reason catalog,
+/// Represents all the errors which can happen in SYMoyaNetwork framework.
+/// SYMoyaNetwork related methods always throw a `SYMoyaNetworkError` or invoke the callback with `SYMoyaNetworkError`
+/// as its error type. To handle errors from SYMoyaNetwork, you switch over the error to get a reason catalog,
 /// then switch over the reason to know error detail.
 public enum SYMoyaNetworkError: Error {
 
     // MARK: Error Reason Types
     
-    /// Represents the error reason during Kingfisher caching system.
+    /// Represents the error reason during SYMoyaNetwork caching system.
     ///
     /// - fileEnumeratorCreationFailed: Cannot create a file enumerator for a certain disk URL. Code 3001.
     /// - invalidFileEnumeratorContent: Cannot get correct file contents from a file enumerator. Code 3002.
     /// - invalidURLResource: The file at target URL exists, but its URL resource is unavailable. Code 3003.
     /// - cannotLoadDataFromDisk: The file at target URL exists, but the data cannot be loaded from it. Code 3004.
     /// - cannotCreateDirectory: Cannot create a folder at a given path. Code 3005.
-    /// - imageNotExisting: The requested image does not exist in cache. Code 3006.
+    /// - responseNotExisting: The requested response does not exist in cache. Code 3006.
     /// - cannotConvertToData: Cannot convert an object to data for storing. Code 3007.
-    /// - cannotSerializeImage: Cannot serialize an image to data for storing. Code 3008.
+    /// - cannotSerializeResponse: Cannot serialize an response to data for storing. Code 3008.
     /// - cannotCreateCacheFile: Cannot create the cache file at a certain fileURL under a key. Code 3009.
     /// - cannotSetCacheFileAttribute: Cannot set file attributes to a cached file. Code 3010.
     public enum CacheErrorReason {
@@ -55,24 +55,24 @@ public enum SYMoyaNetworkError: Error {
         /// - error: The underlying error which describes why this error happens.
         case cannotCreateDirectory(path: String, error: Error)
         
-        /// The requested image does not exist in cache. Code 3006.
-        /// - key: Key of the requested image in cache.
-        case imageNotExisting(key: String)
+        /// The requested response does not exist in cache. Code 3006.
+        /// - key: Key of the requested response in cache.
+        case responseNotExisting(key: String)
         
         /// Cannot convert an object to data for storing. Code 3007.
         /// - object: The object which needs be convert to data.
         case cannotConvertToData(object: Any, error: Error)
         
-        /// Cannot serialize an image to data for storing. Code 3008.
-        /// - image: The input image needs to be serialized to cache.
-        /// - original: The original image data, if exists.
-        /// - serializer: The `CacheSerializer` used for the image serializing.
+        /// Cannot serialize an response to data for storing. Code 3008.
+        /// - response: The input response needs to be serialized to cache.
+        /// - original: The original response data, if exists.
+        /// - serializer: The `CacheSerializer` used for the response serializing.
         case cannotSerializeResponse(response: Moya.Response?, serializer: CacheSerializer)
 
         /// Cannot create the cache file at a certain fileURL under a key. Code 3009.
         /// - fileURL: The url where the cache file should be created.
-        /// - key: The cache key used for the cache. When caching a file through `KingfisherManager` and Kingfisher's
-        ///        extension method, it is the resolved cache key based on your input `Source` and the image processors.
+        /// - key: The cache key used for the cache. When caching a file through `SYMoyaNetworkManager` and SYMoyaNetwork's
+        ///        extension method, it is the resolved cache key based on your input `Source` and the response processors.
         /// - data: The data to be cached.
         /// - error: The underlying error originally thrown by Foundation when writing the `data` to the disk file at
         ///          `fileURL`.
@@ -88,7 +88,7 @@ public enum SYMoyaNetworkError: Error {
         /// The disk storage of cache is not ready. Code 3011.
         ///
         /// This is usually due to extremely lack of space on disk storage, and
-        /// Kingfisher failed even when creating the cache folder. The disk storage will be in unusable state. Normally,
+        /// SYMoyaNetwork failed even when creating the cache folder. The disk storage will be in unusable state. Normally,
         /// ask user to free some spaces and restart the app to make the disk storage work again.
         /// - cacheURL: The intended URL which should be the storage folder.
         case diskStorageIsNotReady(cacheURL: URL)
@@ -100,12 +100,12 @@ public enum SYMoyaNetworkError: Error {
 //    case requestError(reason: RequestErrorReason)
 //    /// Represents the error reason during networking response phase.
 //    case responseError(reason: ResponseErrorReason)
-    /// Represents the error reason during Kingfisher caching system.
+    /// Represents the error reason during SYMoyaNetwork caching system.
     case cacheError(reason: CacheErrorReason)
-    /// Represents the error reason during image processing phase.
+    /// Represents the error reason during response processing phase.
 //    case processorError(reason: ProcessorErrorReason)
-//    /// Represents the error reason during image setting in a view related class.
-//    case imageSettingError(reason: ImageSettingErrorReason)
+//    /// Represents the error reason during response setting in a view related class.
+//    case responseSettingError(reason: ResponseSettingErrorReason)
 }
 
 
@@ -127,7 +127,7 @@ extension SYMoyaNetworkError: LocalizedError {
 // MARK: - CustomNSError Conforming
 extension SYMoyaNetworkError: CustomNSError {
 
-    /// The error domain of `SYMoyaNetworkError`. All errors from Kingfisher is under this domain.
+    /// The error domain of `SYMoyaNetworkError`. All errors from SYMoyaNetwork is under this domain.
     public static let domain = "com.shannonyang.SYMoyaNetwork.Error"
 
     /// The error code within the given domain.
@@ -137,7 +137,7 @@ extension SYMoyaNetworkError: CustomNSError {
 //        case .responseError(let reason): return reason.errorCode
         case .cacheError(let reason): return reason.errorCode
 //        case .processorError(let reason): return reason.errorCode
-//        case .imageSettingError(let reason): return reason.errorCode
+//        case .responseSettingError(let reason): return reason.errorCode
         }
     }
 }
@@ -156,16 +156,17 @@ extension SYMoyaNetworkError.CacheErrorReason {
             return "Cannot load data from disk at URL: \(url). Underlying error: \(error)"
         case .cannotCreateDirectory(let path, let error):
             return "Cannot create directory at given path: Path: \(path). Underlying error: \(error)"
-        case .imageNotExisting(let key):
-            return "The image is not in cache, but you requires it should only be " +
+        case .responseNotExisting(let key):
+            return "The response is not in cache, but you requires it should only be " +
                    "from cache by enabling the `.onlyFromCache` option. Key: \(key)."
         case .cannotConvertToData(let object, let error):
             return "Cannot convert the input object to a `Data` object when storing it to disk cache. " +
                    "Object: \(object). Underlying error: \(error)"
         case .cannotSerializeResponse(let response, let serializer):
-            return "Cannot serialize an image due to the cache serializer returning `nil`. " +
-                   "Image: \(String(describing:image)), original data: \(String(describing: originalData)), " +
-                   "serializer: \(serializer)."
+//            return "Cannot serialize an response due to the cache serializer returning `nil`. " +
+//                   "Response: \(String(describing:response)), original data: \(String(describing: originalData)), " +
+//                   "serializer: \(serializer)."
+        return ""
         case .cannotCreateCacheFile(let fileURL, let key, let data, let error):
             return "Cannot create cache file at url: \(fileURL), key: \(key), data length: \(data.count). " +
                    "Underlying foundation error: \(error)."
@@ -185,7 +186,7 @@ extension SYMoyaNetworkError.CacheErrorReason {
         case .invalidURLResource: return 30003
         case .cannotLoadDataFromDisk: return 30004
         case .cannotCreateDirectory: return 30005
-        case .imageNotExisting: return 30006
+        case .responseNotExisting: return 30006
         case .cannotConvertToData: return 30007
         case .cannotSerializeResponse: return 30008
         case .cannotCreateCacheFile: return 30009

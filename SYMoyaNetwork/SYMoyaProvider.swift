@@ -8,6 +8,17 @@
 
 import Foundation
 import Moya
+import ObjectMapper
+
+public enum ProviderSerializerType {
+    case data
+    case image
+    case string(keyPath: String?)
+    case json(failsOnEmptyData: Bool = true)
+    case codable(keyPath: String? = nil, decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true)
+    case swiftyjson(opt: JSONSerialization.ReadingOptions = [])
+    case objectmapper(keyPath: String? = nil, context: MapContext? = nil)
+}
 
 open class SYMoyaProvider<Target: SYTargetType>: Moya.MoyaProvider<Target> {
     
@@ -67,7 +78,7 @@ public extension SYMoyaProvider {
     func generateCacheKey(_ target: Target) -> String {
         let urlString = URL(target: target).absoluteString
         
-        let parametersString: String?
+        var parametersString: String?
         if let httpBody = try? self.endpoint(target).urlRequest().httpBody {
             parametersString = String(decoding: httpBody, as: UTF8.self)
         }
@@ -90,7 +101,7 @@ public extension SYMoyaProvider {
     }
     
     
-    func cache(_ target: Target, response: Moya.Response) {
+    func cache(_ target: Target, response: Moya.Response, callbackQueue: DispatchQueue? = .none, completionHandler: ((CacheStoreResult) -> Void)?) {
         switch target.networkCacheType {
         case .syMoyaNetworkCache(let networkCacheOptionsInfo):
             if let cacheTime = networkCacheOptionsInfo.cacheTime {
@@ -115,12 +126,42 @@ public extension SYMoyaProvider {
                     return
                 }
                 
-                self.cache.storeToDisk(<#T##data: Data##Data#>, forKey: <#T##String#>, processorIdentifier: <#T##String#>, expiration: <#T##StorageExpiration?#>, callbackQueue: <#T##CallbackQueue#>, completionHandler: <#T##((CacheStoreResult) -> Void)?##((CacheStoreResult) -> Void)?##(CacheStoreResult) -> Void#>)
+                let key = self.generateCacheKey(target)
                 
+                var queue = CallbackQueue.untouch
+                if let cQueue = callbackQueue {
+                    queue = CallbackQueue.dispatch(cQueue)
+                }
+                
+                self.cache.store(response, forKey: key, toDisk: networkCacheOptionsInfo.shouldToCacheDisk, callbackQueue: queue, completionHandler: completionHandler)
             }
+        case .urlRequestCache(let cachePolicy):
+            break
         default:
             break
         }
     }
+    
+    func retrieve(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo, callbackQueue: DispatchQueue? = .none, completionHandler: ((Result<NetworkCacheResult, SYMoyaNetworkError>) -> Void)?) {
+        let key = self.generateCacheKey(target)
+        var queue = CallbackQueue.untouch
+        if let cQueue = callbackQueue {
+            queue = CallbackQueue.dispatch(cQueue)
+        }
+        self.cache.retrieveResponse(forKey: key, options: options, callbackQueue: queue, completionHandler: completionHandler)
+    }
+    
+    func retrieveResponseInMemoryCache(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo) -> Moya.Response? {
+        let key = self.generateCacheKey(target)
+        return self.cache.retrieveResponseInMemoryCache(forKey: key, options: options)
+    }
+    
+    func retrieveResponseInDiskCache(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo, callbackQueue: DispatchQueue? = .none, completionHandler: @escaping (Result<Moya.Response?, SYMoyaNetworkError>) -> Void) {
+        let key = self.generateCacheKey(target)
+        var queue = CallbackQueue.untouch
+        if let cQueue = callbackQueue {
+            queue = CallbackQueue.dispatch(cQueue)
+        }
+        self.cache.retrieveResponseInDiskCache(forKey: key, options: options, callbackQueue: queue, completionHandler: completionHandler)
+    }
 }
-

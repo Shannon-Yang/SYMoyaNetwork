@@ -13,68 +13,67 @@ import UIKit
 #endif
     
 
-/// KingfisherOptionsInfo is a typealias for [KingfisherOptionsInfoItem].
-/// You can use the enum of option item with value to control some behaviors of Kingfisher.
+/// SYMoyaNetworkOptionsInfo is a typealias for [SYMoyaNetworkOptionsInfoItem].
+/// You can use the enum of option item with value to control some behaviors of SYMoyaNetwork.
 public typealias SYMoyaNetworkOptionsInfo = [SYMoyaNetworkOptionsInfoItem]
 
 extension Array where Element == SYMoyaNetworkOptionsInfoItem {
     static let empty: SYMoyaNetworkOptionsInfo = []
 }
 
-/// Represents the available option items could be used in `KingfisherOptionsInfo`.
+/// Represents the available option items could be used in `SYMoyaNetworkOptionsInfo`.
 public enum SYMoyaNetworkOptionsInfoItem {
     
-    /// Kingfisher will use the associated `NetworkCache` object when handling related operations,
-    /// including trying to retrieve the cached images and store the downloaded image to it.
+    /// SYMoyaNetwork will use the associated `NetworkCache` object when handling related operations,
+    /// including trying to retrieve the cached responses and store the downloaded response to it.
     case targetCache(NetworkCache)
 
-    /// If set, Kingfisher will ignore the cache and try to start a download task for the image source.
+    /// If set, SYMoyaNetwork will ignore the cache and try to start a download task for the response source.
     case forceRefresh
 
-    /// If set, Kingfisher will try to retrieve the image from memory cache first. If the image is not in memory
-    /// cache, then it will ignore the disk cache but download the image again from network. This is useful when
-    /// you want to display a changeable image behind the same url at the same app session, while avoiding download
+    /// If set, SYMoyaNetwork will try to retrieve the response from memory cache first. If the response is not in memory
+    /// cache, then it will ignore the disk cache but download the response again from network. This is useful when
+    /// you want to display a changeable response behind the same url at the same app session, while avoiding download
     /// it for multiple times.
     case fromMemoryCacheOrRefresh
     
-    /// If set, Kingfisher will only cache the value in memory but not in disk.
+    /// If set, SYMoyaNetwork will only cache the value in memory but not in disk.
     case cacheMemoryOnly
     
-    /// If set, Kingfisher will wait for caching operation to be completed before calling the completion block.
+    /// If set, SYMoyaNetwork will wait for caching operation to be completed before calling the completion block.
     case waitForCache
     
-    /// If set, Kingfisher will only try to retrieve the image from cache, but not from network. If the image is not in
-    /// cache, the image retrieving will fail with the `KingfisherError.cacheError` with `.imageNotExisting` as its
+    /// If set, SYMoyaNetwork will only try to retrieve the response from cache, but not from network. If the response is not in
+    /// cache, the response retrieving will fail with the `SYMoyaNetworkError.cacheError` with `.responseNotExisting` as its
     /// reason.
     case onlyFromCache
     
-    case cacheMetadata: 
+    case providerSerializerType(ProviderSerializerType)
 
-    /// The associated value will be used as the target queue of dispatch callbacks when retrieving images from
-    /// cache. If not set, Kingfisher will use `.mainCurrentOrAsync` for callbacks.
+    /// The associated value will be used as the target queue of dispatch callbacks when retrieving responses from
+    /// cache. If not set, SYMoyaNetwork will use `.mainCurrentOrAsync` for callbacks.
     ///
     /// - Note:
     /// This option does not affect the callbacks for UI related extension methods. You will always get the
     /// callbacks called from main queue.
     case callbackQueue(CallbackQueue)
     
-    /// Provides a `CacheSerializer` to convert some data to an image object for
+    /// Provides a `CacheSerializer` to convert some data to an response object for
     /// retrieving from disk cache or vice versa for storing to disk cache.
     /// If not set, the `DefaultCacheSerializer.default` will be used.
     case cacheSerializer(CacheSerializer)
     
-    /// If set and used in `ImagePrefetcher`, the prefetching operation will load the images into memory storage
-    /// aggressively. By default this is not contained in the options, that means if the requested image is already
-    /// in disk cache, Kingfisher will not try to load it to memory.
+    /// aggressively. By default this is not contained in the options, that means if the requested response is already
+    /// in disk cache, SYMoyaNetwork will not try to load it to memory.
     case alsoPrefetchToMemory
     
     /// If set, the disk storage loading will happen in the same calling queue. By default, disk storage file loading
     /// happens in its own queue with an asynchronous dispatch behavior. Although it provides better non-blocking disk
-    /// loading performance, it also causes a flickering when you reload an image from disk, if the image view already
-    /// has an image set.
+    /// loading performance, it also causes a flickering when you reload an response from disk, if the response view already
+    /// has an response set.
     ///
     /// Set this options will stop that flickering by keeping all loading in the same queue (typically the UI queue
-    /// if you are using Kingfisher's extension methods to set an image), with a tradeoff of loading performance.
+    /// if you are using SYMoyaNetwork's extension methods to set an response), with a tradeoff of loading performance.
     case loadDiskFileSynchronously
     
     /// The expiration setting for memory cache. By default, the underlying `MemoryStorage.Backend` uses the
@@ -101,11 +100,11 @@ public enum SYMoyaNetworkOptionsInfoItem {
     case diskCacheAccessExtendingExpiration(ExpirationExtending)
 }
 
-// Improve performance by parsing the input `KingfisherOptionsInfo` (self) first.
+// Improve performance by parsing the input `SYMoyaNetworkOptionsInfo` (self) first.
 // So we can prevent the iterating over the options array again and again.
-/// The parsed options info used across Kingfisher methods. Each property in this type corresponds a case member
-/// in `SYMoyaNetworkOptionsInfoItem`. When a `KingfisherOptionsInfo` sent to Kingfisher related methods, it will be
-/// parsed and converted to a `KingfisherParsedOptionsInfo` first, and pass through the internal methods.
+/// The parsed options info used across SYMoyaNetwork methods. Each property in this type corresponds a case member
+/// in `SYMoyaNetworkOptionsInfoItem`. When a `SYMoyaNetworkOptionsInfo` sent to SYMoyaNetwork related methods, it will be
+/// parsed and converted to a `SYMoyaNetworkParsedOptionsInfo` first, and pass through the internal methods.
 public struct SYMoyaNetworkParsedOptionsInfo {
 
     public var targetCache: NetworkCache? = nil
@@ -114,12 +113,12 @@ public struct SYMoyaNetworkParsedOptionsInfo {
     public var cacheMemoryOnly = false
     public var waitForCache = false
     public var onlyFromCache = false
+    public var providerSerializerType: ProviderSerializerType = .data
     public var backgroundDecode = false
     public var preloadAllAnimationData = false
     public var callbackQueue: CallbackQueue = .mainCurrentOrAsync
     public var cacheSerializer: CacheSerializer = DefaultCacheSerializer.default
     public var onlyLoadFirstFrame = false
-    public var cacheOriginalImage = false
     public var alsoPrefetchToMemory = false
     public var loadDiskFileSynchronously = false
     public var memoryCacheExpiration: StorageExpiration? = nil
@@ -137,6 +136,7 @@ public struct SYMoyaNetworkParsedOptionsInfo {
             case .cacheMemoryOnly: cacheMemoryOnly = true
             case .waitForCache: waitForCache = true
             case .onlyFromCache: onlyFromCache = true
+            case .providerSerializerType(let type): providerSerializerType = type
             case .callbackQueue(let value): callbackQueue = value
             case .cacheSerializer(let value): cacheSerializer = value
             case .alsoPrefetchToMemory: alsoPrefetchToMemory = true

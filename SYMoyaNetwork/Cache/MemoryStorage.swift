@@ -93,7 +93,7 @@ public enum MemoryStorage {
             storeNoThrow(value: value, forKey: key, expiration: expiration)
         }
 
-        // The no throw version for storing value in cache. Kingfisher knows the detail so it
+        // The no throw version for storing value in cache. SYMoyaNetwork knows the detail so it
         // could use this version to make syntax simpler internally.
         func storeNoThrow(
             value: T,
