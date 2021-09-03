@@ -13,7 +13,7 @@ import Moya
 /// SYMoyaNetwork related methods always throw a `SYMoyaNetworkError` or invoke the callback with `SYMoyaNetworkError`
 /// as its error type. To handle errors from SYMoyaNetwork, you switch over the error to get a reason catalog,
 /// then switch over the reason to know error detail.
-public enum SYMoyaNetworkError: Error {
+public enum SYMoyaNetworkError: Swift.Error {
 
     // MARK: Error Reason Types
     

@@ -67,6 +67,9 @@ public extension NetworkCacheType {
         
         public var cacheKey: String = defaultCacheKey
         public var cacheTime: TimeInterval?
+        
+        
+        
         /// The file size limit on disk of the storage in bytes. 0 means no limit.
         public var sizeLimit: UInt
         
@@ -82,10 +85,10 @@ public extension NetworkCacheType {
         
         public let shouldToCacheDisk: Bool
         
-//        init(cacheTime: TimeInterval?, cacheKey: String) {
-//            self.cacheTime = cacheTime
-//            self.cacheKey = cacheKey
-//        }
+        init(cacheTime: TimeInterval?, cacheKey: String) {
+            self.cacheTime = cacheTime
+            self.cacheKey = cacheKey
+        }
     }
 }
 

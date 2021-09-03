@@ -25,10 +25,10 @@ struct NetworkConfig {
 }
 
 
-//public extension NetworkLoggerPlugin.Configuration.LogOptions {
-//
-//
-//}
+public extension NetworkLoggerPlugin.Configuration.LogOptions {
+
+
+}
 
 // MARK: - Private
 

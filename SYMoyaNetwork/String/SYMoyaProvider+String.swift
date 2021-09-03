@@ -16,7 +16,9 @@ extension SYMoyaProvider {
     }
     
    open func requestString(_ target: Target, keyPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping ((_ result: Result<String, MoyaError>) -> Void)) -> Cancellable {
+    
         return self.request(target, callbackQueue: callbackQueue, progress: progress, completion: { (result) in
+            
             let stringResult = result.flatMap { response in
                 Result<String, Error>(catching: {
                     try response.mapString(atKeyPath: keyPath)
@@ -24,6 +26,7 @@ extension SYMoyaProvider {
             }
             completion(stringResult)
         })
+    
     }
     
 }

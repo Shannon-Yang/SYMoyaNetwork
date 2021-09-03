@@ -132,8 +132,8 @@ public extension SYMoyaProvider {
                 if let cQueue = callbackQueue {
                     queue = CallbackQueue.dispatch(cQueue)
                 }
-                
-                self.cache.store(response, forKey: key, toDisk: networkCacheOptionsInfo.shouldToCacheDisk, callbackQueue: queue, completionHandler: completionHandler)
+                let info = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache),.alsoPrefetchToMemory])
+                self.cache.store(response, forKey: key, options: <#T##SYMoyaNetworkParsedOptionsInfo#>, toDisk: networkCacheOptionsInfo.shouldToCacheDisk, callbackQueue: queue, completionHandler: completionHandler)
             }
         case .urlRequestCache(let cachePolicy):
             break

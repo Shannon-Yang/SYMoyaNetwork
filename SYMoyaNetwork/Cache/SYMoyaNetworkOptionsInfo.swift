@@ -30,24 +30,16 @@ public enum SYMoyaNetworkOptionsInfoItem {
 
     /// If set, SYMoyaNetwork will ignore the cache and try to start a download task for the response source.
     case forceRefresh
-
-    /// If set, SYMoyaNetwork will try to retrieve the response from memory cache first. If the response is not in memory
-    /// cache, then it will ignore the disk cache but download the response again from network. This is useful when
-    /// you want to display a changeable response behind the same url at the same app session, while avoiding download
-    /// it for multiple times.
-    case fromMemoryCacheOrRefresh
     
     /// If set, SYMoyaNetwork will only cache the value in memory but not in disk.
     case cacheMemoryOnly
-    
-    /// If set, SYMoyaNetwork will wait for caching operation to be completed before calling the completion block.
-    case waitForCache
     
     /// If set, SYMoyaNetwork will only try to retrieve the response from cache, but not from network. If the response is not in
     /// cache, the response retrieving will fail with the `SYMoyaNetworkError.cacheError` with `.responseNotExisting` as its
     /// reason.
     case onlyFromCache
     
+    ///
     case providerSerializerType(ProviderSerializerType)
 
     /// The associated value will be used as the target queue of dispatch callbacks when retrieving responses from
@@ -62,10 +54,6 @@ public enum SYMoyaNetworkOptionsInfoItem {
     /// retrieving from disk cache or vice versa for storing to disk cache.
     /// If not set, the `DefaultCacheSerializer.default` will be used.
     case cacheSerializer(CacheSerializer)
-    
-    /// aggressively. By default this is not contained in the options, that means if the requested response is already
-    /// in disk cache, SYMoyaNetwork will not try to load it to memory.
-    case alsoPrefetchToMemory
     
     /// If set, the disk storage loading will happen in the same calling queue. By default, disk storage file loading
     /// happens in its own queue with an asynchronous dispatch behavior. Although it provides better non-blocking disk
@@ -132,14 +120,11 @@ public struct SYMoyaNetworkParsedOptionsInfo {
             switch option {
             case .targetCache(let value): targetCache = value
             case .forceRefresh: forceRefresh = true
-            case .fromMemoryCacheOrRefresh: fromMemoryCacheOrRefresh = true
             case .cacheMemoryOnly: cacheMemoryOnly = true
-            case .waitForCache: waitForCache = true
             case .onlyFromCache: onlyFromCache = true
             case .providerSerializerType(let type): providerSerializerType = type
             case .callbackQueue(let value): callbackQueue = value
             case .cacheSerializer(let value): cacheSerializer = value
-            case .alsoPrefetchToMemory: alsoPrefetchToMemory = true
             case .loadDiskFileSynchronously: loadDiskFileSynchronously = true
             case .memoryCacheExpiration(let expiration): memoryCacheExpiration = expiration
             case .memoryCacheAccessExtendingExpiration(let expirationExtending): memoryCacheAccessExtendingExpiration = expirationExtending

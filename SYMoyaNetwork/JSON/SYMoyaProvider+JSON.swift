@@ -11,8 +11,7 @@ import Moya
 
 extension SYMoyaProvider {
     
-    
-    /*
+
     func requestJSONFromDiskCache(_ target: Target,failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none) -> Cancellable {
         
     }
@@ -21,7 +20,7 @@ extension SYMoyaProvider {
         
     }
     
-    open func requestJSON(_ target: Target, failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping ((_ result: Result<Any, Swift.Error>) -> Void)) -> Cancellable? {
+    open func requestJSON(_ target: Target, failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping ((_ result: Result<Any, SYMoyaNetworkError>) -> Void)) -> Cancellable? {
         switch target.networkCacheType {
         case .urlRequestCache,.none:
             break
@@ -33,10 +32,11 @@ extension SYMoyaProvider {
                     completion(self.jsonResult(result, failsOnEmptyData: failsOnEmptyData))
                 })
             case .cache:
-                self.retrieve(target, options: <#T##SYMoyaNetworkParsedOptionsInfo#>, callbackQueue: callbackQueue) { result in
+                let info = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
+                self.retrieve(target, options: info, callbackQueue: callbackQueue) { result in
                     switch result {
                     case .success(let networkCacheResult):
-                        let s = self.jsonResult(result, failsOnEmptyData: failsOnEmptyData)
+                        let s = self.jsonResult(networkCacheResult, failsOnEmptyData: failsOnEmptyData)
                     case .failure(let error):
                         
                     }
@@ -53,18 +53,53 @@ extension SYMoyaProvider {
                 <#code#>
             }
         }
-    } */
+    }
     
 }
 
 
 private extension SYMoyaProvider {
     
-    func jsonResult(_ result: Result<Moya.Response, Swift.Error>, failsOnEmptyData: Bool) -> Result<Any, Swift.Error> {
-        return result.flatMap { response in
-            Result<Any, Swift.Error>(catching: {
-                try response.mapJSON(failsOnEmptyData: failsOnEmptyData)
-            }).mapError { $0 as! MoyaError }
+    func jsonResult(_ result: Result<Moya.Response, Swift.Error>, failsOnEmptyData: Bool) -> Result<Any, SYMoyaNetworkError> {
+
+        switch result {
+        case .success(let response):
+            do {
+                return .success(try response.mapJSON(failsOnEmptyData: failsOnEmptyData))
+            } catch let error {
+                if let moyaError = error as? MoyaError {
+                    return .failure(moyaError.transformToSYMoyaNetworkError())
+                }
+                return .failure(error as! SYMoyaNetworkError)
+            }
+        case .failure(let error):
+            if let moyaError = error as? MoyaError {
+                return .failure(moyaError.transformToSYMoyaNetworkError())
+            }
+            return .failure(error as! SYMoyaNetworkError)
         }
+
+        
+//        return result.flatMap { response in
+//
+//            Result<Any, SYMoyaNetworkError>(catching: {
+//
+//                do {
+//                    return try response.mapJSON(failsOnEmptyData: failsOnEmptyData)
+//                } catch let error {
+//                    if let moyaError = error as? MoyaError {
+//                        return moyaError.transformToSYMoyaNetworkError()
+//                    }
+//                    return error as! SYMoyaNetworkError
+//                }
+//            }).mapError {
+//                if let moyaError = $0 as? MoyaError {
+//                    return moyaError.transformToSYMoyaNetworkError()
+//                }
+//                return $0 as! SYMoyaNetworkError
+//            }
+//        }
+        
+        
     }
 }

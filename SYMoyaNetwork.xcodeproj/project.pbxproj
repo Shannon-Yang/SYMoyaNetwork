@@ -14,6 +14,7 @@
 		FB517AAB269EB74E00AE0882 /* SYMoyaNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = FB517A9D269EB74E00AE0882 /* SYMoyaNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB517ABB269EC20800AE0882 /* NetworkConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB517ABA269EC20800AE0882 /* NetworkConfig.swift */; };
 		FB517ABD269EC22D00AE0882 /* SYTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB517ABC269EC22D00AE0882 /* SYTargetType.swift */; };
+		FB69548126E22AEC00BE60F6 /* MoyaError+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB69548026E22AEC00BE60F6 /* MoyaError+Transform.swift */; };
 		FB766C1326D39EF200C803F5 /* SYMoyaNetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB766C1226D39EF200C803F5 /* SYMoyaNetworkLoggerPlugin.swift */; };
 		FB83137D26CBC8FE001E4F73 /* SYMoyaProvider+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB83137C26CBC8FE001E4F73 /* SYMoyaProvider+ObjectMapper.swift */; };
 		FB83137F26CBC960001E4F73 /* Response+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB83137E26CBC960001E4F73 /* Response+ObjectMapper.swift */; };
@@ -92,6 +93,7 @@
 		FB517AAA269EB74E00AE0882 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FB517ABA269EC20800AE0882 /* NetworkConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfig.swift; sourceTree = "<group>"; };
 		FB517ABC269EC22D00AE0882 /* SYTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYTargetType.swift; sourceTree = "<group>"; };
+		FB69548026E22AEC00BE60F6 /* MoyaError+Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaError+Transform.swift"; sourceTree = "<group>"; };
 		FB766C1226D39EF200C803F5 /* SYMoyaNetworkLoggerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYMoyaNetworkLoggerPlugin.swift; sourceTree = "<group>"; };
 		FB83137C26CBC8FE001E4F73 /* SYMoyaProvider+ObjectMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "SYMoyaProvider+ObjectMapper.swift"; sourceTree = "<group>"; };
 		FB83137E26CBC960001E4F73 /* Response+ObjectMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Response+ObjectMapper.swift"; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				FB766C1226D39EF200C803F5 /* SYMoyaNetworkLoggerPlugin.swift */,
 				FBDEDF3026D501240060D75A /* SYMoyaNetworkError.swift */,
 				FBF0770E26DCB0E800947CE7 /* ResponseDataSourceType.swift */,
+				FB69548026E22AEC00BE60F6 /* MoyaError+Transform.swift */,
 			);
 			path = SYMoyaNetwork;
 			sourceTree = "<group>";
@@ -667,6 +670,7 @@
 				FBDEDF3526D5E1300060D75A /* NetworkCache.swift in Sources */,
 				FB83139726CE4EA1001E4F73 /* SYMoyaProvider+SwiftyJSON.swift in Sources */,
 				FBDEDF5C26D784110060D75A /* Response+CacheCostCalculable.swift in Sources */,
+				FB69548126E22AEC00BE60F6 /* MoyaError+Transform.swift in Sources */,
 				FBDEDF2D26D4FDBE0060D75A /* Date+Extension.swift in Sources */,
 				FB8313A226CFB83C001E4F73 /* URL+SYMoya.swift in Sources */,
 				FB83137D26CBC8FE001E4F73 /* SYMoyaProvider+ObjectMapper.swift in Sources */,
