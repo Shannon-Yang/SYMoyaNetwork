@@ -68,27 +68,32 @@ public extension NetworkCacheType {
         public var cacheKey: String = defaultCacheKey
         public var cacheTime: TimeInterval?
         
+        public var cacheCallbackQueue: CallbackQueue
+        
+        
+        
+        
         
         
         /// The file size limit on disk of the storage in bytes. 0 means no limit.
-        public var sizeLimit: UInt
-        
-        /// The item count limit of the memory storage.
-        public var countLimit: Int = .max
-        
-        /// The time interval between the storage do clean work for swiping expired items.
-        public let cleanInterval: TimeInterval
-        
-        public let diskStorage: DiskStorage.Config
-        
-        public let memoryStorage: MemoryStorage.Config
-        
-        public let shouldToCacheDisk: Bool
-        
-        init(cacheTime: TimeInterval?, cacheKey: String) {
-            self.cacheTime = cacheTime
-            self.cacheKey = cacheKey
-        }
+//        public var sizeLimit: UInt
+//
+//        /// The item count limit of the memory storage.
+//        public var countLimit: Int = .max
+//
+//        /// The time interval between the storage do clean work for swiping expired items.
+//        public let cleanInterval: TimeInterval
+//
+//        public let diskStorage: DiskStorage.Config
+//
+//        public let memoryStorage: MemoryStorage.Config
+//
+//        public let shouldToCacheDisk: Bool
+//
+//        init(cacheTime: TimeInterval?, cacheKey: String) {
+//            self.cacheTime = cacheTime
+//            self.cacheKey = cacheKey
+//        }
     }
 }
 

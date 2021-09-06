@@ -87,11 +87,6 @@ public protocol SYTargetType: Moya.TargetType {
     var networkCacheType: NetworkCacheType { get }
     
     var responseDataSourceType: ResponseDataSourceType { get }
-    
-    
-    func requestCompleteFilter(_ response: Moya.Response)
-    
-    func requestFailedFilter(_ response: Moya.Response)
 }
 
 public extension SYTargetType {

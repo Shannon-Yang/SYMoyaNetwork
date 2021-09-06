@@ -50,6 +50,7 @@ public enum SYMoyaNetworkOptionsInfoItem {
     /// callbacks called from main queue.
     case callbackQueue(CallbackQueue)
     
+    
     /// Provides a `CacheSerializer` to convert some data to an response object for
     /// retrieving from disk cache or vice versa for storing to disk cache.
     /// If not set, the `DefaultCacheSerializer.default` will be used.
@@ -105,6 +106,7 @@ public struct SYMoyaNetworkParsedOptionsInfo {
     public var backgroundDecode = false
     public var preloadAllAnimationData = false
     public var callbackQueue: CallbackQueue = .mainCurrentOrAsync
+    public var cacheCallbackQueue: CallbackQueue = .untouch
     public var cacheSerializer: CacheSerializer = DefaultCacheSerializer.default
     public var onlyLoadFirstFrame = false
     public var alsoPrefetchToMemory = false
@@ -124,6 +126,7 @@ public struct SYMoyaNetworkParsedOptionsInfo {
             case .onlyFromCache: onlyFromCache = true
             case .providerSerializerType(let type): providerSerializerType = type
             case .callbackQueue(let value): callbackQueue = value
+            case .cacheCallbackQueue(let value): cacheCallbackQueue = value
             case .cacheSerializer(let value): cacheSerializer = value
             case .loadDiskFileSynchronously: loadDiskFileSynchronously = true
             case .memoryCacheExpiration(let expiration): memoryCacheExpiration = expiration

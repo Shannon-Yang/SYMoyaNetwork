@@ -35,13 +35,21 @@ open class SYMoyaProvider<Target: SYTargetType>: Moya.MoyaProvider<Target> {
         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, callbackQueue: callbackQueue, session: session, plugins: plugins, trackInflights: trackInflights)
     }
 
-    open override func request(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping Completion) -> Cancellable {
-        
-        
-        super.request(target, callbackQueue: callbackQueue, progress: progress) { result in
-
-        }
-    }
+//    open override func request(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping Completion) -> Cancellable {
+//
+//
+//        super.request(target, callbackQueue: callbackQueue, progress: progress) { result in
+//
+//        }
+//    }
+    
+    ///  Called on the main thread after request succeeded.
+    
+    func requestCompleteFilter(_ response: Moya.Response) { }
+    
+    ///  Called on the main thread when request failed.
+    
+    func requestFailedFilter(_ error: SYMoyaNetworkError) { }
     
 }
 
@@ -101,7 +109,7 @@ public extension SYMoyaProvider {
     }
     
     
-    func cache(_ target: Target, response: Moya.Response, callbackQueue: DispatchQueue? = .none, completionHandler: ((CacheStoreResult) -> Void)?) {
+    func cache(_ target: Target, response: Moya.Response, completionHandler: ((CacheStoreResult) -> Void)? = nil) {
         switch target.networkCacheType {
         case .syMoyaNetworkCache(let networkCacheOptionsInfo):
             if let cacheTime = networkCacheOptionsInfo.cacheTime {
@@ -128,12 +136,8 @@ public extension SYMoyaProvider {
                 
                 let key = self.generateCacheKey(target)
                 
-                var queue = CallbackQueue.untouch
-                if let cQueue = callbackQueue {
-                    queue = CallbackQueue.dispatch(cQueue)
-                }
-                let info = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache),.alsoPrefetchToMemory])
-                self.cache.store(response, forKey: key, options: <#T##SYMoyaNetworkParsedOptionsInfo#>, toDisk: networkCacheOptionsInfo.shouldToCacheDisk, callbackQueue: queue, completionHandler: completionHandler)
+                let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
+                self.cache.store(response, forKey: key, options: options, toDisk: false, callbackQueue: .untouch, completionHandler: completionHandler)
             }
         case .urlRequestCache(let cachePolicy):
             break
@@ -142,13 +146,28 @@ public extension SYMoyaProvider {
         }
     }
     
-    func retrieve(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo, callbackQueue: DispatchQueue? = .none, completionHandler: ((Result<NetworkCacheResult, SYMoyaNetworkError>) -> Void)?) {
+    func retrieve(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo, callbackQueue: DispatchQueue? = .none, completionHandler: ((Result<Moya.Response, SYMoyaNetworkError>) -> Void)?) {
         let key = self.generateCacheKey(target)
         var queue = CallbackQueue.untouch
         if let cQueue = callbackQueue {
             queue = CallbackQueue.dispatch(cQueue)
         }
-        self.cache.retrieveResponse(forKey: key, options: options, callbackQueue: queue, completionHandler: completionHandler)
+        self.cache.retrieveResponse(forKey: key, options: options, callbackQueue: queue) { result in
+            switch result {
+            case .success(let networkCacheResult):
+                switch networkCacheResult {
+                case .memory(let response):
+                    completionHandler?(.success(response))
+                case .disk(let response):
+                    completionHandler?(.success(response))
+                case .none:
+                    // cache Not Existing
+                    completionHandler?(.failure(.cacheError(reason: .responseNotExisting(key: key))))
+                }
+            case .failure(let error):
+                completionHandler?(.failure(error))
+            }
+        }
     }
     
     func retrieveResponseInMemoryCache(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo) -> Moya.Response? {

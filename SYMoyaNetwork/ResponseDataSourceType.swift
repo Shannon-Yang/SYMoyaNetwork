@@ -29,13 +29,15 @@ public enum ResponseDataSourceType {
     
     /// - custom: Custom Cache, By implementing CacheCustomizable Protocol, through the service layer to tell whether the current cache to be updated
     
-    case custom
+    case custom(ResponseDataSourceCustomizable)
 }
 
 
 /// CacheCustomizable protocol
 
 public protocol ResponseDataSourceCustomizable {
+    
+    func shouldRequestIfCacheNotExist() -> Bool
     
     /// Custom Request cache operations From Business Logic Layer, indicating the need to send a request
     ///
@@ -53,4 +55,13 @@ public protocol ResponseDataSourceCustomizable {
     /// - Returns: if return true, will to update cache,otherwise not update
     
     func shouldUpdateCache(_ target: SYTargetType, response: Moya.Response) -> Bool
+}
+
+
+extension ResponseDataSourceCustomizable {
+    
+    func shouldRequestIfCacheNotExist() -> Bool {
+        return true
+    }
+    
 }

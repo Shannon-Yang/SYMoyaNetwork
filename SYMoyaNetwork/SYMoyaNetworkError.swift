@@ -55,7 +55,7 @@ public enum SYMoyaNetworkError: Swift.Error {
         /// - error: The underlying error which describes why this error happens.
         case cannotCreateDirectory(path: String, error: Error)
         
-        /// The requested response does not exist in cache. Code 3006.
+        /// The requested response does not exist in cache. Code 30006.
         /// - key: Key of the requested response in cache.
         case responseNotExisting(key: String)
         
