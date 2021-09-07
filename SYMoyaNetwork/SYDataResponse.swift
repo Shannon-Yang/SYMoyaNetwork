@@ -26,7 +26,7 @@ public struct SYDataResponse<Success, Failure: Error> {
     /// Returns the associated error value if the result if it is a failure, `nil` otherwise.
     public var error: Failure? { result.failure }
 
-    /// Creates a `DataResponse` instance with the specified parameters derived from the response serialization.
+    /// Creates a `SYDataResponse` instance with the specified parameters derived from the response serialization.
     ///
     /// - Parameters:
     ///   - request:               The `URLRequest` sent to the server.
@@ -35,7 +35,7 @@ public struct SYDataResponse<Success, Failure: Error> {
     ///   - metrics:               The `URLSessionTaskMetrics` of the `DataRequest` or `UploadRequest`.
     ///   - serializationDuration: The duration taken by serialization.
     ///   - result:                The `Result` of response serialization.
-    public init(response: Moya.Response?, isDataFromCache: Bool,
+    public init(response: Moya.Response?, isDataFromCache: Bool = false,
                 result: Result<Success, Failure>) {
         self.response = response
         self.isDataFromCache = isDataFromCache

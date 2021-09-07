@@ -34,14 +34,6 @@ open class SYMoyaProvider<Target: SYTargetType>: Moya.MoyaProvider<Target> {
         self.cache = NetworkCache.default
         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, callbackQueue: callbackQueue, session: session, plugins: plugins, trackInflights: trackInflights)
     }
-
-//    open override func request(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping Completion) -> Cancellable {
-//
-//
-//        super.request(target, callbackQueue: callbackQueue, progress: progress) { result in
-//
-//        }
-//    }
     
     ///  Called on the main thread after request succeeded.
     
@@ -146,7 +138,7 @@ public extension SYMoyaProvider {
         }
     }
     
-    func retrieve(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo, callbackQueue: DispatchQueue? = .none, completionHandler: ((Result<Moya.Response, SYMoyaNetworkError>) -> Void)?) {
+    func retrieve(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo, callbackQueue: DispatchQueue? = .none, completion: (_ result: Result<Moya.Response, SYMoyaNetworkError>) -> Void) {
         let key = self.generateCacheKey(target)
         var queue = CallbackQueue.untouch
         if let cQueue = callbackQueue {
@@ -157,15 +149,15 @@ public extension SYMoyaProvider {
             case .success(let networkCacheResult):
                 switch networkCacheResult {
                 case .memory(let response):
-                    completionHandler?(.success(response))
+                    completion(.success(response))
                 case .disk(let response):
-                    completionHandler?(.success(response))
+                    completion(.success(response))
                 case .none:
                     // cache Not Existing
-                    completionHandler?(.failure(.cacheError(reason: .responseNotExisting(key: key))))
+                    completion(.failure(.cacheError(reason: .responseNotExisting(key: key))))
                 }
             case .failure(let error):
-                completionHandler?(.failure(error))
+                completion(.failure(error))
             }
         }
     }
@@ -182,5 +174,49 @@ public extension SYMoyaProvider {
             queue = CallbackQueue.dispatch(cQueue)
         }
         self.cache.retrieveResponseInDiskCache(forKey: key, options: options, callbackQueue: queue, completionHandler: completionHandler)
+    }
+    
+    func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping ((_ result: Result<Moya.Response, SYMoyaNetworkError>) -> Void)) -> Cancellable {
+        return self.request(target, callbackQueue: callbackQueue, progress: progress, completion: { result in
+            switch result {
+            case .success(let response):
+                // completion
+                completion(.success(response))
+                
+                // callback filter
+                DispatchQueue.main.async {
+                    self.requestCompleteFilter(response)
+                }
+                
+                // Cache
+                self.cacheIfNeeded(target, response: response)
+                
+            case .failure(let error):
+                let e = error.transformToSYMoyaNetworkError()
+                // callback filter
+                DispatchQueue.main.async {
+                    self.requestFailedFilter(e)
+                }
+                completion(.failure(e))
+            }
+        })
+    }
+    
+    
+    func cacheIfNeeded(_ target: Target, response: Moya.Response) {
+        // Cache
+        switch target.responseDataSourceType {
+        case .cacheIfPossible, .cacheAndServer:
+            // cache
+            self.cache(target, response: response)
+        case .custom(let customizable):
+            let dataResponse = SYMoyaNetworkDataResponse(response: response, isDataFromCache: false, result: .success(response))
+            let isUpdateCache = customizable.shouldUpdateCache(target, dataResponse: dataResponse)
+            if isUpdateCache {
+                self.cache(target, response: response)
+            }
+        default:
+            break
+        }
     }
 }

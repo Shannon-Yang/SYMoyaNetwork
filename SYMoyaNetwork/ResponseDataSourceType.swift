@@ -37,7 +37,7 @@ public enum ResponseDataSourceType {
 
 public protocol ResponseDataSourceCustomizable {
     
-    func shouldRequestIfCacheNotExist() -> Bool
+    func shouldRequestIfCacheFeatchFailure() -> Bool
     
     /// Custom Request cache operations From Business Logic Layer, indicating the need to send a request
     ///
@@ -45,7 +45,7 @@ public protocol ResponseDataSourceCustomizable {
     /// - Parameter CacheResponse: cache Response
     /// - Returns: true is send request , false It does not send the request
     
-    func shouldSendRequest(_ target: SYTargetType, cacheResponse: Moya.Response) -> Bool
+    func shouldSendRequest<T>(_ target: SYTargetType, dataResponse: SYMoyaNetworkDataResponse<T>) -> Bool
     
     
     /// Custom response cache, By Business Logic Layer to indicate the current cache needs to be updated
@@ -54,13 +54,13 @@ public protocol ResponseDataSourceCustomizable {
     /// - Parameter response: current request response
     /// - Returns: if return true, will to update cache,otherwise not update
     
-    func shouldUpdateCache(_ target: SYTargetType, response: Moya.Response) -> Bool
+    func shouldUpdateCache<T>(_ target: SYTargetType, dataResponse: SYMoyaNetworkDataResponse<T>) -> Bool
 }
 
 
 extension ResponseDataSourceCustomizable {
     
-    func shouldRequestIfCacheNotExist() -> Bool {
+    func shouldRequestIfCacheFeatchFailure() -> Bool {
         return true
     }
     

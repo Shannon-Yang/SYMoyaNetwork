@@ -126,7 +126,7 @@ public struct SYMoyaNetworkParsedOptionsInfo {
             case .onlyFromCache: onlyFromCache = true
             case .providerSerializerType(let type): providerSerializerType = type
             case .callbackQueue(let value): callbackQueue = value
-            case .cacheCallbackQueue(let value): cacheCallbackQueue = value
+//            case .cacheCallbackQueue(let value): cacheCallbackQueue = value
             case .cacheSerializer(let value): cacheSerializer = value
             case .loadDiskFileSynchronously: loadDiskFileSynchronously = true
             case .memoryCacheExpiration(let expiration): memoryCacheExpiration = expiration
