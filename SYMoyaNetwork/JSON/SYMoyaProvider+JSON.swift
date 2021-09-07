@@ -20,14 +20,14 @@ extension SYMoyaProvider {
         
     }
     
-    open func responseJSON(_ target: Target, failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping ((_ dataResponse: SYMoyaNetworkDataResponse<Any>) -> Void)) -> Cancellable? {
+    open func responseJSON(_ target: Target, failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<Any>) -> Void) -> Cancellable? {
         switch target.networkCacheType {
         case .urlRequestCache,.none:
             break
         case .syMoyaNetworkCache(_):
-            switch target.responseDataSourceType {
-            case .server:
-                return self.req(target, callbackQueue: callbackQueue, progress: progress) { result in
+            
+            func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<Any>) -> Void) -> Cancellable {
+                self.req(target, callbackQueue: callbackQueue, progress: progress) { result in
                     switch result {
                     case .success(let response):
                         let jsonDataResponse = self.serializerJSONDataResponse(response, failsOnEmptyData: failsOnEmptyData)
@@ -36,38 +36,76 @@ extension SYMoyaProvider {
                         completion(SYMoyaNetworkDataResponse(response: nil, result: .failure(error)))
                     }
                 }
+            }
+            
+            switch target.responseDataSourceType {
+            case .server:
+                return req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
             case .cache:
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-                
-                self.retrieve(target, options: options, callbackQueue: callbackQueue) { result: Result<Response, SYMoyaNetworkError> in
-                    
+                self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
+                    switch result {
+                    case .success(let response):
+                        let jsonDataResponse = self.serializerJSONDataResponse(response, failsOnEmptyData: failsOnEmptyData)
+                        completion(jsonDataResponse)
+                    case .failure(let error):
+                        completion(SYMoyaNetworkDataResponse(response: nil, result: .failure(error)))
+                    }
                 }
-                
-                self.retrieve(.json(Any.self, failsOnEmptyData: failsOnEmptyData), target: target, options: options, callbackQueue: callbackQueue, completion: completion)
             case .cacheIfPossible:
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
                 
-                self.retrieve(.json(Any.self, failsOnEmptyData: failsOnEmptyData), target: target, options: options, callbackQueue: callbackQueue) { dataResponse in
-                    if dataResponse.result.isSuccess {
-                        completion(dataResponse.map({ $0 as Any }))
-                    } else {
-                        _ = self.requestWithSerializerType(.json(Any.self, failsOnEmptyData: failsOnEmptyData), target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
+                self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
+                    switch result {
+                    case .success(let response):
+                        let jsonDataResponse = self.serializerJSONDataResponse(response, failsOnEmptyData: failsOnEmptyData)
+                        completion(jsonDataResponse)
+                    case .failure(_):
+                          _ = req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
                     }
                 }
             case .cacheAndServer:
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
                 
-                self.retrieve(.json(Any.self, failsOnEmptyData: failsOnEmptyData), target: target, options: options, callbackQueue: callbackQueue) { dataResponse in
-                    if dataResponse.result.isSuccess {
-                        completion(dataResponse.map({ $0 as Any }))
+                self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
+                    switch result {
+                    case .success(let response):
+                        let jsonDataResponse = self.serializerJSONDataResponse(response, failsOnEmptyData: failsOnEmptyData)
+                        completion(jsonDataResponse)
                         // 再次发起请求
-                        _ = self.requestWithSerializerType(.json(Any.self, failsOnEmptyData: failsOnEmptyData), target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
-                    } else {
-                        _ = self.requestWithSerializerType(.json(Any.self, failsOnEmptyData: failsOnEmptyData), target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
+                        _ = req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
+                    case .failure(_):
+                        _ = req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
                     }
                 }
             case .custom(let customizable):
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
+                
+                self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
+                    func re() {
+                        // 再次发起请求
+                        _ = self.req(target, callbackQueue: callbackQueue, progress: progress) { result in
+                            switch result {
+                            case .success(let response):
+                                let jsonDataResponse = self.serializerJSONDataResponse(response, failsOnEmptyData: failsOnEmptyData)
+                                completion(jsonDataResponse)
+                            case .failure(let error):
+                                completion(SYMoyaNetworkDataResponse(response: nil, result: .failure(error)))
+                            }
+                        }
+                    }
+                    
+                    switch result {
+                    case .success(let response):
+                        let jsonDataResponse = self.serializerJSONDataResponse(response, failsOnEmptyData: failsOnEmptyData)
+                        completion(jsonDataResponse)
+                        re()
+                    case .failure(_):
+                        re()
+                    }
+                }
+                
+                
 
                 self.retrieve(.json(Any.self, failsOnEmptyData: failsOnEmptyData), target: target, options: options, callbackQueue: callbackQueue) { dataResponse in
                     
@@ -86,6 +124,11 @@ extension SYMoyaProvider {
                         }
                     }
                 }
+                
+                
+                
+                
+                
             }
         }
         return nil
