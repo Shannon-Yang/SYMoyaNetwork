@@ -10,15 +10,15 @@ import Foundation
 import Moya
 import ObjectMapper
 
-public enum ProviderSerializerType {
-    case data
-    case image
-    case string(keyPath: String?)
-    case json(failsOnEmptyData: Bool = true)
-    case codable(keyPath: String? = nil, decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true)
-    case swiftyjson(opt: JSONSerialization.ReadingOptions = [])
-    case objectmapper(keyPath: String? = nil, context: MapContext? = nil)
-}
+//public enum ProviderSerializerType {
+//    case data
+//    case image
+//    case string(keyPath: String?)
+//    case json(failsOnEmptyData: Bool = true)
+//    case codable(keyPath: String? = nil, decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true)
+//    case swiftyjson(opt: JSONSerialization.ReadingOptions = [])
+//    case objectmapper(keyPath: String? = nil, context: MapContext? = nil)
+//}
 
 open class SYMoyaProvider<Target: SYTargetType>: Moya.MoyaProvider<Target> {
     
@@ -29,9 +29,11 @@ open class SYMoyaProvider<Target: SYTargetType>: Moya.MoyaProvider<Target> {
     
     public let cache: NetworkCache
     
+    public let urlCache: SYMoyaURLCache
     
     public override init(endpointClosure: @escaping SYMoyaProvider<Target>.EndpointClosure = SYMoyaProvider.syDefaultEndpointMapping, requestClosure: @escaping SYMoyaProvider<Target>.RequestClosure = SYMoyaProvider.defaultRequestMapping, stubClosure: @escaping SYMoyaProvider<Target>.StubClosure = SYMoyaProvider.neverStub, callbackQueue: DispatchQueue? = nil, session: Session = SYMoyaProvider<Target>.defaultAlamofireSession(), plugins: [PluginType] = [], trackInflights: Bool = false) {
         self.cache = NetworkCache.default
+        self.urlCache = SYMoyaURLCache(urlCache: session.sessionConfiguration.urlCache ?? URLCache.shared)
         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, callbackQueue: callbackQueue, session: session, plugins: plugins, trackInflights: trackInflights)
     }
     
@@ -43,12 +45,17 @@ open class SYMoyaProvider<Target: SYTargetType>: Moya.MoyaProvider<Target> {
     
     func requestFailedFilter(_ error: SYMoyaNetworkError) { }
     
+    
+    class func clearAll() {
+        
+    }
+    
 }
 
 public extension SYMoyaProvider {
     
     final class func syDefaultEndpointMapping(for target: Target) -> Endpoint {
-        let endpoint = Endpoint(
+        var endpoint = Endpoint(
             url: URL(target: target).absoluteString,
             sampleResponseClosure: { .networkResponse(200, target.sampleData) },
             method: target.method,
@@ -72,6 +79,24 @@ public extension SYMoyaProvider {
         } catch let error {
             print("Endpoint failed to get urlRequest, desc: \(error.localizedDescription)")
         }
+        
+        // set
+        switch target.networkCacheType {
+        case .urlRequestCache(let urlCacheInfo):
+            if target.method == .get {
+                if urlCacheInfo.isCanUseCacheControl {
+                    endpoint = endpoint.adding(newHTTPHeaderFields: ["Cache-Control" : "no-cache"])
+                } else {
+                    endpoint = endpoint.adding(newHTTPHeaderFields: ["Pragma" : "no-cache"])
+                }
+                endpoint = endpoint.adding(newHTTPHeaderFields: [SYMoyaURLCache.refreshCacheKey: SYMoyaURLCache.RefreshCacheValue.refreshCache.rawValue])
+            } else {
+                print("URLRequestCache only supports get requests, if you want to use other request methods for caching, maybe you can try SYMoyaNetworkCache")
+            }
+        default:
+            break
+        }
+        
         return endpoint
     }
     
@@ -84,7 +109,7 @@ public extension SYMoyaProvider {
         }
         
         let method = target.method.rawValue
-     
+        
         var cacheKey: String = NetworkCacheType.defaultCacheKey
         switch target.networkCacheType {
         case .syMoyaNetworkCache(let info):
@@ -131,9 +156,9 @@ public extension SYMoyaProvider {
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
                 self.cache.store(response, forKey: key, options: options, toDisk: false, callbackQueue: .untouch, completionHandler: completionHandler)
             }
-        case .urlRequestCache(let cachePolicy):
-            break
-        default:
+        case .urlRequestCache(let urlCacheInfo):
+            self.urlCache(target, response: response, urlCacheInfo: urlCacheInfo)
+        case .none:
             break
         }
     }
@@ -201,6 +226,16 @@ public extension SYMoyaProvider {
                     self.requestFailedFilter(e)
                 }
                 completion(.failure(e))
+                
+                // clear if needed
+                switch target.networkCacheType {
+                case .urlRequestCache(let urlCacheInfo):
+                    if urlCacheInfo.autoClearCache {
+                        self.clearCache(target, urlCacheInfo: urlCacheInfo)
+                    }
+                default:
+                    break
+                }
             }
         })
     }
@@ -208,17 +243,24 @@ public extension SYMoyaProvider {
     
     func cacheIfNeeded(_ target: Target, response: Moya.Response) {
         // Cache
-        switch target.responseDataSourceType {
-        case .cacheIfPossible, .cacheAndServer:
-            // cache
+        switch target.networkCacheType {
+        case .urlRequestCache(_):
             self.cache(target, response: response)
-        case .custom(let customizable):
-            let dataResponse = SYMoyaNetworkDataResponse(response: response, isDataFromCache: false, result: .success(response))
-            let isUpdateCache = customizable.shouldUpdateCache(target, dataResponse: dataResponse)
-            if isUpdateCache {
+        case .syMoyaNetworkCache(_):
+            switch target.responseDataSourceType {
+            case .cacheIfPossible, .cacheAndServer:
+                // cache
                 self.cache(target, response: response)
+            case .custom(let customizable):
+                let dataResponse = SYMoyaNetworkDataResponse(response: response, isDataFromCache: false, result: .success(response))
+                let isUpdateCache = customizable.shouldUpdateCache(target, dataResponse: dataResponse)
+                if isUpdateCache {
+                    self.cache(target, response: response)
+                }
+            default:
+                break
             }
-        default:
+        case .none:
             break
         }
     }

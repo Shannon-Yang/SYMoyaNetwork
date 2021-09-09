@@ -9,8 +9,6 @@
 import Foundation
 import Moya
 
-public typealias URLRequestCacheCachePolicy = URLRequest.CachePolicy
-
 ///  Network Cache type of a cached Request.
 /// - none: The Request is not cached yet when retrieving it.
 /// - urlRequestCache: The response is cached in memory.
@@ -21,7 +19,7 @@ public enum NetworkCacheType {
     /// The Request is not cached yet when retrieving it.
     case none
     /// The Request is cached use Http.
-    case urlRequestCache(cachePolicy: URLRequestCacheCachePolicy)
+    case urlRequestCache(urlCacheInfo: URLCacheInfo)
     /// The Request is cached in disk or memory
     case syMoyaNetworkCache(networkCacheOptionsInfo: NetworkCacheOptionsInfo)
 
@@ -48,8 +46,8 @@ extension NetworkCacheType: Equatable {
         switch (lhs, rhs) {
         case (.none, .none):
             return true
-        case (let .urlRequestCache(lhsCachePolicy), let .urlRequestCache(rhsCachePolicy)):
-            return lhsCachePolicy.rawValue == rhsCachePolicy.rawValue
+        case (let .urlRequestCache(lhsURLCacheInfo), let .urlRequestCache(rhsURLCacheInfo)):
+            return lhsURLCacheInfo.cachePolicy.rawValue == rhsURLCacheInfo.cachePolicy.rawValue && lhsURLCacheInfo.HTTPVersion == rhsURLCacheInfo.HTTPVersion
         case (let .syMoyaNetworkCache(lhsNetworkCacheOptionsInfo), let .syMoyaNetworkCache(rhsNetworkCacheOptionsInfo)):
             return lhsNetworkCacheOptionsInfo.cacheKey == rhsNetworkCacheOptionsInfo.cacheKey && lhsNetworkCacheOptionsInfo.cacheTime == rhsNetworkCacheOptionsInfo.cacheTime
         default:
@@ -100,6 +98,34 @@ public extension NetworkCacheType {
 
 public extension NetworkCacheType {
     
+    struct URLCacheInfo {
+        
+        public let ignoreServer: Bool
+        
+        public var HTTPVersion: String {
+            didSet {
+                if self.HTTPVersion.contains("1.0") {
+                    self.isCanUseCacheControl = false
+                }
+            }
+        }
+        
+        private(set) var isCanUseCacheControl = true
+        
+        public var maxAge: Int
+        
+        public var isPrivate: Bool = false
+        
+        public var autoClearCache: Bool
+        
+        init(ignoreServer: Bool = true, maxAge: Int, autoClearCache: Bool, isPrivate: Bool = false, HTTPVersion: String = "HTTP/1.1") {
+            self.ignoreServer = ignoreServer
+            self.maxAge = maxAge
+            self.autoClearCache = autoClearCache
+            self.isPrivate = isPrivate
+            self.HTTPVersion = HTTPVersion
+        }
+    }
     
 }
 

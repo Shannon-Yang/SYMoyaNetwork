@@ -41,22 +41,23 @@ extension SYMoyaProvider {
     }
     
     open func responseJSON(_ target: Target, failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<Any>) -> Void) -> Cancellable? {
-        switch target.networkCacheType {
-        case .urlRequestCache,.none:
-            break
-        case .syMoyaNetworkCache(_):
-            func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<Any>) -> Void) -> Cancellable {
-                self.req(target, callbackQueue: callbackQueue, progress: progress) { result in
-                    switch result {
-                    case .success(let response):
-                        let jsonDataResponse = self.serializerJSONDataResponse(response, isDataFromCache: false, failsOnEmptyData: failsOnEmptyData)
-                        completion(jsonDataResponse)
-                    case .failure(let error):
-                        completion(SYMoyaNetworkDataResponse(response: nil, result: .failure(error)))
-                    }
+        
+        func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<Any>) -> Void) -> Cancellable {
+            self.req(target, callbackQueue: callbackQueue, progress: progress) { result in
+                switch result {
+                case .success(let response):
+                    let jsonDataResponse = self.serializerJSONDataResponse(response, isDataFromCache: false, failsOnEmptyData: failsOnEmptyData)
+                    completion(jsonDataResponse)
+                case .failure(let error):
+                    completion(SYMoyaNetworkDataResponse(response: nil, result: .failure(error)))
                 }
             }
-            
+        }
+        
+        switch target.networkCacheType {
+        case .none, .urlRequestCache:
+            return req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
+        case .syMoyaNetworkCache(_):
             switch target.responseDataSourceType {
             case .server:
                 return req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
