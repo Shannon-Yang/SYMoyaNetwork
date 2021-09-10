@@ -10,15 +10,6 @@ import Foundation
 import Moya
 import ObjectMapper
 
-//public enum ProviderSerializerType {
-//    case data
-//    case image
-//    case string(keyPath: String?)
-//    case json(failsOnEmptyData: Bool = true)
-//    case codable(keyPath: String? = nil, decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true)
-//    case swiftyjson(opt: JSONSerialization.ReadingOptions = [])
-//    case objectmapper(keyPath: String? = nil, context: MapContext? = nil)
-//}
 
 open class SYMoyaProvider<Target: SYTargetType>: Moya.MoyaProvider<Target> {
     

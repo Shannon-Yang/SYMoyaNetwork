@@ -297,7 +297,6 @@ open class NetworkCache {
                     callbackQueue: callbackQueue,
                     expiration: options.diskCacheExpiration,
                     completionHandler: completionHandler)
-                
             }
         }
     }

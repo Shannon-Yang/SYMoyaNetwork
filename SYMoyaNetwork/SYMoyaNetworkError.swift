@@ -106,6 +106,17 @@ public enum SYMoyaNetworkError: Swift.Error {
 //    case processorError(reason: ProcessorErrorReason)
 //    /// Represents the error reason during response setting in a view related class.
 //    case responseSettingError(reason: ResponseSettingErrorReason)
+    
+    
+    case batchRequestError(reason: BatchRequestErrorReason)
+    
+    
+    public enum BatchRequestErrorReason {
+        
+        case providersIsEmpty
+    }
+    
+    
 }
 
 
@@ -118,6 +129,7 @@ extension SYMoyaNetworkError: LocalizedError {
 //        case .requestError(let reason): return reason.errorDescription
 //        case .responseError(let reason): return reason.errorDescription
         case .cacheError(let reason): return reason.errorDescription
+        case .batchRequestError(let reason): return reason.errorDescription
 //        case .processorError(let reason): return reason.errorDescription
         }
     }
@@ -138,6 +150,7 @@ extension SYMoyaNetworkError: CustomNSError {
         case .cacheError(let reason): return reason.errorCode
 //        case .processorError(let reason): return reason.errorCode
 //        case .responseSettingError(let reason): return reason.errorCode
+        case .batchRequestError(let reason): return reason.errorCode
         }
     }
 }
@@ -192,6 +205,24 @@ extension SYMoyaNetworkError.CacheErrorReason {
         case .cannotCreateCacheFile: return 30009
         case .cannotSetCacheFileAttribute: return 30010
         case .diskStorageIsNotReady: return 30011
+        }
+    }
+}
+
+//MARK: - BatchRequestErrorReason
+
+extension SYMoyaNetworkError.BatchRequestErrorReason {
+    var errorDescription: String? {
+        switch self {
+        case .providersIsEmpty:
+            return "Providers of BatchRequest are empty, please make sure that Providers are not empty"
+        }
+    }
+    
+    var errorCode: Int {
+        switch self {
+        case .providersIsEmpty: return 30012
+        
         }
     }
 }

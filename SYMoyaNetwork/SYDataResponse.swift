@@ -9,22 +9,22 @@
 import Foundation
 import Moya
 
-public typealias SYMoyaNetworkDataResponse<Success> = SYDataResponse<Success, SYMoyaNetworkError>
+public typealias SYMoyaNetworkDataResponse<Success> = SYDataResponse<Success>
 
-public struct SYDataResponse<Success, Failure: Error> {
+public struct SYDataResponse<Success> {
 
     public let response: Moya.Response?
     
     public let isDataFromCache: Bool
 
     /// The result of response serialization.
-    public let result: Result<Success, Failure>
+    public let result: SYResult<Success>
 
     /// Returns the associated value of the result if it is a success, `nil` otherwise.
     public var value: Success? { result.success }
 
     /// Returns the associated error value if the result if it is a failure, `nil` otherwise.
-    public var error: Failure? { result.failure }
+    public var error: SYMoyaNetworkError? { result.failure }
 
     /// Creates a `SYDataResponse` instance with the specified parameters derived from the response serialization.
     ///
@@ -36,7 +36,7 @@ public struct SYDataResponse<Success, Failure: Error> {
     ///   - serializationDuration: The duration taken by serialization.
     ///   - result:                The `Result` of response serialization.
     public init(response: Moya.Response?, isDataFromCache: Bool = false,
-                result: Result<Success, Failure>) {
+                result: SYResult<Success>) {
         self.response = response
         self.isDataFromCache = isDataFromCache
         self.result = result
