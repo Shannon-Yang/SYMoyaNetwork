@@ -15,7 +15,7 @@ public struct SYDataResponse<Success> {
 
     public let response: Moya.Response?
     
-    public let isDataFromCache: Bool
+    public var isDataFromCache: Bool
 
     /// The result of response serialization.
     public let result: SYResult<Success>
