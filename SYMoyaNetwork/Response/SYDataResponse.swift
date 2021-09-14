@@ -9,22 +9,22 @@
 import Foundation
 import Moya
 
-public typealias SYMoyaNetworkDataResponse<Success> = SYDataResponse<Success>
+public typealias SYMoyaNetworkDataResponse<Success> = SYDataResponse<Success, SYMoyaNetworkError>
 
-public struct SYDataResponse<Success> {
+public struct SYDataResponse<Success, Failure: Error> {
 
     public let response: Moya.Response?
     
     public var isDataFromCache: Bool
 
     /// The result of response serialization.
-    public let result: SYResult<Success>
+    public let result: Result<Success, Failure>
 
     /// Returns the associated value of the result if it is a success, `nil` otherwise.
     public var value: Success? { result.success }
 
     /// Returns the associated error value if the result if it is a failure, `nil` otherwise.
-    public var error: SYMoyaNetworkError? { result.failure }
+    public var error: Failure? { result.failure }
 
     /// Creates a `SYDataResponse` instance with the specified parameters derived from the response serialization.
     ///
@@ -36,7 +36,7 @@ public struct SYDataResponse<Success> {
     ///   - serializationDuration: The duration taken by serialization.
     ///   - result:                The `Result` of response serialization.
     public init(response: Moya.Response?, isDataFromCache: Bool = false,
-                result: SYResult<Success>) {
+                result: Result<Success, Failure>) {
         self.response = response
         self.isDataFromCache = isDataFromCache
         self.result = result
@@ -61,7 +61,7 @@ extension SYDataResponse {
     public func map<NewSuccess>(_ transform: (Success) -> NewSuccess) -> SYDataResponse<NewSuccess, Failure> {
         SYDataResponse<NewSuccess, Failure>(response: response, isDataFromCache: isDataFromCache, result: result.map(transform))
     }
-
+    
     /// Evaluates the given closure when the result of this `SYDataResponse` is a success, passing the unwrapped result
     /// value as a parameter.
     ///
@@ -80,7 +80,7 @@ extension SYDataResponse {
         SYDataResponse<NewSuccess, Error>(response: response, isDataFromCache: isDataFromCache, result: result.tryMap(transform))
         
     }
-
+    
     /// Evaluates the specified closure when the `SYDataResponse` is a failure, passing the unwrapped error as a parameter.
     ///
     /// Use the `mapError` function with a closure that does not throw. For example:
@@ -94,7 +94,7 @@ extension SYDataResponse {
     public func mapError<NewFailure: Error>(_ transform: (Failure) -> NewFailure) -> SYDataResponse<Success, NewFailure> {
         SYDataResponse<Success, NewFailure>(response: response, isDataFromCache: isDataFromCache, result: result.mapError(transform))
     }
-
+    
     /// Evaluates the specified closure when the `SYDataResponse` is a failure, passing the unwrapped error as a parameter.
     ///
     /// Use the `tryMapError` function with a closure that may throw an error. For example:
@@ -107,7 +107,7 @@ extension SYDataResponse {
     /// - Parameter transform: A throwing closure that takes the error of the instance.
     ///
     /// - Returns: A `SYDataResponse` instance containing the result of the transform.
-    public func tryMapError<NewFailure: Error>(_ transform: (Failure) throws -> NewFailure) -> SYDataResponse<Success, Error> {
-        SYDataResponse<Success, Error>(response: response, isDataFromCache: isDataFromCache, result: result.tryMapError(transform))
+    public func tryMapError<NewFailure: Error>(_ transform: (Failure) throws -> NewFailure) -> SYDataResponse<Success,Error> {
+        SYDataResponse<Success,Error>(response: response, isDataFromCache: isDataFromCache, result: result.tryMapError(transform))
     }
 }

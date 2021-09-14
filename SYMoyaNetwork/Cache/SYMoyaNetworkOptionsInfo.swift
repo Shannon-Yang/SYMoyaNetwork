@@ -40,7 +40,7 @@ public enum SYMoyaNetworkOptionsInfoItem {
     case onlyFromCache
     
     ///
-    case providerSerializerType(ProviderSerializerType)
+//    case providerSerializerType(ProviderSerializerType)
 
     /// The associated value will be used as the target queue of dispatch callbacks when retrieving responses from
     /// cache. If not set, SYMoyaNetwork will use `.mainCurrentOrAsync` for callbacks.
@@ -102,7 +102,7 @@ public struct SYMoyaNetworkParsedOptionsInfo {
     public var cacheMemoryOnly = false
     public var waitForCache = false
     public var onlyFromCache = false
-    public var providerSerializerType: ProviderSerializerType = .data
+//    public var providerSerializerType: ProviderSerializerType = .data
     public var backgroundDecode = false
     public var preloadAllAnimationData = false
     public var callbackQueue: CallbackQueue = .mainCurrentOrAsync
@@ -124,7 +124,7 @@ public struct SYMoyaNetworkParsedOptionsInfo {
             case .forceRefresh: forceRefresh = true
             case .cacheMemoryOnly: cacheMemoryOnly = true
             case .onlyFromCache: onlyFromCache = true
-            case .providerSerializerType(let type): providerSerializerType = type
+//            case .providerSerializerType(let type): providerSerializerType = type
             case .callbackQueue(let value): callbackQueue = value
 //            case .cacheCallbackQueue(let value): cacheCallbackQueue = value
             case .cacheSerializer(let value): cacheSerializer = value

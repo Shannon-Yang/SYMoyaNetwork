@@ -120,6 +120,7 @@ public extension SYMoyaProvider {
     func cache(_ target: Target, response: Moya.Response, completionHandler: ((CacheStoreResult) -> Void)? = nil) {
         switch target.networkCacheType {
         case .syMoyaNetworkCache(let networkCacheOptionsInfo):
+            
             if let cacheTime = networkCacheOptionsInfo.cacheTime {
                 
                 guard cacheTime > 0 else {

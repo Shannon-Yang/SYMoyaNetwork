@@ -49,14 +49,13 @@ extension SYMoyaProvider {
                 switch result {
                 case .success(let response):
                     var codableObjectDataResponse: SYMoyaNetworkDataResponse<T> = self.serializerCodableObjectDataResponse(response, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
-                    codableObjectDataResponse.isDataFromCache = true
+                    codableObjectDataResponse.isDataFromCache = false
                     completion(codableObjectDataResponse)
                 case .failure(let error):
                     completion(SYMoyaNetworkDataResponse(response: nil, result: .failure(error)))
                 }
             }
         }
-        
         
         switch target.networkCacheType {
         case .urlRequestCache,.none:

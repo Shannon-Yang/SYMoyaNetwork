@@ -8,21 +8,29 @@
 
 import Foundation
 import Moya
-import SwiftyJSON
+//import SwiftyJSON
 
 public final class SYMoyaNetworkLoggerPlugin {
+    
+    enum NetworkLogMark: String {
+        case success = "SUCCESS --> ✅😊"
+        case fail = "FAIL --> ❌😟"
+        case invalidRequest = "INVALID --> ‼️⚠️"
+    }
 
     public var configuration: Configuration
+    
+    public var shouldPrintRequestLog: Bool = true
 
     /// Initializes a NetworkLoggerPlugin.
     public init(configuration: Configuration = Configuration()) {
         self.configuration = configuration
+        #if DEBUG
+        self.shouldPrintRequestLog = true
+        #endif
+        self.shouldPrintRequestLog = false
     }
-    
-    
-//    shouldPrintRequestLog
 }
-
 
 public extension SYMoyaNetworkLoggerPlugin.Configuration {
     struct LogOptions: OptionSet {
@@ -114,14 +122,14 @@ public extension SYMoyaNetworkLoggerPlugin {
 }
 
 
-public extension NetworkLoggerPlugin.Configuration {
+public extension SYMoyaNetworkLoggerPlugin.Configuration {
     
     struct Formatter {
 
         // MARK: Typealiases
         // swiftlint:disable nesting
         public typealias DataFormatterType = (Data) -> (String)
-        public typealias EntryFormatterType = (_ identifier: String, _ message: String, _ target: TargetType) -> String
+        public typealias EntryFormatterType = (_ identifier: String, _ message: String, _ target: SYTargetType) -> String
         // swiftlint:enable nesting
 
         // MARK: Properties
@@ -166,51 +174,117 @@ public extension NetworkLoggerPlugin.Configuration {
     }
     
 }
-/*
+
 extension SYMoyaNetworkLoggerPlugin: PluginType {
     /// Called to modify a request before sending.
-    func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
+    public func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
         return request
     }
 
-    /// Called immediately before a request is sent over the network (or stubbed).
-    func willSend(_ request: RequestType, target: TargetType) {
-        
-    }
-
-    /// Called after a response has been received, but before the MoyaProvider has invoked its completion handler.
-    func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
-        
-    }
+//    /// Called immediately before a request is sent over the network (or stubbed).
+//    public func willSend(_ request: RequestType, target: TargetType) {
+//
+//    }
+//
+//    /// Called after a response has been received, but before the MoyaProvider has invoked its completion handler.
+//    public func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
+//
+//    }
 
     /// Called to modify a result before completion.
-    func process(_ result: Result<Moya.Response, MoyaError>, target: TargetType) -> Result<Moya.Response, MoyaError> {
-        
+    public func process(_ result: Result<Moya.Response, MoyaError>, target: TargetType) -> Result<Moya.Response, MoyaError> {
+        return result
     }
-}*/
+    
+    
+    public func willSend(_ request: RequestType, target: TargetType) {
+        logNetworkRequest(request, target: target) { [weak self] output in
+            self?.configuration.output(target, output)
+        }
+    }
+
+    public func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
+        switch result {
+        case .success(let response):
+            configuration.output(target, logNetworkResponse(response, target: target, isFromError: false))
+        case let .failure(error):
+            configuration.output(target, logNetworkError(error, target: target))
+        }
+    }
+    
+}
 
 
-// MARK: - Private
+// MARK: - Logging
 
 private extension SYMoyaNetworkLoggerPlugin {
     
-    /*
-    func logNetworkRequest(_ request: RequestType, target: TargetType, completion: @escaping ([String]) -> Void) {
+    func requestURLString(target: SYTargetType) -> String {
+        let requestURL: URL
+        let targetPath = target.path
+        if target.useCDN {
+            if let cdnURL = target.cdnURL {
+                if targetPath.isEmpty {
+                    requestURL = cdnURL
+                } else {
+                    requestURL = cdnURL.appendingPathComponent(targetPath)
+                }
+            } else {
+                if targetPath.isEmpty {
+                    requestURL = target.baseURL
+                } else {
+                    requestURL = target.baseURL.appendingPathComponent(targetPath)
+                }
+            }
+        } else {
+            if targetPath.isEmpty {
+                requestURL = target.baseURL
+            } else {
+                requestURL = target.baseURL.appendingPathComponent(targetPath)
+            }
+        }
+        return requestURL.absoluteString
+    }
+
+    func logNetworkRequest(_ request: RequestType, target: SYTargetType, completion: @escaping ([String]) -> Void) {
+        
+        let urlString = self.requestURLString(target: target)
+        var requestInfo = "  RequestMethod: \(target.method.rawValue)  RequestURL: \(urlString)"
+        
+        let parametersString: String
+        
+        switch target.task {
+        case .requestData(let data):
+        case .
+        case .requestParameters(let parameters, let encoding):
+            
+        case .requestCompositeParameters(let bodyParameters, let bodyEncoding, let urlParameters):
+            
+        case .downloadParameters(let parameters, let encoding, let destination):
+           
+        default:
+            break
+        }
+        
+        
+        //Request presence check
+        guard let httpRequest = request.request else {
+            var des = "\(SYMoyaNetworkLoggerPlugin.NetworkLogMark.invalidRequest.rawValue)"
+            des.append(requestInfo)
+            completion([configuration.formatter.entry(des, "(invalid request)", target)])
+            return
+        }
+        
         //cURL formatting
         if configuration.logOptions.contains(.formatRequestAscURL) {
             _ = request.cURLDescription { [weak self] output in
                 guard let self = self else { return }
-
                 completion([self.configuration.formatter.entry("Request", output, target)])
             }
             return
         }
 
-        //Request presence check
-        guard let httpRequest = request.request else {
-            completion([configuration.formatter.entry("Request", "(invalid request)", target)])
-            return
-        }
+       
 
         // Adding log entries for each given log option
         var output = [String]()
@@ -242,11 +316,42 @@ private extension SYMoyaNetworkLoggerPlugin {
         }
 
         completion(output)
-    }*/
+    }
+
+    func logNetworkResponse(_ response: Response, target: TargetType, isFromError: Bool) -> [String] {
+        // Adding log entries for each given log option
+        var output = [String]()
+
+        //Response presence check
+        if let httpResponse = response.response {
+            output.append(configuration.formatter.entry("Response", httpResponse.description, target))
+        } else {
+            output.append(configuration.formatter.entry("Response", "Received empty network response for \(target).", target))
+        }
+
+        if (isFromError && configuration.logOptions.contains(.errorResponseBody))
+            || configuration.logOptions.contains(.successResponseBody) {
+
+            let stringOutput = configuration.formatter.responseData(response.data)
+            output.append(configuration.formatter.entry("Response Body", stringOutput, target))
+        }
+
+        return output
+    }
+
+    func logNetworkError(_ error: MoyaError, target: TargetType) -> [String] {
+        //Some errors will still have a response, like errors due to Alamofire's HTTP code validation.
+        if let moyaResponse = error.response {
+            return logNetworkResponse(moyaResponse, target: target, isFromError: true)
+        }
+
+        //Errors without an HTTPURLResponse are those due to connectivity, time-out and such.
+        return [configuration.formatter.entry("Error", "Error calling \(target) : \(error)", target)]
+    }
 }
 
 
-func generateResponseDescription(_ target: TargetType, urlRequest: URLRequest?, response: HTTPURLResponse?, fileURL: URL? = nil, resumeData: Data? = nil, data: Data? = nil, error: Error?) -> String {
+func generateResponseDescription(_ target: TargetType, moya) -> String {
     
     var mark = "✅😊"
     

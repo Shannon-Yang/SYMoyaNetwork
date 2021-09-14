@@ -24,7 +24,7 @@ public struct BatchResult<Target: SYTargetType> {
 public class BatchDataResponse<Target: SYTargetType> {
 
     /// The result of response serialization.
-    public var result: SYResult<[BatchResult<Target>]>
+    public var result: Result<[BatchResult<Target>], SYMoyaNetworkError>
 
     /// Returns the associated value of the result if it is a success, `nil` otherwise.
     public var value: [BatchResult<Target>]?
@@ -41,7 +41,7 @@ public class BatchDataResponse<Target: SYTargetType> {
     ///   - metrics:               The `URLSessionTaskMetrics` of the `DataRequest` or `UploadRequest`.
     ///   - serializationDuration: The duration taken by serialization.
     ///   - result:                The `Result` of response serialization.
-    public init(result: SYResult<[BatchResult<Target>]>) {
+    public init(result: Result<[BatchResult<Target>], SYMoyaNetworkError>) {
         self.result = result
         self.value = result.success
     }
@@ -49,7 +49,7 @@ public class BatchDataResponse<Target: SYTargetType> {
 
 //public enum BatchData
 
-struct SYMoyaBatchRequestProvider<Target: SYTargetType> {
+class SYMoyaBatchRequestProvider<Target: SYTargetType> {
     
     private let providers: [BatchMoyaProvider<Target>]
     
@@ -57,7 +57,7 @@ struct SYMoyaBatchRequestProvider<Target: SYTargetType> {
         self.providers = providers
     }
     
-
+    
     fileprivate var lock: DispatchSemaphore = DispatchSemaphore(value: 1)
     
     private let queueName = "com.shannonyang.SYMoyaNetwork.BatchRequest.queue.\(UUID().uuidString)"
@@ -86,7 +86,7 @@ struct SYMoyaBatchRequestProvider<Target: SYTargetType> {
                         batchDataResponse.result = .failure(error.transformToSYMoyaNetworkError())
                         completion(batchDataResponse)
                     }
-                    lock.signal()
+                    self.lock.signal()
                 }
             }
         }

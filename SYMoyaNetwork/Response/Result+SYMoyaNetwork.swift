@@ -8,11 +8,6 @@
 
 import Foundation
 
-import Foundation
-
-/// Default type of `Result` returned by Alamofire, with an `AFError` `Failure` type.
-public typealias SYResult<Success> = Result<Success, SYMoyaNetworkError>
-
 // MARK: - Internal APIs
 
 extension Result {

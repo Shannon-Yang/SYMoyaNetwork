@@ -15,9 +15,7 @@ struct NetworkConfig {
     
     var debugLogEnabled: Bool = true
     
-    
     var logConfiguration: LogConfiguration
-    
     
     var diskCacheConfig: DiskStorage.Config
     

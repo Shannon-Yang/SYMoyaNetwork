@@ -253,19 +253,13 @@
 				FBDEDF2B26D4FD790060D75A /* Utility */,
 				FBDEDF1E26D4FBBF0060D75A /* Cache */,
 				FBD7A70F26E9E41600DB5061 /* SYMoyaURLCache */,
+				FBD7A72026F08B3B00DB5061 /* SYMoya */,
+				FBD7A72126F08B6A00DB5061 /* Log */,
+				FBD7A72226F08BB500DB5061 /* Config */,
+				FBD7A72326F08BD100DB5061 /* Error */,
+				FBD7A72426F08C4500DB5061 /* Response */,
 				FB517A9D269EB74E00AE0882 /* SYMoyaNetwork.h */,
 				FB517A9E269EB74E00AE0882 /* Info.plist */,
-				FB517ABA269EC20800AE0882 /* NetworkConfig.swift */,
-				FB517ABC269EC22D00AE0882 /* SYTargetType.swift */,
-				FB83138626CD1145001E4F73 /* Log.swift */,
-				FB83139F26CF55B3001E4F73 /* SYMoyaProvider.swift */,
-				FB8313A126CFB83C001E4F73 /* URL+SYMoya.swift */,
-				FB766C1226D39EF200C803F5 /* SYMoyaNetworkLoggerPlugin.swift */,
-				FBDEDF3026D501240060D75A /* SYMoyaNetworkError.swift */,
-				FBF0770E26DCB0E800947CE7 /* ResponseDataSourceType.swift */,
-				FB69548026E22AEC00BE60F6 /* MoyaError+Transform.swift */,
-				FB69548226E625B100BE60F6 /* Result+SYMoyaNetwork.swift */,
-				FB69548426E627A800BE60F6 /* SYDataResponse.swift */,
 			);
 			path = SYMoyaNetwork;
 			sourceTree = "<group>";
@@ -372,6 +366,52 @@
 				FBD7A71B26EF545300DB5061 /* SYMoyaChainRequestProvider.swift */,
 			);
 			path = SYMoyaChainRequestProvider;
+			sourceTree = "<group>";
+		};
+		FBD7A72026F08B3B00DB5061 /* SYMoya */ = {
+			isa = PBXGroup;
+			children = (
+				FBF0770E26DCB0E800947CE7 /* ResponseDataSourceType.swift */,
+				FB517ABC269EC22D00AE0882 /* SYTargetType.swift */,
+				FB83139F26CF55B3001E4F73 /* SYMoyaProvider.swift */,
+				FB8313A126CFB83C001E4F73 /* URL+SYMoya.swift */,
+			);
+			path = SYMoya;
+			sourceTree = "<group>";
+		};
+		FBD7A72126F08B6A00DB5061 /* Log */ = {
+			isa = PBXGroup;
+			children = (
+				FB83138626CD1145001E4F73 /* Log.swift */,
+				FB766C1226D39EF200C803F5 /* SYMoyaNetworkLoggerPlugin.swift */,
+			);
+			path = Log;
+			sourceTree = "<group>";
+		};
+		FBD7A72226F08BB500DB5061 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				FB517ABA269EC20800AE0882 /* NetworkConfig.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		FBD7A72326F08BD100DB5061 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				FBDEDF3026D501240060D75A /* SYMoyaNetworkError.swift */,
+				FB69548026E22AEC00BE60F6 /* MoyaError+Transform.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		FBD7A72426F08C4500DB5061 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				FB69548226E625B100BE60F6 /* Result+SYMoyaNetwork.swift */,
+				FB69548426E627A800BE60F6 /* SYDataResponse.swift */,
+			);
+			path = Response;
 			sourceTree = "<group>";
 		};
 		FBDEDF1E26D4FBBF0060D75A /* Cache */ = {

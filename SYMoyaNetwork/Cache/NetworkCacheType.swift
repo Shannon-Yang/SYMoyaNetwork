@@ -41,20 +41,20 @@ public enum NetworkCacheType {
     }
 }
 
-extension NetworkCacheType: Equatable {
-    public static func == (lhs: NetworkCacheType, rhs: NetworkCacheType) -> Bool {
-        switch (lhs, rhs) {
-        case (.none, .none):
-            return true
-        case (let .urlRequestCache(lhsURLCacheInfo), let .urlRequestCache(rhsURLCacheInfo)):
-            return lhsURLCacheInfo.cachePolicy.rawValue == rhsURLCacheInfo.cachePolicy.rawValue && lhsURLCacheInfo.HTTPVersion == rhsURLCacheInfo.HTTPVersion
-        case (let .syMoyaNetworkCache(lhsNetworkCacheOptionsInfo), let .syMoyaNetworkCache(rhsNetworkCacheOptionsInfo)):
-            return lhsNetworkCacheOptionsInfo.cacheKey == rhsNetworkCacheOptionsInfo.cacheKey && lhsNetworkCacheOptionsInfo.cacheTime == rhsNetworkCacheOptionsInfo.cacheTime
-        default:
-            return false
-        }
-    }
-}
+//extension NetworkCacheType: Equatable {
+//    public static func == (lhs: NetworkCacheType, rhs: NetworkCacheType) -> Bool {
+//        switch (lhs, rhs) {
+//        case (.none, .none):
+//            return true
+//        case (let .urlRequestCache(lhsURLCacheInfo), let .urlRequestCache(rhsURLCacheInfo)):
+//            return lhsURLCacheInfo.ignoreServer == rhsURLCacheInfo.ignoreServer && lhsURLCacheInfo.HTTPVersion == rhsURLCacheInfo.HTTPVersion && lhsURLCacheInfo.autoClearCache == rhsURLCacheInfo.autoClearCache && lhsURLCacheInfo.isCanUseCacheControl == rhsURLCacheInfo.isCanUseCacheControl && lhsURLCacheInfo.maxAge == rhsURLCacheInfo.maxAge && lhsURLCacheInfo.isPrivate == rhsURLCacheInfo.isPrivate
+//        case (let .syMoyaNetworkCache(lhsNetworkCacheOptionsInfo), let .syMoyaNetworkCache(rhsNetworkCacheOptionsInfo)):
+//            return lhsNetworkCacheOptionsInfo.cacheKey == rhsNetworkCacheOptionsInfo.cacheKey && lhsNetworkCacheOptionsInfo.cacheTime == rhsNetworkCacheOptionsInfo.cacheTime
+//        default:
+//            return false
+//        }
+//    }
+//}
 
 
 public extension NetworkCacheType {
@@ -64,37 +64,18 @@ public extension NetworkCacheType {
     struct NetworkCacheOptionsInfo {
         
         public var cacheKey: String = defaultCacheKey
-        public var cacheTime: TimeInterval?
+    
+        public var diskStorageConfig: DiskStorage.Config
         
-        public var cacheCallbackQueue: CallbackQueue
+        public var memoryStorageConfig: MemoryStorage.Config
         
-        
-        
-        
-        
-        
-        /// The file size limit on disk of the storage in bytes. 0 means no limit.
-//        public var sizeLimit: UInt
-//
-//        /// The item count limit of the memory storage.
-//        public var countLimit: Int = .max
-//
-//        /// The time interval between the storage do clean work for swiping expired items.
-//        public let cleanInterval: TimeInterval
-//
-//        public let diskStorage: DiskStorage.Config
-//
-//        public let memoryStorage: MemoryStorage.Config
-//
-//        public let shouldToCacheDisk: Bool
-//
-//        init(cacheTime: TimeInterval?, cacheKey: String) {
-//            self.cacheTime = cacheTime
-//            self.cacheKey = cacheKey
-//        }
+        init(cacheKey: String = defaultCacheKey, diskStorageConfig: DiskStorage.Config, memoryStorageConfig: MemoryStorage.Config) {
+            self.cacheKey = cacheKey
+            self.diskStorageConfig = diskStorageConfig
+            self.memoryStorageConfig = memoryStorageConfig
+        }
     }
 }
-
 
 public extension NetworkCacheType {
     
