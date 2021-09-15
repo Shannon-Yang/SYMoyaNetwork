@@ -9,6 +9,8 @@
 import Foundation
 import Moya
 
+//MARK: - Cache
+
 extension SYMoyaProvider {
     
     func generateCacheKey(_ target: Target) -> String {
@@ -138,4 +140,46 @@ extension SYMoyaProvider {
             break
         }
     }
+}
+
+//MARK: - Cache Clean
+
+public extension SYMoyaProvider {
+    
+    /// Clears the memory & disk storage of this cache. This is an async operation.
+    ///
+    /// - Parameter handler: A closure which is invoked when the cache clearing operation finishes.
+    ///                      This `handler` will be called from the main queue.
+    
+    func clearCache(completion handler: (() -> Void)? = nil) {
+        self.cache.clearCache(completion: handler)
+    }
+    
+    func clearMemoryCache() {
+        self.cache.clearMemoryCache()
+    }
+    
+    func clearDiskCache(completion handler: (() -> Void)? = nil) {
+        self.cache.clearDiskCache(completion: handler)
+    }
+    
+    func cleanExpiredCache(completion handler: (() -> Void)? = nil) {
+        self.cache.cleanExpiredCache(completion: handler)
+    }
+
+    /// Clears the expired response from disk storage.
+    func cleanExpiredMemoryCache() {
+        self.cache.cleanExpiredMemoryCache()
+    }
+    
+    /// Clears the expired response from disk storage. This is an async operation.
+     func cleanExpiredDiskCache() {
+        self.cache.cleanExpiredDiskCache()
+    }
+
+    func cleanExpiredDiskCache(completion handler: (() -> Void)? = nil) {
+        self.cache.cleanExpiredDiskCache(completion: handler)
+    }
+    
+    
 }

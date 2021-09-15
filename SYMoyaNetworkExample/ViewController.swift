@@ -10,10 +10,13 @@ import UIKit
 import SYMoyaNetwork
 
 class ViewController: UIViewController {
+    
+    let provider = SYMoyaProvider()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        
     }
 
 

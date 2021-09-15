@@ -91,7 +91,6 @@ public extension NetworkCacheType {
             self.HTTPVersion = HTTPVersion
         }
     }
-    
 }
 
 
