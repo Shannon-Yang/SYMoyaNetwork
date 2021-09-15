@@ -13,9 +13,6 @@ target 'SYMoyaNetwork' do
   # https://github.com/Moya/Moya
   pod 'Moya', '~> 14.0'
   
-  # https://github.com/kenshincui/AlamofireURLCache
-  pod 'AlamofireURLCache5'
-  
   # https://github.com/SwiftyJSON/SwiftyJSON
   pod 'SwiftyJSON', '~> 5.0'
 
