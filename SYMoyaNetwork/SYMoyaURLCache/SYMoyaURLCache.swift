@@ -11,9 +11,7 @@ import Foundation
 import CoreFoundation
 import Moya
 
-
 public let cachedURLResponseUserInfoKey = "com.shannonyang.SYMoyaNetwork.CachedURLResponse.Key"
-
 public let cachedURLResponseUserInfoValue = "com.shannonyang.SYMoyaNetwork.CachedURLResponse.Value"
 
 public class SYMoyaURLCache {

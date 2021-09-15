@@ -18,9 +18,9 @@
 		FB69548326E625B100BE60F6 /* Result+SYMoyaNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB69548226E625B100BE60F6 /* Result+SYMoyaNetwork.swift */; };
 		FB69548526E627A800BE60F6 /* SYDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB69548426E627A800BE60F6 /* SYDataResponse.swift */; };
 		FB766C1326D39EF200C803F5 /* SYMoyaNetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB766C1226D39EF200C803F5 /* SYMoyaNetworkLoggerPlugin.swift */; };
+		FB8071B026F1EB530042B30D /* SYMoyaProvider+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8071AF26F1EB530042B30D /* SYMoyaProvider+Cache.swift */; };
 		FB83137D26CBC8FE001E4F73 /* SYMoyaProvider+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB83137C26CBC8FE001E4F73 /* SYMoyaProvider+ObjectMapper.swift */; };
 		FB83137F26CBC960001E4F73 /* Response+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB83137E26CBC960001E4F73 /* Response+ObjectMapper.swift */; };
-		FB83138726CD1145001E4F73 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB83138626CD1145001E4F73 /* Log.swift */; };
 		FB83138926CD1216001E4F73 /* NetworkCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB83138826CD1216001E4F73 /* NetworkCacheType.swift */; };
 		FB83139726CE4EA1001E4F73 /* SYMoyaProvider+SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB83139626CE4EA1001E4F73 /* SYMoyaProvider+SwiftyJSON.swift */; };
 		FB83139926CE5103001E4F73 /* Response+SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB83139826CE5103001E4F73 /* Response+SwiftyJSON.swift */; };
@@ -103,9 +103,9 @@
 		FB69548226E625B100BE60F6 /* Result+SYMoyaNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result+SYMoyaNetwork.swift"; sourceTree = "<group>"; };
 		FB69548426E627A800BE60F6 /* SYDataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYDataResponse.swift; sourceTree = "<group>"; };
 		FB766C1226D39EF200C803F5 /* SYMoyaNetworkLoggerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYMoyaNetworkLoggerPlugin.swift; sourceTree = "<group>"; };
+		FB8071AF26F1EB530042B30D /* SYMoyaProvider+Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+Cache.swift"; sourceTree = "<group>"; };
 		FB83137C26CBC8FE001E4F73 /* SYMoyaProvider+ObjectMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "SYMoyaProvider+ObjectMapper.swift"; sourceTree = "<group>"; };
 		FB83137E26CBC960001E4F73 /* Response+ObjectMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Response+ObjectMapper.swift"; sourceTree = "<group>"; };
-		FB83138626CD1145001E4F73 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		FB83138826CD1216001E4F73 /* NetworkCacheType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCacheType.swift; sourceTree = "<group>"; };
 		FB83139626CE4EA1001E4F73 /* SYMoyaProvider+SwiftyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+SwiftyJSON.swift"; sourceTree = "<group>"; };
 		FB83139826CE5103001E4F73 /* Response+SwiftyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Response+SwiftyJSON.swift"; sourceTree = "<group>"; };
@@ -375,6 +375,7 @@
 				FB517ABC269EC22D00AE0882 /* SYTargetType.swift */,
 				FB83139F26CF55B3001E4F73 /* SYMoyaProvider.swift */,
 				FB8313A126CFB83C001E4F73 /* URL+SYMoya.swift */,
+				FB8071AF26F1EB530042B30D /* SYMoyaProvider+Cache.swift */,
 			);
 			path = SYMoya;
 			sourceTree = "<group>";
@@ -382,7 +383,6 @@
 		FBD7A72126F08B6A00DB5061 /* Log */ = {
 			isa = PBXGroup;
 			children = (
-				FB83138626CD1145001E4F73 /* Log.swift */,
 				FB766C1226D39EF200C803F5 /* SYMoyaNetworkLoggerPlugin.swift */,
 			);
 			path = Log;
@@ -741,11 +741,11 @@
 				FBDEDF5126D656120060D75A /* SYMoyaProvider+Image.swift in Sources */,
 				FBDEDF4E26D654B40060D75A /* SYMoyaProvider+String.swift in Sources */,
 				FBDEDF2826D4FBBF0060D75A /* DiskStorage.swift in Sources */,
+				FB8071B026F1EB530042B30D /* SYMoyaProvider+Cache.swift in Sources */,
 				FBD7A71126E9E42C00DB5061 /* SYMoyaURLCache.swift in Sources */,
 				FB517ABD269EC22D00AE0882 /* SYTargetType.swift in Sources */,
 				FBDEDF2F26D4FEAD0060D75A /* String+MD5.swift in Sources */,
 				FBDEDF4A26D64CA60060D75A /* SYMoyaProvider+JSON.swift in Sources */,
-				FB83138726CD1145001E4F73 /* Log.swift in Sources */,
 				FB83137F26CBC960001E4F73 /* Response+ObjectMapper.swift in Sources */,
 				FBDEDF3126D501240060D75A /* SYMoyaNetworkError.swift in Sources */,
 				FB83139B26CE56EF001E4F73 /* SYMoyaProvider+Codable.swift in Sources */,

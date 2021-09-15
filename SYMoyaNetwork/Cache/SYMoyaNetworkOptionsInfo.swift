@@ -27,9 +27,6 @@ public enum SYMoyaNetworkOptionsInfoItem {
     /// SYMoyaNetwork will use the associated `NetworkCache` object when handling related operations,
     /// including trying to retrieve the cached responses and store the downloaded response to it.
     case targetCache(NetworkCache)
-
-    /// If set, SYMoyaNetwork will ignore the cache and try to start a download task for the response source.
-    case forceRefresh
     
     /// If set, SYMoyaNetwork will only cache the value in memory but not in disk.
     case cacheMemoryOnly
@@ -38,9 +35,6 @@ public enum SYMoyaNetworkOptionsInfoItem {
     /// cache, the response retrieving will fail with the `SYMoyaNetworkError.cacheError` with `.responseNotExisting` as its
     /// reason.
     case onlyFromCache
-    
-    ///
-//    case providerSerializerType(ProviderSerializerType)
 
     /// The associated value will be used as the target queue of dispatch callbacks when retrieving responses from
     /// cache. If not set, SYMoyaNetwork will use `.mainCurrentOrAsync` for callbacks.
@@ -49,7 +43,6 @@ public enum SYMoyaNetworkOptionsInfoItem {
     /// This option does not affect the callbacks for UI related extension methods. You will always get the
     /// callbacks called from main queue.
     case callbackQueue(CallbackQueue)
-    
     
     /// Provides a `CacheSerializer` to convert some data to an response object for
     /// retrieving from disk cache or vice versa for storing to disk cache.
@@ -102,7 +95,6 @@ public struct SYMoyaNetworkParsedOptionsInfo {
     public var cacheMemoryOnly = false
     public var waitForCache = false
     public var onlyFromCache = false
-//    public var providerSerializerType: ProviderSerializerType = .data
     public var backgroundDecode = false
     public var preloadAllAnimationData = false
     public var callbackQueue: CallbackQueue = .mainCurrentOrAsync
@@ -121,12 +113,9 @@ public struct SYMoyaNetworkParsedOptionsInfo {
         for option in info {
             switch option {
             case .targetCache(let value): targetCache = value
-            case .forceRefresh: forceRefresh = true
             case .cacheMemoryOnly: cacheMemoryOnly = true
             case .onlyFromCache: onlyFromCache = true
-//            case .providerSerializerType(let type): providerSerializerType = type
             case .callbackQueue(let value): callbackQueue = value
-//            case .cacheCallbackQueue(let value): cacheCallbackQueue = value
             case .cacheSerializer(let value): cacheSerializer = value
             case .loadDiskFileSynchronously: loadDiskFileSynchronously = true
             case .memoryCacheExpiration(let expiration): memoryCacheExpiration = expiration

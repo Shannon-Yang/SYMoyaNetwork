@@ -9,30 +9,28 @@
 import Foundation
 import Moya
 
-struct NetworkConfig {
+public struct NetworkConfig {
     
-    typealias LogConfiguration = Moya.NetworkLoggerPlugin.Configuration
+    public typealias LogConfiguration = SYMoyaNetworkLoggerPlugin.Configuration
     
-    var debugLogEnabled: Bool = true
-    
-    var logConfiguration: LogConfiguration
-    
-    var diskCacheConfig: DiskStorage.Config
-    
-    var memoryCacheConfig: MemoryStorage.Config
-}
+    public static let sharedInstance : NetworkConfig = NetworkConfig()
 
-
-public extension NetworkLoggerPlugin.Configuration.LogOptions {
-
-
+    public var logConfiguration: LogConfiguration = NetworkConfig.defaultLogConfiguration()
+    
+    public var networkCache: NetworkCache = NetworkConfig.defaultNetworkCache()
+    
 }
 
 // MARK: - Private
 
-private extension NetworkConfig {
+extension NetworkConfig {
     
-    func defaultCacheConfig() {
-        // TODO: Shannon Yang 👺
+   static func defaultLogConfiguration() -> LogConfiguration {
+        return LogConfiguration()
     }
+    
+    static func defaultNetworkCache() -> NetworkCache {
+        return NetworkCache.default
+    }
+
 }

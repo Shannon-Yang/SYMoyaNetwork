@@ -31,26 +31,26 @@ public enum SYMoyaNetworkError: Swift.Error {
     /// - cannotSetCacheFileAttribute: Cannot set file attributes to a cached file. Code 3010.
     public enum CacheErrorReason {
         
-        /// Cannot create a file enumerator for a certain disk URL. Code 3001.
+        /// Cannot create a file enumerator for a certain disk URL. Code 30001.
         /// - url: The target disk URL from which the file enumerator should be created.
         case fileEnumeratorCreationFailed(url: URL)
         
-        /// Cannot get correct file contents from a file enumerator. Code 3002.
+        /// Cannot get correct file contents from a file enumerator. Code 30002.
         /// - url: The target disk URL from which the content of a file enumerator should be got.
         case invalidFileEnumeratorContent(url: URL)
         
-        /// The file at target URL exists, but its URL resource is unavailable. Code 3003.
+        /// The file at target URL exists, but its URL resource is unavailable. Code 30003.
         /// - error: The underlying error thrown by file manager.
         /// - key: The key used to getting the resource from cache.
         /// - url: The disk URL where the target cached file exists.
         case invalidURLResource(error: Error, key: String, url: URL)
         
-        /// The file at target URL exists, but the data cannot be loaded from it. Code 3004.
+        /// The file at target URL exists, but the data cannot be loaded from it. Code 30004.
         /// - url: The disk URL where the target cached file exists.
         /// - error: The underlying error which describes why this error happens.
         case cannotLoadDataFromDisk(url: URL, error: Error)
         
-        /// Cannot create a folder at a given path. Code 3005.
+        /// Cannot create a folder at a given path. Code 30005.
         /// - path: The disk path where the directory creating operation fails.
         /// - error: The underlying error which describes why this error happens.
         case cannotCreateDirectory(path: String, error: Error)
@@ -59,17 +59,17 @@ public enum SYMoyaNetworkError: Swift.Error {
         /// - key: Key of the requested response in cache.
         case responseNotExisting(key: String)
         
-        /// Cannot convert an object to data for storing. Code 3007.
+        /// Cannot convert an object to data for storing. Code 30007.
         /// - object: The object which needs be convert to data.
         case cannotConvertToData(object: Any, error: Error)
         
-        /// Cannot serialize an response to data for storing. Code 3008.
+        /// Cannot serialize an response to data for storing. Code 30008.
         /// - response: The input response needs to be serialized to cache.
         /// - original: The original response data, if exists.
         /// - serializer: The `CacheSerializer` used for the response serializing.
         case cannotSerializeResponse(response: Moya.Response?, serializer: CacheSerializer)
 
-        /// Cannot create the cache file at a certain fileURL under a key. Code 3009.
+        /// Cannot create the cache file at a certain fileURL under a key. Code 30009.
         /// - fileURL: The url where the cache file should be created.
         /// - key: The cache key used for the cache. When caching a file through `SYMoyaNetworkManager` and SYMoyaNetwork's
         ///        extension method, it is the resolved cache key based on your input `Source` and the response processors.
@@ -78,14 +78,14 @@ public enum SYMoyaNetworkError: Swift.Error {
         ///          `fileURL`.
         case cannotCreateCacheFile(fileURL: URL, key: String, data: Data, error: Error)
 
-        /// Cannot set file attributes to a cached file. Code 3010.
+        /// Cannot set file attributes to a cached file. Code 30010.
         /// - filePath: The path of target cache file.
         /// - attributes: The file attribute to be set to the target file.
         /// - error: The underlying error originally thrown by Foundation when setting the `attributes` to the disk
         ///          file at `filePath`.
         case cannotSetCacheFileAttribute(filePath: String, attributes: [FileAttributeKey : Any], error: Error)
 
-        /// The disk storage of cache is not ready. Code 3011.
+        /// The disk storage of cache is not ready. Code 30011.
         ///
         /// This is usually due to extremely lack of space on disk storage, and
         /// SYMoyaNetwork failed even when creating the cache folder. The disk storage will be in unusable state. Normally,
@@ -94,29 +94,29 @@ public enum SYMoyaNetworkError: Swift.Error {
         case diskStorageIsNotReady(cacheURL: URL)
     }
     
-    // MARK: Member Cases
-    
-    /// Represents the error reason during networking request phase.
-//    case requestError(reason: RequestErrorReason)
-//    /// Represents the error reason during networking response phase.
-//    case responseError(reason: ResponseErrorReason)
-    /// Represents the error reason during SYMoyaNetwork caching system.
-    case cacheError(reason: CacheErrorReason)
-    /// Represents the error reason during response processing phase.
-//    case processorError(reason: ProcessorErrorReason)
-//    /// Represents the error reason during response setting in a view related class.
-//    case responseSettingError(reason: ResponseSettingErrorReason)
-    
-    
-    case batchRequestError(reason: BatchRequestErrorReason)
-    
-    
     public enum BatchRequestErrorReason {
-        
         case providersIsEmpty
     }
     
+    public enum SerializeErrorReason {
+        case imageMapping(response: Moya.Response)
+        case jsonMapping(response: Moya.Response)
+        case stringMapping(response: Moya.Response)
+        case objectMapping(error: Swift.Error, response: Moya.Response)
+        case encodableMapping(error: Swift.Error)
+        case statusCodeFail(response: Moya.Response)
+        case underlying(error: Swift.Error, response: Moya.Response?)
+        case urlRequestCreateFail(string: String)
+        case parameterEncodingError(error: Swift.Error)
+    }
     
+    // MARK: Member Cases
+
+    case cacheError(reason: CacheErrorReason)
+
+    case batchRequestError(reason: BatchRequestErrorReason)
+    
+    case serializeError(reason: SerializeErrorReason)
 }
 
 
@@ -130,6 +130,7 @@ extension SYMoyaNetworkError: LocalizedError {
 //        case .responseError(let reason): return reason.errorDescription
         case .cacheError(let reason): return reason.errorDescription
         case .batchRequestError(let reason): return reason.errorDescription
+        case .serializeError(let reason): return reason.errorDescription
 //        case .processorError(let reason): return reason.errorDescription
         }
     }
@@ -151,6 +152,8 @@ extension SYMoyaNetworkError: CustomNSError {
 //        case .processorError(let reason): return reason.errorCode
 //        case .responseSettingError(let reason): return reason.errorCode
         case .batchRequestError(let reason): return reason.errorCode
+            
+        case .serializeError(let reason): return reason.errorCode
         }
     }
 }
@@ -176,10 +179,9 @@ extension SYMoyaNetworkError.CacheErrorReason {
             return "Cannot convert the input object to a `Data` object when storing it to disk cache. " +
                    "Object: \(object). Underlying error: \(error)"
         case .cannotSerializeResponse(let response, let serializer):
-//            return "Cannot serialize an response due to the cache serializer returning `nil`. " +
-//                   "Response: \(String(describing:response)), original data: \(String(describing: originalData)), " +
-//                   "serializer: \(serializer)."
-        return ""
+            return "Cannot serialize an response due to the cache serializer returning `nil`. " +
+                "Response: \(response?.description ?? ""), original data: \(String(describing: response?.data)), " +
+                   "serializer: \(serializer)."
         case .cannotCreateCacheFile(let fileURL, let key, let data, let error):
             return "Cannot create cache file at url: \(fileURL), key: \(key), data length: \(data.count). " +
                    "Underlying foundation error: \(error)."
@@ -221,8 +223,51 @@ extension SYMoyaNetworkError.BatchRequestErrorReason {
     
     var errorCode: Int {
         switch self {
-        case .providersIsEmpty: return 30012
+        case .providersIsEmpty: return 40001
         
+        }
+    }
+}
+
+
+
+//MARK: - SerializeErrorReason
+
+extension SYMoyaNetworkError.SerializeErrorReason {
+    var errorDescription: String? {
+        switch self {
+        case .imageMapping(let response):
+            return "Image serialization failed, Response: \(response.description)"
+        case .jsonMapping(let response):
+            return "JSON serialization failed, Response: \(response.description)"
+        case .stringMapping(let response):
+            return "String serialization failed, Response: \(response.description)"
+        case .objectMapping(let error, let response):
+            return "Object serialization failed, Response: \(response.description), Error: \(error.localizedDescription)"
+        case .encodableMapping(let error):
+            return "EncodableMapping serialization failed, Error: \(error.localizedDescription)"
+        case .statusCodeFail(let response):
+            return "Request failed, Response: \(response.description), StatuCode: \(response.response?.statusCode ?? 0)"
+        case .underlying(let error, let response):
+            return "Underlying Error: \(error.localizedDescription), Response: \(response?.description ?? "")"
+        case .urlRequestCreateFail(let string):
+            return "URLRequest creation failed, please check if the request is correct. Reason: \(string)"
+        case .parameterEncodingError(let error):
+            return "Request parameter encoding error. Reason: \(error.localizedDescription)"
+        }
+    }
+    
+    var errorCode: Int {
+        switch self {
+        case .imageMapping: return 50001
+        case .jsonMapping: return 50002
+        case .stringMapping: return 50003
+        case .objectMapping: return 50004
+        case .encodableMapping: return 50005
+        case .statusCodeFail: return 50006
+        case .underlying: return 50007
+        case .urlRequestCreateFail: return 50008
+        case .parameterEncodingError: return 50009
         }
     }
 }

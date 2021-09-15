@@ -7,8 +7,6 @@
 //
 
 import Foundation
-
-
 public extension URL {
     
     /// Initialize URL from Moya's `TargetType`.

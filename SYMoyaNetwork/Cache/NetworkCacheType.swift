@@ -41,22 +41,6 @@ public enum NetworkCacheType {
     }
 }
 
-//extension NetworkCacheType: Equatable {
-//    public static func == (lhs: NetworkCacheType, rhs: NetworkCacheType) -> Bool {
-//        switch (lhs, rhs) {
-//        case (.none, .none):
-//            return true
-//        case (let .urlRequestCache(lhsURLCacheInfo), let .urlRequestCache(rhsURLCacheInfo)):
-//            return lhsURLCacheInfo.ignoreServer == rhsURLCacheInfo.ignoreServer && lhsURLCacheInfo.HTTPVersion == rhsURLCacheInfo.HTTPVersion && lhsURLCacheInfo.autoClearCache == rhsURLCacheInfo.autoClearCache && lhsURLCacheInfo.isCanUseCacheControl == rhsURLCacheInfo.isCanUseCacheControl && lhsURLCacheInfo.maxAge == rhsURLCacheInfo.maxAge && lhsURLCacheInfo.isPrivate == rhsURLCacheInfo.isPrivate
-//        case (let .syMoyaNetworkCache(lhsNetworkCacheOptionsInfo), let .syMoyaNetworkCache(rhsNetworkCacheOptionsInfo)):
-//            return lhsNetworkCacheOptionsInfo.cacheKey == rhsNetworkCacheOptionsInfo.cacheKey && lhsNetworkCacheOptionsInfo.cacheTime == rhsNetworkCacheOptionsInfo.cacheTime
-//        default:
-//            return false
-//        }
-//    }
-//}
-
-
 public extension NetworkCacheType {
     
     static let defaultCacheKey: String = "com.shannonyang.SYMoyaNetwork.NetworkCache.Key"
