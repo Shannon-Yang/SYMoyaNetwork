@@ -32,6 +32,8 @@
 		FB80743F26F341A40042B30D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB80743726F341A40042B30D /* LaunchScreen.storyboard */; };
 		FB80744026F341A40042B30D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB80743926F341A40042B30D /* Main.storyboard */; };
 		FB80744126F341A40042B30D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80743B26F341A40042B30D /* AppDelegate.swift */; };
+		FB80744526F355B40042B30D /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB80744426F355B40042B30D /* SYMoyaNetwork.framework */; };
+		FB80744626F355B40042B30D /* SYMoyaNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB80744426F355B40042B30D /* SYMoyaNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,17 @@
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FB80744726F355B40042B30D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FB80744626F355B40042B30D /* SYMoyaNetwork.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -110,6 +123,7 @@
 		FB80743A26F341A40042B30D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FB80743B26F341A40042B30D /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB80743C26F341A40042B30D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB80744426F355B40042B30D /* SYMoyaNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SYMoyaNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +131,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB80744526F355B40042B30D /* SYMoyaNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +164,7 @@
 			children = (
 				FB80736926F33E090042B30D /* SYMoyaNetwork-Example */,
 				FB80736826F33E090042B30D /* Products */,
+				FB80744326F355B40042B30D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -239,6 +255,14 @@
 			path = "SYMoyaNetwork-Example-tvOS";
 			sourceTree = "<group>";
 		};
+		FB80744326F355B40042B30D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FB80744426F355B40042B30D /* SYMoyaNetwork.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -249,6 +273,7 @@
 				FB80736326F33E090042B30D /* Sources */,
 				FB80736426F33E090042B30D /* Frameworks */,
 				FB80736526F33E090042B30D /* Resources */,
+				FB80744726F355B40042B30D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

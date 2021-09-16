@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import SYMoyaNetwork
+//@testable import SYMoyaNetwork
 
 class SYMoyaNetworkTests: XCTestCase {
 
