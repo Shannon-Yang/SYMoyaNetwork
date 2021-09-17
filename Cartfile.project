@@ -1,0 +1,10 @@
+SYMoyaNetwork:
+  project: SYMoyaNetwork.xcworkspace
+  sdks:
+  - watchsimulator
+  - iphonesimulator
+  - appletvsimulator
+  - watchos
+  - appletvos
+  - iphoneos
+  - macosx
