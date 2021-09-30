@@ -116,7 +116,7 @@ open class NetworkCache {
     /// The default `NetworkCache` object. SYMoyaNetwork will use this cache for its related methods if there is no
     /// other cache specified. The `name` of this default cache is "default", and you should not use this name
     /// for any of your customize cache.
-    public static let `default` = NetworkCache(name: "default")
+//    public static let `default` = NetworkCache(name: "default")
 
 
     // MARK: Public Properties
@@ -444,19 +444,12 @@ open class NetworkCache {
         } else if options.fromMemoryCacheOrRefresh {
             callbackQueue.execute { completionHandler(.success(.none)) }
         } else {
-
             // Begin to disk search.
             self.retrieveResponseInDiskCache(forKey: key, options: options, callbackQueue: callbackQueue) {
                 result in
                 switch result {
                 case .success(let response):
-
-//                    guard let response = response else {
-//                        // No response found in disk storage.
-//                        callbackQueue.execute { completionHandler(.success(.none)) }
-//                        return
-//                    }
-
+                    
                     // Cache the disk response to memory.
                     // We are passing `false` to `toDisk`, the memory cache does not change
                     // callback queue, we can call `completionHandler` without another dispatch.

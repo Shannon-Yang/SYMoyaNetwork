@@ -7,43 +7,45 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB63547F2705A61E003F1D7C /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63544A2705A61D003F1D7C /* Storage.swift */; };
+		FB6354802705A61E003F1D7C /* MemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63544B2705A61D003F1D7C /* MemoryStorage.swift */; };
+		FB6354812705A61E003F1D7C /* DiskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63544C2705A61D003F1D7C /* DiskStorage.swift */; };
+		FB6354822705A61E003F1D7C /* CacheSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63544D2705A61D003F1D7C /* CacheSerializer.swift */; };
+		FB6354832705A61E003F1D7C /* NetworkCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63544E2705A61D003F1D7C /* NetworkCache.swift */; };
+		FB6354842705A61E003F1D7C /* SYMoyaNetworkOptionsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63544F2705A61D003F1D7C /* SYMoyaNetworkOptionsInfo.swift */; };
+		FB6354852705A61E003F1D7C /* NetworkCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354502705A61D003F1D7C /* NetworkCacheType.swift */; };
+		FB6354862705A61E003F1D7C /* SYMoyaNetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354522705A61D003F1D7C /* SYMoyaNetworkLoggerPlugin.swift */; };
+		FB6354872705A61E003F1D7C /* SYMoyaProvider+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354542705A61D003F1D7C /* SYMoyaProvider+Image.swift */; };
+		FB6354882705A61E003F1D7C /* SYMoyaChainRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354562705A61D003F1D7C /* SYMoyaChainRequestProvider.swift */; };
+		FB6354892705A61E003F1D7C /* SYMoyaProvider+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354582705A61E003F1D7C /* SYMoyaProvider+JSON.swift */; };
+		FB63548A2705A61E003F1D7C /* SYMoyaBatchRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63545A2705A61E003F1D7C /* SYMoyaBatchRequestProvider.swift */; };
+		FB63548B2705A61E003F1D7C /* SYMoyaURLCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63545C2705A61E003F1D7C /* SYMoyaURLCache.swift */; };
+		FB63548C2705A61E003F1D7C /* SYMoyaProvider+URLCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63545D2705A61E003F1D7C /* SYMoyaProvider+URLCache.swift */; };
+		FB63548D2705A61E003F1D7C /* SYMoyaProvider+SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63545F2705A61E003F1D7C /* SYMoyaProvider+SwiftyJSON.swift */; };
+		FB63548E2705A61E003F1D7C /* Response+SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354602705A61E003F1D7C /* Response+SwiftyJSON.swift */; };
+		FB63548F2705A61E003F1D7C /* SYMoyaProvider+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354622705A61E003F1D7C /* SYMoyaProvider+Codable.swift */; };
+		FB6354902705A61E003F1D7C /* Response+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354632705A61E003F1D7C /* Response+Codable.swift */; };
+		FB6354912705A61E003F1D7C /* SYMoyaNetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354652705A61E003F1D7C /* SYMoyaNetworkError.swift */; };
+		FB6354922705A61E003F1D7C /* MoyaError+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354662705A61E003F1D7C /* MoyaError+Transform.swift */; };
+		FB6354932705A61E003F1D7C /* Response+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354682705A61E003F1D7C /* Response+ObjectMapper.swift */; };
+		FB6354942705A61E003F1D7C /* SYMoyaProvider+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354692705A61E003F1D7C /* SYMoyaProvider+ObjectMapper.swift */; };
+		FB6354952705A61E003F1D7C /* SYMoyaProvider+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63546B2705A61E003F1D7C /* SYMoyaProvider+String.swift */; };
+		FB6354962705A61E003F1D7C /* SYDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63546D2705A61E003F1D7C /* SYDataResponse.swift */; };
+		FB6354972705A61E003F1D7C /* Result+SYMoyaNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63546E2705A61E003F1D7C /* Result+SYMoyaNetwork.swift */; };
+		FB6354982705A61E003F1D7C /* ResponseDataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354702705A61E003F1D7C /* ResponseDataSourceType.swift */; };
+		FB6354992705A61E003F1D7C /* SYMoyaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354712705A61E003F1D7C /* SYMoyaProvider.swift */; };
+		FB63549A2705A61E003F1D7C /* URL+SYMoya.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354722705A61E003F1D7C /* URL+SYMoya.swift */; };
+		FB63549B2705A61E003F1D7C /* SYTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354732705A61E003F1D7C /* SYTargetType.swift */; };
+		FB63549C2705A61E003F1D7C /* SYMoyaProvider+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354742705A61E003F1D7C /* SYMoyaProvider+Cache.swift */; };
+		FB63549D2705A61E003F1D7C /* NetworkConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354762705A61E003F1D7C /* NetworkConfig.swift */; };
+		FB63549E2705A61E003F1D7C /* SYMoyaProvider+HandyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354782705A61E003F1D7C /* SYMoyaProvider+HandyJSON.swift */; };
+		FB63549F2705A61E003F1D7C /* Response+HandyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354792705A61E003F1D7C /* Response+HandyJSON.swift */; };
+		FB6354A02705A61E003F1D7C /* Response+CacheCostCalculable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63547B2705A61E003F1D7C /* Response+CacheCostCalculable.swift */; };
+		FB6354A12705A61E003F1D7C /* CallbackQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63547C2705A61E003F1D7C /* CallbackQueue.swift */; };
+		FB6354A22705A61E003F1D7C /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63547D2705A61E003F1D7C /* String+MD5.swift */; };
+		FB6354A32705A61E003F1D7C /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63547E2705A61E003F1D7C /* Date+Extensions.swift */; };
 		FB8072F826F32C070042B30D /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
 		FB8072FF26F32C070042B30D /* SYMoyaNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = FB8072F126F32C070042B30D /* SYMoyaNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FB80733B26F32E760042B30D /* SYMoyaBatchRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80730926F32E750042B30D /* SYMoyaBatchRequestProvider.swift */; };
-		FB80733C26F32E760042B30D /* SYMoyaProvider+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80730B26F32E750042B30D /* SYMoyaProvider+Image.swift */; };
-		FB80733D26F32E760042B30D /* SYMoyaProvider+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80730D26F32E750042B30D /* SYMoyaProvider+Codable.swift */; };
-		FB80733E26F32E760042B30D /* Response+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80730E26F32E750042B30D /* Response+Codable.swift */; };
-		FB80733F26F32E760042B30D /* SYMoyaProvider+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80731026F32E750042B30D /* SYMoyaProvider+String.swift */; };
-		FB80734026F32E760042B30D /* SYMoyaURLCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80731226F32E750042B30D /* SYMoyaURLCache.swift */; };
-		FB80734126F32E760042B30D /* SYMoyaProvider+URLCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80731326F32E750042B30D /* SYMoyaProvider+URLCache.swift */; };
-		FB80734226F32E770042B30D /* SYDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80731526F32E750042B30D /* SYDataResponse.swift */; };
-		FB80734326F32E770042B30D /* Result+SYMoyaNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80731626F32E750042B30D /* Result+SYMoyaNetwork.swift */; };
-		FB80734426F32E770042B30D /* Response+CacheCostCalculable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80731826F32E760042B30D /* Response+CacheCostCalculable.swift */; };
-		FB80734526F32E770042B30D /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80731926F32E760042B30D /* Date+Extension.swift */; };
-		FB80734626F32E770042B30D /* CallbackQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80731A26F32E760042B30D /* CallbackQueue.swift */; };
-		FB80734726F32E770042B30D /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80731B26F32E760042B30D /* String+MD5.swift */; };
-		FB80734826F32E770042B30D /* SYMoyaProvider+SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80731D26F32E760042B30D /* SYMoyaProvider+SwiftyJSON.swift */; };
-		FB80734926F32E770042B30D /* Response+SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80731E26F32E760042B30D /* Response+SwiftyJSON.swift */; };
-		FB80734A26F32E770042B30D /* NetworkConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80732026F32E760042B30D /* NetworkConfig.swift */; };
-		FB80734B26F32E770042B30D /* ResponseDataSourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80732226F32E760042B30D /* ResponseDataSourceType.swift */; };
-		FB80734C26F32E770042B30D /* SYMoyaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80732326F32E760042B30D /* SYMoyaProvider.swift */; };
-		FB80734D26F32E770042B30D /* URL+SYMoya.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80732426F32E760042B30D /* URL+SYMoya.swift */; };
-		FB80734E26F32E770042B30D /* SYTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80732526F32E760042B30D /* SYTargetType.swift */; };
-		FB80734F26F32E770042B30D /* SYMoyaProvider+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80732626F32E760042B30D /* SYMoyaProvider+Cache.swift */; };
-		FB80735026F32E770042B30D /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80732826F32E760042B30D /* Storage.swift */; };
-		FB80735126F32E770042B30D /* MemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80732926F32E760042B30D /* MemoryStorage.swift */; };
-		FB80735226F32E770042B30D /* DiskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80732A26F32E760042B30D /* DiskStorage.swift */; };
-		FB80735326F32E770042B30D /* CacheSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80732B26F32E760042B30D /* CacheSerializer.swift */; };
-		FB80735426F32E770042B30D /* NetworkCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80732C26F32E760042B30D /* NetworkCache.swift */; };
-		FB80735526F32E770042B30D /* SYMoyaNetworkOptionsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80732D26F32E760042B30D /* SYMoyaNetworkOptionsInfo.swift */; };
-		FB80735626F32E770042B30D /* NetworkCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80732E26F32E760042B30D /* NetworkCacheType.swift */; };
-		FB80735726F32E770042B30D /* SYMoyaNetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80733026F32E760042B30D /* SYMoyaNetworkLoggerPlugin.swift */; };
-		FB80735826F32E770042B30D /* SYMoyaChainRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80733226F32E760042B30D /* SYMoyaChainRequestProvider.swift */; };
-		FB80735926F32E770042B30D /* Response+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80733426F32E760042B30D /* Response+ObjectMapper.swift */; };
-		FB80735A26F32E770042B30D /* SYMoyaProvider+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80733526F32E760042B30D /* SYMoyaProvider+ObjectMapper.swift */; };
-		FB80735B26F32E770042B30D /* SYMoyaNetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80733726F32E760042B30D /* SYMoyaNetworkError.swift */; };
-		FB80735C26F32E770042B30D /* MoyaError+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80733826F32E760042B30D /* MoyaError+Transform.swift */; };
-		FB80735D26F32E770042B30D /* SYMoyaProvider+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80733A26F32E760042B30D /* SYMoyaProvider+JSON.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,45 +59,47 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FB63544A2705A61D003F1D7C /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		FB63544B2705A61D003F1D7C /* MemoryStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryStorage.swift; sourceTree = "<group>"; };
+		FB63544C2705A61D003F1D7C /* DiskStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiskStorage.swift; sourceTree = "<group>"; };
+		FB63544D2705A61D003F1D7C /* CacheSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheSerializer.swift; sourceTree = "<group>"; };
+		FB63544E2705A61D003F1D7C /* NetworkCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkCache.swift; sourceTree = "<group>"; };
+		FB63544F2705A61D003F1D7C /* SYMoyaNetworkOptionsInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYMoyaNetworkOptionsInfo.swift; sourceTree = "<group>"; };
+		FB6354502705A61D003F1D7C /* NetworkCacheType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkCacheType.swift; sourceTree = "<group>"; };
+		FB6354522705A61D003F1D7C /* SYMoyaNetworkLoggerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYMoyaNetworkLoggerPlugin.swift; sourceTree = "<group>"; };
+		FB6354542705A61D003F1D7C /* SYMoyaProvider+Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+Image.swift"; sourceTree = "<group>"; };
+		FB6354562705A61D003F1D7C /* SYMoyaChainRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYMoyaChainRequestProvider.swift; sourceTree = "<group>"; };
+		FB6354582705A61E003F1D7C /* SYMoyaProvider+JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+JSON.swift"; sourceTree = "<group>"; };
+		FB63545A2705A61E003F1D7C /* SYMoyaBatchRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYMoyaBatchRequestProvider.swift; sourceTree = "<group>"; };
+		FB63545C2705A61E003F1D7C /* SYMoyaURLCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYMoyaURLCache.swift; sourceTree = "<group>"; };
+		FB63545D2705A61E003F1D7C /* SYMoyaProvider+URLCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+URLCache.swift"; sourceTree = "<group>"; };
+		FB63545F2705A61E003F1D7C /* SYMoyaProvider+SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+SwiftyJSON.swift"; sourceTree = "<group>"; };
+		FB6354602705A61E003F1D7C /* Response+SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+SwiftyJSON.swift"; sourceTree = "<group>"; };
+		FB6354622705A61E003F1D7C /* SYMoyaProvider+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+Codable.swift"; sourceTree = "<group>"; };
+		FB6354632705A61E003F1D7C /* Response+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+Codable.swift"; sourceTree = "<group>"; };
+		FB6354652705A61E003F1D7C /* SYMoyaNetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYMoyaNetworkError.swift; sourceTree = "<group>"; };
+		FB6354662705A61E003F1D7C /* MoyaError+Transform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MoyaError+Transform.swift"; sourceTree = "<group>"; };
+		FB6354682705A61E003F1D7C /* Response+ObjectMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+ObjectMapper.swift"; sourceTree = "<group>"; };
+		FB6354692705A61E003F1D7C /* SYMoyaProvider+ObjectMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+ObjectMapper.swift"; sourceTree = "<group>"; };
+		FB63546B2705A61E003F1D7C /* SYMoyaProvider+String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+String.swift"; sourceTree = "<group>"; };
+		FB63546D2705A61E003F1D7C /* SYDataResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYDataResponse.swift; sourceTree = "<group>"; };
+		FB63546E2705A61E003F1D7C /* Result+SYMoyaNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Result+SYMoyaNetwork.swift"; sourceTree = "<group>"; };
+		FB6354702705A61E003F1D7C /* ResponseDataSourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseDataSourceType.swift; sourceTree = "<group>"; };
+		FB6354712705A61E003F1D7C /* SYMoyaProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYMoyaProvider.swift; sourceTree = "<group>"; };
+		FB6354722705A61E003F1D7C /* URL+SYMoya.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+SYMoya.swift"; sourceTree = "<group>"; };
+		FB6354732705A61E003F1D7C /* SYTargetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYTargetType.swift; sourceTree = "<group>"; };
+		FB6354742705A61E003F1D7C /* SYMoyaProvider+Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+Cache.swift"; sourceTree = "<group>"; };
+		FB6354762705A61E003F1D7C /* NetworkConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkConfig.swift; sourceTree = "<group>"; };
+		FB6354782705A61E003F1D7C /* SYMoyaProvider+HandyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+HandyJSON.swift"; sourceTree = "<group>"; };
+		FB6354792705A61E003F1D7C /* Response+HandyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+HandyJSON.swift"; sourceTree = "<group>"; };
+		FB63547B2705A61E003F1D7C /* Response+CacheCostCalculable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+CacheCostCalculable.swift"; sourceTree = "<group>"; };
+		FB63547C2705A61E003F1D7C /* CallbackQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallbackQueue.swift; sourceTree = "<group>"; };
+		FB63547D2705A61E003F1D7C /* String+MD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+MD5.swift"; sourceTree = "<group>"; };
+		FB63547E2705A61E003F1D7C /* Date+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYMoyaNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB8072F126F32C070042B30D /* SYMoyaNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYMoyaNetwork.h; sourceTree = "<group>"; };
 		FB8072F226F32C070042B30D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FB8072F726F32C070042B30D /* SYMoyaNetworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SYMoyaNetworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB80730926F32E750042B30D /* SYMoyaBatchRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYMoyaBatchRequestProvider.swift; sourceTree = "<group>"; };
-		FB80730B26F32E750042B30D /* SYMoyaProvider+Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+Image.swift"; sourceTree = "<group>"; };
-		FB80730D26F32E750042B30D /* SYMoyaProvider+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+Codable.swift"; sourceTree = "<group>"; };
-		FB80730E26F32E750042B30D /* Response+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+Codable.swift"; sourceTree = "<group>"; };
-		FB80731026F32E750042B30D /* SYMoyaProvider+String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+String.swift"; sourceTree = "<group>"; };
-		FB80731226F32E750042B30D /* SYMoyaURLCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYMoyaURLCache.swift; sourceTree = "<group>"; };
-		FB80731326F32E750042B30D /* SYMoyaProvider+URLCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+URLCache.swift"; sourceTree = "<group>"; };
-		FB80731526F32E750042B30D /* SYDataResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYDataResponse.swift; sourceTree = "<group>"; };
-		FB80731626F32E750042B30D /* Result+SYMoyaNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Result+SYMoyaNetwork.swift"; sourceTree = "<group>"; };
-		FB80731826F32E760042B30D /* Response+CacheCostCalculable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+CacheCostCalculable.swift"; sourceTree = "<group>"; };
-		FB80731926F32E760042B30D /* Date+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
-		FB80731A26F32E760042B30D /* CallbackQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallbackQueue.swift; sourceTree = "<group>"; };
-		FB80731B26F32E760042B30D /* String+MD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+MD5.swift"; sourceTree = "<group>"; };
-		FB80731D26F32E760042B30D /* SYMoyaProvider+SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+SwiftyJSON.swift"; sourceTree = "<group>"; };
-		FB80731E26F32E760042B30D /* Response+SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+SwiftyJSON.swift"; sourceTree = "<group>"; };
-		FB80732026F32E760042B30D /* NetworkConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkConfig.swift; sourceTree = "<group>"; };
-		FB80732226F32E760042B30D /* ResponseDataSourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseDataSourceType.swift; sourceTree = "<group>"; };
-		FB80732326F32E760042B30D /* SYMoyaProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYMoyaProvider.swift; sourceTree = "<group>"; };
-		FB80732426F32E760042B30D /* URL+SYMoya.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+SYMoya.swift"; sourceTree = "<group>"; };
-		FB80732526F32E760042B30D /* SYTargetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYTargetType.swift; sourceTree = "<group>"; };
-		FB80732626F32E760042B30D /* SYMoyaProvider+Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+Cache.swift"; sourceTree = "<group>"; };
-		FB80732826F32E760042B30D /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
-		FB80732926F32E760042B30D /* MemoryStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryStorage.swift; sourceTree = "<group>"; };
-		FB80732A26F32E760042B30D /* DiskStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiskStorage.swift; sourceTree = "<group>"; };
-		FB80732B26F32E760042B30D /* CacheSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheSerializer.swift; sourceTree = "<group>"; };
-		FB80732C26F32E760042B30D /* NetworkCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkCache.swift; sourceTree = "<group>"; };
-		FB80732D26F32E760042B30D /* SYMoyaNetworkOptionsInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYMoyaNetworkOptionsInfo.swift; sourceTree = "<group>"; };
-		FB80732E26F32E760042B30D /* NetworkCacheType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkCacheType.swift; sourceTree = "<group>"; };
-		FB80733026F32E760042B30D /* SYMoyaNetworkLoggerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYMoyaNetworkLoggerPlugin.swift; sourceTree = "<group>"; };
-		FB80733226F32E760042B30D /* SYMoyaChainRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYMoyaChainRequestProvider.swift; sourceTree = "<group>"; };
-		FB80733426F32E760042B30D /* Response+ObjectMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+ObjectMapper.swift"; sourceTree = "<group>"; };
-		FB80733526F32E760042B30D /* SYMoyaProvider+ObjectMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+ObjectMapper.swift"; sourceTree = "<group>"; };
-		FB80733726F32E760042B30D /* SYMoyaNetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYMoyaNetworkError.swift; sourceTree = "<group>"; };
-		FB80733826F32E760042B30D /* MoyaError+Transform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MoyaError+Transform.swift"; sourceTree = "<group>"; };
-		FB80733A26F32E760042B30D /* SYMoyaProvider+JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+JSON.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +121,162 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FB6354492705A61D003F1D7C /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				FB63544A2705A61D003F1D7C /* Storage.swift */,
+				FB63544B2705A61D003F1D7C /* MemoryStorage.swift */,
+				FB63544C2705A61D003F1D7C /* DiskStorage.swift */,
+				FB63544D2705A61D003F1D7C /* CacheSerializer.swift */,
+				FB63544E2705A61D003F1D7C /* NetworkCache.swift */,
+				FB63544F2705A61D003F1D7C /* SYMoyaNetworkOptionsInfo.swift */,
+				FB6354502705A61D003F1D7C /* NetworkCacheType.swift */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
+		FB6354512705A61D003F1D7C /* Log */ = {
+			isa = PBXGroup;
+			children = (
+				FB6354522705A61D003F1D7C /* SYMoyaNetworkLoggerPlugin.swift */,
+			);
+			path = Log;
+			sourceTree = "<group>";
+		};
+		FB6354532705A61D003F1D7C /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				FB6354542705A61D003F1D7C /* SYMoyaProvider+Image.swift */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
+		FB6354552705A61D003F1D7C /* SYMoyaChainRequestProvider */ = {
+			isa = PBXGroup;
+			children = (
+				FB6354562705A61D003F1D7C /* SYMoyaChainRequestProvider.swift */,
+			);
+			path = SYMoyaChainRequestProvider;
+			sourceTree = "<group>";
+		};
+		FB6354572705A61E003F1D7C /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				FB6354582705A61E003F1D7C /* SYMoyaProvider+JSON.swift */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
+		FB6354592705A61E003F1D7C /* SYMoyaBatchRequestProvider */ = {
+			isa = PBXGroup;
+			children = (
+				FB63545A2705A61E003F1D7C /* SYMoyaBatchRequestProvider.swift */,
+			);
+			path = SYMoyaBatchRequestProvider;
+			sourceTree = "<group>";
+		};
+		FB63545B2705A61E003F1D7C /* SYMoyaURLCache */ = {
+			isa = PBXGroup;
+			children = (
+				FB63545C2705A61E003F1D7C /* SYMoyaURLCache.swift */,
+				FB63545D2705A61E003F1D7C /* SYMoyaProvider+URLCache.swift */,
+			);
+			path = SYMoyaURLCache;
+			sourceTree = "<group>";
+		};
+		FB63545E2705A61E003F1D7C /* SwiftyJSON */ = {
+			isa = PBXGroup;
+			children = (
+				FB63545F2705A61E003F1D7C /* SYMoyaProvider+SwiftyJSON.swift */,
+				FB6354602705A61E003F1D7C /* Response+SwiftyJSON.swift */,
+			);
+			path = SwiftyJSON;
+			sourceTree = "<group>";
+		};
+		FB6354612705A61E003F1D7C /* Codable */ = {
+			isa = PBXGroup;
+			children = (
+				FB6354622705A61E003F1D7C /* SYMoyaProvider+Codable.swift */,
+				FB6354632705A61E003F1D7C /* Response+Codable.swift */,
+			);
+			path = Codable;
+			sourceTree = "<group>";
+		};
+		FB6354642705A61E003F1D7C /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				FB6354652705A61E003F1D7C /* SYMoyaNetworkError.swift */,
+				FB6354662705A61E003F1D7C /* MoyaError+Transform.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		FB6354672705A61E003F1D7C /* ObjectMapper */ = {
+			isa = PBXGroup;
+			children = (
+				FB6354682705A61E003F1D7C /* Response+ObjectMapper.swift */,
+				FB6354692705A61E003F1D7C /* SYMoyaProvider+ObjectMapper.swift */,
+			);
+			path = ObjectMapper;
+			sourceTree = "<group>";
+		};
+		FB63546A2705A61E003F1D7C /* String */ = {
+			isa = PBXGroup;
+			children = (
+				FB63546B2705A61E003F1D7C /* SYMoyaProvider+String.swift */,
+			);
+			path = String;
+			sourceTree = "<group>";
+		};
+		FB63546C2705A61E003F1D7C /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				FB63546D2705A61E003F1D7C /* SYDataResponse.swift */,
+				FB63546E2705A61E003F1D7C /* Result+SYMoyaNetwork.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		FB63546F2705A61E003F1D7C /* SYMoya */ = {
+			isa = PBXGroup;
+			children = (
+				FB6354702705A61E003F1D7C /* ResponseDataSourceType.swift */,
+				FB6354712705A61E003F1D7C /* SYMoyaProvider.swift */,
+				FB6354722705A61E003F1D7C /* URL+SYMoya.swift */,
+				FB6354732705A61E003F1D7C /* SYTargetType.swift */,
+				FB6354742705A61E003F1D7C /* SYMoyaProvider+Cache.swift */,
+			);
+			path = SYMoya;
+			sourceTree = "<group>";
+		};
+		FB6354752705A61E003F1D7C /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				FB6354762705A61E003F1D7C /* NetworkConfig.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		FB6354772705A61E003F1D7C /* HandyJSON */ = {
+			isa = PBXGroup;
+			children = (
+				FB6354782705A61E003F1D7C /* SYMoyaProvider+HandyJSON.swift */,
+				FB6354792705A61E003F1D7C /* Response+HandyJSON.swift */,
+			);
+			path = HandyJSON;
+			sourceTree = "<group>";
+		};
+		FB63547A2705A61E003F1D7C /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				FB63547B2705A61E003F1D7C /* Response+CacheCostCalculable.swift */,
+				FB63547C2705A61E003F1D7C /* CallbackQueue.swift */,
+				FB63547D2705A61E003F1D7C /* String+MD5.swift */,
+				FB63547E2705A61E003F1D7C /* Date+Extensions.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		FB8072E426F32C070042B30D = {
 			isa = PBXGroup;
 			children = (
@@ -137,173 +297,27 @@
 		FB8072F026F32C070042B30D /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				FB80732726F32E760042B30D /* Cache */,
-				FB80730C26F32E750042B30D /* Codable */,
-				FB80731F26F32E760042B30D /* Config */,
-				FB80733626F32E760042B30D /* Error */,
-				FB80730A26F32E750042B30D /* Image */,
-				FB80733926F32E760042B30D /* JSON */,
-				FB80732F26F32E760042B30D /* Log */,
-				FB80733326F32E760042B30D /* ObjectMapper */,
-				FB80731426F32E750042B30D /* Response */,
-				FB80730F26F32E750042B30D /* String */,
-				FB80731C26F32E760042B30D /* SwiftyJSON */,
-				FB80732126F32E760042B30D /* SYMoya */,
-				FB80730826F32E750042B30D /* SYMoyaBatchRequestProvider */,
-				FB80733126F32E760042B30D /* SYMoyaChainRequestProvider */,
-				FB80731126F32E750042B30D /* SYMoyaURLCache */,
-				FB80731726F32E760042B30D /* Utility */,
+				FB6354492705A61D003F1D7C /* Cache */,
+				FB6354612705A61E003F1D7C /* Codable */,
+				FB6354752705A61E003F1D7C /* Config */,
+				FB6354642705A61E003F1D7C /* Error */,
+				FB6354772705A61E003F1D7C /* HandyJSON */,
+				FB6354532705A61D003F1D7C /* Image */,
+				FB6354572705A61E003F1D7C /* JSON */,
+				FB6354512705A61D003F1D7C /* Log */,
+				FB6354672705A61E003F1D7C /* ObjectMapper */,
+				FB63546C2705A61E003F1D7C /* Response */,
+				FB63546A2705A61E003F1D7C /* String */,
+				FB63545E2705A61E003F1D7C /* SwiftyJSON */,
+				FB63546F2705A61E003F1D7C /* SYMoya */,
+				FB6354592705A61E003F1D7C /* SYMoyaBatchRequestProvider */,
+				FB6354552705A61D003F1D7C /* SYMoyaChainRequestProvider */,
+				FB63545B2705A61E003F1D7C /* SYMoyaURLCache */,
+				FB63547A2705A61E003F1D7C /* Utility */,
 				FB8072F126F32C070042B30D /* SYMoyaNetwork.h */,
 				FB8072F226F32C070042B30D /* Info.plist */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		FB80730826F32E750042B30D /* SYMoyaBatchRequestProvider */ = {
-			isa = PBXGroup;
-			children = (
-				FB80730926F32E750042B30D /* SYMoyaBatchRequestProvider.swift */,
-			);
-			path = SYMoyaBatchRequestProvider;
-			sourceTree = "<group>";
-		};
-		FB80730A26F32E750042B30D /* Image */ = {
-			isa = PBXGroup;
-			children = (
-				FB80730B26F32E750042B30D /* SYMoyaProvider+Image.swift */,
-			);
-			path = Image;
-			sourceTree = "<group>";
-		};
-		FB80730C26F32E750042B30D /* Codable */ = {
-			isa = PBXGroup;
-			children = (
-				FB80730D26F32E750042B30D /* SYMoyaProvider+Codable.swift */,
-				FB80730E26F32E750042B30D /* Response+Codable.swift */,
-			);
-			path = Codable;
-			sourceTree = "<group>";
-		};
-		FB80730F26F32E750042B30D /* String */ = {
-			isa = PBXGroup;
-			children = (
-				FB80731026F32E750042B30D /* SYMoyaProvider+String.swift */,
-			);
-			path = String;
-			sourceTree = "<group>";
-		};
-		FB80731126F32E750042B30D /* SYMoyaURLCache */ = {
-			isa = PBXGroup;
-			children = (
-				FB80731226F32E750042B30D /* SYMoyaURLCache.swift */,
-				FB80731326F32E750042B30D /* SYMoyaProvider+URLCache.swift */,
-			);
-			path = SYMoyaURLCache;
-			sourceTree = "<group>";
-		};
-		FB80731426F32E750042B30D /* Response */ = {
-			isa = PBXGroup;
-			children = (
-				FB80731526F32E750042B30D /* SYDataResponse.swift */,
-				FB80731626F32E750042B30D /* Result+SYMoyaNetwork.swift */,
-			);
-			path = Response;
-			sourceTree = "<group>";
-		};
-		FB80731726F32E760042B30D /* Utility */ = {
-			isa = PBXGroup;
-			children = (
-				FB80731826F32E760042B30D /* Response+CacheCostCalculable.swift */,
-				FB80731926F32E760042B30D /* Date+Extension.swift */,
-				FB80731A26F32E760042B30D /* CallbackQueue.swift */,
-				FB80731B26F32E760042B30D /* String+MD5.swift */,
-			);
-			path = Utility;
-			sourceTree = "<group>";
-		};
-		FB80731C26F32E760042B30D /* SwiftyJSON */ = {
-			isa = PBXGroup;
-			children = (
-				FB80731D26F32E760042B30D /* SYMoyaProvider+SwiftyJSON.swift */,
-				FB80731E26F32E760042B30D /* Response+SwiftyJSON.swift */,
-			);
-			path = SwiftyJSON;
-			sourceTree = "<group>";
-		};
-		FB80731F26F32E760042B30D /* Config */ = {
-			isa = PBXGroup;
-			children = (
-				FB80732026F32E760042B30D /* NetworkConfig.swift */,
-			);
-			path = Config;
-			sourceTree = "<group>";
-		};
-		FB80732126F32E760042B30D /* SYMoya */ = {
-			isa = PBXGroup;
-			children = (
-				FB80732226F32E760042B30D /* ResponseDataSourceType.swift */,
-				FB80732326F32E760042B30D /* SYMoyaProvider.swift */,
-				FB80732426F32E760042B30D /* URL+SYMoya.swift */,
-				FB80732526F32E760042B30D /* SYTargetType.swift */,
-				FB80732626F32E760042B30D /* SYMoyaProvider+Cache.swift */,
-			);
-			path = SYMoya;
-			sourceTree = "<group>";
-		};
-		FB80732726F32E760042B30D /* Cache */ = {
-			isa = PBXGroup;
-			children = (
-				FB80732826F32E760042B30D /* Storage.swift */,
-				FB80732926F32E760042B30D /* MemoryStorage.swift */,
-				FB80732A26F32E760042B30D /* DiskStorage.swift */,
-				FB80732B26F32E760042B30D /* CacheSerializer.swift */,
-				FB80732C26F32E760042B30D /* NetworkCache.swift */,
-				FB80732D26F32E760042B30D /* SYMoyaNetworkOptionsInfo.swift */,
-				FB80732E26F32E760042B30D /* NetworkCacheType.swift */,
-			);
-			path = Cache;
-			sourceTree = "<group>";
-		};
-		FB80732F26F32E760042B30D /* Log */ = {
-			isa = PBXGroup;
-			children = (
-				FB80733026F32E760042B30D /* SYMoyaNetworkLoggerPlugin.swift */,
-			);
-			path = Log;
-			sourceTree = "<group>";
-		};
-		FB80733126F32E760042B30D /* SYMoyaChainRequestProvider */ = {
-			isa = PBXGroup;
-			children = (
-				FB80733226F32E760042B30D /* SYMoyaChainRequestProvider.swift */,
-			);
-			path = SYMoyaChainRequestProvider;
-			sourceTree = "<group>";
-		};
-		FB80733326F32E760042B30D /* ObjectMapper */ = {
-			isa = PBXGroup;
-			children = (
-				FB80733426F32E760042B30D /* Response+ObjectMapper.swift */,
-				FB80733526F32E760042B30D /* SYMoyaProvider+ObjectMapper.swift */,
-			);
-			path = ObjectMapper;
-			sourceTree = "<group>";
-		};
-		FB80733626F32E760042B30D /* Error */ = {
-			isa = PBXGroup;
-			children = (
-				FB80733726F32E760042B30D /* SYMoyaNetworkError.swift */,
-				FB80733826F32E760042B30D /* MoyaError+Transform.swift */,
-			);
-			path = Error;
-			sourceTree = "<group>";
-		};
-		FB80733926F32E760042B30D /* JSON */ = {
-			isa = PBXGroup;
-			children = (
-				FB80733A26F32E760042B30D /* SYMoyaProvider+JSON.swift */,
-			);
-			path = JSON;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -414,41 +428,43 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB80734726F32E770042B30D /* String+MD5.swift in Sources */,
-				FB80735026F32E770042B30D /* Storage.swift in Sources */,
-				FB80735526F32E770042B30D /* SYMoyaNetworkOptionsInfo.swift in Sources */,
-				FB80735326F32E770042B30D /* CacheSerializer.swift in Sources */,
-				FB80734426F32E770042B30D /* Response+CacheCostCalculable.swift in Sources */,
-				FB80734526F32E770042B30D /* Date+Extension.swift in Sources */,
-				FB80734F26F32E770042B30D /* SYMoyaProvider+Cache.swift in Sources */,
-				FB80734126F32E760042B30D /* SYMoyaProvider+URLCache.swift in Sources */,
-				FB80734326F32E770042B30D /* Result+SYMoyaNetwork.swift in Sources */,
-				FB80734626F32E770042B30D /* CallbackQueue.swift in Sources */,
-				FB80735726F32E770042B30D /* SYMoyaNetworkLoggerPlugin.swift in Sources */,
-				FB80734E26F32E770042B30D /* SYTargetType.swift in Sources */,
-				FB80735D26F32E770042B30D /* SYMoyaProvider+JSON.swift in Sources */,
-				FB80734926F32E770042B30D /* Response+SwiftyJSON.swift in Sources */,
-				FB80734826F32E770042B30D /* SYMoyaProvider+SwiftyJSON.swift in Sources */,
-				FB80734026F32E760042B30D /* SYMoyaURLCache.swift in Sources */,
-				FB80735C26F32E770042B30D /* MoyaError+Transform.swift in Sources */,
-				FB80733C26F32E760042B30D /* SYMoyaProvider+Image.swift in Sources */,
-				FB80735B26F32E770042B30D /* SYMoyaNetworkError.swift in Sources */,
-				FB80735A26F32E770042B30D /* SYMoyaProvider+ObjectMapper.swift in Sources */,
-				FB80733E26F32E760042B30D /* Response+Codable.swift in Sources */,
-				FB80734B26F32E770042B30D /* ResponseDataSourceType.swift in Sources */,
-				FB80735626F32E770042B30D /* NetworkCacheType.swift in Sources */,
-				FB80735926F32E770042B30D /* Response+ObjectMapper.swift in Sources */,
-				FB80734226F32E770042B30D /* SYDataResponse.swift in Sources */,
-				FB80735126F32E770042B30D /* MemoryStorage.swift in Sources */,
-				FB80733D26F32E760042B30D /* SYMoyaProvider+Codable.swift in Sources */,
-				FB80733B26F32E760042B30D /* SYMoyaBatchRequestProvider.swift in Sources */,
-				FB80734A26F32E770042B30D /* NetworkConfig.swift in Sources */,
-				FB80735426F32E770042B30D /* NetworkCache.swift in Sources */,
-				FB80735226F32E770042B30D /* DiskStorage.swift in Sources */,
-				FB80734C26F32E770042B30D /* SYMoyaProvider.swift in Sources */,
-				FB80733F26F32E760042B30D /* SYMoyaProvider+String.swift in Sources */,
-				FB80735826F32E770042B30D /* SYMoyaChainRequestProvider.swift in Sources */,
-				FB80734D26F32E770042B30D /* URL+SYMoya.swift in Sources */,
+				FB6354802705A61E003F1D7C /* MemoryStorage.swift in Sources */,
+				FB6354952705A61E003F1D7C /* SYMoyaProvider+String.swift in Sources */,
+				FB63547F2705A61E003F1D7C /* Storage.swift in Sources */,
+				FB6354A22705A61E003F1D7C /* String+MD5.swift in Sources */,
+				FB6354942705A61E003F1D7C /* SYMoyaProvider+ObjectMapper.swift in Sources */,
+				FB63548A2705A61E003F1D7C /* SYMoyaBatchRequestProvider.swift in Sources */,
+				FB6354822705A61E003F1D7C /* CacheSerializer.swift in Sources */,
+				FB6354A12705A61E003F1D7C /* CallbackQueue.swift in Sources */,
+				FB63549F2705A61E003F1D7C /* Response+HandyJSON.swift in Sources */,
+				FB63548B2705A61E003F1D7C /* SYMoyaURLCache.swift in Sources */,
+				FB63549B2705A61E003F1D7C /* SYTargetType.swift in Sources */,
+				FB6354932705A61E003F1D7C /* Response+ObjectMapper.swift in Sources */,
+				FB6354A02705A61E003F1D7C /* Response+CacheCostCalculable.swift in Sources */,
+				FB6354852705A61E003F1D7C /* NetworkCacheType.swift in Sources */,
+				FB6354972705A61E003F1D7C /* Result+SYMoyaNetwork.swift in Sources */,
+				FB6354892705A61E003F1D7C /* SYMoyaProvider+JSON.swift in Sources */,
+				FB6354982705A61E003F1D7C /* ResponseDataSourceType.swift in Sources */,
+				FB6354922705A61E003F1D7C /* MoyaError+Transform.swift in Sources */,
+				FB63548C2705A61E003F1D7C /* SYMoyaProvider+URLCache.swift in Sources */,
+				FB63549D2705A61E003F1D7C /* NetworkConfig.swift in Sources */,
+				FB6354A32705A61E003F1D7C /* Date+Extensions.swift in Sources */,
+				FB63549C2705A61E003F1D7C /* SYMoyaProvider+Cache.swift in Sources */,
+				FB6354832705A61E003F1D7C /* NetworkCache.swift in Sources */,
+				FB6354902705A61E003F1D7C /* Response+Codable.swift in Sources */,
+				FB6354992705A61E003F1D7C /* SYMoyaProvider.swift in Sources */,
+				FB63548F2705A61E003F1D7C /* SYMoyaProvider+Codable.swift in Sources */,
+				FB6354862705A61E003F1D7C /* SYMoyaNetworkLoggerPlugin.swift in Sources */,
+				FB63549A2705A61E003F1D7C /* URL+SYMoya.swift in Sources */,
+				FB6354812705A61E003F1D7C /* DiskStorage.swift in Sources */,
+				FB6354842705A61E003F1D7C /* SYMoyaNetworkOptionsInfo.swift in Sources */,
+				FB6354882705A61E003F1D7C /* SYMoyaChainRequestProvider.swift in Sources */,
+				FB63548D2705A61E003F1D7C /* SYMoyaProvider+SwiftyJSON.swift in Sources */,
+				FB6354962705A61E003F1D7C /* SYDataResponse.swift in Sources */,
+				FB6354912705A61E003F1D7C /* SYMoyaNetworkError.swift in Sources */,
+				FB63548E2705A61E003F1D7C /* Response+SwiftyJSON.swift in Sources */,
+				FB6354872705A61E003F1D7C /* SYMoyaProvider+Image.swift in Sources */,
+				FB63549E2705A61E003F1D7C /* SYMoyaProvider+HandyJSON.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

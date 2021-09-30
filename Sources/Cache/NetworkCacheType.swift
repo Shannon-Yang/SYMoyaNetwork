@@ -52,8 +52,9 @@ public extension NetworkCacheType {
         public var diskStorageConfig: DiskStorage.Config
         
         public var memoryStorageConfig: MemoryStorage.Config
+ 
         
-        init(cacheKey: String = defaultCacheKey, diskStorageConfig: DiskStorage.Config, memoryStorageConfig: MemoryStorage.Config) {
+        init(cacheKey: String = defaultCacheKey, diskStorageConfig: DiskStorage.Config = NetworkConfig.sharedInstance.networkCache.diskStorage.config, memoryStorageConfig: MemoryStorage.Config = NetworkConfig.sharedInstance.networkCache.memoryStorage.config) {
             self.cacheKey = cacheKey
             self.diskStorageConfig = diskStorageConfig
             self.memoryStorageConfig = memoryStorageConfig

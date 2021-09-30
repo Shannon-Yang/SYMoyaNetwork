@@ -35,13 +35,17 @@ extension SYMoyaProvider {
         if let string = parametersString {
             key.append("+\(string)")
         }
+        debugPrint("🔥🔥🔥🔥🔥----> \(key) <---- < Class: \(type(of: self)) Function:\(#function) Line: \(#line) >🔥🔥🔥🔥🔥")
         return key.md5()
     }
     
     
-    func cache(_ target: Target, response: Moya.Response, completionHandler: ((CacheStoreResult) -> Void)? = nil) {
+    func cache(_ target: Target, response: Moya.Response, toDisk: Bool = true) {
         switch target.networkCacheType {
         case .syMoyaNetworkCache(let networkCacheOptionsInfo):
+            // config
+            self.cache.diskStorage.config = networkCacheOptionsInfo.diskStorageConfig
+            self.cache.memoryStorage.config = networkCacheOptionsInfo.memoryStorageConfig
             
             if networkCacheOptionsInfo.diskStorageConfig.expiration.isExpired {
                 return
@@ -65,10 +69,14 @@ extension SYMoyaProvider {
             
             let key = self.generateCacheKey(target)
             
-            let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
+            let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache),.diskCacheExpiration(.days(7)),.memoryCacheExpiration(.seconds(300))])
             
-            self.cache.store(response, forKey: key, options: options, completionHandler: completionHandler)
-            
+            self.cache.store(response, forKey: key, options: options, toDisk: toDisk) { result in
+                if let diskResultDes = result.diskCacheResult.failure?.errorDescription {
+                    // disk Cache Failure
+                    print("\(diskResultDes)")
+                }
+            }
         case .urlRequestCache(let urlCacheInfo):
             self.urlCache(target, response: response, urlCacheInfo: urlCacheInfo)
         case .none:
@@ -83,19 +91,21 @@ extension SYMoyaProvider {
             queue = CallbackQueue.dispatch(cQueue)
         }
         self.cache.retrieveResponse(forKey: key, options: options, callbackQueue: queue) { result in
-            switch result {
-            case .success(let networkCacheResult):
-                switch networkCacheResult {
-                case .memory(let response):
-                    completion(.success(response))
-                case .disk(let response):
-                    completion(.success(response))
-                case .none:
-                    // cache Not Existing
-                    completion(.failure(.cacheError(reason: .responseNotExisting(key: key))))
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let networkCacheResult):
+                    switch networkCacheResult {
+                    case .memory(let response):
+                        completion(.success(response))
+                    case .disk(let response):
+                        completion(.success(response))
+                    case .none:
+                        // cache Not Existing
+                        completion(.failure(.cacheError(reason: .responseNotExisting(key: key))))
+                    }
+                case .failure(let error):
+                    completion(.failure(error))
                 }
-            case .failure(let error):
-                completion(.failure(error))
             }
         }
     }
@@ -120,21 +130,24 @@ extension SYMoyaProvider {
     func cacheIfNeeded(_ target: Target, response: Moya.Response) {
         // Cache
         switch target.networkCacheType {
-        case .urlRequestCache(_):
-            self.cache(target, response: response)
-        case .syMoyaNetworkCache(_):
-            switch target.responseDataSourceType {
-            case .cacheIfPossible, .cacheAndServer:
-                // cache
-                self.cache(target, response: response)
-            case .custom(let customizable):
-                let dataResponse = SYMoyaNetworkDataResponse(response: response, isDataFromCache: false, result: .success(response))
-                let isUpdateCache = customizable.shouldUpdateCache(target, dataResponse: dataResponse)
-                if isUpdateCache {
+        case .urlRequestCache:
+            break
+        case .syMoyaNetworkCache(let info):
+            switch info.memoryStorageConfig.expiration {
+            case .never, .expired:
+                switch info.diskStorageConfig.expiration {
+                case .expired, .never:
+                    break
+                default:
                     self.cache(target, response: response)
                 }
             default:
-                break
+                switch info.diskStorageConfig.expiration {
+                case .expired, .never:
+                    self.cache(target, response: response, toDisk: false)
+                default:
+                    self.cache(target, response: response)
+                }
             }
         case .none:
             break
@@ -180,6 +193,5 @@ public extension SYMoyaProvider {
     func cleanExpiredDiskCache(completion handler: (() -> Void)? = nil) {
         self.cache.cleanExpiredDiskCache(completion: handler)
     }
-    
     
 }

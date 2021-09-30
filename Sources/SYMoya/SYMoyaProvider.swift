@@ -36,7 +36,6 @@ open class SYMoyaProvider<Target: SYTargetType>: Moya.MoyaProvider<Target> {
         self.urlCache = SYMoyaURLCache(urlCache: session.sessionConfiguration.urlCache ?? URLCache.shared)
         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, callbackQueue: callbackQueue, session: session, plugins: plugins, trackInflights: trackInflights)
     }
-    
 }
 
 //MARK: - Default
@@ -93,6 +92,8 @@ public extension SYMoyaProvider {
 //MARK: - Req
 
 extension SYMoyaProvider {
+    
+    @discardableResult
     func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping ((_ result: Result<Moya.Response, SYMoyaNetworkError>) -> Void)) -> Cancellable {
         return self.request(target, callbackQueue: callbackQueue, progress: progress, completion: { result in
             switch result {

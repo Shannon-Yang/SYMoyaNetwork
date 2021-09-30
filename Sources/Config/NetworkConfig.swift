@@ -30,7 +30,7 @@ extension NetworkConfig {
     }
     
     static func defaultNetworkCache() -> NetworkCache {
-        return NetworkCache.default
+        return NetworkCache(name: "Default")
     }
 
 }

@@ -29,7 +29,7 @@ public enum SYMoyaNetworkError: Swift.Error {
     /// - cannotSerializeResponse: Cannot serialize an response to data for storing. Code 3008.
     /// - cannotCreateCacheFile: Cannot create the cache file at a certain fileURL under a key. Code 3009.
     /// - cannotSetCacheFileAttribute: Cannot set file attributes to a cached file. Code 3010.
-    public enum CacheErrorReason {
+    public enum CacheErrorReason: Swift.Error {
         
         /// Cannot create a file enumerator for a certain disk URL. Code 30001.
         /// - url: The target disk URL from which the file enumerator should be created.
@@ -104,10 +104,20 @@ public enum SYMoyaNetworkError: Swift.Error {
         case stringMapping(response: Moya.Response)
         case objectMapping(error: Swift.Error, response: Moya.Response)
         case encodableMapping(error: Swift.Error)
-        case statusCodeFail(response: Moya.Response)
+        case handlyJSONObjectMap(response: Moya.Response)
+    }
+    
+    public enum RequestErrorReason {
         case underlying(error: Swift.Error, response: Moya.Response?)
+    }
+    
+    public enum EndpointErrorReason {
         case urlRequestCreateFail(string: String)
         case parameterEncodingError(error: Swift.Error)
+    }
+    
+    public enum ValidationErrorReason {
+        case statusCode(response: Moya.Response)
     }
     
     // MARK: Member Cases
@@ -117,6 +127,12 @@ public enum SYMoyaNetworkError: Swift.Error {
     case batchRequestError(reason: BatchRequestErrorReason)
     
     case serializeError(reason: SerializeErrorReason)
+    
+    case requestErrorReason(reason: RequestErrorReason)
+    
+    case endpointErrorReason(reason: EndpointErrorReason)
+    
+    case validationErrorReason(reason: ValidationErrorReason)
 }
 
 
@@ -126,12 +142,12 @@ extension SYMoyaNetworkError: LocalizedError {
     /// A localized message describing what error occurred.
     public var errorDescription: String? {
         switch self {
-//        case .requestError(let reason): return reason.errorDescription
-//        case .responseError(let reason): return reason.errorDescription
         case .cacheError(let reason): return reason.errorDescription
         case .batchRequestError(let reason): return reason.errorDescription
         case .serializeError(let reason): return reason.errorDescription
-//        case .processorError(let reason): return reason.errorDescription
+        case .requestErrorReason(let reason): return reason.errorDescription
+        case .endpointErrorReason(let reason): return reason.errorDescription
+        case .validationErrorReason(let reason): return reason.errorDescription
         }
     }
 }
@@ -139,26 +155,25 @@ extension SYMoyaNetworkError: LocalizedError {
 
 // MARK: - CustomNSError Conforming
 extension SYMoyaNetworkError: CustomNSError {
-
+    
     /// The error domain of `SYMoyaNetworkError`. All errors from SYMoyaNetwork is under this domain.
     public static let domain = "com.shannonyang.SYMoyaNetwork.Error"
-
+    
     /// The error code within the given domain.
     public var errorCode: Int {
         switch self {
-//        case .requestError(let reason): return reason.errorCode
-//        case .responseError(let reason): return reason.errorCode
         case .cacheError(let reason): return reason.errorCode
-//        case .processorError(let reason): return reason.errorCode
-//        case .responseSettingError(let reason): return reason.errorCode
         case .batchRequestError(let reason): return reason.errorCode
-            
         case .serializeError(let reason): return reason.errorCode
+        case .requestErrorReason(let reason): return reason.errorCode
+        case .endpointErrorReason(let reason): return reason.errorCode
+        case .validationErrorReason(let reason): return reason.errorCode
         }
     }
 }
 
 extension SYMoyaNetworkError.CacheErrorReason {
+    
     var errorDescription: String? {
         switch self {
         case .fileEnumeratorCreationFailed(let url):
@@ -214,6 +229,7 @@ extension SYMoyaNetworkError.CacheErrorReason {
 //MARK: - BatchRequestErrorReason
 
 extension SYMoyaNetworkError.BatchRequestErrorReason {
+    
     var errorDescription: String? {
         switch self {
         case .providersIsEmpty:
@@ -224,16 +240,15 @@ extension SYMoyaNetworkError.BatchRequestErrorReason {
     var errorCode: Int {
         switch self {
         case .providersIsEmpty: return 40001
-        
         }
     }
 }
 
 
-
 //MARK: - SerializeErrorReason
 
 extension SYMoyaNetworkError.SerializeErrorReason {
+    
     var errorDescription: String? {
         switch self {
         case .imageMapping(let response):
@@ -246,14 +261,8 @@ extension SYMoyaNetworkError.SerializeErrorReason {
             return "Object serialization failed, Response: \(response.description), Error: \(error.localizedDescription)"
         case .encodableMapping(let error):
             return "EncodableMapping serialization failed, Error: \(error.localizedDescription)"
-        case .statusCodeFail(let response):
-            return "Request failed, Response: \(response.description), StatuCode: \(response.response?.statusCode ?? 0)"
-        case .underlying(let error, let response):
-            return "Underlying Error: \(error.localizedDescription), Response: \(response?.description ?? "")"
-        case .urlRequestCreateFail(let string):
-            return "URLRequest creation failed, please check if the request is correct. Reason: \(string)"
-        case .parameterEncodingError(let error):
-            return "Request parameter encoding error. Reason: \(error.localizedDescription)"
+        case .handlyJSONObjectMap(let response):
+            return "HandlyJSON serialization failed, Response: \(response.description)"
         }
     }
     
@@ -264,10 +273,78 @@ extension SYMoyaNetworkError.SerializeErrorReason {
         case .stringMapping: return 50003
         case .objectMapping: return 50004
         case .encodableMapping: return 50005
-        case .statusCodeFail: return 50006
-        case .underlying: return 50007
-        case .urlRequestCreateFail: return 50008
-        case .parameterEncodingError: return 50009
+        case .handlyJSONObjectMap: return 50006
+        }
+    }
+}
+
+//MARK: - RequestErrorReason
+
+extension SYMoyaNetworkError.RequestErrorReason {
+    
+    var errorDescription: String? {
+        switch self {
+        case .underlying(let error, let response):
+            let nserror = error as NSError
+            switch nserror.code {
+            case NSURLErrorTimedOut:
+                return "Underlying Error: Request timed out, please check network settings \(error.localizedDescription), Response: \(response?.description ?? "")"
+            case NSURLErrorCannotFindHost:
+                return "Underlying Error: The page failed to load, please try again later \(error.localizedDescription), Response: \(response?.description ?? "")"
+            case NSURLErrorCannotConnectToHost,NSURLErrorNetworkConnectionLost:
+                return "Underlying Error: Operation could not be completed \(error.localizedDescription), Response: \(response?.description ?? "")"
+            case NSURLErrorNotConnectedToInternet:
+                return "Underlying Error: Seems to be disconnected from the internet \(error.localizedDescription), Response: \(response?.description ?? "")"
+            default:
+                return "Underlying Error: \(error.localizedDescription), Response: \(response?.description ?? "")"
+            }
+        }
+    }
+    
+    var errorCode: Int {
+        switch self {
+        case .underlying: return 60001
+        }
+    }
+}
+
+
+//MARK: - EndpointMapURLRequestErrorReason
+
+extension SYMoyaNetworkError.EndpointErrorReason {
+    
+    var errorDescription: String? {
+        switch self {
+        case .urlRequestCreateFail(let string):
+            return "URLRequest creation failed, please check if the request is correct. Reason: \(string)"
+        case .parameterEncodingError(let error):
+            return "Request parameter encoding error. Reason: \(error.localizedDescription)"
+        }
+    }
+    
+    var errorCode: Int {
+        switch self {
+        case .urlRequestCreateFail: return 70001
+        case .parameterEncodingError: return 70002
+        }
+    }
+}
+
+
+//MARK: - ValidationErrorReason
+
+extension SYMoyaNetworkError.ValidationErrorReason {
+    
+    var errorDescription: String? {
+        switch self {
+        case .statusCode(let response):
+            return "Status code verification failed, Response: \(response.description), StatuCode: \(response.response?.statusCode ?? 0)"
+        }
+    }
+    
+    var errorCode: Int {
+        switch self {
+        case .statusCode: return 80001
         }
     }
 }

@@ -85,8 +85,6 @@ public protocol SYTargetType: Moya.TargetType {
     var httpShouldUsePipelining: Bool { get }
     
     var networkCacheType: NetworkCacheType { get }
-    
-    var responseDataSourceType: ResponseDataSourceType { get }
 }
 
 public extension SYTargetType {
@@ -150,10 +148,6 @@ public extension SYTargetType {
     
     var networkCacheType: NetworkCacheType {
         return .none
-    }
-    
-    var responseDataSourceType: ResponseDataSourceType {
-        return .server
     }
     
     func requestCompleteFilter(_ response: Moya.Response) { }

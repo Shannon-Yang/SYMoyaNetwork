@@ -21,19 +21,13 @@ public final class SYMoyaNetworkLoggerPlugin {
     }
 
     public var configuration: Configuration
-    
-    public var shouldPrintRequestLog: Bool = true
-    
     private var start: TimeInterval = 0
     private var end: TimeInterval = 0
+    private var willSendRequest: RequestType?
 
     /// Initializes a NetworkLoggerPlugin.
     public init(configuration: Configuration = NetworkConfig.sharedInstance.logConfiguration) {
         self.configuration = configuration
-        #if DEBUG
-        self.shouldPrintRequestLog = true
-        #endif
-        self.shouldPrintRequestLog = false
     }
 }
 
@@ -72,18 +66,20 @@ public extension SYMoyaNetworkLoggerPlugin.Configuration {
 public extension SYMoyaNetworkLoggerPlugin {
     
     struct Configuration {
-
+        
         // MARK: - Typealiases
         // swiftlint:disable nesting
         public typealias OutputType = (_ target: TargetType, _ items: [String]) -> Void
         // swiftlint:enable nesting
-
+        
         // MARK: - Properties
-
+        
         public var formatter: Formatter
         public var output: OutputType
         public var logOptions: LogOptions
-
+        public var shouldPrintRequestLog: Bool = true
+        public var items = [String]()
+        
         /// The designated way to instanciate a Configuration.
         ///
         /// - Parameters:
@@ -93,14 +89,15 @@ public extension SYMoyaNetworkLoggerPlugin {
         ///   - logOptions: A set of options you can use to customize which request component is logged.
         public init(formatter: Formatter = Formatter(),
                     output: @escaping OutputType = defaultOutput,
-                    logOptions: LogOptions = .default) {
+                    logOptions: LogOptions = .default, shouldPrintRequestLog: Bool = true) {
             self.formatter = formatter
             self.output = output
             self.logOptions = logOptions
+            self.shouldPrintRequestLog = shouldPrintRequestLog
         }
-
+        
         // MARK: - Defaults
-
+        
         public static func defaultOutput(target: TargetType, items: [String]) {
             items.forEach({ print($0) })
         }
@@ -147,7 +144,18 @@ public extension SYMoyaNetworkLoggerPlugin.Configuration {
                 guard let rawString = try JSON(data: data).rawString() else { return "## Cannot map data to String ##" }
                 return rawString
             } catch let error {
-                return error.localizedDescription
+                func buildParameterToDictionary(_ string: String?) -> String? {
+                    var dic = Dictionary<String, Any>()
+                    let separateStringArray = string?.components(separatedBy: "&")
+                    let separateArray = separateStringArray?.map({ $0.components(separatedBy: "=") }).filter({ $0.count == 2 })
+                    separateArray?.forEach({ dic[String($0[0])] = $0[1] })
+                    let dicString = JSON(dic).rawString()
+                    return dicString
+                }
+                guard let rawString = buildParameterToDictionary(String(data: data, encoding: .utf8)) else {
+                    return error.localizedDescription
+                }
+                return rawString
             }
         }
         
@@ -168,23 +176,30 @@ extension SYMoyaNetworkLoggerPlugin: PluginType {
     
     /// Called immediately before a request is sent over the network (or stubbed).
     public func willSend(_ request: RequestType, target: TargetType) {
-        if self.shouldPrintRequestLog {
+        if self.configuration.shouldPrintRequestLog {
             self.start = ProcessInfo.processInfo.systemUptime
-            logNetworkRequest(request, target: target as! SYTargetType) { [weak self] output in
-                self?.configuration.output(target, output)
-            }
+            self.willSendRequest = request
         }
     }
     
     /// Called after a response has been received, but before the MoyaProvider has invoked its completion handler.
     public func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
-        if self.shouldPrintRequestLog {
+        if self.configuration.shouldPrintRequestLog {
             self.end = ProcessInfo.processInfo.systemUptime
+            
+            // Request
+            if let request = self.willSendRequest {
+                logNetworkRequest(request, target: target as! SYTargetType) { [weak self] output in
+                    self?.configuration.output(target, output)
+                }
+            }
+
+            // Response
             switch result {
             case .success(let response):
-                configuration.output(target, logNetworkResponse(response, target: target as! SYTargetType, isFromError: false))
+                self.configuration.output(target, logNetworkResponse(response, target: target as! SYTargetType, isFromError: false))
             case let .failure(error):
-                configuration.output(target, logNetworkError(error, target: target as! SYTargetType))
+                self.configuration.output(target, logNetworkError(error, target: target as! SYTargetType))
             }
         }
     }
@@ -237,10 +252,8 @@ private extension SYMoyaNetworkLoggerPlugin {
             return header
         }
         
-        let urlString = self.requestURLString(target: target)
-        
         func requestInfo() -> String {
-            let requestInfo = "  RequestMethod: \(target.method.rawValue)  RequestURL: \(urlString)"
+            let requestInfo = "  RequestMethod: \(target.method.rawValue)  RequestURL: \(request.request?.description ?? "")"
             return requestInfo
         }
         
@@ -252,12 +265,13 @@ private extension SYMoyaNetworkLoggerPlugin {
         }
         
         // Request presence check
+        let urlString = self.requestURLString(target: target)
         guard let httpRequest = request.request, !urlString.isEmpty else {
             headerString = "(invalid request)"
             var des = header()
             des.append("\(SYMoyaNetworkLoggerPlugin.NetworkLogMark.invalidRequest.rawValue)")
             des.append(requestInfo())
-            des.append("(invalid request)")
+            des.append(headerString)
             completion([configuration.formatter.entry(des, target)])
             return
         }
@@ -270,7 +284,6 @@ private extension SYMoyaNetworkLoggerPlugin {
             if let httpRequestHeaders = httpRequest.allHTTPHeaderFields {
                 allHeaders.merge(httpRequestHeaders) { $1 }
             }
-            
             headerString = allHeaders.description
             let header = header()
             output.append(configuration.formatter.entry(header, target))
@@ -287,14 +300,12 @@ private extension SYMoyaNetworkLoggerPlugin {
                 output.append(configuration.formatter.entry(parameters, target))
             }
             
-            
             if let body = httpRequest.httpBody {
                 parametersString = configuration.formatter.requestData(body)
                 let parameters = parameters()
                 output.append(configuration.formatter.entry(parameters, target))
             }
         }
-        
         completion(output)
     }
     
@@ -312,9 +323,16 @@ private extension SYMoyaNetworkLoggerPlugin {
         // Adding log entries for each given log option
         var output = [String]()
         
+        func requestInfo() -> String {
+            let requestInfo = "  StatusCode: \(response.statusCode)  RequestMethod: \(target.method.rawValue)  RequestURL: \(response.request?.description ?? "")"
+            return requestInfo
+        }
+    
         var resultJSONString = ""
         func responseDes(mark: NetworkLogMark) -> String {
-            var responseDes = "\(mark.rawValue)"
+            var responseDes = "\n\(mark.rawValue)"
+            let info = requestInfo()
+            responseDes.append(info)
             responseDes.append(" \n\n↓↓↓↓ [RESPONSE]: \n")
             responseDes.append("\nData: \(response.data.count) bytes\n")
             responseDes.append("\nResult: \(resultJSONString)\n")
@@ -344,10 +362,10 @@ private extension SYMoyaNetworkLoggerPlugin {
         } else {
             //Errors without an HTTPURLResponse are those due to connectivity, time-out and such.
             func responseDes(mark: NetworkLogMark) -> String {
-                var responseDes = "\(mark.rawValue)"
+                var responseDes = "\n\(mark.rawValue)"
                 responseDes.append(" \n\n↓↓↓↓ [RESPONSE]: \n")
                 responseDes.append("\nData: 0 bytes\n")
-                responseDes.append("\nResult: \(String(describing: error.errorDescription))\n")
+                responseDes.append("\nResult: \(error.errorDescription ?? "")\n")
                 if configuration.logOptions.contains(.requestDuration) {
                     responseDes.append(timeline())
                 }
