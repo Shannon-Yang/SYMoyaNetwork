@@ -30,8 +30,8 @@ provider.request(.zen) { result in
 
 ```swift
 provider = MoyaProvider<GitHub>()
-provider.responseObject(.zen) { (result: SYMoyaNetworkDataResponse<BaseMappable>) in
-    switch result {
+provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<BaseMappable>) in
+    switch response.result {
     case let .success(mappable):
         // The mappable will be the data you want to get, you can use it directly, you don’t need to do any conversion
     case let .failure(error):
@@ -173,11 +173,149 @@ $ git submodule add 'The data model library you want to use, such as HandyJSON, 
 
 ## 用法
 
-像和使用`Moya`一样，`SYMoyaNetwork`的用法和`Moya`完全一样，你不用担心它的使用方式会很复杂，这将减少
+### 数据请求
+
+像和使用`Moya`一样，`SYMoyaNetwork`的用法和`Moya`完全一样，你不用担心它的使用方式会很复杂，像
 
 
 
+`SYMoyaNetwork`提供了JSON、String、Image、HandyJSON、ObjectMapper、Codable、SwiftyJSON等多种数据类型的支持，你可以使用SYMoyaProvider调用对应的Response方法。
 
+#### JSON
+
+```swift
+provider = SYMoyaProvider<GitHub>()
+provider.responseJSON(.zen) { (response: SYMoyaNetworkDataResponse<Any>) in
+    switch response.result {
+    case let .success(json):
+        // do something with the response json data. You can use the json object directly without conversion
+    case let .failure(error):
+        // this means there was a network failure - either the request
+        // wasn't sent (connectivity), or no response was received (server
+        // timed out).  If the server responds with a 4xx or 5xx error, that
+        // will be sent as a ".success"-ful response.
+    }
+}
+```
+
+#### String
+
+```swift
+provider = SYMoyaProvider<GitHub>()
+provider.responseString(.zen) { (response: SYMoyaNetworkDataResponse<String>) in
+    switch response.result {
+    case let .success(string):
+        // do something with the response string data. You can use the string object directly without conversion
+    case let .failure(error):
+        // this means there was a network failure - either the request
+        // wasn't sent (connectivity), or no response was received (server
+        // timed out).  If the server responds with a 4xx or 5xx error, that
+        // will be sent as a ".success"-ful response.
+    }
+}
+```
+
+#### Image
+
+```swift
+provider = SYMoyaProvider<GitHub>()
+provider.responseImage(.zen) { (response: SYMoyaNetworkDataResponse<Image>) in
+    switch response.result {
+    case let .success(image):
+        // do something with the response image data. You can use the image object directly without conversion
+    case let .failure(error):
+        // this means there was a network failure - either the request
+        // wasn't sent (connectivity), or no response was received (server
+        // timed out).  If the server responds with a 4xx or 5xx error, that
+        // will be sent as a ".success"-ful response.
+    }
+}
+```
+
+#### HandyJSON
+
+```swift
+provider = SYMoyaProvider<GitHub>()
+provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<T: HandyJSON>) in
+    switch response.result {
+    case let .success(handyJSONObject):
+        // do something with the response handyJSONObject data. You can use the handyJSONObject object directly without conversion
+    case let .failure(error):
+        // this means there was a network failure - either the request
+        // wasn't sent (connectivity), or no response was received (server
+        // timed out).  If the server responds with a 4xx or 5xx error, that
+        // will be sent as a ".success"-ful response.
+    }
+}
+```
+
+#### ObjectMapper
+
+```swift
+provider = SYMoyaProvider<GitHub>()
+provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<T: BaseMappable>) in
+    switch response.result {
+    case let .success(mappableObject):
+        // do something with the response mappableObject data. You can use the mappableObject object directly without conversion
+    case let .failure(error):
+        // this means there was a network failure - either the request
+        // wasn't sent (connectivity), or no response was received (server
+        // timed out).  If the server responds with a 4xx or 5xx error, that
+        // will be sent as a ".success"-ful response.
+    }
+}
+```
+
+#### Codable
+
+```swift
+provider = SYMoyaProvider<GitHub>()
+provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<T: Decodable>) in
+    switch response.result {
+    case let .success(codableObject):
+        // do something with the response codableObject data. You can use the codableObject object directly without conversion
+    case let .failure(error):
+        // this means there was a network failure - either the request
+        // wasn't sent (connectivity), or no response was received (server
+        // timed out).  If the server responds with a 4xx or 5xx error, that
+        // will be sent as a ".success"-ful response.
+    }
+}
+```
+
+#### SwiftyJSON
+
+```swift
+provider = SYMoyaProvider<GitHub>()
+provider.responseSwiftyJSON(.zen) { (response: SYMoyaNetworkDataResponse<SwiftyJSON.JSON>) in
+    switch response.result {
+    case let .success(swiftyjson):
+        // do something with the response swiftyjson data. You can use the swiftyjson object directly without conversion
+    case let .failure(error):
+        // this means there was a network failure - either the request
+        // wasn't sent (connectivity), or no response was received (server
+        // timed out).  If the server responds with a 4xx or 5xx error, that
+        // will be sent as a ".success"-ful response.
+    }
+}
+```
+
+### 网络缓存
+
+#### URL缓存
+如果你想要实现URL缓存，那么你可以在SYTarget
+
+#### 数据缓存
+
+
+### 批量请求
+
+### 链式请求
+
+
+## License
+
+SYMoyaNetwork is released under an MIT license. See License.md for more information.
 
 
 
