@@ -12,6 +12,10 @@ import SwiftyJSON
 
 public extension Response {
     
+    /// <#Description#>
+    /// - Parameter opt: <#opt description#>
+    /// - Throws: <#description#>
+    /// - Returns: <#description#>
     func mapSwiftyJSON(options opt: JSONSerialization.ReadingOptions = []) throws -> JSON {
         do {
             return try JSON(data: self.data, options: opt)

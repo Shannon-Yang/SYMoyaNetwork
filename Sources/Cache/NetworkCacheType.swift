@@ -11,14 +11,14 @@ import Moya
 
 ///  Network Cache type of a cached Request.
 /// - none: The Request is not cached yet when retrieving it.
-/// - urlRequestCache: The response is cached in memory.
+/// - urlRequestCache: The response is cached by HTTP Protocol.
 /// - syMoyaNetworkCache: The response is cached in disk.
 
 public enum NetworkCacheType {
 
     /// The Request is not cached yet when retrieving it.
     case none
-    /// The Request is cached use Http.
+    /// The Request is cached use HTTP Protocol
     case urlRequestCache(urlCacheInfo: URLCacheInfo)
     /// The Request is cached in disk or memory
     case syMoyaNetworkCache(networkCacheOptionsInfo: NetworkCacheOptionsInfo)
@@ -31,6 +31,7 @@ public enum NetworkCacheType {
         }
     }
     
+    /// Indicates whether to use URL for caching
     public var isUrlRequestCacheCase: Bool {
         switch self {
         case .urlRequestCache:
@@ -41,6 +42,7 @@ public enum NetworkCacheType {
     }
 }
 
+//MARK: -
 public extension NetworkCacheType {
     
     static let defaultCacheKey: String = "com.shannonyang.SYMoyaNetwork.NetworkCache.Key"

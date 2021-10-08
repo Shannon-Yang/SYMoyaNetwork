@@ -9,9 +9,11 @@
 import Foundation
 import Moya
 
+/// Inherit Moya.TargetType, extend more properties that can be set for TargetType, and add network cache type settings
+
 public protocol SYTargetType: Moya.TargetType {
 
-    /// CDN  request url
+    /// CDN request url
     var cdnURL: URL? { get }
     
     ///  Should use CDN when sending request.
@@ -65,27 +67,20 @@ public protocol SYTargetType: Moya.TargetType {
     @available(macOS 11.3, iOS 14.5, watchOS 7.4, tvOS 14.5, *)
     var assumesHTTP3Capable: Bool { get }
     
-    /**
-        @abstract Determine whether default cookie handling will happen for
-        this request.
-        @discussion NOTE: This value is not used prior to 10.3
-        @result YES if cookies will be sent with and set for this request;
-        otherwise NO.
-    */
+    /// `true` if cookies will be sent with and set for this request; otherwise `false`.
     var httpShouldHandleCookies: Bool { get }
     
-    /**
-     @abstract Reports whether the receiver is not expected to wait for the
-     previous response before transmitting.
-     @result YES if the receiver should transmit before the previous response
-     is received.  NO if the receiver should wait for the previous response
-     before transmitting.
-     */
+    /// `true` if the receiver should transmit before the previous response
+    /// is received.  `false` if the receiver should wait for the previous response
+    /// before transmitting.
     @available(iOS 4.0, *)
     var httpShouldUsePipelining: Bool { get }
     
+    /// Network Cache type of a cached Request.
     var networkCacheType: NetworkCacheType { get }
 }
+
+//MARK: - Default Value
 
 public extension SYTargetType {
     
@@ -149,12 +144,20 @@ public extension SYTargetType {
     var networkCacheType: NetworkCacheType {
         return .none
     }
+}
+
+//MARK: - Request indicate
+
+public extension SYTargetType {
     
+    ///
     func requestCompleteFilter(_ response: Moya.Response) { }
     
     func requestFailedFilter(_ response: Moya.Response) { }
 }
 
+
+//MARK: - Internal
 
 internal extension SYTargetType {
     
