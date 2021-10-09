@@ -303,9 +303,44 @@ provider.responseSwiftyJSON(.zen) { (response: SYMoyaNetworkDataResponse<SwiftyJ
 ### 网络缓存
 
 #### URL缓存
-如果你想要实现URL缓存，那么你可以在SYTarget
+如果你想要实现URL缓存，那么你可以在SYTarget中设置`networkCacheType`为`urlRequestCache`类型，如：
+
+```swift
+var networkCacheType: NetworkCacheType {
+      return .URLCacheInfo(maxAge: 10)
+   }
+```
+
+在设置`urlRequestCache`需要传入URL缓存相关的基本信息，例如`ignoreServer`、`maxAge`、`autoClearCache`等关于URL缓存的相关信息，这些信息将在缓存时做重要的决策，设置了 maxAge > 0 将在请求时根据缓存信息进行数据缓存，这些工作都已经自动帮你完成了🍯
+
+如果需要忽略服务器端缓存配置，默认情况下，如果服务器配置了缓存头，则使用服务器端配置，但您可以使用自定义缓存年龄并通过设置ignoreServer参数忽略此配置，只需要设置如下即可：
+
+```swift
+var networkCacheType: NetworkCacheType {
+      return .URLCacheInfo(ignoreServer: true, maxAge: 10, isPrivate: false)
+   }
+```
+
+有时您需要手动清理缓存而不是刷新缓存数据，但是对于网络请求错误、序列化错误等我们推荐使用autoClearCache参数自动忽略错误的缓存数据，可以如下设置：
+
+```swift
+var networkCacheType: NetworkCacheType {
+        return .URLCacheInfo(maxAge: 10, autoClearCache: true)
+    }
+```
 
 #### 数据缓存
+URL缓存仅仅只能对Get请求的数据进行缓存，若需要对Post或者其他类型的请求进行缓存，那么我们需要对Response进行数据存储，`SYMoyaNetwork`已经做好了这一切🍯，仅仅只需要在SYTarget中设置`networkCacheType`为`syMoyaNetworkCache`类型，`syMoyaNetworkCache`做了两种存储，一种为内存存储（MemoryStorage），一种为磁盘存储（DiskStorage），和URL缓存类似，也需要传入存储相关的信息，例如：`diskStorageConfig`、`memoryStorageConfig`等，具体参考`NetworkCacheType.NetworkCacheOptionsInfo`相关，具体实例代码如下：
+
+```swift
+var networkCacheType: NetworkCacheType {
+        return .syMoyaNetworkCache(networkCacheOptionsInfo: .init())
+    }
+```
+默认使用的`networkCacheOptionsInfo`为`NetworkConfig`中的默认配置，也可自定义配置，仅只需初始化自定义的`networkCacheOptionsInfo`对象，`networkCacheType`返回类型为`syMoyaNetworkCache`时，在请求完成时，不管是Get还是Post或者其他方式的请求，都将自动根据缓存信息进行数据缓存
+
+`SYMoyaProvider`提供了`responseCodableObject`、`responseObject<T: HandyJSON>`、`responseObject<T: BaseMappable>`、`responseSwiftyJSON`等方法，在每一个方法中都有`responseDataSourceType`这样的一个参数，这个参数和我们
+
 
 
 ### 批量请求

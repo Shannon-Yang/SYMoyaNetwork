@@ -36,10 +36,9 @@ extension SYMoyaProvider {
         }
         
         if response.request?.httpMethod != "GET" {
-            debugPrint("Non-GET requests do not support caching!")
+            print("Non-GET requests do not support caching!")
             return
         }
-        
         
         if response.data.isEmpty {
             return

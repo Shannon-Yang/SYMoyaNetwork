@@ -35,7 +35,6 @@ extension SYMoyaProvider {
         if let string = parametersString {
             key.append("+\(string)")
         }
-        debugPrint("🔥🔥🔥🔥🔥----> \(key) <---- < Class: \(type(of: self)) Function:\(#function) Line: \(#line) >🔥🔥🔥🔥🔥")
         return key.md5()
     }
     
