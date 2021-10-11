@@ -310,6 +310,7 @@ final class DataStreamTests: BaseTestCase {
         XCTAssertNil(decodingError)
     }
 
+    #if !(os(Linux) || os(Windows))
     func testThatDataStreamRequestProducesWorkingInputStream() {
         // Given
         let expect = expectation(description: "stream complete")
@@ -332,6 +333,7 @@ final class DataStreamTests: BaseTestCase {
         XCTAssertTrue(parsed)
         XCTAssertNil(parser.parserError)
     }
+    #endif
 
     func testThatDataStreamCanBeManuallyResumed() {
         // Given
@@ -935,7 +937,7 @@ final class DataStreamIntegrationTests: BaseTestCase {
 
     func testThatDataStreamCanAuthenticate() {
         // Given
-        let user = "user", password = "password"
+        let user = "userstream", password = "password"
         var response: HTTPURLResponse?
         var streamOnMain = false
         var completeOnMain = false

@@ -31,9 +31,9 @@ public class SYMoyaURLCache {
     
 }
 
-// MARK: - Private
+// MARK: - internal
 
-private extension SYMoyaURLCache {
+extension SYMoyaURLCache {
     
     func addCacheControlHeaderField(headers:NSDictionary,maxAge:Int,isPrivate:Bool) {
         var cacheValue = "max-age=\(maxAge)"

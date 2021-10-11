@@ -9,7 +9,19 @@
 import Foundation
 import Moya
 
+/// SYMoyaProvider supports Codable data type analysis
+
 extension SYMoyaProvider {
+    
+    
+    /// Get data from the cache and parse it into Codable type data
+    /// - Parameters:
+    ///   - target: The request object that implements the TargetType protocol
+    ///   - keyPath: The specified path of the serialized Codable object
+    ///   - decoder: <#decoder description#>
+    ///   - failsOnEmptyData: <#failsOnEmptyData description#>
+    ///   - callbackQueue: <#callbackQueue description#>
+    ///   - completion: <#completion description#>
     
     func responseCodableObjectFromCache<T: Decodable>(_ target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
