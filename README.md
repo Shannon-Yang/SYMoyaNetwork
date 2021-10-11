@@ -351,12 +351,61 @@ var networkCacheType: NetworkCacheType {
 
 ### 批量请求
 
- 
+在一些情况下，我们可能需要发送一批网络请求，`SYMoyaNetwork`提供了批量发起网络请求操作，`SYMoyaBatchRequestProvider`主要用于批量发起网络请求操作，在发起网络请求前，需要初始化`BatchMoyaProvider`的数组传入，在批量请求时，`SYMoyaBatchRequestProvider`维护了一个`BatchMoyaProvider`的请求数组，在所有请求全部请求完成后，将会返回`BatchResult`对象。
 
+> 注意：在批量请求过程中，只要其中有一个请求失败了，那么整个Provider都会回调`failure`方法，只有全部请求都成功后才会回调`success`
+
+如下：
+
+```swift
+let batchProvider = BatchMoyaProvider(targetType:.zen, provider: MoyaProvider<GitHub>())
+let batchProvider2 = BatchMoyaProvider(targetType:.zen, provider: MoyaProvider<GitHub>())
+    
+let batchRequestProvider = SYMoyaBatchRequestProvider(providers: [batchProvider, batchProvider2])
+batchRequestProvider.request { batchResponse in
+   switch batchResponse.result {
+     case .success(let batchData):
+        // do something with the response batch data. You can use the batchData directly without conversion
+     case .failure(let error):
+        // this means there was a network failure - either the request
+        // wasn't sent (connectivity), or no response was received (server
+        // timed out).  If the server responds with a 4xx or 5xx error, that
+        // will be sent as a ".success"-ful response.
+        }
+    }
+```
 
 ### 链式请求
 
+用于管理有相互依赖的网络请求，它实际上最终可以用来管理多个拓扑排序后的网络请求。
 
+例如，我们有一个需求，需要用户在注册时，先发送注册的 Api，然后 :
+
+* 如果注册成功，再发送读取用户信息的 Api。并且，读取用户信息的 Api 需要使用注册成功返回的用户 id 号。
+* 如果注册失败，则不发送读取用户信息的 Api 了。
+
+如下：
+```swift
+let chainRequestProvider = SYMoyaChainRequestProvider()
+    // Initial chain request
+    let chainProvider = ChainProvider(targetType:.zen, provider: MoyaProvider<GitHub>(), chainCompletion: { dataResponses in
+        switch dataResponses.result {
+          case .success(let chainData):
+            // After the request is completed, proceed to the next request based on the requested data
+            let chainProvider2 = ChainProvider(targetType:.zen, provider: MoyaProvider<GitHub>(), chainCompletion: nil)
+             chainRequestProvider.addChainProvider(provider: chainProvider2)
+                
+          case .failure(let error):
+            // this means there was a network failure - either the request
+            // wasn't sent (connectivity), or no response was received (server
+            // timed out).  If the server responds with a 4xx or 5xx error, that
+            // will be sent as a ".success"-ful response.
+           }
+        })
+    chainRequestProvider.delegate =  self
+    chainRequestProvider.addChainProvider(provider: chainProvider)
+    chainRequestProvider.request()
+```
 ## License
 
 SYMoyaNetwork is released under an MIT license. See License.md for more information.
