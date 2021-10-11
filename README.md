@@ -386,7 +386,7 @@ batchRequestProvider.request { batchResponse in
 
 如下：
 ```swift
-let chainRequestProvider = SYMoyaChainRequestProvider()
+    let chainRequestProvider = SYMoyaChainRequestProvider()
     // Initial chain request
     let chainProvider = ChainProvider(targetType:.zen, provider: MoyaProvider<GitHub>(), chainCompletion: { dataResponses in
         switch dataResponses.result {
