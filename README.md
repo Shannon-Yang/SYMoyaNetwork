@@ -341,13 +341,13 @@ var networkCacheType: NetworkCacheType {
 
 `SYMoyaProvider`提供了`responseCodableObject`、`responseObject<T: HandyJSON>`、`responseObject<T: BaseMappable>`、`responseSwiftyJSON`等方法，在每一个方法中都有`responseDataSourceType`这样的一个参数，这个参数主要是数据返回的响应类型，目前`responseDataSourceType`分为`server`、`cache`、`cacheIfPossible`、`cacheAndServer`、`custom`一共5种数据返回类型。
 
-`server`：直接从服务器获取数据，不会回调缓存数据
-`cache`：如果有缓存，直接从缓存中获取数据并进行回调，将回调`success`结果，若不存在缓存则回调失败`failure`结果，并会返回对应的`error`信息
-`cacheIfPossible`：如果有缓存，将直接从缓存中获取数据，如果缓存获取成功，那么将进行`success`回调，若缓存获取失败，将发起网络请求，网络请求成功后将进行`success`回调，请求失败后将进行`failure`回调
-`cacheAndServer`：如果当前接口有缓存，那么将先获取缓存数据后进行一次回调，然后发起网络请求，然后再次回调
-`custom`：自定义模式的回调，需要实现`ResponseDataSourceCustomizable`协议，这将先从缓存获取缓存数据，得到缓存数据后，将会通过`shouldSendRequest`方法将当前的缓存数进行回调，可以通过回调的缓存数据进行判断，需要通过`shouldUpdateCache`方法回调是否需要更新缓存，这种数据回调模式比较常用的是用作获取数据量比较大的请求。
+* `server`：直接从服务器获取数据，不会回调缓存数据
+* `cache`：如果有缓存，直接从缓存中获取数据并进行回调，将回调`success`结果，若不存在缓存则回调失败`failure`结果，并会返回对应的`error`信息
+* `cacheIfPossible`：如果有缓存，将直接从缓存中获取数据，如果缓存获取成功，那么将进行`success`回调，若缓存获取失败，将发起网络请求，网络请求成功后将进行`success`回调，请求失败后将进行`failure`回调
+* `cacheAndServer`：如果当前接口有缓存，那么将先获取缓存数据后进行一次回调，然后发起网络请求，然后再次回调
+* `custom`：自定义模式的回调，需要实现`ResponseDataSourceCustomizable`协议，这将先从缓存获取缓存数据，得到缓存数据后，将会通过`shouldSendRequest`方法将当前的缓存数进行回调，可以通过回调的缓存数据进行判断，需要通过`shouldUpdateCache`方法回调是否需要更新缓存，这种数据回调模式比较常用的是用作获取数据量比较大的请求。
 
-例如：我们有一本书，这本书的书籍详情数据是很多的，当我们第一次获取了这本书的书籍详情时，一个比较机智的做法是把当前这本书的书籍详情缓存到本地，下一次打开app的时候先展示这本书的缓存数据，然后在去请求书籍的详情最新的数据，更新本地的缓存，这样确实能达到想要的效果，可是并非是最优方案，一般情况下，如果将书籍详情完全请求覆盖本地缓存，由于书籍详情的数据可能比较大，因此在网络请求相应时间上会很长，而且用户的数据流量也会浪费，所以比较好的方案是仅仅只请求当前书籍的一些基本信息，通过基本信息的一些关键字段判断当前本地缓存的书籍数据是否是最新，然后在判断当前是否需要更新本地缓存，如果书籍的详情数据为最新的，那将不需要再去请求数据，比如基本信息中的`version`等字段，可以通过传`version`等字段给服务端来验证当前的缓存是否为最新，如果当前的缓存不是最新的再发起网络请求，将最新的书籍详情数据请求下来，这样既能先展示数据给用户，又能节省用户流量，在不必要更新数据的时候减少这种庞大数据的请求。
+> `custom`的场景适用如下，例如：我们有一本书，这本书的书籍详情数据是很多的，当我们第一次获取了这本书的书籍详情时，一个比较机智的做法是把当前这本书的书籍详情缓存到本地，下一次打开app的时候先展示这本书的缓存数据，然后在去请求书籍的详情最新的数据，更新本地的缓存，这样确实能达到想要的效果，可是并非是最优方案，一般情况下，如果将书籍详情完全请求覆盖本地缓存，由于书籍详情的数据可能比较大，因此在网络请求相应时间上会很长，而且用户的数据流量也会浪费，所以比较好的方案是仅仅只请求当前书籍的一些基本信息，通过基本信息的一些关键字段判断当前本地缓存的书籍数据是否是最新，然后在判断当前是否需要更新本地缓存，如果书籍的详情数据为最新的，那将不需要再去请求数据，比如基本信息中的`version`等字段，可以通过传`version`等字段给服务端来验证当前的缓存是否为最新，如果当前的缓存不是最新的再发起网络请求，将最新的书籍详情数据请求下来，这样既能先展示数据给用户，又能节省用户流量，在不必要更新数据的时候减少这种庞大数据的请求。
 
 ### 批量请求
 
@@ -358,8 +358,8 @@ var networkCacheType: NetworkCacheType {
 如下：
 
 ```swift
-let batchProvider = BatchMoyaProvider(targetType:.zen, provider: MoyaProvider<GitHub>())
-let batchProvider2 = BatchMoyaProvider(targetType:.zen, provider: MoyaProvider<GitHub>())
+let batchProvider = BatchMoyaProvider(targetType:.zen, provider: SYMoyaProvider<GitHub>())
+let batchProvider2 = BatchMoyaProvider(targetType:.zen, provider: SYMoyaProvider<GitHub>())
     
 let batchRequestProvider = SYMoyaBatchRequestProvider(providers: [batchProvider, batchProvider2])
 batchRequestProvider.request { batchResponse in
@@ -388,11 +388,11 @@ batchRequestProvider.request { batchResponse in
 ```swift
     let chainRequestProvider = SYMoyaChainRequestProvider()
     // Initial chain request
-    let chainProvider = ChainProvider(targetType:.zen, provider: MoyaProvider<GitHub>(), chainCompletion: { dataResponses in
+    let chainProvider = ChainProvider(targetType:.zen, provider: SYMoyaProvider<GitHub>(), chainCompletion: { dataResponses in
         switch dataResponses.result {
           case .success(let chainData):
             // After the request is completed, proceed to the next request based on the requested data
-            let chainProvider2 = ChainProvider(targetType:.zen, provider: MoyaProvider<GitHub>(), chainCompletion: nil)
+            let chainProvider2 = ChainProvider(targetType:.zen, provider: SYMoyaProvider<GitHub>(), chainCompletion: nil)
              chainRequestProvider.addChainProvider(provider: chainProvider2)
                 
           case .failure(let error):
