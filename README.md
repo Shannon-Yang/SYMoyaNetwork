@@ -29,7 +29,7 @@ provider.request(.zen) { result in
 当网络数据请求完成后，我们需要手动的将moyaResponse转换成我们想要的对象，例如使用[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)做为数据模型时，我们需要每次在返回网络请求时都需要将moyaResponse转换为BaseMappable对象，也许你会封装一个统一的方法去做这件事情，但还是需要手动调用这样的一些转换方法，这将让使用者做这些繁琐而又无味的工作，因此SYMoyaNetwork已经做好了这样的工作，你只需要关心你想要得到的数据，SYMoyaNetwork将会给你想要返回的数据，例如使用[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)做为数据模型时，我们可以这样来获取数据对象
 
 ```swift
-provider = MoyaProvider<GitHub>()
+provider = SYMoyaProvider<GitHub>()
 provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<BaseMappable>) in
     switch response.result {
     case let .success(mappable):
