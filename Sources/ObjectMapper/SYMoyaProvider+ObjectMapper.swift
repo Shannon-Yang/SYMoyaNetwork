@@ -10,7 +10,7 @@ import Foundation
 import Moya
 import ObjectMapper
 
-extension SYMoyaProvider {
+public extension SYMoyaProvider {
     
     func responseObjectFromCache<T: BaseMappable>(_ target: Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
@@ -290,7 +290,7 @@ extension SYMoyaProvider {
     }
 }
 
-extension SYMoyaProvider {
+public extension SYMoyaProvider {
     
     func serializerObjectDataResponse<T: BaseMappable>(_ response: Moya.Response, keyPath: String? = nil, context: MapContext? = nil) -> SYMoyaNetworkDataResponse<T> {
         let dataRes: SYMoyaNetworkDataResponse<T>

@@ -10,7 +10,7 @@ import Foundation
 import Moya
 import Alamofire
 
-extension SYMoyaProvider {
+public extension SYMoyaProvider {
     
     func urlCache(_ target: Target, response: Moya.Response, urlCacheInfo: NetworkCacheType.URLCacheInfo) {
         if urlCacheInfo.maxAge <= 0 {

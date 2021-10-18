@@ -49,7 +49,7 @@ public class BatchDataResponse<Target: SYTargetType> {
 
 //public enum BatchData
 
-class SYMoyaBatchRequestProvider<Target: SYTargetType> {
+public class SYMoyaBatchRequestProvider<Target: SYTargetType> {
     
     private let providers: [BatchMoyaProvider<Target>]
     
@@ -62,7 +62,7 @@ class SYMoyaBatchRequestProvider<Target: SYTargetType> {
     
     private let queueName = "com.shannonyang.SYMoyaNetwork.BatchRequest.queue.\(UUID().uuidString)"
     
-    func request(_ callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponses: BatchDataResponse<Target>) -> Void) {
+    public func request(_ callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponses: BatchDataResponse<Target>) -> Void) {
         
         if providers.isEmpty {
             completion(BatchDataResponse(result: .failure(.batchRequestError(reason: .providersIsEmpty))))

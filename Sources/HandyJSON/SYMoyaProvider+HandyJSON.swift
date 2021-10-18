@@ -10,7 +10,7 @@ import Foundation
 import Moya
 import HandyJSON
 
-extension SYMoyaProvider {
+public extension SYMoyaProvider {
     
     func responseObjectFromCache<T: HandyJSON>(_ target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
@@ -289,7 +289,7 @@ extension SYMoyaProvider {
     }
 }
 
-extension SYMoyaProvider {
+public extension SYMoyaProvider {
     
     func serializerObjectDataResponse<T: HandyJSON>(_ response: Moya.Response, designatedPath: String? = nil) -> SYMoyaNetworkDataResponse<T> {
         let dataRes: SYMoyaNetworkDataResponse<T>

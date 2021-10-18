@@ -9,7 +9,7 @@
 import Foundation
 import Moya
 
-extension SYMoyaProvider {
+public extension SYMoyaProvider {
     
     func responseStringFromCache(_ target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<String>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
@@ -149,7 +149,7 @@ extension SYMoyaProvider {
     }
 }
 
-extension SYMoyaProvider {
+public extension SYMoyaProvider {
     
     func serializerStringDataResponse(_ response: Moya.Response, atKeyPath: String? = nil) -> SYMoyaNetworkDataResponse<String> {
         let dataRes: SYMoyaNetworkDataResponse<String>

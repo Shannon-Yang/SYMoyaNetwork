@@ -11,7 +11,7 @@ import Moya
 
 //MARK: - Cache
 
-extension SYMoyaProvider {
+public extension SYMoyaProvider {
     
     func generateCacheKey(_ target: Target) -> String {
         let urlString = URL(target: target).absoluteString
@@ -156,7 +156,7 @@ extension SYMoyaProvider {
 
 //MARK: - Cache Clean
 
-public extension SYMoyaProvider {
+public public extension SYMoyaProvider {
     
     /// Clears the memory & disk storage of this cache. This is an async operation.
     ///

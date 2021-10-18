@@ -67,7 +67,7 @@ public extension NetworkCacheType {
         ///   - diskStorageConfig: Disk storage configuration.
         ///   - memoryStorageConfig: Memory storage configuration.
         
-        init(cacheKey: String = defaultCacheKey, diskStorageConfig: DiskStorage.Config = NetworkConfig.sharedInstance.networkCache.diskStorage.config, memoryStorageConfig: MemoryStorage.Config = NetworkConfig.sharedInstance.networkCache.memoryStorage.config) {
+        public init(cacheKey: String = defaultCacheKey, diskStorageConfig: DiskStorage.Config = NetworkConfig.sharedInstance.networkCache.diskStorage.config, memoryStorageConfig: MemoryStorage.Config = NetworkConfig.sharedInstance.networkCache.memoryStorage.config) {
             self.cacheKey = cacheKey
             self.diskStorageConfig = diskStorageConfig
             self.memoryStorageConfig = memoryStorageConfig
@@ -106,7 +106,7 @@ public extension NetworkCacheType {
         ///
         public var autoClearCache: Bool
         
-        init(ignoreServer: Bool = true, maxAge: Int, autoClearCache: Bool, isPrivate: Bool = false, HTTPVersion: String = "HTTP/1.1") {
+        public init(ignoreServer: Bool = true, maxAge: Int, autoClearCache: Bool, isPrivate: Bool = false, HTTPVersion: String = "HTTP/1.1") {
             self.ignoreServer = ignoreServer
             self.maxAge = maxAge
             self.autoClearCache = autoClearCache

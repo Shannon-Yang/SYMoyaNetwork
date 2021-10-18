@@ -11,7 +11,7 @@ import Moya
 
 /// SYMoyaProvider supports Codable data type analysis
 
-extension SYMoyaProvider {
+public extension SYMoyaProvider {
     
     
     /// Get data from the cache and parse it into Codable type data
@@ -161,7 +161,7 @@ extension SYMoyaProvider {
     }
 }
 
-extension SYMoyaProvider {
+public extension SYMoyaProvider {
     
     func serializerCodableObjectDataResponse<T: Decodable>(_ response: Moya.Response, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) -> SYMoyaNetworkDataResponse<T> {
         let dataRes: SYMoyaNetworkDataResponse<T>
