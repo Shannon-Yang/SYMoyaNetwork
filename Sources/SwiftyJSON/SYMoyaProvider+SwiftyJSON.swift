@@ -10,7 +10,7 @@ import Foundation
 import Moya
 import SwiftyJSON
 
-extension SYMoyaProvider {
+public extension SYMoyaProvider {
     
     func responseSwiftyJSONFromCache(_ target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<SwiftyJSON.JSON>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
@@ -30,7 +30,6 @@ extension SYMoyaProvider {
     func responseSwiftyJSONFromDiskCache(_ target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<SwiftyJSON.JSON>) -> Void) {
         
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-        
         self.retrieveResponseInDiskCache(target, options: options, callbackQueue: callbackQueue) { result in
             switch result {
             case .success(let response):
@@ -151,7 +150,7 @@ extension SYMoyaProvider {
 }
 
 
-extension SYMoyaProvider {
+public extension SYMoyaProvider {
     
     func serializerSwiftyJSONDataResponse(_ response: Moya.Response, options opt: JSONSerialization.ReadingOptions = []) -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
         let dataRes: SYMoyaNetworkDataResponse<SwiftyJSON.JSON>
