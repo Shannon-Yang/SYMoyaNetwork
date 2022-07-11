@@ -10,8 +10,16 @@ import Foundation
 import Moya
 import ObjectMapper
 
+//MARK: - ObjectMapper
 public extension SYMoyaProvider {
     
+    /// Get ObjectMapper generic object data from cache，If there is a cache, it will be obtained in memory first. If there is no cache in the memory, the cache will be read from the disk. If there is no cached data, the completion will callback nil object
+    /// - Parameters:
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - keyPath: Key-path-taking variants of like-named methods. The default implementation of each parses the key path enough to determine whether or not it has more than one component (key path components are separated by periods). If so, -valueForKey: is invoked with the first key path component as the argument, and the method being invoked is invoked recursively on the result, with the remainder of the key path passed as an argument. If not, the like-named non-key-path-taking method is invoked.
+    ///   - context: MapContext is available for developers who wish to pass information around during the mapping process.
+    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
+    ///   - completion: The callback after completion, returns the ObjectMapper generic object
     func responseObjectFromCache<T: BaseMappable>(_ target: Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
@@ -27,6 +35,13 @@ public extension SYMoyaProvider {
         }
     }
     
+    /// Get ObjectMapper generic object data from disk cache
+    /// - Parameters:
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - keyPath: Key-path-taking variants of like-named methods. The default implementation of each parses the key path enough to determine whether or not it has more than one component (key path components are separated by periods). If so, -valueForKey: is invoked with the first key path component as the argument, and the method being invoked is invoked recursively on the result, with the remainder of the key path passed as an argument. If not, the like-named non-key-path-taking method is invoked.
+    ///   - context: MapContext is available for developers who wish to pass information around during the mapping process.
+    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
+    ///   - completion: The callback after completion, returns the ObjectMapper generic object
     func responseObjectFromDiskCache<T: BaseMappable>(_ target: Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
         
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
@@ -44,6 +59,12 @@ public extension SYMoyaProvider {
         }
     }
     
+    /// Get ObjectMapper generic object data from memory cache
+    /// - Parameters:
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - keyPath: Key-path-taking variants of like-named methods. The default implementation of each parses the key path enough to determine whether or not it has more than one component (key path components are separated by periods). If so, -valueForKey: is invoked with the first key path component as the argument, and the method being invoked is invoked recursively on the result, with the remainder of the key path passed as an argument. If not, the like-named non-key-path-taking method is invoked.
+    ///   - context: MapContext is available for developers who wish to pass information around during the mapping process.
+    /// - Returns: SYMoyaNetworkDataResponse object
     func responseObjectFromMemoryCache<T: BaseMappable>(_ target: Target, keyPath: String? = nil, context: MapContext? = nil) -> SYMoyaNetworkDataResponse<T> {
         
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
@@ -58,9 +79,18 @@ public extension SYMoyaProvider {
         return dataRes
     }
     
-    
+    /// According to responseDataSourceType, request ObjectMapper generic object data. The default responseDataSourceType is .server, which will request data directly from the server. The rules for requesting data refer to: ResponseDataSourceType
+    /// - Parameters:
+    ///   - responseDataSourceType: Request's responseData source type, implementing different type responseData source type
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - keyPath: Key-path-taking variants of like-named methods. The default implementation of each parses the key path enough to determine whether or not it has more than one component (key path components are separated by periods). If so, -valueForKey: is invoked with the first key path component as the argument, and the method being invoked is invoked recursively on the result, with the remainder of the key path passed as an argument. If not, the like-named non-key-path-taking method is invoked.
+    ///   - context: MapContext is available for developers who wish to pass information around during the mapping process.
+    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
+    ///   - progress: Data request progress, the data progress is called back only when a request is sent to obtain server data
+    ///   - completion: The callback after completion, returns the ObjectMapper generic object
+    /// - Returns: Protocol to define the opaque type returned from a request.
     @discardableResult
-    open func responseObject<T: BaseMappable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable? {
+    func responseObject<T: BaseMappable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable? {
         @discardableResult
         func req<T: BaseMappable>(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable {
             self.req(target, callbackQueue: callbackQueue, progress: progress) { result in
@@ -116,7 +146,7 @@ public extension SYMoyaProvider {
                         var objectDataResponse: SYMoyaNetworkDataResponse<T> = self.serializerObjectDataResponse(response, keyPath: keyPath, context: context)
                         objectDataResponse.isDataFromCache = true
                         completion(objectDataResponse)
-                        // 再次发起请求
+                        // make the request again
                         req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
                     case .failure(_):
                         req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
@@ -150,6 +180,13 @@ public extension SYMoyaProvider {
         return nil
     }
     
+    /// Get ObjectMapper generic object array data from cache，If there is a cache, it will be obtained in memory first. If there is no cache in the memory, the cache will be read from the disk. If there is no cached data, the completion will callback nil object
+    /// - Parameters:
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - keyPath: Key-path-taking variants of like-named methods. The default implementation of each parses the key path enough to determine whether or not it has more than one component (key path components are separated by periods). If so, -valueForKey: is invoked with the first key path component as the argument, and the method being invoked is invoked recursively on the result, with the remainder of the key path passed as an argument. If not, the like-named non-key-path-taking method is invoked.
+    ///   - context: MapContext is available for developers who wish to pass information around during the mapping process.
+    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
+    ///   - completion: The callback after completion, returns the ObjectMapper generic object array
     func responseObjectsFromCache<T: BaseMappable>(_ target: Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
@@ -165,6 +202,13 @@ public extension SYMoyaProvider {
         }
     }
     
+    /// Get ObjectMapper generic object array data from disk cache
+    /// - Parameters:
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - keyPath: Key-path-taking variants of like-named methods. The default implementation of each parses the key path enough to determine whether or not it has more than one component (key path components are separated by periods). If so, -valueForKey: is invoked with the first key path component as the argument, and the method being invoked is invoked recursively on the result, with the remainder of the key path passed as an argument. If not, the like-named non-key-path-taking method is invoked.
+    ///   - context: MapContext is available for developers who wish to pass information around during the mapping process.
+    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
+    ///   - completion: The callback after completion, returns the ObjectMapper generic object array
     func responseObjectsFromDiskCache<T: BaseMappable>(_ target: Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void) {
         
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
@@ -182,6 +226,12 @@ public extension SYMoyaProvider {
         }
     }
     
+    /// Get ObjectMapper generic object array data from memory cache
+    /// - Parameters:
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - keyPath: Key-path-taking variants of like-named methods. The default implementation of each parses the key path enough to determine whether or not it has more than one component (key path components are separated by periods). If so, -valueForKey: is invoked with the first key path component as the argument, and the method being invoked is invoked recursively on the result, with the remainder of the key path passed as an argument. If not, the like-named non-key-path-taking method is invoked.
+    ///   - context: MapContext is available for developers who wish to pass information around during the mapping process.
+    /// - Returns: SYMoyaNetworkDataResponse object
     func responseObjectsFromMemoryCache<T: BaseMappable>(_ target: Target, keyPath: String? = nil, context: MapContext? = nil) -> SYMoyaNetworkDataResponse<[T]> {
         
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
@@ -196,9 +246,18 @@ public extension SYMoyaProvider {
         return dataRes
     }
     
-    
+    /// According to responseDataSourceType, request ObjectMapper generic object array data. The default responseDataSourceType is .server, which will request data directly from the server. The rules for requesting data refer to: ResponseDataSourceType
+    /// - Parameters:
+    ///   - responseDataSourceType: Request's responseData source type, implementing different type responseData source type
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - keyPath: Key-path-taking variants of like-named methods. The default implementation of each parses the key path enough to determine whether or not it has more than one component (key path components are separated by periods). If so, -valueForKey: is invoked with the first key path component as the argument, and the method being invoked is invoked recursively on the result, with the remainder of the key path passed as an argument. If not, the like-named non-key-path-taking method is invoked.
+    ///   - context: MapContext is available for developers who wish to pass information around during the mapping process.
+    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
+    ///   - progress: Data request progress, the data progress is called back only when a request is sent to obtain server data
+    ///   - completion: The callback after completion, returns the ObjectMapper generic object array
+    /// - Returns: Protocol to define the opaque type returned from a request.
     @discardableResult
-    open func responseObjects<T: BaseMappable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void) -> Cancellable? {
+    func responseObjects<T: BaseMappable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void) -> Cancellable? {
         
         @discardableResult
         func req<T: BaseMappable>(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void) -> Cancellable {
@@ -255,7 +314,7 @@ public extension SYMoyaProvider {
                         var objectsDataResponse: SYMoyaNetworkDataResponse<[T]> = self.serializerObjectsDataResponse(response, keyPath: keyPath, context: context)
                         objectsDataResponse.isDataFromCache = true
                         completion(objectsDataResponse)
-                        // 再次发起请求
+                        // make the request again
                         req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
                     case .failure(_):
                         req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
@@ -290,6 +349,7 @@ public extension SYMoyaProvider {
     }
 }
 
+//MARK: - Extension
 public extension SYMoyaProvider {
     
     func serializerObjectDataResponse<T: BaseMappable>(_ response: Moya.Response, keyPath: String? = nil, context: MapContext? = nil) -> SYMoyaNetworkDataResponse<T> {

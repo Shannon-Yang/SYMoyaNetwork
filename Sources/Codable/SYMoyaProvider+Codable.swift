@@ -9,20 +9,17 @@
 import Foundation
 import Moya
 
-/// SYMoyaProvider supports Codable data type analysis
-
+//MARK: - Codable Provider
 public extension SYMoyaProvider {
     
-    
-    /// Get data from the cache and parse it into Codable type data
+    /// Get Codable data from cache，If there is a cache, it will be obtained in memory first. If there is no cache in the memory, the cache will be read from the disk. If there is no cached data, the completion will callback nil object
     /// - Parameters:
-    ///   - target: The request object that implements the TargetType protocol
-    ///   - keyPath: The specified path of the serialized Codable object
-    ///   - decoder: <#decoder description#>
-    ///   - failsOnEmptyData: <#failsOnEmptyData description#>
-    ///   - callbackQueue: <#callbackQueue description#>
-    ///   - completion: <#completion description#>
-    
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - keyPath: Optional key path at which to parse object.
+    ///   - decoder: Default json parsing object
+    ///   - failsOnEmptyData: Indicates whether the callback parsing fails when the data is empty, the default is true
+    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
+    ///   - completion: Callback after completion
     func responseCodableObjectFromCache<T: Decodable>(_ target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
@@ -38,6 +35,14 @@ public extension SYMoyaProvider {
         }
     }
     
+    /// Get Codable data from disk cache
+    /// - Parameters:
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - keyPath: Optional key path at which to parse object.
+    ///   - decoder: Default json parsing object
+    ///   - failsOnEmptyData: Indicates whether the callback parsing fails when the data is empty, the default is true
+    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
+    ///   - completion: Callback after completion
     func responseCodableObjectFromDiskCache<T: Decodable>(_ target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
         
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
@@ -55,6 +60,13 @@ public extension SYMoyaProvider {
         }
     }
     
+    /// Get Codable data from memory cache
+    /// - Parameters:
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - keyPath: Optional key path at which to parse object.
+    ///   - decoder: Default json parsing object
+    ///   - failsOnEmptyData: Indicates whether the callback parsing fails when the data is empty, the default is true
+    /// - Returns: SYMoyaNetworkDataResponse object
     func responseCodableObjectFromMemoryCache<T: Decodable>(_ target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) -> SYMoyaNetworkDataResponse<T> {
         
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
@@ -69,8 +81,19 @@ public extension SYMoyaProvider {
         return dataRes
     }
     
+    /// According to responseDataSourceType, request Codable data. The default responseDataSourceType is .server, which will request data directly from the server. The rules for requesting data refer to: ResponseDataSourceType
+    /// - Parameters:
+    ///   - responseDataSourceType: Request's responseData source type, implementing different type responseData source type
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - keyPath: Optional key path at which to parse object.
+    ///   - decoder: Default json parsing object
+    ///   - failsOnEmptyData: Indicates whether the callback parsing fails when the data is empty, the default is true
+    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
+    ///   - progress: Data request progress, the data progress is called back only when a request is sent to obtain server data
+    ///   - completion: Callback after completion
+    /// - Returns: Protocol to define the opaque type returned from a request.
     @discardableResult
-    open func responseCodableObject<T: Decodable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable? {
+    func responseCodableObject<T: Decodable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable? {
         @discardableResult
         func req<T: Decodable>(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable {
             self.req(target, callbackQueue: callbackQueue, progress: progress) { result in
@@ -126,7 +149,7 @@ public extension SYMoyaProvider {
                         var codableObjectDataResponse: SYMoyaNetworkDataResponse<T> = self.serializerCodableObjectDataResponse(response, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
                         codableObjectDataResponse.isDataFromCache = true
                         completion(codableObjectDataResponse)
-                        // 再次发起请求
+                        // make the request again
                         req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
                     case .failure(_):
                         req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
@@ -161,6 +184,7 @@ public extension SYMoyaProvider {
     }
 }
 
+//MARK: - Extension
 public extension SYMoyaProvider {
     
     func serializerCodableObjectDataResponse<T: Decodable>(_ response: Moya.Response, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) -> SYMoyaNetworkDataResponse<T> {

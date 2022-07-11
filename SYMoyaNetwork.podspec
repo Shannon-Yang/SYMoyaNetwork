@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+  Network abstraction layer based on Moya extension. You only need to care about what kind of data you want to get, and implement network data caching with different strategies. You don't need to spend a lot of time doing such work, and obtaining network data will become so simple.
                        DESC
 
   s.homepage         = 'https://github.com/Shannon-Yang/SYMoyaNetwork'
@@ -31,11 +31,14 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '10.0'
   s.osx.deployment_target = '10.12'
   s.tvos.deployment_target = '10.0'
-  s.watchos.deployment_target = '6.0'
+  s.watchos.deployment_target = '3.0'
 
   s.source_files = ["Sources/**/*.swift"]
 
   s.swift_version = '5.3'
+  s.cocoapods_version = '>= 1.4.0'
+
+  s.default_subspec = "Core"
   
   # s.resource_bundles = {
   #   'SYMoyaNetwork' => ['SYMoyaNetwork/Assets/*.png']
@@ -43,18 +46,55 @@ TODO: Add long description of the pod here.
 
   s.requires_arc = true
 
-  s.framework  = "Foundation"
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-
-  # https://github.com/tristanhimmelman/ObjectMapper
-  s.dependency 'ObjectMapper', '~> 4.0'
-
-  # https://github.com/Moya/Moya
-  s.dependency 'Moya', '~> 14.0'
+  s.subspec "Core" do |s|
+    s.source_files  = "Sources/Core/Utility/", "Sources/Core/SYMoyaURLCache/", "Sources/Core/SYMoyaChainRequestProvider/", "Sources/Core/SYMoyaBatchRequestProvider/", "Sources/Core/SYMoya/", "Sources/Core/String/", "Sources/Core/Response/", "Sources/Core/Log/", "Sources/Core/JSON/", "Sources/Core/Image/", "Sources/Core/Error/", "Sources/Core/Config/", "Sources/Core/Cache/", "Sources/Core/SwiftyJSON/"
+    # https://github.com/Moya/Moya
+    s.dependency 'Moya', '~> 15.0'
+    # https://github.com/SwiftyJSON/SwiftyJSON
+    s.dependency 'SwiftyJSON', '~> 5.0'
+    s.framework  = "Foundation"
+  end
   
-  # https://github.com/SwiftyJSON/SwiftyJSON
-  s.dependency 'SwiftyJSON', '~> 5.0'
+  s.subspec "Codable" do |s|
+    s.source_files  = "Sources/Codable/"
+    s.dependency "SYMoyaNetwork/Core"
+    s.ios.deployment_target = '10.0'
+    s.osx.deployment_target = '10.12'
+    s.tvos.deployment_target = '10.0'
+    s.watchos.deployment_target = '3.0'
+  end
+
+  s.subspec "ObjectMapper" do |s|
+    s.source_files  = "Sources/ObjectMapper/"
+    s.dependency "SYMoyaNetwork/Core"
+    # https://github.com/tristanhimmelman/ObjectMapper
+    s.dependency 'ObjectMapper', '~> 4.0'
+    s.ios.deployment_target = '10.0'
+    s.osx.deployment_target = '10.12'
+    s.tvos.deployment_target = '10.0'
+    s.watchos.deployment_target = '3.0'
+  end
+  
+  s.subspec "HandyJSON" do |s|
+    s.source_files  = "Sources/HandyJSON/"
+    s.dependency "SYMoyaNetwork/Core"
+    # https://github.com/alibaba/HandyJSON
+    s.dependency 'HandyJSON', '~> 5.0.2'
+    s.ios.deployment_target = '10.0'
+    s.osx.deployment_target = '10.12'
+    s.tvos.deployment_target = '10.0'
+    s.watchos.deployment_target = '3.0'
+  end
+
+  s.subspec "MJExtension" do |s|
+    s.source_files  = "Sources/MJExtension/"
+    s.dependency "SYMoyaNetwork/Core"
+    # https://github.com/CoderMJLee/MJExtension
+    s.dependency 'MJExtension'
+    s.ios.deployment_target = '10.0'
+    s.osx.deployment_target = '10.12'
+    s.tvos.deployment_target = '10.0'
+    s.watchos.deployment_target = '3.0'
+  end
 
 end
