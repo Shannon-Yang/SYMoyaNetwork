@@ -111,7 +111,7 @@ pod 'SYMoyaNetwork/HandyJSON'
 
 #or
 
-pod 'SYMoyaNetwork/SwiftyJSON'
+pod 'SYMoyaNetwork/MJExtension'
 ```
 
 然后运行 `pod install`。
