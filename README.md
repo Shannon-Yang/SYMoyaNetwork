@@ -285,6 +285,23 @@ provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<T: Decodabl
 }
 ```
 
+#### MJExtension
+
+```swift
+provider = SYMoyaProvider<GitHub>()
+provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<T: NSObject>) in
+    switch response.result {
+    case let .success(object):
+        // do something with the response MJExtension data. You can use the MJExtension object directly without conversion
+    case let .failure(error):
+        // this means there was a network failure - either the request
+        // wasn't sent (connectivity), or no response was received (server
+        // timed out).  If the server responds with a 4xx or 5xx error, that
+        // will be sent as a ".success"-ful response.
+    }
+}
+```
+
 #### SwiftyJSON
 
 ```swift
