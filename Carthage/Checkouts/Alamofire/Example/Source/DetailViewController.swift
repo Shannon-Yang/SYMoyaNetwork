@@ -38,7 +38,7 @@ class DetailViewController: UITableViewController {
             request?.onURLRequestCreation { [weak self] _ in
                 self?.title = self?.request?.description
             }
-            
+
             refreshControl?.endRefreshing()
             headers.removeAll()
             body = nil
@@ -76,6 +76,7 @@ class DetailViewController: UITableViewController {
             return
         }
 
+        refreshControl?.isHidden = false
         refreshControl?.beginRefreshing()
 
         let start = CACurrentMediaTime()

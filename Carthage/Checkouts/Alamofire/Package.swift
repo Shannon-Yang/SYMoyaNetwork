@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.6
 //
 //  Package.swift
 //
@@ -34,6 +34,7 @@ let package = Package(name: "Alamofire",
                                           targets: ["Alamofire"])],
                       targets: [.target(name: "Alamofire",
                                         path: "Source",
+                                        exclude: ["Info.plist"],
                                         linkerSettings: [.linkedFramework("CFNetwork",
                                                                           .when(platforms: [.iOS,
                                                                                             .macOS,
@@ -41,5 +42,7 @@ let package = Package(name: "Alamofire",
                                                                                             .watchOS]))]),
                                 .testTarget(name: "AlamofireTests",
                                             dependencies: ["Alamofire"],
-                                            path: "Tests")],
+                                            path: "Tests",
+                                            exclude: ["Info.plist", "Test Plans"],
+                                            resources: [.process("Resources")])],
                       swiftLanguageVersions: [.v5])

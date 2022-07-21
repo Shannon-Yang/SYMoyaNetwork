@@ -1,8 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
-`Alamofire` adheres to [Semantic Versioning](https://semver.org/).
+Aside from features marked [🔥 Experimental 🔥], `Alamofire` adheres to [Semantic Versioning](https://semver.org/).
+[🔥 Experimental 🔥] features may require breaking changes in minor, rather than major, releases. This will be rare and 
+compatibility should be preserved in most cases, but cannot be guaranteed.
 
 #### 5.x Releases
+- `5.6.x` Releases - [5.6.0](#560) | [5.6.1](#561) | [5.6.2](#562)
+- `5.5.x` Releases - [5.5.0](#550)
 - `5.4.x` Releases - [5.4.0](#540) | [5.4.1](#541) | [5.4.2](#542) | [5.4.3](#543) | [5.4.4](#544)
 - `5.3.x` Releases - [5.3.0](#530)
 - `5.2.x` Releases - [5.2.0](#520) | [5.2.1](#521) | [5.2.2](#522)
@@ -42,6 +46,98 @@ All notable changes to this project will be documented in this file.
 - `1.2.x` Releases - [1.2.0](#120) | [1.2.1](#121) | [1.2.2](#122) | [1.2.3](#123)
 - `1.1.x` Releases - [1.1.0](#110) | [1.1.1](#111) | [1.1.2](#112) | [1.1.3](#113) | [1.1.4](#114) | [1.1.5](#115)
 - `1.0.x` Releases - [1.0.0](#100) | [1.0.1](#101)
+
+---
+
+## [5.6.2](https://github.com/Alamofire/Alamofire/releases/tag/5.6.2)
+Released on 2022-07-17. All issues associated with this milestone can be found using this [filter](https://github.com/Alamofire/Alamofire/milestone/82?closed=1).
+
+#### Added
+- Error when object provided to `JSONEcoding` contains values that can't be passed through `JSONSerialization`.
+  - Added by [Jon Shier](https://github.com/jshier) in Pull Request [#3624](https://github.com/Alamofire/Alamofire/pull/3624).
+
+#### Updated
+- CI support for all supported Xcode, macOS, and Linux version.
+  - Updated by [Jon Shier](https://github.com/jshier) in Pull Requests [#3607](https://github.com/Alamofire/Alamofire/pull/3607) and [#3622](https://github.com/Alamofire/Alamofire/pull/3622).
+- Support for various Xcode version.
+  - Updated by [Jon Shier](https://github.com/jshier) in Pull Requests [#3616](https://github.com/Alamofire/Alamofire/pull/3616) and [#3632](https://github.com/Alamofire/Alamofire/pull/3632).
+- `Cache-Control` header tests to not require hard-coded delays.
+  - Updated by [Jon Shier](https://github.com/jshier) in Pull Request [#3601](https://github.com/Alamofire/Alamofire/pull/3601).
+
+#### Fixed
+- Swift version check for `SecTrustCopyCertificateChain`.
+  - Fixed by [Jon Shier](https://github.com/jshier) in Pull Request [#3606](https://github.com/Alamofire/Alamofire/pull/3606).
+- Various documentation issues.
+  - Fixed by [Jacob Lange](https://github.com/jacoblange-dev), [rain2540](https://github.com/rain2540), [bondxf](https://github.com/bondxf), [Ikko Ashimine](https://github.com/eltociear), and [Elon Park](https://github.com/ElonPark) in various Pull Requests.
+
+## [5.6.1](https://github.com/Alamofire/Alamofire/releases/tag/5.6.1)
+Released on 2022-04-17. All issues associated with this milestone can be found using this [filter](https://github.com/Alamofire/Alamofire/milestone/81?closed=1).
+
+#### Fixed
+- Missing `automaticallyCancelling` parameter in `serializingDownloadedFileURL`.
+  - Fixed by [Jon Shier](https://github.com/jshier) in Pull Request [#3597](https://github.com/Alamofire/Alamofire/pull/3597).
+
+## [5.6.0](https://github.com/Alamofire/Alamofire/releases/tag/5.6.0)
+Released on 2022-04-13. All issues associated with this milestone can be found using this [filter](https://github.com/Alamofire/Alamofire/milestone/80?closed=1).
+
+#### Added
+- Support for `HTTPMethod.query` to support the [upcoming standard](https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-safe-method-w-body-02).
+  - Added by [Jon Shier](https://github.com/jshier) in Pull Request [#3553](https://github.com/Alamofire/Alamofire/pull/3553).
+- Compile-time Swift version check to enforce minimum supported Swift version.
+  - Added by [Dave Verwer](https://github.com/daveverwer) in Pull Request [#3549](https://github.com/Alamofire/Alamofire/pull/3549).
+- GitHub Sponsors support. You can now sponsor Alamofire directly through GitHub.
+  - Added by [Jon Shier](https://github.com/jshier) in Pull Request [#3543](https://github.com/Alamofire/Alamofire/pull/3543).
+
+#### Updated
+- Swift version required to build [🔥 Experimental 🔥] Swift Concurrency support to 5.6.0 to avoid various Apple bugs with Xcode 13.2.0 and 13.2.1. Support now requires Xcode 13.3.1.
+  - Updated by [Jon Shier](https://github.com/jshier) in Pull Request [#3590](https://github.com/Alamofire/Alamofire/pull/3590).
+- `DownloadRequest` to avoid producing resume data when not explicitly requested on cancellation.
+  - Updated by [Jon Shier](https://github.com/jshier) in Pull Request [#3538](https://github.com/Alamofire/Alamofire/pull/3538).
+- Testing infrastructure to use XCTestPlans on Apple platforms.
+  - Updated by [Jon Shier](https://github.com/jshier) in Pull Request [#3538](https://github.com/Alamofire/Alamofire/pull/3538).
+- GitHub Actions support for greater OS coverage, more SPM platforms, and Swift 5.6.
+  - Updated by [Jon Shier](https://github.com/jshier) in Pull Requests [#3534](https://github.com/Alamofire/Alamofire/pull/3534), [#3545](https://github.com/Alamofire/Alamofire/pull/3545), [#3570](https://github.com/Alamofire/Alamofire/pull/3570), and [#3587](https://github.com/Alamofire/Alamofire/pull/3587).
+
+#### Fixed
+- Various Security framework deprecation warnings when deploying to newer OSes.
+  - Fixed by [Jon Shier](https://github.com/jshier) in Pull Request [#3555](https://github.com/Alamofire/Alamofire/pull/3555).
+- Various documentation issues.
+  - Fixed by [Jon Shier](https://github.com/jshier), [Emanuele Fumagalli](https://github.com/emanuelef), [Huang-Libo](https://github.com/Huang-Libo), and [rain2540](https://github.com/rain2540) in Pull Requests [#3548](https://github.com/Alamofire/Alamofire/pull/3548), [#3562](https://github.com/Alamofire/Alamofire/pull/3562), [#3573](https://github.com/Alamofire/Alamofire/pull/3573), [#3574](https://github.com/Alamofire/Alamofire/pull/3574), and [#3585](https://github.com/Alamofire/Alamofire/pull/3585).
+
+---
+
+## [5.5.0](https://github.com/Alamofire/Alamofire/releases/tag/5.5.0)
+Released on 2021-12-13. All issues associated with this milestone can be found using this [filter](https://github.com/Alamofire/Alamofire/milestone/79?closed=1).
+
+#### Added
+- [🔥 Experimental 🔥] support for Swift Concurrency, including `async`-`await` for requests and `StreamOf` for streaming values.
+  - Added by [Jon Shier](https://github.com/jshier) in Pull Request [#3463](https://github.com/Alamofire/Alamofire/pull/3463).
+- Generic static accessors for various protocols types for Swift 5.5.
+  - Added by [Jon Shier](https://github.com/jshier) in Pull Request [#3499](https://github.com/Alamofire/Alamofire/pull/3499).
+- `.indexInBrackets` options for array encoding in query parameters.
+  - Added by [Tiago Lopes](https://github.com/TiagoMaiaL) in Pull Request [#3516](https://github.com/Alamofire/Alamofire/pull/3516).
+- `RequestAdapterState` and new protocol requirements for `RequestAdapter` to allow for additional state to be available.
+  - Added by [Christian Noon](https://github.com/cnoon) in Pull Request [#3504](https://github.com/Alamofire/Alamofire/pull/3504).
+
+#### Updated
+- `Session` to more safely target provided custom `DispatchQueue`s for internal use.
+  - Updated by [Jon Shier](https://github.com/jshier) in Pull Request [#3523](https://github.com/Alamofire/Alamofire/pull/3523).
+- `AFError` message regarding unacceptable `Content-Type`s to sort the types.
+  - Updated by [Timur Yusipov](https://github.com/Usipov) in Pull Request [#3518](https://github.com/Alamofire/Alamofire/pull/3518).
+- Base Swift language version requirement to 5.3.
+  - Updated by [Jon Shier](https://github.com/jshier) in Pull Request [#3495](https://github.com/Alamofire/Alamofire/pull/3495).
+- Sample app to show proper loading state for requests.
+  - Updated by [Tiago Lopes](https://github.com/TiagoMaiaL) in Pull Request [#3514](https://github.com/Alamofire/Alamofire/pull/3514).
+
+#### Deprecated
+- `responseJSON` and associated methods, in preference to `responseDecodable`.
+  - Deprecated by [Jon Shier](https://github.com/jshier) in Pull Request [#3502](https://github.com/Alamofire/Alamofire/pull/3502).
+
+#### Fixed
+- Use of `Protected` wrapper when accessing properties of the wrapped values to ensure proper thread-safety.
+  - Fixed by [Jon Shier](https://github.com/jshier) in Pull Request [#3505](https://github.com/Alamofire/Alamofire/pull/3505).
+- Various documentation typos.
+  - Fixed by [Christos Koninis](https://github.com/csknns), [Tiago Lopes](https://github.com/TiagoMaiaL), and [Eugene Berdnikov](https://github.com/evnik) in various Pull Requests.
 
 ---
 

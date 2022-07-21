@@ -60,7 +60,6 @@
   + [`ResponseSerializer`](#responseserializer)
     - [`DataResponseSerializer`](#dataresponseserializer)
     - [`StringResponseSerializer`](#stringresponseserializer)
-    - [`JSONResponseSerializer`](#jsonresponseserializer)
     - [`DecodableResponseSerializer`](#decodableresponseserializer)
   + [Customizing Response Handlers](#customizing-response-handlers)
     - [Response Transforms](#response-transforms)
@@ -68,6 +67,12 @@
   + [Using Alamofire with Combine](#using-alamofire-with-combine)
     - [`DownloadResponsePublisher`](#downloadresponsepublisher)
     - [`DataStreamPublisher`](#datastreampublisher)
+  + [Using Alamofire with Swift Concurrency](#using-alamofire-with-swift-concurrency)
+    - [`DataRequest` and `UploadRequest` Support](#datarequest-and-uploadrequest-support)
+    - [`DownloadRequest` Support](#downloadrequest-support)
+    - [Automatic Cancellation](#automatic-cancellation)
+    - [`DataStreamRequest` Support](#datastreamrequest-support)
+    - [Value Stream Handlers](#value-stream-handlers)
 * [Network Reachability](#network-reachability)
 
 # Advanced Usage
@@ -129,7 +134,7 @@ let session = Session(configuration: configuration)
 > As Apple states in their [documentation](https://developer.apple.com/documentation/foundation/urlsessionconfiguration), mutating `URLSessionConfiguration` properties after the instance has been added to a `URLSession` (or, in Alamofire’s case, used to initialize a`Session`) has no effect.
 
 ### `SessionDelegate`
-A `SessionDelegate` instance encapsulates all handling of the various `URLSessionDelegate` and related protocols callbacks. `SessionDelegate` also acts as the `SessionStateDelegate` for every `Request` produced by Alamofire, allowing the `Request` to indirectly import state from the `Session` instance that created them. `SessionDelegate` can be customized with a specific `FileManager` instance, which will be used for any disk access, like accessing files to be uploaded by `UploadRequest`s or files downloaded by `DownloadRequest`s.
+A `SessionDelegate` instance encapsulates all handling of the various `URLSessionDelegate` and related protocols callbacks. `SessionDelegate` also acts as the `SessionStateProvider` for every `Request` produced by Alamofire, allowing the `Request` to indirectly import state from the `Session` instance that created them. `SessionDelegate` can be customized with a specific `FileManager` instance, which will be used for any disk access, like accessing files to be uploaded by `UploadRequest`s or files downloaded by `DownloadRequest`s.
 
 ```swift
 let delegate = SessionDelegate(fileManager: .default)
@@ -166,6 +171,9 @@ let session = Session(interceptor: policy)
 ```
 
 ### Adding a `ServerTrustManager`
+
+> For projects deploying to iOS 14, tvOS 14, watchOS 7, or macOS 11 or later, [Apple now provides built in pinning capabilities](https://developer.apple.com/news/?id=g9ejcf8y) configurable in your app's Info.plist. Please use that capability before implementing your own using Alamofire.
+
 Alamofire’s `ServerTrustManager` class encapsulates mappings between domains and instances of `ServerTrustEvaluating`-conforming types, which provide the ability to customize a `Session`’s handling of TLS security. This includes the use of certificate and public key pinning as well as certificate revocation checking. For more information, see the section about the `ServerTrustManager` and `ServerTrustEvaluating`. Initializing a `ServerTrustManger` is as simple as providing a mapping between the domain and the type of evaluation to be performed:
 
 ```swift
@@ -301,7 +309,7 @@ AF.request(...)
     .downloadProgress { progress in
         print(progress)
     }
-    .responseDecodable(of: SomeType.self) { response in
+    .responseDecodable(of: DecodableType.self) { response in
         debugPrint(response)
     }
 ```
@@ -323,7 +331,7 @@ Alamofire’s `RedirectHandler` protocol provides control and customization of r
 let redirector = Redirector(behavior: .follow)
 AF.request(...)
     .redirect(using: redirector)
-    .responseDecodable(of: SomeType.self) { response in 
+    .responseDecodable(of: DecodableType.self) { response in 
         debugPrint(response)
     }
 ```
@@ -337,7 +345,7 @@ Alamofire’s `CachedResponseHandler` protocol provides control and customizatio
 let cacher = ResponseCacher(behavior: .cache)
 AF.request(...)
     .cacheResponse(using: cacher)
-    .responseDecodable(of: SomeType.self) { response in 
+    .responseDecodable(of: DecodableType.self) { response in 
         debugPrint(response)
     }
 ```
@@ -352,7 +360,7 @@ Adding a credential to automatically reply to any HTTP authentication challenge 
 ```swift
 AF.request(...)
     .authenticate(username: "user@example.domain", password: "password")
-    .responseDecodable(of: SomeType.self) { response in 
+    .responseDecodable(of: DecodableType.self) { response in 
         debugPrint(response)
     }
 ```
@@ -365,7 +373,7 @@ Additionally, adding a raw `URLCredential` is just as easy:
 let credential = URLCredential(...)
 AF.request(...)
     .authenticate(using: credential)
-    .responseDecodable(of: SomeType.self) { response in 
+    .responseDecodable(of: DecodableType.self) { response in 
         debugPrint(response)
     }
 ```
@@ -383,7 +391,7 @@ AF.request(...)
     .onURLRequestCreation { request in
         print(request)
     }
-    .responseDecodable(of: SomeType.self) { response in
+    .responseDecodable(of: DecodableType.self) { response in
         debugPrint(response)
     }
 ```
@@ -391,14 +399,14 @@ AF.request(...)
 ##### `URLSessionTask`s
 In many ways, the various `Request` subclasses act as a wrapper for a `URLSessionTask` and present specific API for interacting with the different types of tasks. These tasks are made visible on the `Request` instance through the `tasks` array property. This includes both the initial task created for the `Request`, as well as any subsequent tasks created as part of the retry process, with one task per retry.
 
-In addition to accumulating these values, every `Request` has an `onURLSessionTaskCreation` method which calls a closure whenever a `URLSessionTask` is created for the `Request`. This clsoure will be called multiple times if the `Request` is retried and only one closure can be set at a time. The provided `URLSessionTask` *SHOULD **NOT*** be used to interact with the `task`'s lifetime, which should only be done by the `Request` itself. Instead, you can use this method to provide the `Request`'s active `task` to other APIs, like `NSFileProvider`. 
+In addition to accumulating these values, every `Request` has an `onURLSessionTaskCreation` method which calls a closure whenever a `URLSessionTask` is created for the `Request`. This closure will be called multiple times if the `Request` is retried and only one closure can be set at a time. The provided `URLSessionTask` *SHOULD **NOT*** be used to interact with the `task`'s lifetime, which should only be done by the `Request` itself. Instead, you can use this method to provide the `Request`'s active `task` to other APIs, like `NSFileProvider`. 
 
 ```swift
 AF.request(...)
     .onURLSessionTaskCreation { task in
         print(task)
     }
-    .responseDecodable(of: SomeType.self) { response in
+    .responseDecodable(of: DecodableType.self) { response in
         debugPrint(response)
     }
 ```
@@ -413,7 +421,7 @@ Alamofire gathers `URLSessionTaskMetrics` values for every `URLSessionTask` perf
 
 ```swift
 AF.request(...)
-    .responseDecodable(of: SomeType.self) { response in {
+    .responseDecodable(of: DecodableType.self) { response in {
         print(response.metrics)
     }
 ```
@@ -501,7 +509,7 @@ Alamofire’s `RequestInterceptor` protocol (composed of the `RequestAdapter` an
 ### `RequestAdapter`
 Alamofire’s  `RequestAdapter` protocol allows each `URLRequest` that’s to be performed by a `Session` to be inspected and mutated before being issued over the network. One very common use of an adapter is to add an `Authorization` header to requests behind a certain type of authentication.
 
-The `RequestAdapter` protocol has a single requirement: 
+The `RequestAdapter` protocol has one required method: 
 
 ```swift
 func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void)
@@ -524,6 +532,20 @@ func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping
     completion(.success(urlRequest))
 }
 ```
+
+The `RequestAdapter` also contains a second method with a default protocol extension implementation to support backwards compatibility:
+
+```swift
+func adapt(_ urlRequest: URLRequest, using state: RequestAdapterState, completion: @escaping (Result<URLRequest, Error>) -> Void)
+```
+
+This second method uses a `RequestAdapterState` type to expose additional internal state beyond the first method including:
+
+- `requestID`: The `UUID` of the `Request` associated with the `URLRequest` to adapt.
+
+This `requestID` is very useful when trying to map custom types associated with the original `Request` to perform custom operations inside the `RequestAdapter`.
+
+> This second method will become the new requirement in the next MAJOR version of Alamofire.
 
 ### `RequestRetrier`
 Alamofire’s `RequestRetrier` protocol allows a `Request` that encountered an `Error` while being executed to be retried. This includes `Error`s produced at any stage of Alamofire’s [request pipeline](#the-request-pipeline).
@@ -863,7 +885,7 @@ AF.request(urlComponents)
 Applications interacting with web applications in a significant manner are encouraged to have custom types conform to `URLConvertible` as a convenient way to map domain-specific models to server resources.
 
 ### `URLRequestConvertible`
-Types adopting the `URLRequestConvertible` protocol can be used to construct `URLRequest`s. `URLRequest` conforms to `URLRequestConvertible` by default, allowing it to be passed into `request`, `upload`, and `download` methods directly. Alamofire uses `URLRequestConvertible` as the foundation of all requests flowing through the request pipeline. Using `URLRequest`s directly the recommended way to customize `URLRequest` creation outside of the `ParameterEncoder`s that Alamofire provides.
+Types adopting the `URLRequestConvertible` protocol can be used to construct `URLRequest`s. `URLRequest` conforms to `URLRequestConvertible` by default, allowing it to be passed into `request`, `upload`, and `download` methods directly. Alamofire uses `URLRequestConvertible` as the foundation of all requests flowing through the request pipeline. Using `URLRequest`s directly is the recommended way to customize `URLRequest` creation outside of the `ParameterEncoder`s that Alamofire provides.
 
 ```swift
 let url = URL(string: "https://httpbin.org/post")!
@@ -1030,7 +1052,6 @@ Alamofire includes a few common responses handlers, including:
 
 - `responseData(queue:completionHandler)`: Validates and preprocesses the response `Data` using `DataResponseSerializer`.
 - `responseString(queue:encoding:completionHandler:)`: Parses the response `Data` as a `String` using the provided `String.Encoding`.
-- `responseJSON(queue:options:completionHandler)`: Parses the response `Data` using `JSONSerialization` using the provided `JSONSerialization.ReadingOptions`. Using this method is not recommended and is only offered for compatibility with existing Alamofire usage. Instead, `responseDecodable` should be used.
 - `responseDecodable(of:queue:decoder:completionHandler:)`: Parses the response `Data` into the provided or inferred `Decodable` type using the provided `DataDecoder`. Uses `JSONDecoder` by default. Recommend method for JSON and generic response parsing.
 
 #### `DataResponseSerializer`
@@ -1038,9 +1059,6 @@ Calling `responseData(queue:completionHandler:)` on `DataRequest` or `DownloadRe
 
 #### `StringResponseSerializer`
 Calling `responseString(queue:encoding:completionHandler)` on `DataRequest` or `DownloadRequest` uses a `StringResponseSerializer` to validate that `Data` has been returned appropriately (no empty responses unless allowed by the `emptyResponseMethods` and `emptyResponseCodes`) and passes that `Data` through the `dataPreprocessor`. The preprocessed `Data` is then used to initialize a `String` using the `String.Encoding` parsed from the `HTTPURLResponse`.
-
-#### `JSONResponseSerializer`
-Calling `responseJSON(queue:options:completionHandler)` on `DataRequest` or `DownloadRequest` uses a `JSONResponseSerializer` to validate that `Data` has been returned appropriately (no empty responses unless allowed by the `emptyResponseMethods` and `emptyResponseCodes`) and passes that `Data` through the `dataPreprocessor`. The preprocessed `Data` is then passed through `JSONSerialization.jsonObject(with:options:)` with the provided options. This serializer is no longer recommended. Instead, using the `DecodableResponseSerializer` provides a better Swift experience.
 
 #### `DecodableResponseSerializer`
 Calling `responseDecodable(of:queue:decoder:completionHandler)` on `DataRequest` or `DownloadRequest` uses a `DecodableResponseSerializer`to validate that `Data` has been returned appropriately (no empty responses unless allowed by the `emptyResponseMethods` and `emptyResponseCodes`) and passes that `Data` through the `dataPreprocessor`. The preprocessed `Data` is then passed through the provided `DataDecoder` and parsed into the provided or inferred `Decodable` type.
@@ -1052,7 +1070,7 @@ In addition to the flexible `ResponseSerializer`s included with Alamofire, there
 Using an existing `ResponseSerializer` and then transforming the output is one of the simplest ways of customizing response handlers. Both `DataResponse` and `DownloadResponse` have `map`, `tryMap`, `mapError`, and `tryMapError` methods that can transform responses while preserving the metadata associated with the response. For example, extracting a property from a `Decodable` response can be achieved using `map`, while also preserving any previous parsing errors.
 
 ```swift
-AF.request(...).responseDecodable(of: SomeType.self) { response in
+AF.request(...).responseDecodable(of: DecodableType.self) { response in
     let propertyResponse = response.map { $0.someProperty }
 
     debugPrint(propertyResponse)
@@ -1062,7 +1080,7 @@ AF.request(...).responseDecodable(of: SomeType.self) { response in
 Transforms that throw errors can also be used with `tryMap`, perhaps to perform validation:
 
 ```swift
-AF.request(..).responseDecodable(of: SomeType.self) { response in
+AF.request(..).responseDecodable(of: DecodableType.self) { response in
     let propertyResponse = response.tryMap { try $0.someProperty.validated() }
 
     debugPrint(propertyResponse)
@@ -1132,7 +1150,7 @@ AF.streamRequest(...).responseStream(using: DecodableStreamSerializer<DecodableT
 ```
 
 ## Using Alamofire with Combine
-On systems supporting the Combine framework, Alamofire offers the ability to publish responses using a custom `Publisher` type. These publishers work much like Alamofire's response handlers. They are chained onto requests and like response handlers, should come after other API like `validate()`. For example:
+On systems supporting the Combine framework, Alamofire offers the ability to publish responses using a custom `Publisher` type. These publishers work much like Alamofire's response handlers. They are chained onto requests and, like response handlers, should come after other API like `validate()`. For example:
 
 ```swift
 AF.request(...).publishDecodable(type: DecodableType.self)
@@ -1201,6 +1219,142 @@ Like most `DownloadRequest`'s response handlers, `DownloadResponsePublisher` rea
 #### `DataStreamPublisher`
 `DataStreamPublisher` is a `Publisher` for `DataStreamRequest`s. Like `DataStreamRequest` itself, and unlike Alamofire's other `Publisher`s, `DataStreamPublisher` can return multiple values serialized from `Data` received from the network, as well as a final completion event. For more information on how `DataStreamRequest` works, please see our [detailed usage documentation](https://github.com/Alamofire/Alamofire/blob/master/Documentation/Usage.md#streaming-data-from-a-server).
 
+## Using Alamofire with Swift Concurrency
+Swift's concurrency features, released in Swift 5.5, provide fundamental asynchronous building blocks in the language, including `async`-`await` syntax, `Task`s, and actors. Alamofire provides extensions allowing the use of common Alamofire APIs with Swift's concurrency features.
+
+> Alamofire's concurrency support requires Swift 5.6.0 or Xcode 13.3.1 due to bugs with older Swift 5.5 compilers and Xcode versions. These examples also include the use of static protocol values added in Alamofire 5.5 for Swift 5.5.
+
+### `DataRequest` and `UploadRequest` Support
+
+Alamofire's concurrency support works by vending various `*Task` types, like `DataTask`, `DownloadTask`, and `DataStreamTask`. These types work similarly to Alamofire's existing response handlers and convert the standard completion handlers into `async` properties which can be `await`ed. For example, `DataRequest` (and `UploadRequest`, which inherits from `DataRequest`) can provide a `DataTask` used to `await` any of the asynchronous values:
+
+```swift
+let value = try await AF.request(...).serializingDecodable(TestResponse.self).value
+```
+
+This code synchronously produces a `DataTask<TestResponse>` value which can be used to `await` any part of the resulting `DataResponse<TestResponse, AFError>`. Each `DataTask` can be used to `await` any of these properties as many times as needed. For example:
+
+```swift
+let dataTask = AF.request(...).serializingDecodable(TestResponse.self)
+// Later...
+let response = await dataTask.response // Returns full DataResponse<TestResponse, AFError>
+// Elsewhere...
+let result = await dataTask.result // Returns Result<TestResponse, AFError>
+// And...
+let value = try await dataTask.value // Returns the TestResponse or throws the AFError as an Error
+```
+
+Similarly, and like Alamofire's existing closure and publisher-based response handlers, each request can produce multiple tasks that perform the same or different serializations.
+
+```swift
+let request = AF.request(...)
+// Later...
+let stringResponse = await request.serializingString().response
+// Elsewhere...
+let decodableResponse = await request.serializingDecodable(TestResponse.self).response
+```
+
+Finally, like all Swift Concurrency APIs, these `await`able properties can be used to `await` multiple requests issued in parallel. For example:
+
+```swift
+async let first = AF.request(...).serializingDecodable(TestResponse.self).response
+async let second = AF.request(...).serializingString().response
+async let third = AF.request(...).serializingData().response
+
+// Later...
+
+// Produces (DataResponse<TestResponse, AFError>, DataResponse<String, AFError>,  DataResponse<Data, AFError>) 
+// when all requests are complete.
+let responses = await (first, second, third) 
+```
+
+Alamofire's concurrency APIs can also be used with other builtin concurrency constructs like `Task` and `TaskGroup`.
+
+### `DownloadRequest` Support
+
+Like `DataRequest`, `DownloadRequest` vends its own `DownloadTask` value which can be used to `await` the completion of the request. Like the existing response handlers, the `DownloadTask` will read the downloaded `Data` from disk, so if the `Data` is very large it's best to simply get the `URL` and read the `Data` in a way that won't read it all into memory at once.
+
+```swift
+let url = try await AF.download(...).serializingURL().value
+```
+
+### Automatic Cancellation
+
+By default, `DataTask` and `DownloadTask` values do not cancel the underlying request when an enclosing concurrent context is cancelled. This means that request will complete even if the enclosing context is explicitly cancelled. For example:
+
+```swift
+let request = AF.request(...) // Creates the DataRequest.
+let task = Task { // Produces a `Task<DataResponse<TestResponse, AFError>, Never> value.
+    await request.serializingDecodable(TestResponse.self).response
+}
+
+// Later...
+
+task.cancel() // task is cancelled, but the DataRequest created inside it is not.
+print(task.isCancelled) // true
+print(request.isCancelled) // false
+```
+
+If automatic cancellation is desired, it can be configured when creating the `DataTask` or `DownloadTask`. For example:
+
+```swift
+let request = AF.request(...) // Creates the DataRequest.
+let task = Task { // Produces a `Task<DataResponse<TestResponse, AFError>, Never> value.
+    await request.serializingDecodable(TestResponse.self, automaticallyCancelling: true).response
+}
+
+// Later...
+
+task.cancel() // task is cancelled.
+print(task.isCancelled) // true
+print(request.isCancelled) // true
+```
+
+This automatic cancellation only takes affect when one of the asynchronous properties is `await`ed. 
+
+### `DataStreamRequest` Support
+
+`DataStreamRequest`, unlike the other request types, does not read a single value and complete. Instead, it continuously streams `Data` from the server to be processed through a handler. With Swift Concurrency, this callback API has been replaced with `StreamOf` values vended by `DataStreamTask`. `StreamOf` conforms to `AsyncSequence`, allowing the use of `for await` syntax to observe values as they're received by the stream. Unlike `DataTask` and `DownloadTask`, `DataStreamTask` doesn't vend asynchronous properties itself. Instead, it vends the streams that can be observed.
+
+```swift
+let streamTask = AF.dataStreamRequest(...).streamTask()
+
+// Later...
+
+for await data in streamTask.streamingData() { 
+    // Streams Stream<Data, Never> values. a.k.a StreamOf<DataStreamRequest.Stream<Data, Never>>
+}
+```
+
+This loop only ends when the `DataStreamRequest` completes, either through the server closing the connection or the `DataStreamRequest` being cancelled. If the loop is ended early by `break`ing out of it, the `DataStreamRequest` is canceled and no further values can be received. If the use of multiple observers without automatically cancellation is desired, you can pass `false` for the `automaticallyCancelling` parameter.
+
+```swift
+let streamTask = AF.dataStreamRequest(...).streamTask()
+
+// Later...
+
+for await data in streamTask.streamingData(automaticallyCancelling: false) { 
+    // Streams Stream<Data, Never> values. a.k.a StreamOf<DataStreamRequest.Stream<Data, Never>>
+    if condition { break } // Stream ends but underlying `DataStreamRequest` is not cancelled and keeps receiving data.
+}
+```
+
+One observer setting `automaticallyCancelling` to `false` does not affect other from the same `DataStreamRequest`, so if any other observer exits the request will still be cancelled.
+
+### Value Stream Handlers
+
+Alamofire provides various handlers for internal values which are produced asynchronously, such as `Progress` values, `URLRequest`s and `URLSessionTask`s, as well as cURL descriptions of the request each time a new request is issued. Alamofire's concurrency support now exposes these handlers as `StreamOf` values that can be used to asynchronously observe the received values. For instance, if you wanted to print each cURL description produced by a request:
+
+```swift
+let request = AF.request(...)
+
+// Later...
+
+for await description in request.cURLDescriptions() {
+    print(description)
+}
+```
+
 ## Network Reachability
 The `NetworkReachabilityManager` listens for changes in the reachability of hosts and addresses for both Cellular and WiFi network interfaces.
 
@@ -1218,10 +1372,10 @@ manager?.startListening { status in
 There are some important things to remember when using network reachability to determine what to do next.
 
 - **DO NOT** use Reachability to determine if a network request should be sent.
-	- You should **ALWAYS** send it.
+    - You should **ALWAYS** send it.
 - When reachability is restored, use the event to retry failed network requests.
-	- Even though the network requests may still fail, this is a good moment to retry them.
+    - Even though the network requests may still fail, this is a good moment to retry them.
 - The network reachability status can be useful for determining why a network request may have failed.
-	- If a network request fails, it is more useful to tell the user that the network request failed due to being offline rather than a more technical error, such as "request timed out."
+    - If a network request fails, it is more useful to tell the user that the network request failed due to being offline rather than a more technical error, such as "request timed out."
 
 Alternatively, using a `RequestRetrier`, like the built in `RetryPolicy`, instead of reachability updates to retry requests which failed to a network failure will likely be simpler and more reliable. By default, `RetryPolicy` will retry idempotent requests on a variety of error conditions, including an offline network connection.

@@ -26,7 +26,6 @@ import Alamofire
 import Foundation
 import XCTest
 
-#if !SWIFT_PACKAGE
 final class UploadFileInitializationTestCase: BaseTestCase {
     func testUploadClassMethodWithMethodURLAndFile() {
         // Given
@@ -73,7 +72,6 @@ final class UploadFileInitializationTestCase: BaseTestCase {
         XCTAssertNotNil(request.response, "response should not be nil")
     }
 }
-#endif
 
 // MARK: -
 
@@ -124,7 +122,6 @@ final class UploadDataInitializationTestCase: BaseTestCase {
 
 // MARK: -
 
-#if !SWIFT_PACKAGE
 final class UploadStreamInitializationTestCase: BaseTestCase {
     func testUploadClassMethodWithMethodURLAndStream() {
         // Given
@@ -173,7 +170,6 @@ final class UploadStreamInitializationTestCase: BaseTestCase {
         XCTAssertNotNil(request.response, "response should not be nil, tasks: \(request.tasks)")
     }
 }
-#endif
 
 // MARK: -
 
@@ -204,7 +200,7 @@ final class UploadDataTestCase: BaseTestCase {
     func testUploadDataRequestWithProgress() {
         // Given
         let url = Endpoint.method(.post).url
-        let string = String(repeating: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ", count: 300)
+        let string = String(repeating: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ", count: 1000)
         let data = Data(string.utf8)
 
         let expectation = self.expectation(description: "Bytes upload progress should be reported: \(url)")
@@ -683,9 +679,9 @@ final class UploadMultipartFormDataTestCase: BaseTestCase {
     private func executeMultipartFormDataUploadRequestWithProgress(streamFromDisk: Bool) {
         // Given
         let loremData1 = Data(String(repeating: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                                     count: 100).utf8)
+                                     count: 500).utf8)
         let loremData2 = Data(String(repeating: "Lorem ipsum dolor sit amet, nam no graeco recusabo appellantur.",
-                                     count: 100).utf8)
+                                     count: 500).utf8)
 
         let expectation = self.expectation(description: "multipart form data upload should succeed")
 

@@ -100,11 +100,11 @@ final class RequestResponseTestCase: BaseTestCase {
 
         let expectation = self.expectation(description: "request should succeed")
 
-        var response: DataResponse<Any, AFError>?
+        var response: DataResponse<TestResponse, AFError>?
 
         // When
         AF.request(.method(.post), parameters: parameters)
-            .responseJSON { closureResponse in
+            .responseDecodable(of: TestResponse.self) { closureResponse in
                 response = closureResponse
                 expectation.fulfill()
             }
@@ -116,7 +116,7 @@ final class RequestResponseTestCase: BaseTestCase {
         XCTAssertNotNil(response?.response)
         XCTAssertNotNil(response?.data)
 
-        if let json = response?.result.success as? [String: Any], let form = json["form"] as? [String: String] {
+        if let form = response?.result.success?.form {
             XCTAssertEqual(form["french"], parameters["french"])
             XCTAssertEqual(form["japanese"], parameters["japanese"])
             XCTAssertEqual(form["arabic"], parameters["arabic"])
@@ -126,19 +126,18 @@ final class RequestResponseTestCase: BaseTestCase {
         }
     }
 
-    #if !SWIFT_PACKAGE
     func testPOSTRequestWithBase64EncodedImages() {
         // Given
         let pngBase64EncodedString: String = {
-            let URL = url(forResource: "unicorn", withExtension: "png")
-            let data = try! Data(contentsOf: URL)
+            let fileURL = url(forResource: "unicorn", withExtension: "png")
+            let data = try! Data(contentsOf: fileURL)
 
             return data.base64EncodedString(options: .lineLength64Characters)
         }()
 
         let jpegBase64EncodedString: String = {
-            let URL = url(forResource: "rainbow", withExtension: "jpg")
-            let data = try! Data(contentsOf: URL)
+            let fileURL = url(forResource: "rainbow", withExtension: "jpg")
+            let data = try! Data(contentsOf: fileURL)
 
             return data.base64EncodedString(options: .lineLength64Characters)
         }()
@@ -149,11 +148,11 @@ final class RequestResponseTestCase: BaseTestCase {
 
         let expectation = self.expectation(description: "request should succeed")
 
-        var response: DataResponse<Any, AFError>?
+        var response: DataResponse<TestResponse, AFError>?
 
         // When
         AF.request(Endpoint.method(.post), method: .post, parameters: parameters)
-            .responseJSON { closureResponse in
+            .responseDecodable(of: TestResponse.self) { closureResponse in
                 response = closureResponse
                 expectation.fulfill()
             }
@@ -166,7 +165,7 @@ final class RequestResponseTestCase: BaseTestCase {
         XCTAssertNotNil(response?.data)
         XCTAssertEqual(response?.result.isSuccess, true)
 
-        if let json = response?.result.success as? [String: Any], let form = json["form"] as? [String: String] {
+        if let form = response?.result.success?.form {
             XCTAssertEqual(form["email"], parameters["email"])
             XCTAssertEqual(form["png_image"], parameters["png_image"])
             XCTAssertEqual(form["jpeg_image"], parameters["jpeg_image"])
@@ -174,7 +173,6 @@ final class RequestResponseTestCase: BaseTestCase {
             XCTFail("form parameter in JSON should not be nil")
         }
     }
-    #endif
 
     // MARK: Queues
 
@@ -183,10 +181,10 @@ final class RequestResponseTestCase: BaseTestCase {
         let queue = DispatchQueue(label: "org.alamofire.testSerializationQueue")
         let manager = Session(serializationQueue: queue)
         let expectation = self.expectation(description: "request should complete")
-        var response: DataResponse<Any, AFError>?
+        var response: DataResponse<TestResponse, AFError>?
 
         // When
-        manager.request(Endpoint.get).responseJSON { resp in
+        manager.request(.get).responseDecodable(of: TestResponse.self) { resp in
             response = resp
             expectation.fulfill()
         }
@@ -203,10 +201,10 @@ final class RequestResponseTestCase: BaseTestCase {
         let serializationQueue = DispatchQueue(label: "org.alamofire.testSerializationQueue")
         let manager = Session(requestQueue: requestQueue, serializationQueue: serializationQueue)
         let expectation = self.expectation(description: "request should complete")
-        var response: DataResponse<Any, AFError>?
+        var response: DataResponse<TestResponse, AFError>?
 
         // When
-        manager.request(Endpoint.get).responseJSON { resp in
+        manager.request(.get).responseDecodable(of: TestResponse.self) { resp in
             response = resp
             expectation.fulfill()
         }
@@ -225,11 +223,11 @@ final class RequestResponseTestCase: BaseTestCase {
         let count = 10
         let expectation = self.expectation(description: "request should complete")
         expectation.expectedFulfillmentCount = count
-        var responses: [DataResponse<Any, AFError>] = []
+        var responses: [DataResponse<TestResponse, AFError>] = []
 
         // When
         DispatchQueue.concurrentPerform(iterations: count) { _ in
-            session.request(.default).responseJSON { resp in
+            session.request(.default).responseDecodable(of: TestResponse.self) { resp in
                 responses.append(resp)
                 expectation.fulfill()
             }
@@ -239,7 +237,7 @@ final class RequestResponseTestCase: BaseTestCase {
 
         // Then
         XCTAssertEqual(responses.count, count)
-        XCTAssertTrue(responses.allSatisfy { $0.result.isSuccess })
+        XCTAssertTrue(responses.allSatisfy(\.result.isSuccess))
     }
 
     // MARK: Encodable Parameters
@@ -666,8 +664,8 @@ final class RequestResponseTestCase: BaseTestCase {
         // Given
         let session = Session()
 
-        var response1: DataResponse<Any, AFError>?
-        var response2: DataResponse<Any, AFError>?
+        var response1: DataResponse<TestResponse, AFError>?
+        var response2: DataResponse<TestResponse, AFError>?
 
         let expect = expectation(description: "both response serializer completions should be called")
         expect.expectedFulfillmentCount = 2
@@ -675,11 +673,11 @@ final class RequestResponseTestCase: BaseTestCase {
         // When
         let request = session.request(.default)
 
-        request.responseJSON { resp in
+        request.responseDecodable(of: TestResponse.self) { resp in
             response1 = resp
             expect.fulfill()
 
-            request.responseJSON { resp in
+            request.responseDecodable(of: TestResponse.self) { resp in
                 response2 = resp
                 expect.fulfill()
             }
@@ -698,9 +696,9 @@ final class RequestResponseTestCase: BaseTestCase {
         // Given
         let session = Session()
 
-        var response1: DataResponse<Any, AFError>?
-        var response2: DataResponse<Any, AFError>?
-        var response3: DataResponse<Any, AFError>?
+        var response1: DataResponse<TestResponse, AFError>?
+        var response2: DataResponse<TestResponse, AFError>?
+        var response3: DataResponse<TestResponse, AFError>?
 
         let expect = expectation(description: "all response serializer completions should be called")
         expect.expectedFulfillmentCount = 3
@@ -708,15 +706,15 @@ final class RequestResponseTestCase: BaseTestCase {
         // When
         let request = session.request(.default)
 
-        request.responseJSON { resp in
+        request.responseDecodable(of: TestResponse.self) { resp in
             response1 = resp
             expect.fulfill()
 
-            request.responseJSON { resp in
+            request.responseDecodable(of: TestResponse.self) { resp in
                 response2 = resp
                 expect.fulfill()
 
-                request.responseJSON { resp in
+                request.responseDecodable(of: TestResponse.self) { resp in
                     response3 = resp
                     expect.fulfill()
                 }
@@ -736,21 +734,21 @@ final class RequestResponseTestCase: BaseTestCase {
         let session = Session()
         let request = session.request(.default)
 
-        var response1: DataResponse<Any, AFError>?
-        var response2: DataResponse<Any, AFError>?
-        var response3: DataResponse<Any, AFError>?
+        var response1: DataResponse<TestResponse, AFError>?
+        var response2: DataResponse<TestResponse, AFError>?
+        var response3: DataResponse<TestResponse, AFError>?
 
         // When
         let expect1 = expectation(description: "response serializer 1 completion should be called")
-        request.responseJSON { response1 = $0; expect1.fulfill() }
+        request.responseDecodable(of: TestResponse.self) { response1 = $0; expect1.fulfill() }
         waitForExpectations(timeout: timeout)
 
         let expect2 = expectation(description: "response serializer 2 completion should be called")
-        request.responseJSON { response2 = $0; expect2.fulfill() }
+        request.responseDecodable(of: TestResponse.self) { response2 = $0; expect2.fulfill() }
         waitForExpectations(timeout: timeout)
 
         let expect3 = expectation(description: "response serializer 3 completion should be called")
-        request.responseJSON { response3 = $0; expect3.fulfill() }
+        request.responseDecodable(of: TestResponse.self) { response3 = $0; expect3.fulfill() }
         waitForExpectations(timeout: timeout)
 
         // Then
@@ -762,7 +760,7 @@ final class RequestResponseTestCase: BaseTestCase {
 
 // MARK: -
 
-class RequestDescriptionTestCase: BaseTestCase {
+final class RequestDescriptionTestCase: BaseTestCase {
     func testRequestDescription() {
         // Given
         let url = Endpoint().url
@@ -1179,7 +1177,6 @@ final class RequestLifetimeTests: BaseTestCase {
 
 // MARK: -
 
-#if !SWIFT_PACKAGE
 final class RequestInvalidURLTestCase: BaseTestCase {
     func testThatDataRequestWithFileURLThrowsError() {
         // Given
@@ -1240,4 +1237,3 @@ final class RequestInvalidURLTestCase: BaseTestCase {
         XCTAssertNil(response?.response)
     }
 }
-#endif

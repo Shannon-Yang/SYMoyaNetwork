@@ -20,31 +20,60 @@ BOLDCYAN="\033[1m\033[36m"
 BOLDWHITE="\033[1m\033[37m"
 
 # make sure all tests are passing
-
 if [[ `uname` == "Darwin" ]]; then
-    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-14- | wc -l` -ge 1 ]; then
-        DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-11/iOS/14.4
-    else
-		echo "No iOS 14.* Simulator found, available runtimes are:"
-		xcrun simctl list runtimes
-    	exit -1
-    fi
+	if [[ "${XCODE12}" == "" ]]; then
+		echo "🏔 Running iOS 15.2 / Xcode 13"
 
-    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-7- | wc -l` -ge 1 ]; then
-        DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-5-44mm/watchOS/7.2
-    else
-		echo "No watchOS 7.* Simulator found, available runtimes are:"
-		xcrun simctl list runtimes
-    	exit -1
-    fi
+		if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-15- | wc -l` -ge 1 ]; then
+			DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-12/iOS/15.2
+		else
+			echo "No iOS 15.* Simulator found, available runtimes are:"
+			xcrun simctl list runtimes
+			exit -1
+		fi
 
-    if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-14- | wc -l` -ge 1 ]; then
-        DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/14.3
-    else
-		echo "No tvOS 14.* Simulator found, available runtimes are:"
-		xcrun simctl list runtimes
-    	exit -1
-    fi
+		if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-8- | wc -l` -ge 1 ]; then
+			DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-6-44mm/watchOS/8.3
+		else
+			echo "No watchOS 8.* Simulator found, available runtimes are:"
+			xcrun simctl list runtimes
+			exit -1
+		fi
+
+		if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-15- | wc -l` -ge 1 ]; then
+        	DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/15.2
+		else
+			echo "No tvOS 15.* Simulator found, available runtimes are:"
+			xcrun simctl list runtimes
+			exit -1
+		fi
+	else
+		echo "🗻 Running iOS 14.5 / Xcode 12.5.1"
+
+		if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.iOS-14- | wc -l` -ge 1 ]; then
+			DEFAULT_IOS_SIMULATOR=RxSwiftTest/iPhone-11/iOS/14.5
+		else
+			echo "No iOS 14.* Simulator found, available runtimes are:"
+			xcrun simctl list runtimes
+			exit -1
+		fi
+
+		if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.watchOS-7- | wc -l` -ge 1 ]; then
+			DEFAULT_WATCHOS_SIMULATOR=RxSwiftTest/Apple-Watch-Series-5-44mm/watchOS/7.4
+		else
+			echo "No watchOS 7.* Simulator found, available runtimes are:"
+			xcrun simctl list runtimes
+			exit -1
+		fi
+
+		if [ `xcrun simctl list runtimes | grep com.apple.CoreSimulator.SimRuntime.tvOS-14- | wc -l` -ge 1 ]; then
+			DEFAULT_TVOS_SIMULATOR=RxSwiftTest/Apple-TV-1080p/tvOS/14.5
+		else
+			echo "No tvOS 14.* Simulator found, available runtimes are:"
+			xcrun simctl list runtimes
+			exit -1
+		fi
+	fi
 fi
 
 RUN_SIMULATOR_BY_NAME=0

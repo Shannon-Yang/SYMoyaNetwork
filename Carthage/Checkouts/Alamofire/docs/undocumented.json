@@ -2,8 +2,50 @@
   "warnings": [
     {
       "file": "/Users/jshier/Desktop/Code/Alamofire/Source/Combine.swift",
-      "line": 242,
+      "line": 203,
+      "symbol": "DataRequest.publishDecodable(type:queue:preprocessor:decoder:emptyResponseCodes:emptyResponseMethods:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jshier/Desktop/Code/Alamofire/Source/Combine.swift",
+      "line": 259,
       "symbol": "DataStreamPublisher",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jshier/Desktop/Code/Alamofire/Source/Combine.swift",
+      "line": 590,
+      "symbol": "DownloadRequest.publishDecodable(type:queue:preprocessor:decoder:emptyResponseCodes:emptyResponseMethods:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jshier/Desktop/Code/Alamofire/Source/Concurrency.swift",
+      "line": 516,
+      "symbol": "DataStreamTask",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jshier/Desktop/Code/Alamofire/Source/Concurrency.swift",
+      "line": 518,
+      "symbol": "DataStreamTask.Stream",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jshier/Desktop/Code/Alamofire/Source/Concurrency.swift",
+      "line": 649,
+      "symbol": "StreamOf.BufferingPolicy",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jshier/Desktop/Code/Alamofire/Source/Concurrency.swift",
+      "line": 677,
+      "symbol": "StreamOf.Iterator",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
@@ -33,6 +75,34 @@
       "line": 308,
       "symbol": "EventMonitor.request(_:didParseResponse:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jshier/Desktop/Code/Alamofire/Source/ParameterEncoding.swift",
+      "line": 242,
+      "symbol": "JSONEncoding.Error",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jshier/Desktop/Code/Alamofire/Source/ParameterEncoding.swift",
+      "line": 243,
+      "symbol": "JSONEncoding.Error.invalidJSONObject",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jshier/Desktop/Code/Alamofire/Source/ParameterEncoding.swift",
+      "line": 325,
+      "symbol": "JSONEncoding.Error",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jshier/Desktop/Code/Alamofire/Source/ParameterEncoding.swift",
+      "line": 326,
+      "symbol": "JSONEncoding.Error.localizedDescription",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
@@ -142,21 +212,21 @@
     },
     {
       "file": "/Users/jshier/Desktop/Code/Alamofire/Source/URLEncodedFormEncoder.swift",
-      "line": 574,
+      "line": 606,
       "symbol": "_URLEncodedFormEncoder.KeyedContainer",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jshier/Desktop/Code/Alamofire/Source/URLEncodedFormEncoder.swift",
-      "line": 660,
+      "line": 698,
       "symbol": "_URLEncodedFormEncoder.SingleValueContainer",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/jshier/Desktop/Code/Alamofire/Source/URLEncodedFormEncoder.swift",
-      "line": 803,
+      "line": 836,
       "symbol": "_URLEncodedFormEncoder.UnkeyedContainer",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"

@@ -40,7 +40,7 @@ final class SessionTestCase: BaseTestCase {
             self.throwsError = throwsError
         }
 
-        func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+        func adapt(_ urlRequest: URLRequest, using state: RequestAdapterState, completion: @escaping (Result<URLRequest, Error>) -> Void) {
             adaptedCount += 1
 
             let result: Result<URLRequest, Error> = Result {
@@ -67,7 +67,7 @@ final class SessionTestCase: BaseTestCase {
             self.throwsError = throwsError
         }
 
-        func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+        func adapt(_ urlRequest: URLRequest, using state: RequestAdapterState, completion: @escaping (Result<URLRequest, Error>) -> Void) {
             adaptedCount += 1
 
             let result: Result<URLRequest, Error> = Result {
@@ -101,7 +101,9 @@ final class SessionTestCase: BaseTestCase {
         var shouldRetry = true
         var retryDelay: TimeInterval?
 
-        func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+        func adapt(_ urlRequest: URLRequest,
+                   using state: RequestAdapterState,
+                   completion: @escaping (Result<URLRequest, Error>) -> Void) {
             adaptCalledCount += 1
 
             let result: Result<URLRequest, Error> = Result {
@@ -165,7 +167,9 @@ final class SessionTestCase: BaseTestCase {
         var retryCount = 0
         var retryErrors: [Error] = []
 
-        func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+        func adapt(_ urlRequest: URLRequest,
+                   using state: RequestAdapterState,
+                   completion: @escaping (Result<URLRequest, Error>) -> Void) {
             adaptCalledCount += 1
 
             let result: Result<URLRequest, Error> = Result {
@@ -262,6 +266,27 @@ final class SessionTestCase: BaseTestCase {
         XCTAssertNotNil(session.serverTrustManager, "session server trust policy manager should not be nil")
     }
 
+    // MARK: Tests - Parallel Root Queue
+
+    func testThatSessionWorksCorrectlyWhenPassedAConcurrentRootQueue() {
+        // Given
+        let queue = DispatchQueue(label: "ohNoAParallelQueue", attributes: .concurrent)
+        let session = Session(rootQueue: queue)
+        let didFinish = expectation(description: "request did finish")
+        var receivedResponse: TestResponse?
+
+        // When
+        session.request(.get).responseDecodable(of: TestResponse.self) { response in
+            receivedResponse = response.value
+            didFinish.fulfill()
+        }
+
+        waitForExpectations(timeout: timeout)
+
+        // Then
+        XCTAssertNotNil(receivedResponse, "Should receive TestResponse.")
+    }
+
     // MARK: Tests - Default HTTP Headers
 
     func testDefaultUserAgentHeader() {
@@ -300,7 +325,7 @@ final class SessionTestCase: BaseTestCase {
 
         XCTAssertTrue(userAgent?.contains(alamofireVersion) == true)
         XCTAssertTrue(userAgent?.contains(osNameVersion) == true)
-        XCTAssertTrue(userAgent?.contains("xctest/Unknown") == true)
+        XCTAssertTrue(userAgent?.contains("xctest/") == true)
     }
 
     // MARK: Tests - Supported Accept-Encodings
@@ -462,9 +487,10 @@ final class SessionTestCase: BaseTestCase {
     func testReleasingManagerWithPendingRequestDeinitializesSuccessfully() {
         // Given
         let monitor = ClosureEventMonitor()
-        let expectation = self.expectation(description: "Request created")
-        monitor.requestDidCreateTask = { _, _ in expectation.fulfill() }
+        let didCreateRequest = expectation(description: "Request created")
+        monitor.requestDidCreateTask = { _, _ in didCreateRequest.fulfill() }
         var session: Session? = Session(startRequestsImmediately: false, eventMonitors: [monitor])
+        weak var weakSession = session
 
         // When
         let request = session?.request(.default)
@@ -473,8 +499,14 @@ final class SessionTestCase: BaseTestCase {
         waitForExpectations(timeout: timeout)
 
         // Then
-        XCTAssertEqual(request?.task?.state, .suspended)
-        XCTAssertNil(session, "manager should be nil")
+        if #available(macOS 13, iOS 16, tvOS 16, watchOS 9, *) {
+            // On 2022 OS versions and later, URLSessionTasks are completed even if not resumed before invalidating a session.
+            XCTAssertTrue([.canceling, .completed].contains(request?.task?.state))
+        } else {
+            XCTAssertEqual(request?.task?.state, .suspended)
+        }
+        XCTAssertNil(session, "session should be nil")
+        XCTAssertNil(weakSession, "weak session should be nil")
     }
 
     func testReleasingManagerWithPendingCanceledRequestDeinitializesSuccessfully() {
@@ -825,12 +857,12 @@ final class SessionTestCase: BaseTestCase {
         let session = Session()
 
         let expectation = self.expectation(description: "request should eventually fail")
-        var response: DataResponse<Any, AFError>?
+        var response: DataResponse<TestResponse, AFError>?
 
         // When
         session.request(.basicAuth(), interceptor: handler)
             .validate()
-            .responseJSON { jsonResponse in
+            .responseDecodable(of: TestResponse.self) { jsonResponse in
                 response = jsonResponse
                 expectation.fulfill()
             }
@@ -859,7 +891,7 @@ final class SessionTestCase: BaseTestCase {
         let session = Session()
 
         let expectation = self.expectation(description: "request should eventually fail")
-        var response: DownloadResponse<Any, AFError>?
+        var response: DownloadResponse<TestResponse, AFError>?
 
         let destination: DownloadRequest.Destination = { _, _ in
             let fileURL = self.testDirectoryURL.appendingPathComponent("test-output.json")
@@ -869,7 +901,7 @@ final class SessionTestCase: BaseTestCase {
         // When
         session.download(.basicAuth(), interceptor: handler, to: destination)
             .validate()
-            .responseJSON { jsonResponse in
+            .responseDecodable(of: TestResponse.self) { jsonResponse in
                 response = jsonResponse
                 expectation.fulfill()
             }
@@ -894,14 +926,14 @@ final class SessionTestCase: BaseTestCase {
         let session = Session(interceptor: handler)
 
         let expectation = self.expectation(description: "request should eventually fail")
-        var response: DataResponse<Any, AFError>?
+        var response: DataResponse<TestResponse, AFError>?
 
         let uploadData = Data("upload data".utf8)
 
         // When
         session.upload(uploadData, to: .method(.post))
             .validate()
-            .responseJSON { jsonResponse in
+            .responseDecodable(of: TestResponse.self) { jsonResponse in
                 response = jsonResponse
                 expectation.fulfill()
             }
@@ -927,12 +959,12 @@ final class SessionTestCase: BaseTestCase {
         let session = Session()
 
         let expectation = self.expectation(description: "request should eventually fail")
-        var response: DataResponse<Any, AFError>?
+        var response: DataResponse<TestResponse, AFError>?
 
         // When
         let request = session.request(.basicAuth(), interceptor: handler)
             .validate()
-            .responseJSON { jsonResponse in
+            .responseDecodable(of: TestResponse.self) { jsonResponse in
                 response = jsonResponse
                 expectation.fulfill()
             }
@@ -960,12 +992,12 @@ final class SessionTestCase: BaseTestCase {
         let session = Session(interceptor: sessionHandler)
 
         let expectation = self.expectation(description: "request should eventually fail")
-        var response: DataResponse<Any, AFError>?
+        var response: DataResponse<TestResponse, AFError>?
 
         // When
         let request = session.request(.basicAuth(), interceptor: requestHandler)
             .validate()
-            .responseJSON { jsonResponse in
+            .responseDecodable(of: TestResponse.self) { jsonResponse in
                 response = jsonResponse
                 expectation.fulfill()
             }
@@ -997,12 +1029,12 @@ final class SessionTestCase: BaseTestCase {
         let session = Session(interceptor: handler)
 
         let expectation = self.expectation(description: "request should eventually succeed")
-        var response: DataResponse<Any, AFError>?
+        var response: DataResponse<TestResponse, AFError>?
 
         // When
         let request = session.request(.basicAuth())
             .validate()
-            .responseJSON { jsonResponse in
+            .responseDecodable(of: TestResponse.self) { jsonResponse in
                 response = jsonResponse
                 expectation.fulfill()
             }
@@ -1030,12 +1062,12 @@ final class SessionTestCase: BaseTestCase {
         let session = Session(interceptor: handler)
 
         let expectation = self.expectation(description: "request should eventually fail")
-        var response: DataResponse<Any, AFError>?
+        var response: DataResponse<TestResponse, AFError>?
 
         // When
         let request = session.request(.basicAuth())
             .validate()
-            .responseJSON { jsonResponse in
+            .responseDecodable(of: TestResponse.self) { jsonResponse in
                 response = jsonResponse
                 expectation.fulfill()
             }
@@ -1066,12 +1098,12 @@ final class SessionTestCase: BaseTestCase {
         let session = Session(interceptor: handler)
 
         let expectation = self.expectation(description: "request should eventually fail")
-        var response: DataResponse<Any, AFError>?
+        var response: DataResponse<TestResponse, AFError>?
 
         // When
         let request = session.request(.basicAuth())
             .validate()
-            .responseJSON { jsonResponse in
+            .responseDecodable(of: TestResponse.self) { jsonResponse in
                 response = jsonResponse
                 expectation.fulfill()
             }
@@ -1101,12 +1133,12 @@ final class SessionTestCase: BaseTestCase {
         let session = Session(interceptor: handler)
 
         let expectation = self.expectation(description: "request should eventually fail")
-        var response: DataResponse<Any, AFError>?
+        var response: DataResponse<TestResponse, AFError>?
 
         // When
         let request = session.request(.basicAuth())
             .validate()
-            .responseJSON { jsonResponse in
+            .responseDecodable(of: TestResponse.self) { jsonResponse in
                 response = jsonResponse
                 expectation.fulfill()
             }
@@ -1143,12 +1175,12 @@ final class SessionTestCase: BaseTestCase {
         let session = Session()
 
         let expectation = self.expectation(description: "request should eventually fail")
-        var response: DataResponse<Any, AFError>?
+        var response: DataResponse<TestResponse, AFError>?
 
         // When
         let request = session.request(.image(.jpeg), interceptor: handler)
             .validate()
-            .responseJSON { jsonResponse in
+            .responseDecodable(of: TestResponse.self) { jsonResponse in
                 response = jsonResponse
                 expectation.fulfill()
             }
@@ -1163,7 +1195,7 @@ final class SessionTestCase: BaseTestCase {
         XCTAssertEqual(request.retryCount, 0)
         XCTAssertEqual(response?.result.isSuccess, false)
         XCTAssertEqual(response?.error?.isResponseSerializationError, true)
-        XCTAssertEqual((response?.error?.underlyingError as? CocoaError)?.code, .propertyListReadCorrupt)
+        XCTAssertNotNil(response?.error?.underlyingError as? DecodingError)
         assert(on: session.rootQueue) {
             XCTAssertTrue(session.requestTaskMap.isEmpty)
             XCTAssertTrue(session.activeRequests.isEmpty)
@@ -1178,19 +1210,19 @@ final class SessionTestCase: BaseTestCase {
         let session = Session()
 
         let json1Expectation = expectation(description: "request should eventually fail")
-        var json1Response: DataResponse<Any, AFError>?
+        var json1Response: DataResponse<TestResponse, AFError>?
 
         let json2Expectation = expectation(description: "request should eventually fail")
-        var json2Response: DataResponse<Any, AFError>?
+        var json2Response: DataResponse<TestResponse, AFError>?
 
         // When
         let request = session.request(.image(.jpeg), interceptor: handler)
             .validate()
-            .responseJSON { response in
+            .responseDecodable(of: TestResponse.self) { response in
                 json1Response = response
                 json1Expectation.fulfill()
             }
-            .responseJSON { response in
+            .responseDecodable(of: TestResponse.self) { response in
                 json2Response = response
                 json2Expectation.fulfill()
             }
@@ -1218,7 +1250,7 @@ final class SessionTestCase: BaseTestCase {
             XCTAssertTrue(error.isRequestRetryError)
             if case let .requestRetryFailed(retryError, originalError) = error {
                 XCTAssertEqual(retryError.asAFError?.urlConvertible as? String, "/invalid/url/\(index + 1)")
-                XCTAssertEqual((originalError.asAFError?.underlyingError as? CocoaError)?.code, .propertyListReadCorrupt)
+                XCTAssertNotNil(originalError.asAFError?.underlyingError as? DecodingError)
             } else {
                 XCTFail("Error failure reason should be response serialization failure")
             }
@@ -1231,24 +1263,24 @@ final class SessionTestCase: BaseTestCase {
         let session = Session()
 
         let json1Expectation = expectation(description: "request should eventually fail")
-        var json1Response: DataResponse<Any, AFError>?
+        var json1Response: DataResponse<TestResponse, AFError>?
 
         let json2Expectation = expectation(description: "request should eventually fail")
-        var json2Response: DataResponse<Any, AFError>?
+        var json2Response: DataResponse<TestResponse, AFError>?
 
         // When
         let request = session.request(.image(.jpeg), interceptor: handler)
             .validate()
-            .responseJSON { response in
+            .responseDecodable(of: TestResponse.self) { response in
                 json1Response = response
                 json1Expectation.fulfill()
             }
-            .responseJSON { response in
+            .responseDecodable(of: TestResponse.self) { response in
                 json2Response = response
                 json2Expectation.fulfill()
             }
 
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: timeout)
 
         // Then
         XCTAssertEqual(handler.adaptCalledCount, 2)
@@ -1268,7 +1300,7 @@ final class SessionTestCase: BaseTestCase {
 
         for error in errors {
             XCTAssertTrue(error.isResponseSerializationError)
-            XCTAssertEqual((error.underlyingError as? CocoaError)?.code, .propertyListReadCorrupt)
+            XCTAssertNotNil(error.underlyingError as? DecodingError)
         }
     }
 
@@ -1286,24 +1318,24 @@ final class SessionTestCase: BaseTestCase {
         let session = Session()
 
         let json1Expectation = expectation(description: "request should eventually fail")
-        var json1Response: DataResponse<Any, AFError>?
+        var json1Response: DataResponse<TestResponse, AFError>?
 
         let json2Expectation = expectation(description: "request should eventually fail")
-        var json2Response: DataResponse<Any, AFError>?
+        var json2Response: DataResponse<TestResponse, AFError>?
 
         // When
         let request = session.request(.image(.jpeg), interceptor: handler)
             .validate()
-            .responseJSON { response in
+            .responseDecodable(of: TestResponse.self) { response in
                 json1Response = response
                 json1Expectation.fulfill()
             }
-            .responseJSON { response in
+            .responseDecodable(of: TestResponse.self) { response in
                 json2Response = response
                 json2Expectation.fulfill()
             }
 
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: timeout)
 
         // Then
         XCTAssertEqual(handler.adaptCalledCount, 2)
@@ -1341,24 +1373,24 @@ final class SessionTestCase: BaseTestCase {
         let session = Session()
 
         let json1Expectation = expectation(description: "request should eventually fail")
-        var json1Response: DownloadResponse<Any, AFError>?
+        var json1Response: DownloadResponse<TestResponse, AFError>?
 
         let json2Expectation = expectation(description: "request should eventually fail")
-        var json2Response: DownloadResponse<Any, AFError>?
+        var json2Response: DownloadResponse<TestResponse, AFError>?
 
         // When
         let request = session.download(.image(.jpeg), interceptor: handler)
             .validate()
-            .responseJSON { response in
+            .responseDecodable(of: TestResponse.self) { response in
                 json1Response = response
                 json1Expectation.fulfill()
             }
-            .responseJSON { response in
+            .responseDecodable(of: TestResponse.self) { response in
                 json2Response = response
                 json2Expectation.fulfill()
             }
 
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: timeout)
 
         // Then
         XCTAssertEqual(handler.adaptCalledCount, 2)
@@ -1416,14 +1448,14 @@ final class SessionTestCase: BaseTestCase {
         let session = Session()
 
         let expectation = self.expectation(description: "request should complete")
-        var response: DataResponse<Any, AFError>?
+        var response: DataResponse<TestResponse, AFError>?
         var completionCallCount = 0
 
         // When
         let request = session.request(.default, interceptor: handler)
         request.validate()
 
-        request.responseJSON { resp in
+        request.responseDecodable(of: TestResponse.self) { resp in
             request.cancel()
 
             response = resp
@@ -1455,10 +1487,10 @@ final class SessionTestCase: BaseTestCase {
         let session = Session()
 
         let expectation = self.expectation(description: "request should complete")
-        var response: DataResponse<Any, AFError>?
+        var response: DataResponse<TestResponse, AFError>?
 
         // When
-        let request = session.request(.default).responseJSON { resp in
+        let request = session.request(.default).responseDecodable(of: TestResponse.self) { resp in
             response = resp
             expectation.fulfill()
         }
@@ -1549,7 +1581,7 @@ final class SessionMassActionTestCase: BaseTestCase {
         wait(for: [massActions], timeout: timeout)
 
         // Then
-        XCTAssertTrue(requests.allSatisfy { $0.isSuspended })
+        XCTAssertTrue(requests.allSatisfy(\.isSuspended))
     }
 
     func testThatAutomaticallyResumedRequestsCanBeMassCancelled() {
