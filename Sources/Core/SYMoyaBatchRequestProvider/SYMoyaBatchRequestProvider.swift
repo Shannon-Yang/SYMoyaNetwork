@@ -8,7 +8,6 @@
 
 import Foundation
 import Moya
-import SwiftyJSON
 
 /// Batch request item object
 public struct BatchMoyaProvider<Target: SYTargetType> {
