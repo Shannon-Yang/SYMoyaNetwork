@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Moya
 
 //MARK: - URL
 public extension URL {
