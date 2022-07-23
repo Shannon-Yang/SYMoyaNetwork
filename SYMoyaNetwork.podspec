@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   s.screenshots     = 'https://raw.githubusercontent.com/Shannon-Yang/SYMoyaNetwork/master/images/logo.png'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'ShannonYang' => 'shannonyang0805@gmail.com' }
-  s.source           = { :git => 'https://github.com/ShannonYang/SYMoyaNetwork.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/Shannon-Yang/SYMoyaNetwork.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '10.0'
