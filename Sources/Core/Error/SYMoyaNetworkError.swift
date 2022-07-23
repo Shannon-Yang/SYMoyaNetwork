@@ -105,6 +105,7 @@ public enum SYMoyaNetworkError: Swift.Error {
         case objectMapping(error: Swift.Error, response: Moya.Response)
         case encodableMapping(error: Swift.Error)
         case handlyJSONObjectMap(response: Moya.Response)
+        case mjExtensionMap(response: Moya.Response)
     }
     
     public enum RequestErrorReason {
@@ -261,6 +262,8 @@ extension SYMoyaNetworkError.SerializeErrorReason {
             return "EncodableMapping serialization failed, Error: \(error.localizedDescription)"
         case .handlyJSONObjectMap(let response):
             return "HandlyJSON serialization failed, Response: \(response.description)"
+        case .mjExtensionMap(let response):
+            return "MJExtension serialization failed, Response: \(response.description)"
         }
     }
     
@@ -272,6 +275,7 @@ extension SYMoyaNetworkError.SerializeErrorReason {
         case .objectMapping: return 50004
         case .encodableMapping: return 50005
         case .handlyJSONObjectMap: return 50006
+        case .mjExtensionMap: return 50007
         }
     }
 }
