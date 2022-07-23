@@ -33,12 +33,12 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target = '10.0'
   s.watchos.deployment_target = '3.0'
 
-  s.source_files = ["Sources/**/*.swift"]
+  # s.source_files = ["Sources/**/*.swift"]
 
+  s.default_subspec = "Core"
   s.swift_version = '5.3'
   s.cocoapods_version = '>= 1.4.0'
 
-  s.default_subspec = "Core"
   
   # s.resource_bundles = {
   #   'SYMoyaNetwork' => ['SYMoyaNetwork/Assets/*.png']
@@ -46,55 +46,52 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
 
-  s.subspec "Core" do |s|
-    s.source_files  = "Sources/Core/Utility/", "Sources/Core/SYMoyaURLCache/", "Sources/Core/SYMoyaChainRequestProvider/", "Sources/Core/SYMoyaBatchRequestProvider/", "Sources/Core/SYMoya/", "Sources/Core/String/", "Sources/Core/Response/", "Sources/Core/Log/", "Sources/Core/JSON/", "Sources/Core/Image/", "Sources/Core/Error/", "Sources/Core/Config/", "Sources/Core/Cache/", "Sources/Core/SwiftyJSON/"
+  s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+
+  s.subspec "Core" do |ss|
+    ss.source_files  = "Sources/Core/Utility/", "Sources/Core/SYMoyaURLCache/", "Sources/Core/SYMoyaChainRequestProvider/", "Sources/Core/SYMoyaBatchRequestProvider/", "Sources/Core/SYMoya/", "Sources/Core/String/", "Sources/Core/Response/", "Sources/Core/Log/", "Sources/Core/JSON/", "Sources/Core/Image/", "Sources/Core/Error/", "Sources/Core/Config/", "Sources/Core/Cache/", "Sources/Core/SwiftyJSON/", "Sources/Core/Codable/"
+
     # https://github.com/Moya/Moya
-    s.dependency 'Moya', '~> 15.0'
+    ss.dependency 'Moya', '~> 15.0'
+
     # https://github.com/SwiftyJSON/SwiftyJSON
-    s.dependency 'SwiftyJSON', '~> 5.0'
-    s.framework  = "Foundation"
+    ss.dependency 'SwiftyJSON', '~> 5.0'
+
+    ss.framework  = "Foundation"
   end
   
-  s.subspec "Codable" do |s|
-    s.source_files  = "Sources/Codable/"
-    s.dependency "SYMoyaNetwork/Core"
-    s.ios.deployment_target = '10.0'
-    s.osx.deployment_target = '10.12'
-    s.tvos.deployment_target = '10.0'
-    s.watchos.deployment_target = '3.0'
-  end
-
-  s.subspec "ObjectMapper" do |s|
-    s.source_files  = "Sources/ObjectMapper/"
-    s.dependency "SYMoyaNetwork/Core"
+  s.subspec "SYObjectMapper" do |ss|
+    ss.source_files  = "Sources/ObjectMapper/"
+    ss.dependency "SYMoyaNetwork/Core"
     # https://github.com/tristanhimmelman/ObjectMapper
-    s.dependency 'ObjectMapper', '~> 4.0'
-    s.ios.deployment_target = '10.0'
-    s.osx.deployment_target = '10.12'
-    s.tvos.deployment_target = '10.0'
-    s.watchos.deployment_target = '3.0'
+    ss.dependency 'ObjectMapper', '~> 4.0'
+    ss.ios.deployment_target = '10.0'
+    ss.osx.deployment_target = '10.12'
+    ss.tvos.deployment_target = '10.0'
+    ss.watchos.deployment_target = '3.0'
   end
   
-  s.subspec "HandyJSON" do |s|
-    s.source_files  = "Sources/HandyJSON/"
-    s.dependency "SYMoyaNetwork/Core"
+  s.subspec "SYHandyJSON" do |ss|
+    ss.source_files  = "Sources/HandyJSON/"
+    ss.dependency "SYMoyaNetwork/Core"
     # https://github.com/alibaba/HandyJSON
-    s.dependency 'HandyJSON', '~> 5.0.2'
-    s.ios.deployment_target = '10.0'
-    s.osx.deployment_target = '10.12'
-    s.tvos.deployment_target = '10.0'
-    s.watchos.deployment_target = '3.0'
+    ss.dependency 'HandyJSON', '~> 5.0.2'
+    ss.ios.deployment_target = '10.0'
+    ss.osx.deployment_target = '10.12'
+    ss.tvos.deployment_target = '10.0'
+    ss.watchos.deployment_target = '3.0'
   end
 
-  s.subspec "MJExtension" do |s|
-    s.source_files  = "Sources/MJExtension/"
-    s.dependency "SYMoyaNetwork/Core"
+  s.subspec "SYMJExtension" do |ss|
+    ss.source_files  = "Sources/MJExtension/"
+    ss.dependency "SYMoyaNetwork/Core"
     # https://github.com/CoderMJLee/MJExtension
-    s.dependency 'MJExtension'
-    s.ios.deployment_target = '10.0'
-    s.osx.deployment_target = '10.12'
-    s.tvos.deployment_target = '10.0'
-    s.watchos.deployment_target = '3.0'
+    ss.dependency 'MJExtension'
+    ss.ios.deployment_target = '10.0'
+    ss.osx.deployment_target = '10.12'
+    ss.tvos.deployment_target = '10.0'
+    ss.watchos.deployment_target = '3.0'
   end
 
 end
