@@ -44,7 +44,7 @@ provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<BaseMappabl
 ```
 现在使用SYMoyaNetwork，你不用再关心如何将response转换成你想要的数据，你只需要关心你想要的数据，SYMoyaNetwork已经做好了这一切。
 
-SYMoyaNetwork提供多种数据类常用的数据类型转换，例如：JSON、String、Image、HandyJSON、ObjectMapper、Codable、SwiftyJSON等，使用时仅仅只需要关心你想要得到的数据，其他的你都不用关心，SYMoyaNetwork已经对Moya的response做好了转换，你只管关心你的业务实现。
+SYMoyaNetwork提供多种数据类常用的数据类型转换，例如：JSON、String、Image、HandyJSON、ObjectMapper、Codable、SwiftyJSON、MJExtension等，使用时仅仅只需要关心你想要得到的数据，其他的你都不用关心，SYMoyaNetwork已经对Moya的response做好了转换，你只管关心你的业务实现。
 
 SYMoyaNetwork不仅仅只是做了Moya的Response的转换，更重要的一点是，在Moya的基础上SYMoyaNetwork已经帮你做好网络缓存，在大多数应用使用情况下，网络缓存是非常重要的一个策略，它可以让你的App更快的展示数据，更能为用户节省流量，可以说在网络这一层是一个很重要的决策，因此SYMoyaNetwork提供了两种网络缓存方式，第一种是根据HTTP协议做的网络缓存，第二种是根据请求的数据进行缓存。
 
