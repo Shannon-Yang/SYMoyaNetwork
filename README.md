@@ -103,15 +103,15 @@ pod 'SYMoyaNetwork'
 
 # or 
 
-pod 'SYMoyaNetwork/ObjectMapper'
+pod 'SYMoyaNetwork/SYObjectMapper'
 
 # or
 
-pod 'SYMoyaNetwork/HandyJSON'
+pod 'SYMoyaNetwork/SYHandyJSON'
 
 #or
 
-pod 'SYMoyaNetwork/MJExtension'
+pod 'SYMoyaNetwork/SYMJExtension'
 ```
 
 然后运行 `pod install`。
