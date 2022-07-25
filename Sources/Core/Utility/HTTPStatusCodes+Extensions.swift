@@ -1,6 +1,6 @@
 //
 //  HTTPStatusCode.swift
-//  ZaoZi
+//  SYMoyaNetwork
 //
 //  Created by Shannon Yang on 2022/1/8.
 //  Copyright © 2022 Shenzhen JUJUBE Health Technology Co.,Ltd. All rights reserved.
