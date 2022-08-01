@@ -18,6 +18,12 @@ public protocol SYMoyaProviderDelegate: NSObjectProtocol {
     ///   - response: The response data object after the request is completed
     func provider<Target: SYTargetType>(_ provider: SYMoyaProvider<Target>, requestCompleteFilter response: Moya.Response)
     
+    /// Delegate callback method when data request success
+    /// - Parameters:
+    ///   - provider: The chained request provider is used to manage interdependent network requests
+    ///   - response: network request success response
+    func provider<Target: SYTargetType>(_ provider: SYMoyaProvider<Target>, requestSuccessFilter response: Moya.Response)
+    
     /// Delegate callback method when data request fails
     /// - Parameters:
     ///   - provider: The chained request provider is used to manage interdependent network requests
@@ -45,14 +51,26 @@ open class SYMoyaProvider<Target: SYTargetType>: Moya.MoyaProvider<Target> {
         self.urlCache = SYMoyaURLCache(urlCache: session.sessionConfiguration.urlCache ?? URLCache.shared)
         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, callbackQueue: callbackQueue, session: session, plugins: plugins, trackInflights: trackInflights)
     }
+    
+    // MARK: - Public
+    
+    /// Get the SYEndpointResponseState network request status through target
+    /// - Parameter target: target type obj
+    /// - Returns: The endpoint network request status
+    public func endpointResponseState(for target: Target) -> SYEndpointResponseState {
+        guard let endpoint = self.endpoint(target) as? SYEndpoint else {
+            return .uncompleted
+        }
+        return endpoint.endpointResponseState
+    }
 }
 
 //MARK: - Default
 public extension SYMoyaProvider {
     
     /// Returns the `Endpoint` converted to a `Target`.
-    final class func syDefaultEndpointMapping(for target: Target) -> Endpoint {
-        var endpoint = Endpoint(
+    final class func syDefaultEndpointMapping(for target: Target) -> SYEndpoint {
+        var endpoint = SYEndpoint(
             url: URL(target: target).absoluteString,
             sampleResponseClosure: { .networkResponse(200, target.sampleData) },
             method: target.method,
@@ -107,26 +125,45 @@ extension SYMoyaProvider {
     @discardableResult
     func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping ((_ result: Result<Moya.Response, SYMoyaNetworkError>) -> Void)) -> Cancellable {
         return self.request(target, callbackQueue: callbackQueue, progress: progress, completion: { result in
+        
+            // callback filter
+            DispatchQueue.main.async {
+                self.delegate?.provider(self, requestCompleteFilter: response)
+            }
+            
+            // endpoint
+            let endpoint = self.endpoint(target) as? SYEndpoint
+            
+            // assignment request status
+            endpoint?.endpointResponseState = .complete
+            
             switch result {
             case .success(let response):
                 // completion
                 completion(.success(response))
                 
-                // callback filter
+                // callback filter success
                 DispatchQueue.main.async {
-                    self.delegate?.provider(self, requestCompleteFilter: response)
+                    self.delegate?.provider(self, requestSuccessFilter: response)
                 }
+                
+                // assignment request status
+                endpoint?.endpointResponseState = .success
                 
                 // Cache
                 self.cacheIfNeeded(target, response: response)
                 
             case .failure(let error):
                 let e = error.transformToSYMoyaNetworkError()
-                // callback filter
+                
+                // callback filter failure
                 DispatchQueue.main.async {
                     self.delegate?.provider(self, requestFailedFilter: e)
                 }
                 completion(.failure(e))
+                
+                // assignment request status
+                endpoint?.endpointResponseState = .failed
                 
                 // clear if needed
                 switch target.networkCacheType {
