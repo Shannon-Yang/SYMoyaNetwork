@@ -9,7 +9,7 @@ import UIKit
 import Moya
 
 /// The endpoint network request status, the status change from the initiation to the end of the network request
-enum SYEndpointResponseState {
+public enum SYEndpointResponseState {
    /// The network request has not been completed
    case uncompleted
    /// Network request completed with status code 200..299
@@ -21,7 +21,7 @@ enum SYEndpointResponseState {
 }
 
 /// Inherit Moya.Endpoint, add the endpointResponseState property, and change the response state according to the network request
-class SYEndpoint: Moya.Endpoint {
+public class SYEndpoint: Moya.Endpoint {
     
     /// The endpoint network request status, the status change from the initiation to the end of the network request
     var endpointResponseState: SYEndpointResponseState = .uncompleted

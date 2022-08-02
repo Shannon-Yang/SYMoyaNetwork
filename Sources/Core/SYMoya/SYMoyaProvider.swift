@@ -128,7 +128,7 @@ extension SYMoyaProvider {
         
             // callback filter
             DispatchQueue.main.async {
-                self.delegate?.provider(self, requestCompleteFilter: response)
+                self.delegate?.provider(self, requestCompleteFilter: result.value)
             }
             
             // endpoint

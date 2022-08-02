@@ -3,10 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0465187DF0552FDCE374C430 /* Pods_SYMJExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E6B8F35CE95978E265B96BC /* Pods_SYMJExtension.framework */; };
+		22E32D6D3249E511855D2251 /* Pods_SYObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7769DE82BD0CA535DBD2B991 /* Pods_SYObjectMapper.framework */; };
+		5FFC6CA95D76BC517B9C1119 /* Pods_SYHandyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3734FB39ABA0ED62B3E9A4E4 /* Pods_SYHandyJSON.framework */; };
+		804D27C8C8C837858BFD987A /* Pods_SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB7EC9382898C9C100273950 /* Pods_SYMoyaNetwork.framework */; };
+		9A48803FBD7FE5B9B843F510 /* Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E524089DB55A2C55971D5F4 /* Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework */; };
 		FB45ACE2288BECA600626EA7 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
 		FB45ACE7288BECAE00626EA7 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
 		FB45ACEC288BECB700626EA7 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
@@ -57,7 +62,6 @@
 		FB7EC92E2897C38900273950 /* SYEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7EC92D2897C38900273950 /* SYEndpoint.swift */; };
 		FB8072F826F32C070042B30D /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
 		FB8072FF26F32C070042B30D /* SYMoyaNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = FB8072F126F32C070042B30D /* SYMoyaNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FBEE3DAE2714848D00D927E5 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE3DA727142A5C00D927E5 /* Moya.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +96,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1CA3B35C9794A446DB4A2D10 /* Pods-SYMJExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYMJExtension.debug.xcconfig"; path = "Target Support Files/Pods-SYMJExtension/Pods-SYMJExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		3665B4C0F213C82FCA86EEFF /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYMoyaNetwork-SYMoyaNetworkTests.release.xcconfig"; path = "Target Support Files/Pods-SYMoyaNetwork-SYMoyaNetworkTests/Pods-SYMoyaNetwork-SYMoyaNetworkTests.release.xcconfig"; sourceTree = "<group>"; };
+		3734FB39ABA0ED62B3E9A4E4 /* Pods_SYHandyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SYHandyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38BAD58A30716FE1E020C304 /* Pods-SYMoyaNetwork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYMoyaNetwork.debug.xcconfig"; path = "Target Support Files/Pods-SYMoyaNetwork/Pods-SYMoyaNetwork.debug.xcconfig"; sourceTree = "<group>"; };
+		46ED8F4E419CBD4A5E2406F3 /* Pods-SYMJExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYMJExtension.release.xcconfig"; path = "Target Support Files/Pods-SYMJExtension/Pods-SYMJExtension.release.xcconfig"; sourceTree = "<group>"; };
+		52AF9FB28BF716FA930AEB89 /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYMoyaNetwork-SYMoyaNetworkTests.debug.xcconfig"; path = "Target Support Files/Pods-SYMoyaNetwork-SYMoyaNetworkTests/Pods-SYMoyaNetwork-SYMoyaNetworkTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5E524089DB55A2C55971D5F4 /* Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		604F33DC7F85888A77E42203 /* Pods-SYHandyJSON.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYHandyJSON.debug.xcconfig"; path = "Target Support Files/Pods-SYHandyJSON/Pods-SYHandyJSON.debug.xcconfig"; sourceTree = "<group>"; };
+		7769DE82BD0CA535DBD2B991 /* Pods_SYObjectMapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SYObjectMapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AACE09B11E3A36A48EE5C7D /* Pods-SYHandyJSON.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYHandyJSON.release.xcconfig"; path = "Target Support Files/Pods-SYHandyJSON/Pods-SYHandyJSON.release.xcconfig"; sourceTree = "<group>"; };
+		9E6B8F35CE95978E265B96BC /* Pods_SYMJExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SYMJExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4E7210E5F8413C887D7856A /* Pods-SYObjectMapper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYObjectMapper.release.xcconfig"; path = "Target Support Files/Pods-SYObjectMapper/Pods-SYObjectMapper.release.xcconfig"; sourceTree = "<group>"; };
+		B5A7BB9CBFB23C966737D0EB /* Pods-SYMoyaNetwork.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYMoyaNetwork.release.xcconfig"; path = "Target Support Files/Pods-SYMoyaNetwork/Pods-SYMoyaNetwork.release.xcconfig"; sourceTree = "<group>"; };
+		DB80631AA71D2DFC6C7F1386 /* Pods-SYObjectMapper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYObjectMapper.debug.xcconfig"; path = "Target Support Files/Pods-SYObjectMapper/Pods-SYObjectMapper.debug.xcconfig"; sourceTree = "<group>"; };
+		F61B45913E30E5028FE970CC /* Pods_SYMoyaNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SYMoyaNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB45ACBD288BEC2900626EA7 /* SYObjectMapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYObjectMapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB45ACCB288BEC8F00626EA7 /* SYHandyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYHandyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB45ACD9288BEC9D00626EA7 /* SYMJExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYMJExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -140,6 +159,9 @@
 		FB6A3A2E287BC8CF00454481 /* Response+MJExtension.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+MJExtension.swift.swift"; sourceTree = "<group>"; };
 		FB6A3A2F287BC8CF00454481 /* SYMoyaProvider+MJExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+MJExtension.swift"; sourceTree = "<group>"; };
 		FB7EC92D2897C38900273950 /* SYEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYEndpoint.swift; sourceTree = "<group>"; };
+		FB7EC92F2898BF6900273950 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB7EC9332898C4FC00273950 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB7EC9382898C9C100273950 /* Pods_SYMoyaNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_SYMoyaNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYMoyaNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB8072F126F32C070042B30D /* SYMoyaNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYMoyaNetwork.h; sourceTree = "<group>"; };
 		FB8072F226F32C070042B30D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -153,6 +175,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB45ACEC288BECB700626EA7 /* SYMoyaNetwork.framework in Frameworks */,
+				22E32D6D3249E511855D2251 /* Pods_SYObjectMapper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,6 +184,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB45ACE7288BECAE00626EA7 /* SYMoyaNetwork.framework in Frameworks */,
+				5FFC6CA95D76BC517B9C1119 /* Pods_SYHandyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB45ACE2288BECA600626EA7 /* SYMoyaNetwork.framework in Frameworks */,
+				0465187DF0552FDCE374C430 /* Pods_SYMJExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,7 +201,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBEE3DAE2714848D00D927E5 /* Moya.framework in Frameworks */,
+				804D27C8C8C837858BFD987A /* Pods_SYMoyaNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,12 +210,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB8072F826F32C070042B30D /* SYMoyaNetwork.framework in Frameworks */,
+				9A48803FBD7FE5B9B843F510 /* Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		65FC50B3A3FCAA24BE916A3B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				38BAD58A30716FE1E020C304 /* Pods-SYMoyaNetwork.debug.xcconfig */,
+				B5A7BB9CBFB23C966737D0EB /* Pods-SYMoyaNetwork.release.xcconfig */,
+				52AF9FB28BF716FA930AEB89 /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.debug.xcconfig */,
+				3665B4C0F213C82FCA86EEFF /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.release.xcconfig */,
+				604F33DC7F85888A77E42203 /* Pods-SYHandyJSON.debug.xcconfig */,
+				8AACE09B11E3A36A48EE5C7D /* Pods-SYHandyJSON.release.xcconfig */,
+				1CA3B35C9794A446DB4A2D10 /* Pods-SYMJExtension.debug.xcconfig */,
+				46ED8F4E419CBD4A5E2406F3 /* Pods-SYMJExtension.release.xcconfig */,
+				DB80631AA71D2DFC6C7F1386 /* Pods-SYObjectMapper.debug.xcconfig */,
+				A4E7210E5F8413C887D7856A /* Pods-SYObjectMapper.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		FB45ACB7288BEAC300626EA7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,6 +442,7 @@
 				FB8072F026F32C070042B30D /* Sources */,
 				FB8072EF26F32C070042B30D /* Products */,
 				FBEE3D9F27142A3700D927E5 /* Frameworks */,
+				65FC50B3A3FCAA24BE916A3B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -429,7 +473,15 @@
 		FBEE3D9F27142A3700D927E5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FB7EC9382898C9C100273950 /* Pods_SYMoyaNetwork.framework */,
+				FB7EC9332898C4FC00273950 /* Moya.framework */,
+				FB7EC92F2898BF6900273950 /* SwiftyJSON.framework */,
 				FBEE3DA727142A5C00D927E5 /* Moya.framework */,
+				F61B45913E30E5028FE970CC /* Pods_SYMoyaNetwork.framework */,
+				5E524089DB55A2C55971D5F4 /* Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework */,
+				3734FB39ABA0ED62B3E9A4E4 /* Pods_SYHandyJSON.framework */,
+				9E6B8F35CE95978E265B96BC /* Pods_SYMJExtension.framework */,
+				7769DE82BD0CA535DBD2B991 /* Pods_SYObjectMapper.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -476,6 +528,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB45ACC3288BEC2900626EA7 /* Build configuration list for PBXNativeTarget "SYObjectMapper" */;
 			buildPhases = (
+				3098FF50BFDDD7E6C1A554AE /* [CP] Check Pods Manifest.lock */,
 				FB45ACB8288BEC2900626EA7 /* Headers */,
 				FB45ACB9288BEC2900626EA7 /* Sources */,
 				FB45ACBA288BEC2900626EA7 /* Frameworks */,
@@ -495,6 +548,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB45ACD1288BEC8F00626EA7 /* Build configuration list for PBXNativeTarget "SYHandyJSON" */;
 			buildPhases = (
+				8A111FE5219B615684608BB8 /* [CP] Check Pods Manifest.lock */,
 				FB45ACC6288BEC8F00626EA7 /* Headers */,
 				FB45ACC7288BEC8F00626EA7 /* Sources */,
 				FB45ACC8288BEC8F00626EA7 /* Frameworks */,
@@ -514,6 +568,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB45ACDF288BEC9D00626EA7 /* Build configuration list for PBXNativeTarget "SYMJExtension" */;
 			buildPhases = (
+				682031282F940C6C381D9068 /* [CP] Check Pods Manifest.lock */,
 				FB45ACD4288BEC9D00626EA7 /* Headers */,
 				FB45ACD5288BEC9D00626EA7 /* Sources */,
 				FB45ACD6288BEC9D00626EA7 /* Frameworks */,
@@ -533,6 +588,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB80730226F32C070042B30D /* Build configuration list for PBXNativeTarget "SYMoyaNetwork" */;
 			buildPhases = (
+				37122AE94554C8610BB1220B /* [CP] Check Pods Manifest.lock */,
 				FB8072E926F32C070042B30D /* Headers */,
 				FB8072EA26F32C070042B30D /* Sources */,
 				FB8072EB26F32C070042B30D /* Frameworks */,
@@ -551,9 +607,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB80730526F32C070042B30D /* Build configuration list for PBXNativeTarget "SYMoyaNetworkTests" */;
 			buildPhases = (
+				2BDBAD773EEC00605F4E03C4 /* [CP] Check Pods Manifest.lock */,
 				FB8072F326F32C070042B30D /* Sources */,
 				FB8072F426F32C070042B30D /* Frameworks */,
 				FB8072F526F32C070042B30D /* Resources */,
+				4FF7D77DF1195FFBB39D4CF0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -650,6 +708,136 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2BDBAD773EEC00605F4E03C4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SYMoyaNetwork-SYMoyaNetworkTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3098FF50BFDDD7E6C1A554AE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SYObjectMapper-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		37122AE94554C8610BB1220B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SYMoyaNetwork-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4FF7D77DF1195FFBB39D4CF0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SYMoyaNetwork-SYMoyaNetworkTests/Pods-SYMoyaNetwork-SYMoyaNetworkTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SYMoyaNetwork-SYMoyaNetworkTests/Pods-SYMoyaNetwork-SYMoyaNetworkTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SYMoyaNetwork-SYMoyaNetworkTests/Pods-SYMoyaNetwork-SYMoyaNetworkTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		682031282F940C6C381D9068 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SYMJExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8A111FE5219B615684608BB8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SYHandyJSON-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FB45ACB9288BEC2900626EA7 /* Sources */ = {
@@ -757,6 +945,7 @@
 /* Begin XCBuildConfiguration section */
 		FB45ACC4288BEC2900626EA7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DB80631AA71D2DFC6C7F1386 /* Pods-SYObjectMapper.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
@@ -783,11 +972,13 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		FB45ACC5288BEC2900626EA7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A4E7210E5F8413C887D7856A /* Pods-SYObjectMapper.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
@@ -814,11 +1005,13 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
 		FB45ACD2288BEC8F00626EA7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 604F33DC7F85888A77E42203 /* Pods-SYHandyJSON.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
@@ -845,11 +1038,13 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		FB45ACD3288BEC8F00626EA7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8AACE09B11E3A36A48EE5C7D /* Pods-SYHandyJSON.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
@@ -876,11 +1071,13 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
 		FB45ACE0288BEC9D00626EA7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1CA3B35C9794A446DB4A2D10 /* Pods-SYMJExtension.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
@@ -907,11 +1104,13 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvsimulator appletvos watchos watchsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		FB45ACE1288BEC9D00626EA7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 46ED8F4E419CBD4A5E2406F3 /* Pods-SYMJExtension.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
@@ -938,6 +1137,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvsimulator appletvos watchos watchsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1071,6 +1271,7 @@
 		};
 		FB80730326F32C070042B30D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38BAD58A30716FE1E020C304 /* Pods-SYMoyaNetwork.debug.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_STYLE = Manual;
@@ -1082,6 +1283,9 @@
 				EXCLUDED_ARCHS = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SwiftJSON\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Moya\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Alamofire\"",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
@@ -1105,6 +1309,7 @@
 		};
 		FB80730426F32C070042B30D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B5A7BB9CBFB23C966737D0EB /* Pods-SYMoyaNetwork.release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_STYLE = Manual;
@@ -1116,6 +1321,9 @@
 				EXCLUDED_ARCHS = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Moya\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SwiftJSON\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Alamofire\"",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
@@ -1139,6 +1347,7 @@
 		};
 		FB80730626F32C070042B30D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 52AF9FB28BF716FA930AEB89 /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1158,6 +1367,7 @@
 		};
 		FB80730726F32C070042B30D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3665B4C0F213C82FCA86EEFF /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
