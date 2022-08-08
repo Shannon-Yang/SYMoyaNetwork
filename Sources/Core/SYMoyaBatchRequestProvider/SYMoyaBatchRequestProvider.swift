@@ -53,14 +53,12 @@ public class SYMoyaBatchRequestProvider<Target: SYTargetType> {
     
     private let providers: [BatchMoyaProvider<Target>]
     
-    init(providers: [BatchMoyaProvider<Target>]) {
+    public init(providers: [BatchMoyaProvider<Target>]) {
         self.providers = providers
     }
     
     fileprivate var lock: DispatchSemaphore = DispatchSemaphore(value: 1)
-    
     private let queueName = "com.shannonyang.SYMoyaNetwork.BatchRequest.queue.\(UUID().uuidString)"
-    
     
     /// Make a batch request
     /// - Parameters:
@@ -68,14 +66,11 @@ public class SYMoyaBatchRequestProvider<Target: SYTargetType> {
     ///   - progress: Data request progress
     ///   - completion: The request progress indicates the sum of the request progress of all providers
     public func request(_ callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponses: BatchDataResponse<Target>) -> Void) {
-        
         if providers.isEmpty {
             completion(BatchDataResponse(result: .failure(.batchRequestError(reason: .providersIsEmpty))))
             return
         }
-        
         let queue = DispatchQueue(label: queueName, attributes: .concurrent)
-        
         let batchDataResponse = BatchDataResponse<Target>(result: .success([]))
         
         self.providers.forEach { provider in

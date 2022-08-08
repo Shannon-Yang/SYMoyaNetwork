@@ -14,7 +14,7 @@ public struct NetworkConfig {
     
     public typealias LogConfiguration = SYMoyaNetworkLoggerPlugin.Configuration
     
-    public static let sharedInstance : NetworkConfig = NetworkConfig()
+    public static var sharedInstance : NetworkConfig = NetworkConfig()
 
     /// Network log configuration object
     public var logConfiguration: LogConfiguration = NetworkConfig.defaultLogConfiguration()

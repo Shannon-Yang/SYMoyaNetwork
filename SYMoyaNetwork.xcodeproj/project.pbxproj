@@ -59,7 +59,6 @@
 		FB6354A32705A61E003F1D7C /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63547E2705A61E003F1D7C /* Date+Extensions.swift */; };
 		FB6A3A29287BB48900454481 /* HTTPStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6A3A28287BB48900454481 /* HTTPStatusCode.swift */; };
 		FB6A3A2B287BB49200454481 /* HTTPStatusCodes+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6A3A2A287BB49200454481 /* HTTPStatusCodes+Extensions.swift */; };
-		FB7EC92E2897C38900273950 /* SYEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7EC92D2897C38900273950 /* SYEndpoint.swift */; };
 		FB8072F826F32C070042B30D /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
 		FB8072FF26F32C070042B30D /* SYMoyaNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = FB8072F126F32C070042B30D /* SYMoyaNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
@@ -158,7 +157,6 @@
 		FB6A3A2A287BB49200454481 /* HTTPStatusCodes+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HTTPStatusCodes+Extensions.swift"; sourceTree = "<group>"; };
 		FB6A3A2E287BC8CF00454481 /* Response+MJExtension.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+MJExtension.swift.swift"; sourceTree = "<group>"; };
 		FB6A3A2F287BC8CF00454481 /* SYMoyaProvider+MJExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+MJExtension.swift"; sourceTree = "<group>"; };
-		FB7EC92D2897C38900273950 /* SYEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYEndpoint.swift; sourceTree = "<group>"; };
 		FB7EC92F2898BF6900273950 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB7EC9332898C4FC00273950 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB7EC9382898C9C100273950 /* Pods_SYMoyaNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_SYMoyaNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -370,7 +368,6 @@
 				FB6354722705A61E003F1D7C /* URL+SYMoya.swift */,
 				FB6354732705A61E003F1D7C /* SYTargetType.swift */,
 				FB6354742705A61E003F1D7C /* SYMoyaProvider+Cache.swift */,
-				FB7EC92D2897C38900273950 /* SYEndpoint.swift */,
 			);
 			path = SYMoya;
 			sourceTree = "<group>";
@@ -879,7 +876,6 @@
 				FB6354822705A61E003F1D7C /* CacheSerializer.swift in Sources */,
 				FB6354A12705A61E003F1D7C /* CallbackQueue.swift in Sources */,
 				FB63548B2705A61E003F1D7C /* SYMoyaURLCache.swift in Sources */,
-				FB7EC92E2897C38900273950 /* SYEndpoint.swift in Sources */,
 				FB63549B2705A61E003F1D7C /* SYTargetType.swift in Sources */,
 				FB6354A02705A61E003F1D7C /* Response+CacheCostCalculable.swift in Sources */,
 				FB6354852705A61E003F1D7C /* NetworkCacheType.swift in Sources */,
