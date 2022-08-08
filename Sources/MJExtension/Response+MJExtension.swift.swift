@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Moya
 import MJExtension
 
 //MARK: - MJExtension

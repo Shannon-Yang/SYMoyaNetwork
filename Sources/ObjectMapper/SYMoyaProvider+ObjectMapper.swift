@@ -9,6 +9,7 @@
 import Foundation
 import Moya
 import ObjectMapper
+import SYMoyaNetwork
 
 //MARK: - ObjectMapper
 public extension SYMoyaProvider {

@@ -11,14 +11,26 @@ import Moya
 
 /// Batch request item object
 public struct BatchMoyaProvider<Target: SYTargetType> {
-    public var targetType: Target
-    public var provider: SYMoyaProvider<Target>
+    public let targetType: Target
+    public let provider: SYMoyaProvider<Target>
+    
+    // MARK: - Initallization
+    public init(targetType: Target,provider: SYMoyaProvider<Target>) {
+        self.targetType = targetType
+        self.provider = provider
+    }
 }
 
 /// Batch request returns result object
 public struct BatchResult<Target: SYTargetType> {
-    public var batchProvider: BatchMoyaProvider<Target>
-    public var response: Moya.Response
+    public let batchProvider: BatchMoyaProvider<Target>
+    public let response: Moya.Response
+    
+    // MARK: - Initallization
+    public init(batchProvider: BatchMoyaProvider<Target>,response: Moya.Response) {
+        self.batchProvider = batchProvider
+        self.response = response
+    }
 }
 
 /// Batch request data response

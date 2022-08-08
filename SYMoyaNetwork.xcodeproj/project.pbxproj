@@ -3,14 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		0465187DF0552FDCE374C430 /* Pods_SYMJExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E6B8F35CE95978E265B96BC /* Pods_SYMJExtension.framework */; };
-		22E32D6D3249E511855D2251 /* Pods_SYObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7769DE82BD0CA535DBD2B991 /* Pods_SYObjectMapper.framework */; };
 		5FFC6CA95D76BC517B9C1119 /* Pods_SYHandyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3734FB39ABA0ED62B3E9A4E4 /* Pods_SYHandyJSON.framework */; };
-		804D27C8C8C837858BFD987A /* Pods_SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB7EC9382898C9C100273950 /* Pods_SYMoyaNetwork.framework */; };
 		9A48803FBD7FE5B9B843F510 /* Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E524089DB55A2C55971D5F4 /* Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework */; };
 		FB45ACE2288BECA600626EA7 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
 		FB45ACE7288BECAE00626EA7 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
@@ -61,6 +59,11 @@
 		FB6A3A2B287BB49200454481 /* HTTPStatusCodes+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6A3A2A287BB49200454481 /* HTTPStatusCodes+Extensions.swift */; };
 		FB8072F826F32C070042B30D /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
 		FB8072FF26F32C070042B30D /* SYMoyaNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = FB8072F126F32C070042B30D /* SYMoyaNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FB9E2C8C28A16325001F73FC /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE3DA727142A5C00D927E5 /* Moya.framework */; };
+		FB9E2C8D28A16325001F73FC /* Moya.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE3DA727142A5C00D927E5 /* Moya.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FB9E2C9028A1633E001F73FC /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB9E2C8F28A1633E001F73FC /* SwiftyJSON.framework */; };
+		FB9E2C9128A1633E001F73FC /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB9E2C8F28A1633E001F73FC /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FB9E2C9328A167EF001F73FC /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB9E2C9228A167EF001F73FC /* ObjectMapper.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,21 +97,26 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		FB9E2C8E28A16325001F73FC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FB9E2C9128A1633E001F73FC /* SwiftyJSON.framework in Embed Frameworks */,
+				FB9E2C8D28A16325001F73FC /* Moya.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		1CA3B35C9794A446DB4A2D10 /* Pods-SYMJExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYMJExtension.debug.xcconfig"; path = "Target Support Files/Pods-SYMJExtension/Pods-SYMJExtension.debug.xcconfig"; sourceTree = "<group>"; };
-		3665B4C0F213C82FCA86EEFF /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYMoyaNetwork-SYMoyaNetworkTests.release.xcconfig"; path = "Target Support Files/Pods-SYMoyaNetwork-SYMoyaNetworkTests/Pods-SYMoyaNetwork-SYMoyaNetworkTests.release.xcconfig"; sourceTree = "<group>"; };
 		3734FB39ABA0ED62B3E9A4E4 /* Pods_SYHandyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SYHandyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		38BAD58A30716FE1E020C304 /* Pods-SYMoyaNetwork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYMoyaNetwork.debug.xcconfig"; path = "Target Support Files/Pods-SYMoyaNetwork/Pods-SYMoyaNetwork.debug.xcconfig"; sourceTree = "<group>"; };
-		46ED8F4E419CBD4A5E2406F3 /* Pods-SYMJExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYMJExtension.release.xcconfig"; path = "Target Support Files/Pods-SYMJExtension/Pods-SYMJExtension.release.xcconfig"; sourceTree = "<group>"; };
-		52AF9FB28BF716FA930AEB89 /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYMoyaNetwork-SYMoyaNetworkTests.debug.xcconfig"; path = "Target Support Files/Pods-SYMoyaNetwork-SYMoyaNetworkTests/Pods-SYMoyaNetwork-SYMoyaNetworkTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5E524089DB55A2C55971D5F4 /* Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		604F33DC7F85888A77E42203 /* Pods-SYHandyJSON.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYHandyJSON.debug.xcconfig"; path = "Target Support Files/Pods-SYHandyJSON/Pods-SYHandyJSON.debug.xcconfig"; sourceTree = "<group>"; };
 		7769DE82BD0CA535DBD2B991 /* Pods_SYObjectMapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SYObjectMapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8AACE09B11E3A36A48EE5C7D /* Pods-SYHandyJSON.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYHandyJSON.release.xcconfig"; path = "Target Support Files/Pods-SYHandyJSON/Pods-SYHandyJSON.release.xcconfig"; sourceTree = "<group>"; };
 		9E6B8F35CE95978E265B96BC /* Pods_SYMJExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SYMJExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A4E7210E5F8413C887D7856A /* Pods-SYObjectMapper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYObjectMapper.release.xcconfig"; path = "Target Support Files/Pods-SYObjectMapper/Pods-SYObjectMapper.release.xcconfig"; sourceTree = "<group>"; };
-		B5A7BB9CBFB23C966737D0EB /* Pods-SYMoyaNetwork.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYMoyaNetwork.release.xcconfig"; path = "Target Support Files/Pods-SYMoyaNetwork/Pods-SYMoyaNetwork.release.xcconfig"; sourceTree = "<group>"; };
-		DB80631AA71D2DFC6C7F1386 /* Pods-SYObjectMapper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYObjectMapper.debug.xcconfig"; path = "Target Support Files/Pods-SYObjectMapper/Pods-SYObjectMapper.debug.xcconfig"; sourceTree = "<group>"; };
 		F61B45913E30E5028FE970CC /* Pods_SYMoyaNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SYMoyaNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB45ACBD288BEC2900626EA7 /* SYObjectMapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYObjectMapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB45ACCB288BEC8F00626EA7 /* SYHandyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYHandyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,6 +172,8 @@
 		FB8072F126F32C070042B30D /* SYMoyaNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYMoyaNetwork.h; sourceTree = "<group>"; };
 		FB8072F226F32C070042B30D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FB8072F726F32C070042B30D /* SYMoyaNetworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SYMoyaNetworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB9E2C8F28A1633E001F73FC /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
+		FB9E2C9228A167EF001F73FC /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/iOS/ObjectMapper.framework; sourceTree = "<group>"; };
 		FBEE3DA727142A5C00D927E5 /* Moya.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Moya.framework; path = Carthage/Build/iOS/Moya.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -172,8 +182,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB9E2C9328A167EF001F73FC /* ObjectMapper.framework in Frameworks */,
 				FB45ACEC288BECB700626EA7 /* SYMoyaNetwork.framework in Frameworks */,
-				22E32D6D3249E511855D2251 /* Pods_SYObjectMapper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,7 +209,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				804D27C8C8C837858BFD987A /* Pods_SYMoyaNetwork.framework in Frameworks */,
+				FB9E2C9028A1633E001F73FC /* SwiftyJSON.framework in Frameworks */,
+				FB9E2C8C28A16325001F73FC /* Moya.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,23 +226,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		65FC50B3A3FCAA24BE916A3B /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				38BAD58A30716FE1E020C304 /* Pods-SYMoyaNetwork.debug.xcconfig */,
-				B5A7BB9CBFB23C966737D0EB /* Pods-SYMoyaNetwork.release.xcconfig */,
-				52AF9FB28BF716FA930AEB89 /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.debug.xcconfig */,
-				3665B4C0F213C82FCA86EEFF /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.release.xcconfig */,
-				604F33DC7F85888A77E42203 /* Pods-SYHandyJSON.debug.xcconfig */,
-				8AACE09B11E3A36A48EE5C7D /* Pods-SYHandyJSON.release.xcconfig */,
-				1CA3B35C9794A446DB4A2D10 /* Pods-SYMJExtension.debug.xcconfig */,
-				46ED8F4E419CBD4A5E2406F3 /* Pods-SYMJExtension.release.xcconfig */,
-				DB80631AA71D2DFC6C7F1386 /* Pods-SYObjectMapper.debug.xcconfig */,
-				A4E7210E5F8413C887D7856A /* Pods-SYObjectMapper.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		FB45ACB7288BEAC300626EA7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -439,7 +433,6 @@
 				FB8072F026F32C070042B30D /* Sources */,
 				FB8072EF26F32C070042B30D /* Products */,
 				FBEE3D9F27142A3700D927E5 /* Frameworks */,
-				65FC50B3A3FCAA24BE916A3B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -470,6 +463,8 @@
 		FBEE3D9F27142A3700D927E5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FB9E2C9228A167EF001F73FC /* ObjectMapper.framework */,
+				FB9E2C8F28A1633E001F73FC /* SwiftyJSON.framework */,
 				FB7EC9382898C9C100273950 /* Pods_SYMoyaNetwork.framework */,
 				FB7EC9332898C4FC00273950 /* Moya.framework */,
 				FB7EC92F2898BF6900273950 /* SwiftyJSON.framework */,
@@ -525,7 +520,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB45ACC3288BEC2900626EA7 /* Build configuration list for PBXNativeTarget "SYObjectMapper" */;
 			buildPhases = (
-				3098FF50BFDDD7E6C1A554AE /* [CP] Check Pods Manifest.lock */,
 				FB45ACB8288BEC2900626EA7 /* Headers */,
 				FB45ACB9288BEC2900626EA7 /* Sources */,
 				FB45ACBA288BEC2900626EA7 /* Frameworks */,
@@ -545,7 +539,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB45ACD1288BEC8F00626EA7 /* Build configuration list for PBXNativeTarget "SYHandyJSON" */;
 			buildPhases = (
-				8A111FE5219B615684608BB8 /* [CP] Check Pods Manifest.lock */,
 				FB45ACC6288BEC8F00626EA7 /* Headers */,
 				FB45ACC7288BEC8F00626EA7 /* Sources */,
 				FB45ACC8288BEC8F00626EA7 /* Frameworks */,
@@ -565,7 +558,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB45ACDF288BEC9D00626EA7 /* Build configuration list for PBXNativeTarget "SYMJExtension" */;
 			buildPhases = (
-				682031282F940C6C381D9068 /* [CP] Check Pods Manifest.lock */,
 				FB45ACD4288BEC9D00626EA7 /* Headers */,
 				FB45ACD5288BEC9D00626EA7 /* Sources */,
 				FB45ACD6288BEC9D00626EA7 /* Frameworks */,
@@ -585,11 +577,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB80730226F32C070042B30D /* Build configuration list for PBXNativeTarget "SYMoyaNetwork" */;
 			buildPhases = (
-				37122AE94554C8610BB1220B /* [CP] Check Pods Manifest.lock */,
 				FB8072E926F32C070042B30D /* Headers */,
 				FB8072EA26F32C070042B30D /* Sources */,
 				FB8072EB26F32C070042B30D /* Frameworks */,
-				FB8072EC26F32C070042B30D /* Resources */,
+				FB9E2C8B28A0F6F2001F73FC /* Resources */,
+				FB9E2C8E28A16325001F73FC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -608,7 +600,6 @@
 				FB8072F326F32C070042B30D /* Sources */,
 				FB8072F426F32C070042B30D /* Frameworks */,
 				FB8072F526F32C070042B30D /* Resources */,
-				4FF7D77DF1195FFBB39D4CF0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -690,14 +681,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FB8072EC26F32C070042B30D /* Resources */ = {
+		FB8072F526F32C070042B30D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FB8072F526F32C070042B30D /* Resources */ = {
+		FB9E2C8B28A0F6F2001F73FC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -723,111 +714,6 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-SYMoyaNetwork-SYMoyaNetworkTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3098FF50BFDDD7E6C1A554AE /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SYObjectMapper-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		37122AE94554C8610BB1220B /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SYMoyaNetwork-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4FF7D77DF1195FFBB39D4CF0 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SYMoyaNetwork-SYMoyaNetworkTests/Pods-SYMoyaNetwork-SYMoyaNetworkTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SYMoyaNetwork-SYMoyaNetworkTests/Pods-SYMoyaNetwork-SYMoyaNetworkTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SYMoyaNetwork-SYMoyaNetworkTests/Pods-SYMoyaNetwork-SYMoyaNetworkTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		682031282F940C6C381D9068 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SYMJExtension-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8A111FE5219B615684608BB8 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SYHandyJSON-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -941,7 +827,6 @@
 /* Begin XCBuildConfiguration section */
 		FB45ACC4288BEC2900626EA7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DB80631AA71D2DFC6C7F1386 /* Pods-SYObjectMapper.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
@@ -952,6 +837,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -964,7 +853,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYObjectMapper;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = macosx;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -974,7 +863,6 @@
 		};
 		FB45ACC5288BEC2900626EA7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A4E7210E5F8413C887D7856A /* Pods-SYObjectMapper.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
@@ -985,6 +873,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -997,7 +889,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYObjectMapper;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = macosx;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1007,7 +899,6 @@
 		};
 		FB45ACD2288BEC8F00626EA7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 604F33DC7F85888A77E42203 /* Pods-SYHandyJSON.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
@@ -1040,7 +931,6 @@
 		};
 		FB45ACD3288BEC8F00626EA7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8AACE09B11E3A36A48EE5C7D /* Pods-SYHandyJSON.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
@@ -1073,7 +963,6 @@
 		};
 		FB45ACE0288BEC9D00626EA7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1CA3B35C9794A446DB4A2D10 /* Pods-SYMJExtension.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
@@ -1106,7 +995,6 @@
 		};
 		FB45ACE1288BEC9D00626EA7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 46ED8F4E419CBD4A5E2406F3 /* Pods-SYMJExtension.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
@@ -1117,6 +1005,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1198,6 +1087,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TVOS_DEPLOYMENT_TARGET = 10.0;
+				VALIDATE_WORKSPACE = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 				WATCHOS_DEPLOYMENT_TARGET = 3.0;
@@ -1259,6 +1149,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TVOS_DEPLOYMENT_TARGET = 10.0;
 				VALIDATE_PRODUCT = YES;
+				VALIDATE_WORKSPACE = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 				WATCHOS_DEPLOYMENT_TARGET = 3.0;
@@ -1267,9 +1158,9 @@
 		};
 		FB80730326F32C070042B30D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 38BAD58A30716FE1E020C304 /* Pods-SYMoyaNetwork.debug.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_STYLE = Manual;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -1277,12 +1168,26 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				EXCLUDED_ARCHS = "";
-				FRAMEWORK_SEARCH_PATHS = (
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
+				"FRAMEWORK_SEARCH_PATHS[sdk=appletvos*]" = (
 					"$(inherited)",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/SwiftJSON\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/Moya\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/Alamofire\"",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/tvOS",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=iphoneos*]" = (
+					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/iOS",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/Mac",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=watchos*]" = (
+					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/watchOS",
 				);
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1298,6 +1203,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchsimulator iphonesimulator appletvsimulator watchos appletvos iphoneos macosx";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1305,9 +1211,9 @@
 		};
 		FB80730426F32C070042B30D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B5A7BB9CBFB23C966737D0EB /* Pods-SYMoyaNetwork.release.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_STYLE = Manual;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -1316,11 +1222,30 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				EXCLUDED_ARCHS = "";
 				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/Carthage/Build/",
 					"$(inherited)",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/Moya\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/SwiftJSON\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/Alamofire\"",
+					"$(SRCROOT)/Carthage/Build/watchOS",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=appletvos*]" = (
+					"$(SRCROOT)/Carthage/Build/",
+					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/tvOS",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=iphoneos*]" = (
+					"$(SRCROOT)/Carthage/Build/",
+					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/iOS",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(SRCROOT)/Carthage/Build/",
+					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/Mac",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=watchos*]" = (
+					"$(SRCROOT)/Carthage/Build/",
+					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/watchOS",
 				);
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1336,6 +1261,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "watchsimulator iphonesimulator appletvsimulator watchos appletvos iphoneos macosx";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1343,7 +1269,6 @@
 		};
 		FB80730626F32C070042B30D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 52AF9FB28BF716FA930AEB89 /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1363,7 +1288,6 @@
 		};
 		FB80730726F32C070042B30D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3665B4C0F213C82FCA86EEFF /* Pods-SYMoyaNetwork-SYMoyaNetworkTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

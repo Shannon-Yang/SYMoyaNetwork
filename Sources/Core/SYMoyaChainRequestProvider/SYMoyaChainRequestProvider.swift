@@ -11,17 +11,15 @@ import Moya
 
 // Chain request item object
 public struct ChainProvider<Target: SYTargetType> {
-    var target: Target
-    var provider: SYMoyaProvider<Target>
-    
+    public let target: Target
+    public let provider: SYMoyaProvider<Target>
     public typealias ChainCompletion = (_ dataResponses: ChainDataResponse<Target>) -> Void
-    
     public var callbackQueue: DispatchQueue? = .none
     public var progress: ProgressBlock? = .none
-    
     public let chainCompletion: ChainCompletion
     
-    init(_ target: Target, provider: SYMoyaProvider<Target>, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none,  chainCompletion: @escaping ChainCompletion) {
+    // MARK: - Initallization
+    public init(target: Target, provider: SYMoyaProvider<Target>, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none,  chainCompletion: @escaping ChainCompletion) {
         self.target = target
         self.provider = provider
         self.callbackQueue = callbackQueue
@@ -32,8 +30,14 @@ public struct ChainProvider<Target: SYTargetType> {
 
 /// Chained request data return result
 public struct ChainResult<Target: SYTargetType> {
-    public var chainProvider: ChainProvider<Target>
-    public var response: Moya.Response
+    public let chainProvider: ChainProvider<Target>
+    public let response: Moya.Response
+    
+    // MARK: - Initallization
+    public init(chainProvider: ChainProvider<Target>,response: Moya.Response) {
+        self.chainProvider = chainProvider
+        self.response = response
+    }
 }
 
 
