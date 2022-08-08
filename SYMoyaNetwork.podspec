@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SYMoyaNetwork'
-  s.version          = '1.1.1'
+  s.version          = '1.1.2'
   s.summary          = "Network abstraction layer based on Moya extension"
 
 # This description is used to generate tags and improve search results.
