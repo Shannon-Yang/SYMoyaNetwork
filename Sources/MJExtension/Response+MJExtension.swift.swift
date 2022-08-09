@@ -8,6 +8,7 @@
 
 import Foundation
 import MJExtension
+import Moya
 
 //MARK: - MJExtension
 public extension Response {

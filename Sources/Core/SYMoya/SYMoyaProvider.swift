@@ -123,11 +123,11 @@ public extension SYMoyaProvider {
 
 //MARK: - Req
 
-extension SYMoyaProvider {
+public extension SYMoyaProvider {
     
     /// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
     @discardableResult
-    func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping ((_ result: Result<Moya.Response, SYMoyaNetworkError>) -> Void)) -> Cancellable {
+    public func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping ((_ result: Result<Moya.Response, SYMoyaNetworkError>) -> Void)) -> Cancellable {
         return self.request(target, callbackQueue: callbackQueue, progress: progress, completion: { result in
         
             // callback filter

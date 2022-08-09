@@ -82,7 +82,7 @@ extension SYMoyaProvider {
         }
     }
     
-    func retrieve(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ result: Result<Moya.Response, SYMoyaNetworkError>) -> Void) {
+    public func retrieve(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ result: Result<Moya.Response, SYMoyaNetworkError>) -> Void) {
         let key = self.generateCacheKey(target)
         var queue = CallbackQueue.untouch
         if let cQueue = callbackQueue {
@@ -108,7 +108,7 @@ extension SYMoyaProvider {
         }
     }
     
-    func retrieveResponseInMemoryCache(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo) throws -> Moya.Response {
+    public func retrieveResponseInMemoryCache(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo) throws -> Moya.Response {
         let key = self.generateCacheKey(target)
         if let data = self.cache.retrieveResponseInMemoryCache(forKey: key, options: options) {
             return data
@@ -116,7 +116,7 @@ extension SYMoyaProvider {
         throw SYMoyaNetworkError.cacheError(reason: .responseNotExisting(key: key))
     }
     
-    func retrieveResponseInDiskCache(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo, callbackQueue: DispatchQueue? = .none, completionHandler: @escaping (Result<Moya.Response, SYMoyaNetworkError>) -> Void) {
+    public func retrieveResponseInDiskCache(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo, callbackQueue: DispatchQueue? = .none, completionHandler: @escaping (Result<Moya.Response, SYMoyaNetworkError>) -> Void) {
         let key = self.generateCacheKey(target)
         var queue = CallbackQueue.untouch
         if let cQueue = callbackQueue {

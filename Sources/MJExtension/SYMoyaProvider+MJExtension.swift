@@ -9,6 +9,7 @@
 import Foundation
 import Moya
 import MJExtension
+import SYMoyaNetwork
 
 //MARK: - MJExtension
 public extension SYMoyaProvider {
