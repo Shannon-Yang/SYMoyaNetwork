@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9A48803FBD7FE5B9B843F510 /* Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E524089DB55A2C55971D5F4 /* Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework */; };
 		FB45ACE2288BECA600626EA7 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
 		FB45ACE7288BECAE00626EA7 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
 		FB45ACEC288BECB700626EA7 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
@@ -113,11 +112,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3734FB39ABA0ED62B3E9A4E4 /* Pods_SYHandyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SYHandyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5E524089DB55A2C55971D5F4 /* Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7769DE82BD0CA535DBD2B991 /* Pods_SYObjectMapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SYObjectMapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9E6B8F35CE95978E265B96BC /* Pods_SYMJExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SYMJExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F61B45913E30E5028FE970CC /* Pods_SYMoyaNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SYMoyaNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB45ACBD288BEC2900626EA7 /* SYObjectMapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYObjectMapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB45ACCB288BEC8F00626EA7 /* SYHandyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYHandyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB45ACD9288BEC9D00626EA7 /* SYMJExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYMJExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -165,9 +159,6 @@
 		FB6A3A2A287BB49200454481 /* HTTPStatusCodes+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HTTPStatusCodes+Extensions.swift"; sourceTree = "<group>"; };
 		FB6A3A2E287BC8CF00454481 /* Response+MJExtension.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+MJExtension.swift.swift"; sourceTree = "<group>"; };
 		FB6A3A2F287BC8CF00454481 /* SYMoyaProvider+MJExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+MJExtension.swift"; sourceTree = "<group>"; };
-		FB7EC92F2898BF6900273950 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB7EC9332898C4FC00273950 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB7EC9382898C9C100273950 /* Pods_SYMoyaNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_SYMoyaNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYMoyaNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB8072F126F32C070042B30D /* SYMoyaNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYMoyaNetwork.h; sourceTree = "<group>"; };
 		FB8072F226F32C070042B30D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -221,7 +212,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB8072F826F32C070042B30D /* SYMoyaNetwork.framework in Frameworks */,
-				9A48803FBD7FE5B9B843F510 /* Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,15 +459,7 @@
 				FB9E2C9428A16AA6001F73FC /* MJExtension.framework */,
 				FB9E2C9228A167EF001F73FC /* ObjectMapper.framework */,
 				FB9E2C8F28A1633E001F73FC /* SwiftyJSON.framework */,
-				FB7EC9382898C9C100273950 /* Pods_SYMoyaNetwork.framework */,
-				FB7EC9332898C4FC00273950 /* Moya.framework */,
-				FB7EC92F2898BF6900273950 /* SwiftyJSON.framework */,
 				FBEE3DA727142A5C00D927E5 /* Moya.framework */,
-				F61B45913E30E5028FE970CC /* Pods_SYMoyaNetwork.framework */,
-				5E524089DB55A2C55971D5F4 /* Pods_SYMoyaNetwork_SYMoyaNetworkTests.framework */,
-				3734FB39ABA0ED62B3E9A4E4 /* Pods_SYHandyJSON.framework */,
-				9E6B8F35CE95978E265B96BC /* Pods_SYMJExtension.framework */,
-				7769DE82BD0CA535DBD2B991 /* Pods_SYObjectMapper.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

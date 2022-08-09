@@ -32,8 +32,6 @@
 		FB80743F26F341A40042B30D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB80743726F341A40042B30D /* LaunchScreen.storyboard */; };
 		FB80744026F341A40042B30D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB80743926F341A40042B30D /* Main.storyboard */; };
 		FB80744126F341A40042B30D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80743B26F341A40042B30D /* AppDelegate.swift */; };
-		FB80744526F355B40042B30D /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB80744426F355B40042B30D /* SYMoyaNetwork.framework */; };
-		FB80744626F355B40042B30D /* SYMoyaNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB80744426F355B40042B30D /* SYMoyaNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,7 +80,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FB80744626F355B40042B30D /* SYMoyaNetwork.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -131,7 +128,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB80744526F355B40042B30D /* SYMoyaNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
