@@ -87,7 +87,6 @@ public enum SYMoyaNetworkOptionsInfoItem {
 /// in `SYMoyaNetworkOptionsInfoItem`. When a `SYMoyaNetworkOptionsInfo` sent to SYMoyaNetwork related methods, it will be
 /// parsed and converted to a `SYMoyaNetworkParsedOptionsInfo` first, and pass through the internal methods.
 public struct SYMoyaNetworkParsedOptionsInfo {
-
     public var targetCache: NetworkCache? = nil
     public var forceRefresh = false
     public var fromMemoryCacheOrRefresh = false

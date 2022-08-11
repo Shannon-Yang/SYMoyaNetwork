@@ -12,7 +12,6 @@ import HandyJSON
 import SYMoyaNetwork
 
 //MARK: - HandyJSON Provider
-
 public extension SYMoyaProvider {
     
     /// Get HandyJSON generic object data from cache，If there is a cache, it will be obtained in memory first. If there is no cache in the memory, the cache will be read from the disk. If there is no cached data, the completion will callback nil object

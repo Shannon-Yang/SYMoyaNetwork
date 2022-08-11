@@ -10,37 +10,28 @@ import Foundation
 import Moya
 
 /// The provider proxy method is called back. When the completion method of moya is called back, the corresponding proxy method will be called back. When the network request is completed, the requestCompleteFilter method will be called back. When the request fails, the requestFailedFilter method will be called back.
-public protocol SYMoyaProviderDelegate: NSObjectProtocol {
+public protocol SYMoyaProviderDelegate: AnyObject {
     
     /// When moya's completion method is called back, the requestCompleteFilter method will be called back when the network request is completed
     /// - Parameters:
     ///   - provider: The chained request provider is used to manage interdependent network requests
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
     ///   - response: The response data object after the request is completed
-    func provider<Target: SYTargetType>(_ provider: SYMoyaProvider<Target>, requestCompleteFilter response: Moya.Response?)
+    func provider<Target: SYTargetType>(_ provider: SYMoyaProvider<Target>, target: Target?, requestCompleteFilter response: Moya.Response?)
     
     /// Delegate callback method when data request success
     /// - Parameters:
     ///   - provider: The chained request provider is used to manage interdependent network requests
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
     ///   - response: network request success response
-    func provider<Target: SYTargetType>(_ provider: SYMoyaProvider<Target>, requestSuccessFilter response: Moya.Response)
+    func provider<Target: SYTargetType>(_ provider: SYMoyaProvider<Target>, target: Target?, requestSuccessFilter response: Moya.Response)
     
     /// Delegate callback method when data request fails
     /// - Parameters:
     ///   - provider: The chained request provider is used to manage interdependent network requests
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
     ///   - error: network request error message
-    func provider<Target: SYTargetType>(_ provider: SYMoyaProvider<Target>, requestFailedFilter error: SYMoyaNetworkError)
-}
-
-/// The provider request response status, the status change from the initiation to the end of the network request
-public enum SYMoyaProviderResponseState {
-   /// The network request has not been completed
-   case uncompleted
-   /// Network request completed with status code 200..299
-   case success
-   /// The network request failed, returning an incorrect network status code, for example: 500
-   case failed
-   /// Complete the network request, may fail or succeed
-   case complete
+    func provider<Target: SYTargetType>(_ provider: SYMoyaProvider<Target>, target: Target?, requestFailedFilter error: SYMoyaNetworkError)
 }
 
 // A request provider class that inherits from MoyaProvider. Requests can only be made through this class.
@@ -58,14 +49,83 @@ open class SYMoyaProvider<Target: SYTargetType>: Moya.MoyaProvider<Target> {
     /// URLCache
     public let urlCache: SYMoyaURLCache
     
-    /// The provider request response status, the status change from the initiation to the end of the network request, default is .uncompleted
-    public var providerResponseState: SYMoyaProviderResponseState = .uncompleted
-    
     // MARK: - Initallization
-    public override init(endpointClosure: @escaping SYMoyaProvider<Target>.EndpointClosure = SYMoyaProvider.syDefaultEndpointMapping, requestClosure: @escaping SYMoyaProvider<Target>.RequestClosure = SYMoyaProvider.defaultRequestMapping, stubClosure: @escaping SYMoyaProvider<Target>.StubClosure = SYMoyaProvider.neverStub, callbackQueue: DispatchQueue? = nil, session: Session = SYMoyaProvider<Target>.defaultAlamofireSession(), plugins: [PluginType] = [SYMoyaNetworkLoggerPlugin()], trackInflights: Bool = false) {
+    
+    /// Initializes a provider.
+    public override init(endpointClosure: @escaping EndpointClosure = SYMoyaProvider<Target>.syDefaultEndpointMapping, requestClosure: @escaping RequestClosure = SYMoyaProvider<Target>.defaultRequestMapping, stubClosure: @escaping StubClosure = SYMoyaProvider<Target>.neverStub, callbackQueue: DispatchQueue? = nil, session: Session = SYMoyaProvider<Target>.defaultAlamofireSession(), plugins: [PluginType] = [SYMoyaNetworkLoggerPlugin(),SYMoyaProviderTargetResponseStatePlugin<Target>()], trackInflights: Bool = false) {
         self.cache = NetworkConfig.sharedInstance.networkCache
         self.urlCache = SYMoyaURLCache(urlCache: session.sessionConfiguration.urlCache ?? URLCache.shared)
         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, callbackQueue: callbackQueue, session: session, plugins: plugins, trackInflights: trackInflights)
+    }
+    
+    //MARK: - Override
+    
+    /// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
+    open override func request(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping Completion) -> Cancellable {
+        return super.request(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
+    }
+    
+    /// Returns an `Endpoint` based on the token, method, and parameters by invoking the `endpointClosure`.
+    open override func endpoint(_ token: Target) -> Endpoint {
+        super.endpoint(token)
+    }
+    
+    // swiftlint:disable function_parameter_count
+    /// When overriding this method, call `notifyPluginsOfImpendingStub` to prepare your request
+    /// and then use the returned `URLRequest` in the `createStubFunction` method.
+    /// Note: this was previously in an extension, however it must be in the original class declaration to allow subclasses to override.
+    open override func stubRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, completion: @escaping Completion, endpoint: Endpoint, stubBehavior: StubBehavior) -> CancellableToken {
+        super.stubRequest(target, request: request, callbackQueue: callbackQueue, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
+    }
+    
+    // MARK: - Public
+    
+    /// Get the request state of the target by passing in a target, and get the request status through the providerResponseStateItems array object in the SYMoyaProviderTargetResponseStatePlugin object
+    /// - Parameter target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    /// - Returns: Target state
+    public func responseState(_ target: Target) -> SYMoyaProviderResponseState {
+        guard let item = self.responseStateItem(target) else {
+            return .unknown
+        }
+        return item.state
+    }
+}
+
+// MARK: - Private
+private extension SYMoyaProvider {
+    func providerResponseStateItems() -> [SYMoyaProviderTargetResponseStateItem<Target>]? {
+        guard let plugin = self.plugins.filter({ $0 is SYMoyaProviderTargetResponseStatePlugin<Target> }).first as? SYMoyaProviderTargetResponseStatePlugin<Target> else {
+            return nil
+        }
+        if plugin.providerResponseStateItems.count == 0 {
+            return nil
+        }
+        return plugin.providerResponseStateItems
+    }
+    
+    func responseStateItem(_ target: Target) -> SYMoyaProviderTargetResponseStateItem<Target>? {
+        let providerResponseStateItems = self.providerResponseStateItems()
+        let endPoint = self.endpoint(target)
+        guard let item = providerResponseStateItems?.filter({ $0.endPoint == endPoint }).first else {
+            return nil
+        }
+        return item
+    }
+    
+    func responseStateItem(_ request: URLRequest?) -> SYMoyaProviderTargetResponseStateItem<Target>? {
+        guard let urlRequest = request else {
+            return nil
+        }
+        let providerResponseStateItems = self.providerResponseStateItems()
+        guard let item = providerResponseStateItems?.filter({
+            if let tryURLRequest = try? $0.endPoint.urlRequest() {
+                return tryURLRequest == urlRequest
+            }
+            return false
+        }).first else {
+            return nil
+        }
+        return item
     }
 }
 
@@ -115,10 +175,8 @@ public extension SYMoyaProvider {
         default:
             break
         }
-        
         return endpoint
     }
-  
 }
 
 //MARK: - Req
@@ -127,28 +185,22 @@ public extension SYMoyaProvider {
     
     /// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
     @discardableResult
-    public func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping ((_ result: Result<Moya.Response, SYMoyaNetworkError>) -> Void)) -> Cancellable {
+    func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping ((_ result: Result<Moya.Response, SYMoyaNetworkError>) -> Void)) -> Cancellable {
         return self.request(target, callbackQueue: callbackQueue, progress: progress, completion: { result in
-        
-            // callback filter
-            DispatchQueue.main.async {
-                let value = try? result.get()
-                // assignment request status
-                self.providerResponseState = .complete
-                // delegate
-                self.delegate?.provider(self, requestCompleteFilter: value)
-            }
+            let value = try? result.get()
+            
+            // state item
+            let item = self.responseStateItem(value?.request)
+            
+            // delegate
+            self.delegate?.provider(self, target: item?.target, requestCompleteFilter: value)
             
             switch result {
             case .success(let response):
                 // callback filter success
-                DispatchQueue.main.async {
-                    // assignment request status
-                    self.providerResponseState = .success
-                    // delegate
-                    self.delegate?.provider(self, requestSuccessFilter: response)
-                }
-
+                // delegate
+                self.delegate?.provider(self, target: item?.target, requestSuccessFilter: response)
+                
                 // Cache
                 self.cacheIfNeeded(target, response: response)
                 
@@ -158,12 +210,8 @@ public extension SYMoyaProvider {
             case .failure(let error):
                 let e = error.transformToSYMoyaNetworkError()
                 // callback filter failure
-                DispatchQueue.main.async {
-                    // assignment request status
-                    self.providerResponseState = .failed
-                    // delegate
-                    self.delegate?.provider(self, requestFailedFilter: e)
-                }
+                // delegate
+                self.delegate?.provider(self, target: item?.target, requestFailedFilter: e)
                 
                 // clear if needed
                 switch target.networkCacheType {

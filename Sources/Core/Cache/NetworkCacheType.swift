@@ -20,7 +20,7 @@ public enum NetworkCacheType {
     /// The Request is cached use HTTP Protocol
     case urlRequestCache(urlCacheInfo: URLCacheInfo)
     /// The Request is cached in disk or memory
-    case syMoyaNetworkCache(networkCacheOptionsInfo: NetworkCacheOptionsInfo)
+    case syMoyaNetworkCache(networkCacheOptionsInfo: NetworkCacheOptionsInfo = NetworkCacheOptionsInfo())
 
     /// Whether the cache type represents the Request is already cached or not.
     public var isUseCache: Bool {
@@ -47,7 +47,7 @@ public extension NetworkCacheType {
     static let defaultCacheKey: String = "com.shannonyang.SYMoyaNetwork.NetworkCache.Key"
     
     /// When the network type is changed to syMoyaNetworkCache, the cache information configuration category mainly includes diskStorageConfig configuration, memoryStorageConfig configuration, etc. Other cacheKeys have a default value, which can be modified by setting cacheKey
-    public struct NetworkCacheOptionsInfo {
+    struct NetworkCacheOptionsInfo {
         
         /// The default cache key
         public var cacheKey: String = defaultCacheKey

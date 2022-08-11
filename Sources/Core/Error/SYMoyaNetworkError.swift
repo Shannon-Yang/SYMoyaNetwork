@@ -14,7 +14,7 @@ import Moya
 /// as its error type. To handle errors from SYMoyaNetwork, you switch over the error to get a reason catalog,
 /// then switch over the reason to know error detail.
 public enum SYMoyaNetworkError: Swift.Error {
-
+    
     // MARK: Error Reason Types
     
     /// Represents the error reason during SYMoyaNetwork caching system.
@@ -68,7 +68,7 @@ public enum SYMoyaNetworkError: Swift.Error {
         /// - original: The original response data, if exists.
         /// - serializer: The `CacheSerializer` used for the response serializing.
         case cannotSerializeResponse(response: Moya.Response?, serializer: CacheSerializer)
-
+        
         /// Cannot create the cache file at a certain fileURL under a key. Code 30009.
         /// - fileURL: The url where the cache file should be created.
         /// - key: The cache key used for the cache. When caching a file through `SYMoyaNetworkManager` and SYMoyaNetwork's
@@ -77,14 +77,14 @@ public enum SYMoyaNetworkError: Swift.Error {
         /// - error: The underlying error originally thrown by Foundation when writing the `data` to the disk file at
         ///          `fileURL`.
         case cannotCreateCacheFile(fileURL: URL, key: String, data: Data, error: Error)
-
+        
         /// Cannot set file attributes to a cached file. Code 30010.
         /// - filePath: The path of target cache file.
         /// - attributes: The file attribute to be set to the target file.
         /// - error: The underlying error originally thrown by Foundation when setting the `attributes` to the disk
         ///          file at `filePath`.
         case cannotSetCacheFileAttribute(filePath: String, attributes: [FileAttributeKey : Any], error: Error)
-
+        
         /// The disk storage of cache is not ready. Code 30011.
         ///
         /// This is usually due to extremely lack of space on disk storage, and
@@ -123,15 +123,10 @@ public enum SYMoyaNetworkError: Swift.Error {
     
     // MARK: Member Cases
     case cacheError(reason: CacheErrorReason)
-
     case batchRequestError(reason: BatchRequestErrorReason)
-    
     case serializeError(reason: SerializeErrorReason)
-    
     case requestErrorReason(reason: RequestErrorReason)
-    
     case endpointErrorReason(reason: EndpointErrorReason)
-    
     case validationErrorReason(reason: ValidationErrorReason)
 }
 

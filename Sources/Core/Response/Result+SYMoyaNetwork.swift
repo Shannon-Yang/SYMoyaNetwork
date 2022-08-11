@@ -15,24 +15,24 @@ extension Result {
         guard case .success = self else { return false }
         return true
     }
-
+    
     /// Returns whether the instance is `.failure`.
     var isFailure: Bool {
         !isSuccess
     }
-
+    
     /// Returns the associated value if the result is a success, `nil` otherwise.
     var success: Success? {
         guard case let .success(value) = self else { return nil }
         return value
     }
-
+    
     /// Returns the associated error value if the result is a failure, `nil` otherwise.
     var failure: Failure? {
         guard case let .failure(error) = self else { return nil }
         return error
     }
-
+    
     /// Initializes a `Result` from value or error. Returns `.failure` if the error is non-nil, `.success` otherwise.
     ///
     /// - Parameters:
@@ -45,7 +45,7 @@ extension Result {
             self = .success(value)
         }
     }
-
+    
     /// Evaluates the specified closure when the `Result` is a success, passing the unwrapped value as a parameter.
     ///
     /// Use the `tryMap` method with a closure that may throw an error. For example:
@@ -71,7 +71,7 @@ extension Result {
             return .failure(error)
         }
     }
-
+    
     /// Evaluates the specified closure when the `Result` is a failure, passing the unwrapped error as a parameter.
     ///
     /// Use the `tryMapError` function with a closure that may throw an error. For example:
