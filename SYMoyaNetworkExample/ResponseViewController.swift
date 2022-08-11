@@ -14,9 +14,6 @@ class ResponseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Example Detail"
-        
-        // Do any additional setup after loading the view.
-        self.string()
     }
 }
 
