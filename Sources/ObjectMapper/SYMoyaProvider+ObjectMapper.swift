@@ -154,7 +154,6 @@ public extension SYMoyaProvider {
                     }
                 }
             case .custom(let customizable):
-                
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
                 
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in

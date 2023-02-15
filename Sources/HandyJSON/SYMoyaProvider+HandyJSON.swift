@@ -346,7 +346,7 @@ public extension SYMoyaProvider {
 //MARK: - Extension
 
 public extension SYMoyaProvider {
-    
+
     func serializerObjectDataResponse<T: HandyJSON>(_ response: Moya.Response, designatedPath: String? = nil) -> SYMoyaNetworkDataResponse<T> {
         let dataRes: SYMoyaNetworkDataResponse<T>
         let object: T?
