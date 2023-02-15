@@ -13,9 +13,10 @@ public typealias SYMoyaNetworkDataResponse<Success> = SYDataResponse<Success, SY
 
 /// Represents a response to a `SYMoyaProvider.request`.
 public struct SYDataResponse<Success, Failure: Error> {
-    
+    /// Represents a response to a `MoyaProvider.request`.
     public let response: Moya.Response?
     
+    /// a boolean indicating whether the current data is from the cache
     public var isDataFromCache: Bool
     
     /// The result of response serialization.

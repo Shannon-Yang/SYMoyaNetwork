@@ -13,7 +13,6 @@ import typealias CommonCrypto.CC_LONG
 
 //MARK: - String
 public extension String {
-    
     func md5() -> String {
         let length = Int(CC_MD5_DIGEST_LENGTH)
         let messageData = self.data(using:.utf8)!
