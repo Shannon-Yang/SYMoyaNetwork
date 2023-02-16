@@ -160,8 +160,7 @@ public extension SYMoyaProvider {
         }
         
         // set
-        switch target.networkCacheType {
-        case .urlRequestCache(let urlCacheInfo):
+        if case let target.networkCacheType == .urlRequestCache(let urlCacheInfo) {
             if target.method == .get {
                 if urlCacheInfo.isCanUseCacheControl {
                     endpoint = (endpoint.adding(newHTTPHeaderFields: ["Cache-Control" : "no-cache"]))
@@ -172,17 +171,13 @@ public extension SYMoyaProvider {
             } else {
                 print("URLRequestCache only supports get requests, if you want to use other request methods for caching, maybe you can try SYMoyaNetworkCache")
             }
-        default:
-            break
         }
         return endpoint
     }
 }
 
 //MARK: - Req
-
 public extension SYMoyaProvider {
-    
     /// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
     @discardableResult
     func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping ((_ result: Result<Moya.Response, SYMoyaNetworkError>) -> Void)) -> Cancellable {
