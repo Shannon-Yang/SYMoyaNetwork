@@ -12,7 +12,6 @@ import SwiftyJSON
 
 //MARK: - Response SwiftyJSON
 public extension Response {
-    
     /// Convert response to SwiftlyJSON format data
     /// - Parameter opt: A class for converting JSON to Foundation objects and converting Foundation objects to JSON.
     /// - Throws: If the conversion fails, a JSON parsing failure error will be thrown
