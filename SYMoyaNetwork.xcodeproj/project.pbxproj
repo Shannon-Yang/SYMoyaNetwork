@@ -14,8 +14,6 @@
 		FB45ACF2288BEDDB00626EA7 /* SYMoyaProvider+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354692705A61E003F1D7C /* SYMoyaProvider+ObjectMapper.swift */; };
 		FB45ACF3288BEDE500626EA7 /* SYMoyaProvider+HandyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354782705A61E003F1D7C /* SYMoyaProvider+HandyJSON.swift */; };
 		FB45ACF4288BEDE500626EA7 /* Response+HandyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354792705A61E003F1D7C /* Response+HandyJSON.swift */; };
-		FB45ACF5288BEDEC00626EA7 /* Response+MJExtension.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6A3A2E287BC8CF00454481 /* Response+MJExtension.swift.swift */; };
-		FB45ACF6288BEDEC00626EA7 /* SYMoyaProvider+MJExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6A3A2F287BC8CF00454481 /* SYMoyaProvider+MJExtension.swift */; };
 		FB45ACF8288BEFA700626EA7 /* SYHandyJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = FB45ACF7288BEFA600626EA7 /* SYHandyJSON.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB45ACFA288BEFBD00626EA7 /* SYMJExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = FB45ACF9288BEFBD00626EA7 /* SYMJExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB45ACFC288BEFCA00626EA7 /* SYObjectMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = FB45ACFB288BEFCA00626EA7 /* SYObjectMapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -214,8 +212,6 @@
 		FB668FBF28D3596F00AE74F4 /* SYMoyaPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYMoyaPublisher.swift; sourceTree = "<group>"; };
 		FB6A3A28287BB48900454481 /* HTTPStatusCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPStatusCode.swift; sourceTree = "<group>"; };
 		FB6A3A2A287BB49200454481 /* HTTPStatusCodes+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HTTPStatusCodes+Extensions.swift"; sourceTree = "<group>"; };
-		FB6A3A2E287BC8CF00454481 /* Response+MJExtension.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+MJExtension.swift.swift"; sourceTree = "<group>"; };
-		FB6A3A2F287BC8CF00454481 /* SYMoyaProvider+MJExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+MJExtension.swift"; sourceTree = "<group>"; };
 		FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYMoyaNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB8072F126F32C070042B30D /* SYMoyaNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYMoyaNetwork.h; sourceTree = "<group>"; };
 		FB8072F226F32C070042B30D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -544,30 +540,10 @@
 			path = ReactiveSwift;
 			sourceTree = "<group>";
 		};
-		FB668FBC28D351C800AE74F4 /* RxSwift */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = RxSwift;
-			sourceTree = "<group>";
-		};
-		FB668FBD28D351CD00AE74F4 /* Combine */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Combine;
-			sourceTree = "<group>";
-		};
-		FB668FBE28D351D200AE74F4 /* ReactiveSwift */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ReactiveSwift;
-			sourceTree = "<group>";
-		};
 		FB6A3A2C287BBDD400454481 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				FB81CA3F29A3C5020036C3A0 /* Async */,
 				FB65207828A4FBB8009457DD /* SYMoyaBatchRequestProvider */,
 				FB6354612705A61E003F1D7C /* Codable */,
 				FB63545E2705A61E003F1D7C /* SwiftyJSON */,
@@ -585,18 +561,6 @@
 				FB6354492705A61D003F1D7C /* Cache */,
 			);
 			path = Core;
-			sourceTree = "<group>";
-		};
-		FB6A3A2D287BC8CF00454481 /* MJExtension */ = {
-			isa = PBXGroup;
-			children = (
-				FB668FBE28D351D200AE74F4 /* ReactiveSwift */,
-				FB668FBD28D351CD00AE74F4 /* Combine */,
-				FB668FBC28D351C800AE74F4 /* RxSwift */,
-				FB6A3A2E287BC8CF00454481 /* Response+MJExtension.swift.swift */,
-				FB6A3A2F287BC8CF00454481 /* SYMoyaProvider+MJExtension.swift */,
-			);
-			path = MJExtension;
 			sourceTree = "<group>";
 		};
 		FB8072E426F32C070042B30D = {
@@ -633,9 +597,15 @@
 				FB6A3A2C287BBDD400454481 /* Core */,
 				FB6354772705A61E003F1D7C /* HandyJSON */,
 				FB6354672705A61E003F1D7C /* ObjectMapper */,
-				FB6A3A2D287BC8CF00454481 /* MJExtension */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		FB81CA3F29A3C5020036C3A0 /* Async */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Async;
 			sourceTree = "<group>";
 		};
 		FB9E2CC128A204B4001F73FC /* SYMoyaNetworkExample */ = {
@@ -1058,8 +1028,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB45ACF5288BEDEC00626EA7 /* Response+MJExtension.swift.swift in Sources */,
-				FB45ACF6288BEDEC00626EA7 /* SYMoyaProvider+MJExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
