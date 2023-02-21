@@ -176,8 +176,7 @@ public extension SYMoyaProvider {
 }
 
 //MARK: - Extension
-public extension SYMoyaProvider {
-    
+private extension SYMoyaProvider {
     func serializerJSONDataResponse(_ response: Moya.Response, failsOnEmptyData: Bool = true) -> SYMoyaNetworkDataResponse<Any> {
         let dataRes: SYMoyaNetworkDataResponse<Any>
         do {

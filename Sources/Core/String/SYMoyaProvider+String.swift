@@ -178,8 +178,7 @@ public extension SYMoyaProvider {
 }
 
 //MARK: - Extension
-public extension SYMoyaProvider {
-    
+private extension SYMoyaProvider {
     func serializerStringDataResponse(_ response: Moya.Response, atKeyPath: String? = nil) -> SYMoyaNetworkDataResponse<String> {
         let dataRes: SYMoyaNetworkDataResponse<String>
         do {

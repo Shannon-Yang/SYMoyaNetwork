@@ -11,7 +11,6 @@ import Moya
 
 //MARK: - URL
 public extension URL {
-    
     /// Initialize URL from Moya's `TargetType`.
     init<T: SYTargetType>(target: T) {
         // When a TargetType's path is empty, URL.appendingPathComponent may introduce trailing /, which may not be wanted in some cases

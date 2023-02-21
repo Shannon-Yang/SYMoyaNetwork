@@ -10,7 +10,6 @@ import Foundation
 import Moya
 
 public extension MoyaError {
-    
     func transformToSYMoyaNetworkError() -> SYMoyaNetworkError {
         switch self {
         /// Indicates a response failed to map to an image.

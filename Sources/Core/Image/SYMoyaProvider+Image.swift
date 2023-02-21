@@ -145,9 +145,7 @@ extension SYMoyaProvider {
                     }
                 }
             case .custom(let customizable):
-                
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-                
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
                     case .success(let response):
@@ -174,8 +172,7 @@ extension SYMoyaProvider {
 }
 
 //MARK: - Extension
-public extension SYMoyaProvider {
-    
+private extension SYMoyaProvider {
     func serializerImageDataResponse(_ response: Moya.Response) -> SYMoyaNetworkDataResponse<Image> {
         let dataRes: SYMoyaNetworkDataResponse<Image>
         do {

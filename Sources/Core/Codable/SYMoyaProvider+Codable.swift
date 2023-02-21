@@ -189,7 +189,7 @@ public extension SYMoyaProvider {
 }
 
 //MARK: - Extension
-extension SYMoyaProvider {
+private extension SYMoyaProvider {
     func serializerCodableObjectDataResponse<T: Decodable>(_ response: Moya.Response, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) -> SYMoyaNetworkDataResponse<T> {
         let dataRes: SYMoyaNetworkDataResponse<T>
         do {
