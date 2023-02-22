@@ -12,6 +12,10 @@
 		20F6F26429A623D0004D5C4B /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F26029A623D0004D5C4B /* Alamofire.xcframework */; };
 		20F6F26529A623D0004D5C4B /* Moya.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F26129A623D0004D5C4B /* Moya.xcframework */; };
 		20F6F26929A62409004D5C4B /* SwiftyJSON.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F26829A62409004D5C4B /* SwiftyJSON.xcframework */; };
+		20F6F26E29A62676004D5C4B /* Moya+AsyncSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F6F26A29A62675004D5C4B /* Moya+AsyncSequence.swift */; };
+		20F6F26F29A62676004D5C4B /* MoyaProvider+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F6F26B29A62675004D5C4B /* MoyaProvider+Async.swift */; };
+		20F6F27029A62676004D5C4B /* AsyncRequestWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F6F26C29A62675004D5C4B /* AsyncRequestWrapper.swift */; };
+		20F6F27129A62676004D5C4B /* AsyncTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F6F26D29A62676004D5C4B /* AsyncTask.swift */; };
 		FB45ACE2288BECA600626EA7 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
 		FB45ACE7288BECAE00626EA7 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
 		FB45ACEC288BECB700626EA7 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
@@ -158,6 +162,10 @@
 		20F6F26029A623D0004D5C4B /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Alamofire.xcframework; path = Carthage/Build/Alamofire.xcframework; sourceTree = "<group>"; };
 		20F6F26129A623D0004D5C4B /* Moya.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Moya.xcframework; path = Carthage/Build/Moya.xcframework; sourceTree = "<group>"; };
 		20F6F26829A62409004D5C4B /* SwiftyJSON.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SwiftyJSON.xcframework; path = Carthage/Build/SwiftyJSON.xcframework; sourceTree = "<group>"; };
+		20F6F26A29A62675004D5C4B /* Moya+AsyncSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Moya+AsyncSequence.swift"; sourceTree = "<group>"; };
+		20F6F26B29A62675004D5C4B /* MoyaProvider+Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+Async.swift"; sourceTree = "<group>"; };
+		20F6F26C29A62675004D5C4B /* AsyncRequestWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncRequestWrapper.swift; sourceTree = "<group>"; };
+		20F6F26D29A62676004D5C4B /* AsyncTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncTask.swift; sourceTree = "<group>"; };
 		FB45ACBD288BEC2900626EA7 /* SYObjectMapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYObjectMapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB45ACCB288BEC8F00626EA7 /* SYHandyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYHandyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB45ACD9288BEC9D00626EA7 /* SYMJExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYMJExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -563,6 +571,10 @@
 		FB81CA3F29A3C5020036C3A0 /* Async */ = {
 			isa = PBXGroup;
 			children = (
+				20F6F26C29A62675004D5C4B /* AsyncRequestWrapper.swift */,
+				20F6F26D29A62676004D5C4B /* AsyncTask.swift */,
+				20F6F26A29A62675004D5C4B /* Moya+AsyncSequence.swift */,
+				20F6F26B29A62675004D5C4B /* MoyaProvider+Async.swift */,
 			);
 			path = Async;
 			sourceTree = "<group>";
@@ -1005,7 +1017,9 @@
 				FB6354A02705A61E003F1D7C /* Response+CacheCostCalculable.swift in Sources */,
 				FB6354852705A61E003F1D7C /* NetworkCacheType.swift in Sources */,
 				FB6354972705A61E003F1D7C /* Result+SYMoyaNetwork.swift in Sources */,
+				20F6F26F29A62676004D5C4B /* MoyaProvider+Async.swift in Sources */,
 				FB6354892705A61E003F1D7C /* SYMoyaProvider+JSON.swift in Sources */,
+				20F6F26E29A62676004D5C4B /* Moya+AsyncSequence.swift in Sources */,
 				FB6354982705A61E003F1D7C /* ResponseDataSourceType.swift in Sources */,
 				FB6354922705A61E003F1D7C /* MoyaError+Transform.swift in Sources */,
 				FB63548C2705A61E003F1D7C /* SYMoyaProvider+URLCache.swift in Sources */,
@@ -1019,10 +1033,12 @@
 				FB668FC028D3596F00AE74F4 /* SYMoyaPublisher.swift in Sources */,
 				FB6354992705A61E003F1D7C /* SYMoyaProvider.swift in Sources */,
 				FB63548F2705A61E003F1D7C /* SYMoyaProvider+Codable.swift in Sources */,
+				20F6F27029A62676004D5C4B /* AsyncRequestWrapper.swift in Sources */,
 				FB6354862705A61E003F1D7C /* SYMoyaNetworkLoggerPlugin.swift in Sources */,
 				FB63549A2705A61E003F1D7C /* URL+SYMoya.swift in Sources */,
 				FB6354812705A61E003F1D7C /* DiskStorage.swift in Sources */,
 				FB6354842705A61E003F1D7C /* SYMoyaNetworkOptionsInfo.swift in Sources */,
+				20F6F27129A62676004D5C4B /* AsyncTask.swift in Sources */,
 				FB6354882705A61E003F1D7C /* SYMoyaChainRequestProvider.swift in Sources */,
 				FB63548D2705A61E003F1D7C /* SYMoyaProvider+SwiftyJSON.swift in Sources */,
 				FB6354962705A61E003F1D7C /* SYDataResponse.swift in Sources */,
