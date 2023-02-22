@@ -1,9 +1,4 @@
 github "Moya/Moya" ~> 15.0.0
 github "SwiftyJSON/SwiftyJSON" ~> 5.0
-
-github "Moya/RxMoya" 
-github "Moya/ReactiveMoya" 
-github "Moya/CombineMoya"
-
 github "tristanhimmelman/ObjectMapper" ~> 4.2
 github "alibaba/HandyJSON" ~> 5.0.2
