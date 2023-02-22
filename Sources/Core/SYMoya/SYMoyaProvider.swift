@@ -156,11 +156,11 @@ public extension SYMoyaProvider {
                 request.assumesHTTP3Capable = target.assumesHTTP3Capable
             }
         } catch let error {
-            print("Endpoint failed to get urlRequest, desc: \(error.localizedDescription)")
+            fatalError("Endpoint failed to get urlRequest, desc: \(error.localizedDescription)")
         }
         
         // set
-        if case let target.networkCacheType == .urlRequestCache(let urlCacheInfo) {
+        if case let .urlRequestCache(urlCacheInfo) = target.networkCacheType  {
             if target.method == .get {
                 if urlCacheInfo.isCanUseCacheControl {
                     endpoint = (endpoint.adding(newHTTPHeaderFields: ["Cache-Control" : "no-cache"]))
