@@ -1,5 +1,4 @@
 github "Alamofire/Alamofire" "5.6.4"
-github "CoderMJLee/MJExtension" "3.4.1"
 github "Moya/Moya" "15.0.3"
 github "ReactiveCocoa/ReactiveSwift" "6.7.0"
 github "ReactiveX/RxSwift" "6.5.0"
