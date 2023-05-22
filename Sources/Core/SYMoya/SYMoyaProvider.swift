@@ -61,6 +61,7 @@ open class SYMoyaProvider<Target: SYTargetType>: Moya.MoyaProvider<Target> {
     //MARK: - Override
     
     /// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
+    @discardableResult
     open override func request(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping Completion) -> Cancellable {
         return super.request(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
