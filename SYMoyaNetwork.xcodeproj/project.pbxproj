@@ -7,16 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		20F6F26229A623D0004D5C4B /* ObjectMapper.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F25E29A623D0004D5C4B /* ObjectMapper.xcframework */; };
-		20F6F26329A623D0004D5C4B /* HandyJSON.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F25F29A623D0004D5C4B /* HandyJSON.xcframework */; };
-		20F6F26429A623D0004D5C4B /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F26029A623D0004D5C4B /* Alamofire.xcframework */; };
-		20F6F26529A623D0004D5C4B /* Moya.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F26129A623D0004D5C4B /* Moya.xcframework */; };
-		20F6F26929A62409004D5C4B /* SwiftyJSON.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F26829A62409004D5C4B /* SwiftyJSON.xcframework */; };
 		20F6F26E29A62676004D5C4B /* Moya+AsyncSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F6F26A29A62675004D5C4B /* Moya+AsyncSequence.swift */; };
 		20F6F26F29A62676004D5C4B /* MoyaProvider+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F6F26B29A62675004D5C4B /* MoyaProvider+Async.swift */; };
 		20F6F27029A62676004D5C4B /* AsyncRequestWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F6F26C29A62675004D5C4B /* AsyncRequestWrapper.swift */; };
 		20F6F27129A62676004D5C4B /* AsyncTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F6F26D29A62676004D5C4B /* AsyncTask.swift */; };
-		FB45ACE2288BECA600626EA7 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
 		FB45ACE7288BECAE00626EA7 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
 		FB45ACEC288BECB700626EA7 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
 		FB45ACF1288BEDDB00626EA7 /* Response+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354682705A61E003F1D7C /* Response+ObjectMapper.swift */; };
@@ -24,7 +18,6 @@
 		FB45ACF3288BEDE500626EA7 /* SYMoyaProvider+HandyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354782705A61E003F1D7C /* SYMoyaProvider+HandyJSON.swift */; };
 		FB45ACF4288BEDE500626EA7 /* Response+HandyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354792705A61E003F1D7C /* Response+HandyJSON.swift */; };
 		FB45ACF8288BEFA700626EA7 /* SYHandyJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = FB45ACF7288BEFA600626EA7 /* SYHandyJSON.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FB45ACFA288BEFBD00626EA7 /* SYMJExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = FB45ACF9288BEFBD00626EA7 /* SYMJExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB45ACFC288BEFCA00626EA7 /* SYObjectMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = FB45ACFB288BEFCA00626EA7 /* SYObjectMapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB63547F2705A61E003F1D7C /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63544A2705A61D003F1D7C /* Storage.swift */; };
 		FB6354802705A61E003F1D7C /* MemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63544B2705A61D003F1D7C /* MemoryStorage.swift */; };
@@ -85,16 +78,14 @@
 		FB9E2D1728A2105D001F73FC /* ResponseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB9E2D1528A2105D001F73FC /* ResponseViewController.xib */; };
 		FB9E2D1A28A21BF4001F73FC /* BatchResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9E2D1828A21BF4001F73FC /* BatchResponseViewController.swift */; };
 		FB9E2D1B28A21BF4001F73FC /* BatchResponseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB9E2D1928A21BF4001F73FC /* BatchResponseViewController.xib */; };
+		FBEE35632A1BC361001AFD6C /* Moya.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F26129A623D0004D5C4B /* Moya.xcframework */; };
+		FBEE35642A1BC36F001AFD6C /* ObjectMapper.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F25E29A623D0004D5C4B /* ObjectMapper.xcframework */; };
+		FBEE35652A1BC37D001AFD6C /* HandyJSON.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F25F29A623D0004D5C4B /* HandyJSON.xcframework */; };
+		FBEE35662A1BC384001AFD6C /* SwiftyJSON.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F26829A62409004D5C4B /* SwiftyJSON.xcframework */; };
+		FBEE35672A1BC5A4001AFD6C /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F26029A623D0004D5C4B /* Alamofire.xcframework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		FB45ACE4288BECA600626EA7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FB8072E526F32C070042B30D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FB8072ED26F32C070042B30D;
-			remoteInfo = SYMoyaNetwork;
-		};
 		FB45ACE9288BECAE00626EA7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FB8072E526F32C070042B30D /* Project object */;
@@ -168,9 +159,7 @@
 		20F6F26D29A62676004D5C4B /* AsyncTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncTask.swift; sourceTree = "<group>"; };
 		FB45ACBD288BEC2900626EA7 /* SYObjectMapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYObjectMapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB45ACCB288BEC8F00626EA7 /* SYHandyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYHandyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB45ACD9288BEC9D00626EA7 /* SYMJExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYMJExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB45ACF7288BEFA600626EA7 /* SYHandyJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYHandyJSON.h; sourceTree = "<group>"; };
-		FB45ACF9288BEFBD00626EA7 /* SYMJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYMJExtension.h; sourceTree = "<group>"; };
 		FB45ACFB288BEFCA00626EA7 /* SYObjectMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYObjectMapper.h; sourceTree = "<group>"; };
 		FB63544A2705A61D003F1D7C /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		FB63544B2705A61D003F1D7C /* MemoryStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryStorage.swift; sourceTree = "<group>"; };
@@ -245,6 +234,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB45ACEC288BECB700626EA7 /* SYMoyaNetwork.framework in Frameworks */,
+				FBEE35642A1BC36F001AFD6C /* ObjectMapper.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,15 +242,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBEE35652A1BC37D001AFD6C /* HandyJSON.xcframework in Frameworks */,
 				FB45ACE7288BECAE00626EA7 /* SYMoyaNetwork.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FB45ACD6288BEC9D00626EA7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FB45ACE2288BECA600626EA7 /* SYMoyaNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,11 +251,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20F6F26929A62409004D5C4B /* SwiftyJSON.xcframework in Frameworks */,
-				20F6F26429A623D0004D5C4B /* Alamofire.xcframework in Frameworks */,
-				20F6F26529A623D0004D5C4B /* Moya.xcframework in Frameworks */,
-				20F6F26329A623D0004D5C4B /* HandyJSON.xcframework in Frameworks */,
-				20F6F26229A623D0004D5C4B /* ObjectMapper.xcframework in Frameworks */,
+				FBEE35672A1BC5A4001AFD6C /* Alamofire.xcframework in Frameworks */,
+				FBEE35632A1BC361001AFD6C /* Moya.xcframework in Frameworks */,
+				FBEE35662A1BC384001AFD6C /* SwiftyJSON.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,7 +296,6 @@
 			isa = PBXGroup;
 			children = (
 				FB45ACFB288BEFCA00626EA7 /* SYObjectMapper.h */,
-				FB45ACF9288BEFBD00626EA7 /* SYMJExtension.h */,
 				FB45ACF7288BEFA600626EA7 /* SYHandyJSON.h */,
 				FB8072F126F32C070042B30D /* SYMoyaNetwork.h */,
 				FB8072F226F32C070042B30D /* Info.plist */,
@@ -549,7 +529,6 @@
 				FB8072F726F32C070042B30D /* SYMoyaNetworkTests.xctest */,
 				FB45ACBD288BEC2900626EA7 /* SYObjectMapper.framework */,
 				FB45ACCB288BEC8F00626EA7 /* SYHandyJSON.framework */,
-				FB45ACD9288BEC9D00626EA7 /* SYMJExtension.framework */,
 				FB9E2CC028A204B4001F73FC /* SYMoyaNetworkExample.app */,
 				FB9E2CD528A204B6001F73FC /* SYMoyaNetworkExampleTests.xctest */,
 				FB9E2CDF28A204B6001F73FC /* SYMoyaNetworkExampleUITests.xctest */,
@@ -656,14 +635,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FB45ACD4288BEC9D00626EA7 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FB45ACFA288BEFBD00626EA7 /* SYMJExtension.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FB8072E926F32C070042B30D /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -711,25 +682,6 @@
 			name = SYHandyJSON;
 			productName = SYHandyJSON;
 			productReference = FB45ACCB288BEC8F00626EA7 /* SYHandyJSON.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		FB45ACD8288BEC9D00626EA7 /* SYMJExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FB45ACDF288BEC9D00626EA7 /* Build configuration list for PBXNativeTarget "SYMJExtension" */;
-			buildPhases = (
-				FB45ACD4288BEC9D00626EA7 /* Headers */,
-				FB45ACD5288BEC9D00626EA7 /* Sources */,
-				FB45ACD6288BEC9D00626EA7 /* Frameworks */,
-				FB45ACD7288BEC9D00626EA7 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				FB45ACE5288BECA600626EA7 /* PBXTargetDependency */,
-			);
-			name = SYMJExtension;
-			productName = SYMJExtension;
-			productReference = FB45ACD9288BEC9D00626EA7 /* SYMJExtension.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		FB8072ED26F32C070042B30D /* SYMoyaNetwork */ = {
@@ -839,9 +791,6 @@
 					FB45ACCA288BEC8F00626EA7 = {
 						CreatedOnToolsVersion = 13.4.1;
 					};
-					FB45ACD8288BEC9D00626EA7 = {
-						CreatedOnToolsVersion = 13.4.1;
-					};
 					FB8072ED26F32C070042B30D = {
 						CreatedOnToolsVersion = 12.5.1;
 					};
@@ -878,7 +827,6 @@
 				FB8072F626F32C070042B30D /* SYMoyaNetworkTests */,
 				FB45ACBC288BEC2900626EA7 /* SYObjectMapper */,
 				FB45ACCA288BEC8F00626EA7 /* SYHandyJSON */,
-				FB45ACD8288BEC9D00626EA7 /* SYMJExtension */,
 				FB9E2CBF28A204B4001F73FC /* SYMoyaNetworkExample */,
 				FB9E2CD428A204B6001F73FC /* SYMoyaNetworkExampleTests */,
 				FB9E2CDE28A204B6001F73FC /* SYMoyaNetworkExampleUITests */,
@@ -895,13 +843,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		FB45ACC9288BEC8F00626EA7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FB45ACD7288BEC9D00626EA7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -991,13 +932,6 @@
 			files = (
 				FB45ACF3288BEDE500626EA7 /* SYMoyaProvider+HandyJSON.swift in Sources */,
 				FB45ACF4288BEDE500626EA7 /* Response+HandyJSON.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FB45ACD5288BEC9D00626EA7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1091,11 +1025,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		FB45ACE5288BECA600626EA7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FB8072ED26F32C070042B30D /* SYMoyaNetwork */;
-			targetProxy = FB45ACE4288BECA600626EA7 /* PBXContainerItemProxy */;
-		};
 		FB45ACEA288BECAE00626EA7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FB8072ED26F32C070042B30D /* SYMoyaNetwork */;
@@ -1171,7 +1100,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYObjectMapper;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1210,7 +1139,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYObjectMapper;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1249,7 +1178,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYHandyJSON;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1288,86 +1217,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYHandyJSON;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4";
-			};
-			name = Release;
-		};
-		FB45ACE0288BEC9D00626EA7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DRIVERKIT_DEPLOYMENT_TARGET = 21.4;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMJExtension;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4";
-			};
-			name = Debug;
-		};
-		FB45ACE1288BEC9D00626EA7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DRIVERKIT_DEPLOYMENT_TARGET = 21.4;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				EXCLUDED_ARCHS = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMJExtension;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1417,7 +1267,7 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				EXCLUDED_ARCHS = "armv7 armv7s";
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1438,7 +1288,8 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS_XCODE11 = "-weak_framework Combine";
-				SDKROOT = iphoneos;
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TVOS_DEPLOYMENT_TARGET = 11.0;
@@ -1488,7 +1339,7 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				EXCLUDED_ARCHS = "armv7 armv7s";
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1502,7 +1353,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS_XCODE11 = "-weak_framework Combine";
-				SDKROOT = iphoneos;
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TVOS_DEPLOYMENT_TARGET = 11.0;
@@ -1526,7 +1378,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				EXCLUDED_ARCHS = "armv7 armv7s";
+				EXCLUDED_ARCHS = "";
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
 				"FRAMEWORK_SEARCH_PATHS[sdk=appletvos*]" = (
 					"$(inherited)",
@@ -1559,7 +1411,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1581,7 +1433,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				EXCLUDED_ARCHS = "armv7 armv7s";
+				EXCLUDED_ARCHS = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/Carthage/Build/",
 					"$(inherited)",
@@ -1619,7 +1471,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1643,6 +1495,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork.SYMoyaNetworkTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1662,6 +1515,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork.SYMoyaNetworkTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1675,7 +1529,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 45R2UAUTKL;
+				DEVELOPMENT_TEAM = 9H89J4Z7M2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1687,7 +1541,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1712,7 +1566,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 45R2UAUTKL;
+				DEVELOPMENT_TEAM = 9H89J4Z7M2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1724,7 +1578,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1840,15 +1694,6 @@
 			buildConfigurations = (
 				FB45ACD2288BEC8F00626EA7 /* Debug */,
 				FB45ACD3288BEC8F00626EA7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FB45ACDF288BEC9D00626EA7 /* Build configuration list for PBXNativeTarget "SYMJExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FB45ACE0288BEC9D00626EA7 /* Debug */,
-				FB45ACE1288BEC9D00626EA7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
