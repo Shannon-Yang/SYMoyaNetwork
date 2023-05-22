@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "RxSwift"
-  s.version          = "6.5.0"
+  s.version          = "6.6.0"
   s.summary          = "RxSwift is a Swift implementation of Reactive Extensions"
   s.description      = <<-DESC
 This is a Swift port of [ReactiveX.io](https://github.com/ReactiveX)
@@ -36,4 +36,6 @@ gitDiff().grep("bug").less          // sequences of swift objects
   s.exclude_files         = 'RxSwift/Platform/**/*.swift'
 
   s.swift_version = '5.1'
+
+  s.pod_target_xcconfig = { 'APPLICATION_EXTENSION_API_ONLY' => 'YES' }
 end

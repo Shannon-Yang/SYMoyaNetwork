@@ -193,30 +193,6 @@ final class URLEncodedFormParameterEncoderTests: BaseTestCase {
 }
 
 final class URLEncodedFormEncoderTests: BaseTestCase {
-    func testEncoderThrowsErrorWhenAttemptingToEncodeNilInKeyedContainer() {
-        // Given
-        let encoder = URLEncodedFormEncoder()
-        let parameters = FailingOptionalStruct(testedContainer: .keyed)
-
-        // When
-        let result = Result<String, Error> { try encoder.encode(parameters) }
-
-        // Then
-        XCTAssertTrue(result.isFailure)
-    }
-
-    func testEncoderThrowsErrorWhenAttemptingToEncodeNilInUnkeyedContainer() {
-        // Given
-        let encoder = URLEncodedFormEncoder()
-        let parameters = FailingOptionalStruct(testedContainer: .unkeyed)
-
-        // When
-        let result = Result<String, Error> { try encoder.encode(parameters) }
-
-        // Then
-        XCTAssertTrue(result.isFailure)
-    }
-
     func testEncoderCanEncodeDictionary() {
         // Given
         let encoder = URLEncodedFormEncoder()
@@ -387,7 +363,7 @@ final class URLEncodedFormEncoderTests: BaseTestCase {
         XCTAssertEqual(result.success, "a=1")
     }
 
-    func testThatNestedDictionariesHaveBracketedKeys() {
+    func testThatNestedDictionariesCanHaveBracketKeyPathsByDefault() {
         // Given
         let encoder = URLEncodedFormEncoder()
         let parameters = ["a": ["b": "b"]]
@@ -397,6 +373,42 @@ final class URLEncodedFormEncoderTests: BaseTestCase {
 
         // Then
         XCTAssertEqual(result.success, "a%5Bb%5D=b")
+    }
+
+    func testThatNestedDictionariesCanHaveExplicitBracketKeyPaths() {
+        // Given
+        let encoder = URLEncodedFormEncoder(keyPathEncoding: .brackets)
+        let parameters = ["a": ["b": "b"]]
+
+        // When
+        let result = Result<String, Error> { try encoder.encode(parameters) }
+
+        // Then
+        XCTAssertEqual(result.success, "a%5Bb%5D=b")
+    }
+
+    func testThatNestedDictionariesCanHaveDottedKeyPaths() {
+        // Given
+        let encoder = URLEncodedFormEncoder(keyPathEncoding: .dots)
+        let parameters = ["a": ["b": "b"]]
+
+        // When
+        let result = Result<String, Error> { try encoder.encode(parameters) }
+
+        // Then
+        XCTAssertEqual(result.success, "a.b=b")
+    }
+
+    func testThatNestedDictionariesCanHaveCustomKeyPaths() {
+        // Given
+        let encoder = URLEncodedFormEncoder(keyPathEncoding: .init { "-\($0)" })
+        let parameters = ["a": ["b": "b"]]
+
+        // When
+        let result = Result<String, Error> { try encoder.encode(parameters) }
+
+        // Then
+        XCTAssertEqual(result.success, "a-b=b")
     }
 
     func testThatEncodableStructCanBeEncoded() {
@@ -492,18 +504,6 @@ final class URLEncodedFormEncoderTests: BaseTestCase {
         // Given
         let encoder = URLEncodedFormEncoder()
         let parameters = "string"
-
-        // When
-        let result = Result<String, Error> { try encoder.encode(parameters) }
-
-        // Then
-        XCTAssertFalse(result.isSuccess)
-    }
-
-    func testThatOptionalValuesCannotBeEncoded() {
-        // Given
-        let encoder = URLEncodedFormEncoder()
-        let parameters: [String: String?] = ["string": nil]
 
         // When
         let result = Result<String, Error> { try encoder.encode(parameters) }
@@ -622,6 +622,20 @@ final class URLEncodedFormEncoderTests: BaseTestCase {
 
         // Then
         XCTAssertEqual(result.success, "array=1&array=2")
+    }
+
+    func testThatArraysCanBeEncodedWithCustomClosure() {
+        // Given
+        let encoder = URLEncodedFormEncoder(arrayEncoding: .custom { key, index in
+            "\(key).\(index + 1)"
+        })
+        let parameters = ["array": [1, 2]]
+
+        // When
+        let result = Result<String, Error> { try encoder.encode(parameters) }
+
+        // Then
+        XCTAssertEqual(result.success, "array.1=1&array.2=2")
     }
 
     func testThatBoolsCanBeLiteralEncoded() {
@@ -826,6 +840,54 @@ final class URLEncodedFormEncoderTests: BaseTestCase {
         XCTAssertEqual(result.success, "A=oneTwoThree")
     }
 
+    func testThatNilCanBeEncodedByDroppingTheKeyByDefault() {
+        // Given
+        let encoder = URLEncodedFormEncoder()
+        let parameters: [String: String?] = ["a": nil]
+
+        // When
+        let result = Result<String, Error> { try encoder.encode(parameters) }
+
+        // Then
+        XCTAssertEqual(result.success, "")
+    }
+
+    func testThatNilCanBeEncodedAsNull() {
+        // Given
+        let encoder = URLEncodedFormEncoder(nilEncoding: .null)
+        let parameters: [String: String?] = ["a": nil]
+
+        // When
+        let result = Result<String, Error> { try encoder.encode(parameters) }
+
+        // Then
+        XCTAssertEqual(result.success, "a=null")
+    }
+
+    func testThatNilCanBeEncodedByDroppingTheKey() {
+        // Given
+        let encoder = URLEncodedFormEncoder(nilEncoding: .dropKey)
+        let parameters: [String: String?] = ["a": nil]
+
+        // When
+        let result = Result<String, Error> { try encoder.encode(parameters) }
+
+        // Then
+        XCTAssertEqual(result.success, "")
+    }
+
+    func testThatNilCanBeEncodedByDroppingTheValue() {
+        // Given
+        let encoder = URLEncodedFormEncoder(nilEncoding: .dropValue)
+        let parameters: [String: String?] = ["a": nil]
+
+        // When
+        let result = Result<String, Error> { try encoder.encode(parameters) }
+
+        // Then
+        XCTAssertEqual(result.success, "a=")
+    }
+
     func testThatSpacesCanBeEncodedAsPluses() {
         // Given
         let encoder = URLEncodedFormEncoder(spaceEncoding: .plusReplaced)
@@ -1001,7 +1063,6 @@ final class URLEncodedFormEncoderTests: BaseTestCase {
     }
 }
 
-#if swift(>=5.5)
 final class StaticParameterEncoderInstanceTests: BaseTestCase {
     func takeParameterEncoder(_ parameterEncoder: ParameterEncoder) {
         _ = parameterEncoder
@@ -1017,7 +1078,6 @@ final class StaticParameterEncoderInstanceTests: BaseTestCase {
         takeParameterEncoder(.urlEncodedForm())
     }
 }
-#endif
 
 private struct EncodableStruct: Encodable {
     let one = "one"

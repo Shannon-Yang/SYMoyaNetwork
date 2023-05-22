@@ -40,7 +40,6 @@ public struct ChainResult<Target: SYTargetType> {
     }
 }
 
-
 /// Chained request data response
 public class ChainDataResponse<Target: SYTargetType> {
 

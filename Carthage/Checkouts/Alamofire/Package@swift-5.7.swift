@@ -1,6 +1,6 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.7
 //
-//  Package@swift-5.3.swift
+//  Package.swift
 //
 //  Copyright (c) 2022 Alamofire Software Foundation (http://alamofire.org/)
 //
@@ -26,10 +26,10 @@
 import PackageDescription
 
 let package = Package(name: "Alamofire",
-                      platforms: [.macOS(.v10_12),
-                                  .iOS(.v10),
-                                  .tvOS(.v10),
-                                  .watchOS(.v3)],
+                      platforms: [.macOS(.v10_13),
+                                  .iOS(.v11),
+                                  .tvOS(.v11),
+                                  .watchOS(.v4)],
                       products: [.library(name: "Alamofire",
                                           targets: ["Alamofire"])],
                       targets: [.target(name: "Alamofire",
@@ -43,5 +43,6 @@ let package = Package(name: "Alamofire",
                                 .testTarget(name: "AlamofireTests",
                                             dependencies: ["Alamofire"],
                                             path: "Tests",
-                                            exclude: ["Resources", "Info.plist", "Test Plans"])],
+                                            exclude: ["Info.plist", "Test Plans"],
+                                            resources: [.process("Resources")])],
                       swiftLanguageVersions: [.v5])

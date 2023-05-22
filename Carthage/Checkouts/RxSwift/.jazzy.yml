@@ -38,6 +38,7 @@ custom_categories:
   - ControlProperty+Driver
   - Driver+Subscription
   - Driver
+  - Infallible+Driver
   - ObservableConvertibleType+Driver
 - name: RxCocoa/Traits/SharedSequence
   children:
@@ -99,6 +100,7 @@ custom_categories:
   - RxCollectionViewDataSourcePrefetchingProxy
   - RxCollectionViewDataSourceProxy
   - RxCollectionViewDelegateProxy
+  - RxDelegateProxyCrashFix
   - RxNavigationControllerDelegateProxy
   - RxPickerViewDataSourceProxy
   - RxPickerViewDelegateProxy
@@ -299,9 +301,11 @@ custom_categories:
   - SwiftSupport
 - name: RxSwift/Traits/Infallible
   children:
+  - Infallible+CombineLatest+Collection
   - Infallible+CombineLatest+arity
   - Infallible+Concurrency
   - Infallible+Create
+  - Infallible+Debug
   - Infallible+Operators
   - Infallible+Zip+arity
   - Infallible

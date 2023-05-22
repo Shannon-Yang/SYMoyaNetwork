@@ -330,6 +330,21 @@ You can create your own `URLEncodedFormParameterEncoder` and specify the desired
 let encoder = URLEncodedFormParameterEncoder(encoder: URLEncodedFormEncoder(keyEncoding: .convertToSnakeCase))
 ```
 
+#### Configuring the Encoding of Object Key Paths
+
+Nest object key paths are typically encoded using brackets (e.g. `parent[child][grandchild]`). Alamofire provides the `KeyPathEncoding` to customize that behavior.
+
+- `.brackets` - Wraps each sub-key in the key path in brackets. e.g `parent[child][grandchild]`.
+- `.dots` - Separates each sub-key in the key path with dots. e.g. `parent.child.grandchild`.
+
+Additionally, you can create your own encoding by creating an instance with a custom encoding closure. For example, `KeyPathEncoding { "-\($0)" }` will separate each sub-key path with hyphens. e.g. `parent-child-grandchild`.
+
+You can create your own `URLEncodedFormParameterEncoder` and specify the desired `KeyPathEncoding` in the initializer of the passed `URLEncodedFormEncoder`:
+
+```swift
+let encoder = URLEncodedFormParameterEncoder(encoder: URLEncodedFormEncoder(keyPathEncoding: .brackets))
+```
+
 ##### Configuring the Encoding of Spaces
 
 Older form encoders used `+` to encode spaces and some servers still expect this encoding instead of the modern percent encoding, so Alamofire includes the following methods for encoding spaces:
@@ -341,6 +356,28 @@ You can create your own `URLEncodedFormParameterEncoder` and specify the desired
 
 ```swift
 let encoder = URLEncodedFormParameterEncoder(encoder: URLEncodedFormEncoder(spaceEncoding: .plusReplaced))
+```
+
+##### Configuring the Encoding of Optionals
+
+There is no standard for encoding `Optional` values as part of form data. Nonetheless, Alamofire provides `NilEncoding` with the following methods for encoding optionals:
+
+- `.dropKey` - Encodes `nil` values by dropping them from the output entirely. This matches other Swift encoders. e.g. `otherValue=2`.
+- `.dropValue` - Encodes `nil` values by dropping the value from the output. e.g. `nilValue=&otherValue=2`.
+- `.null` - Encodes `nil` values as the string `null`. e.g. `nilValue=null&otherValue=2`.
+
+Additionally, custom encodings can be created by specifying an encoding closure that provides the `nil` replacement value.
+
+```swift
+extension URLEncodedFormEncoder.NilEncoding {
+  static let customEncoding = NilEncoding { "customNilValue" }
+}
+```
+
+You can create your own `URLEncodedFormParameterEncoder` and specify the desired `NilEncoding` in the initializer of the passed `URLEncodedFormEncoder`:
+
+```swift
+let encoder = URLEncodedFormParameterEncoder(encoder: URLEncodedFormEncoder(nilEncoding: .dropKey))
 ```
 
 #### `JSONParameterEncoder`
