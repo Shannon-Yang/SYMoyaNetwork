@@ -8,6 +8,9 @@
 
 import Foundation
 import Moya
+#if canImport(Combine)
+import Combine
+#endif
 
 //MARK: - Codable Provider
 public extension SYMoyaProvider {
@@ -36,6 +39,12 @@ public extension SYMoyaProvider {
     }
     
     
+//    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+//    func responseCodableObjectFromCachePublisher<T: Decodable>(_ target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> AnyPublisher<SYMoyaNetworkDataResponse<T>, SYMoyaNetworkError> {
+//        
+//        let publisher = AnyPublisher
+//    }
+    
 //    func responseCodableObjectFromCache<T: Decodable>(_ target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<T> {
 //        
 //    }
@@ -49,9 +58,7 @@ public extension SYMoyaProvider {
     ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
     ///   - completion: Callback after completion
     func responseCodableObjectFromDiskCache<T: Decodable>(_ target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
-        
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-        
         self.retrieveResponseInDiskCache(target, options: options, callbackQueue: callbackQueue) { result in
             switch result {
             case .success(let response):
@@ -98,10 +105,10 @@ public extension SYMoyaProvider {
     ///   - completion: Callback after completion
     /// - Returns: Protocol to define the opaque type returned from a request.
     @discardableResult
-    func responseCodableObject<T: Decodable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable? {
+    func responseCodableObject<T: Decodable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Moya.Cancellable? {
         
         @discardableResult
-        func req<T: Decodable>(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable {
+        func req<T: Decodable>(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Moya.Cancellable {
             self.req(target, callbackQueue: callbackQueue, progress: progress) { result in
                 switch result {
                 case .success(let response):
@@ -188,6 +195,12 @@ public extension SYMoyaProvider {
         }
         return nil
     }
+    
+//    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+//    func responsePublisher<T: Decodable>(_ target: Target, callbackQueue: DispatchQueue? = nil) -> AnyPublisher<SYMoyaNetworkDataResponse<T>, SYMoyaNetworkError> {
+//        let publisher = self.requestPublisher(target,callbackQueue: callbackQueue)
+//        
+//    }
 }
 
 //MARK: - Extension

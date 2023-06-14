@@ -1,8 +1,8 @@
 //
-//  SYMoyaProvider+SwiftyJSON+Concurrency.swift
+//  SYMoyaProvider+Codable+Concurrency.swift
 //  SYMoyaNetwork
 //
-//  Created by Shannon Yang on 2023/5/25.
+//  Created by Shannon Yang on 2023/6/1.
 //
 
 import Foundation

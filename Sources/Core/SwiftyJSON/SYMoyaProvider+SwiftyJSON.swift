@@ -14,6 +14,7 @@ import SwiftyJSON
 public extension SYMoyaProvider {
     
     /// Get SwiftyJSON data from cache，If there is a cache, it will be obtained in memory first. If there is no cache in the memory, the cache will be read from the disk. If there is no cached data, the completion will callback nil object
+    ///
     /// - Parameters:
     ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
     ///   - opt: A class for converting JSON to Foundation objects and converting Foundation objects to JSON.
@@ -35,6 +36,7 @@ public extension SYMoyaProvider {
     }
     
     /// Get SwiftyJSON data from disk cache
+    ///
     /// - Parameters:
     ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
     ///   - opt: A class for converting JSON to Foundation objects and converting Foundation objects to JSON.
@@ -85,7 +87,7 @@ public extension SYMoyaProvider {
     ///   - completion: Callback after completion
     /// - Returns: Protocol to define the opaque type returned from a request.
     @discardableResult
-    func responseSwiftyJSON(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<SwiftyJSON.JSON>) -> Void) -> Cancellable? {
+    func responseSwiftyJSON(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYDataResponse<JSON, SYMoyaNetworkError>) -> Void) -> Cancellable? {
         
         @discardableResult
         func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<SwiftyJSON.JSON>) -> Void) -> Cancellable {
@@ -149,9 +151,7 @@ public extension SYMoyaProvider {
                     }
                 }
             case .custom(let customizable):
-                
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-                
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
                     case .success(let response):

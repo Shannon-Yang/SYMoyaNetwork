@@ -50,7 +50,7 @@ open class SYMoyaProvider<Target: SYTargetType>: Moya.MoyaProvider<Target> {
     public let urlCache: SYMoyaURLCache
     
     // MARK: - Initallization
-    
+
     /// Initializes a provider.
     public override init(endpointClosure: @escaping EndpointClosure = SYMoyaProvider<Target>.syDefaultEndpointMapping, requestClosure: @escaping RequestClosure = SYMoyaProvider<Target>.defaultRequestMapping, stubClosure: @escaping StubClosure = SYMoyaProvider<Target>.neverStub, callbackQueue: DispatchQueue? = nil, session: Session = SYMoyaProvider<Target>.defaultAlamofireSession(), plugins: [PluginType] = [SYMoyaNetworkLoggerPlugin(),SYMoyaProviderTargetResponseStatePlugin<Target>()], trackInflights: Bool = false) {
         self.cache = NetworkConfig.sharedInstance.networkCache

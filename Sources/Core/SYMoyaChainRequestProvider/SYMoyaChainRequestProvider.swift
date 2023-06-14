@@ -25,6 +25,7 @@ public struct ChainProvider<Target: SYTargetType> {
         self.callbackQueue = callbackQueue
         self.progress = progress
         self.chainCompletion = chainCompletion
+        
     }
 }
 
