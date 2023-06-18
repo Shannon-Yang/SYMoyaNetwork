@@ -47,12 +47,11 @@ public extension SYMoyaProvider {
     func responseStringPublisher(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> AnyPublisher <SYMoyaNetworkDataResponse<String>,SYMoyaNetworkError> {
         return SYMoyaPublisher { [weak self] subscriber in
             return self?.responseString(responseDataSourceType,target: target, atKeyPath: atKeyPath, callbackQueue: callbackQueue, progress: progress) { dataResponse in
-                switch dataResponse.result {
-                case .success(let response):
-                    _ = subscriber.receive(response.rawValue as! SYMoyaNetworkDataResponse<String>)
-                    subscriber.receive(completion: .finished)
-                case .failure(let error):
+                if case let .failure(error) = dataResponse.result {
                     subscriber.receive(completion: .failure(error))
+                } else {
+                    _ = subscriber.receive(dataResponse)
+                    subscriber.receive(completion: .finished)
                 }
             }
         }

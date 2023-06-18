@@ -12,28 +12,28 @@ import Moya
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public extension SYMoyaProvider {
 
-    func responseStringFromCacheContinuation(_ target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<String> {
+    func responseImageFromCache(_ target: Target, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<Image> {
         return await withCheckedContinuation { continuation in
-            self.responseStringFromCache(target, atKeyPath: atKeyPath, callbackQueue: callbackQueue) { dataResponse in
+            self.responseImageFromCache(target, callbackQueue: callbackQueue) { dataResponse in
                 continuation.resume(returning: dataResponse)
             }
         }
     }
     
-    func responseStringFromDiskCacheContinuation(_ target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<String> {
+    func responseImageFromDiskCache(_ target: Target, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<Image> {
         return await withCheckedContinuation{ continuation in
-            self.responseStringFromDiskCache(target,atKeyPath: atKeyPath,callbackQueue: callbackQueue) { dataResponse in
+            self.responseImageFromDiskCache(target, callbackQueue: callbackQueue) { dataResponse in
                 continuation.resume(returning: dataResponse)
             }
         }
     }
     
-    func responseStringContinuation(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<String> {
+    func responseImage(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<Image> {
         let actor = SYDataResponseActor(provider: self)
         return try await withTaskCancellationHandler {
             try await withCheckedContinuation { continuation in
-                 Task {
-                     await actor.responseString(responseDataSourceType,target: target,atKeyPath: atKeyPath,callbackQueue: callbackQueue,progress: progress, completion: { dataResponse in
+                Task {
+                     await actor.responseImage(responseDataSourceType,target: target, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
                          continuation.resume(returning: dataResponse)
                      })
                  }

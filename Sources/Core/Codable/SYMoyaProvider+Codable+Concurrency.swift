@@ -7,40 +7,39 @@
 
 import Foundation
 import Moya
-import SwiftyJSON
 
 //MARK: - SwiftyJSON Provider Concurrency
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public extension SYMoyaProvider {
 
-    func responseSwiftyJSONFromCacheContinuation(_ target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
+    func responseCodableFromCache<T: Decodable>(_ target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<T> {
         return await withCheckedContinuation { continuation in
-            self.responseSwiftyJSONFromCache(target, options: opt, callbackQueue: callbackQueue) { dataResponse in
+            self.responseCodableObjectFromCache(target, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue) { dataResponse in
                 continuation.resume(returning: dataResponse)
             }
         }
     }
     
-    func responseSwiftyJSONFromDiskCacheContinuation(_ target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
+    func responseCodableFromDiskCache<T: Decodable>(_ target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<T> {
         return await withCheckedContinuation{ continuation in
-            self.responseSwiftyJSONFromDiskCache(target, options: opt, callbackQueue: callbackQueue) { dataResponse in
+            self.responseCodableObjectFromDiskCache(target, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue) { dataResponse in
                 continuation.resume(returning: dataResponse)
             }
         }
     }
     
-//    func responseSwiftyJSONContinuation(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
-//        let actor = SYDataResponseActor(provider: self)
-//        return try await withTaskCancellationHandler {
-//            try await withCheckedContinuation { continuation in
-//                 Task {
-//                     await actor.responseSwiftyJSON(responseDataSourceType,target: target, options: opt, callbackQueue: callbackQueue, progress: progress) { dataResponse in
-//                         continuation.resume(returning: dataResponse)
-//                     }
-//                 }
-//            }
-//        } onCancel: {
-//            Task { await actor.cancel() }
-//        }
-//    }
+    func responseCodable<T: Decodable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<T> {
+        let actor = SYDataResponseActor(provider: self)
+        return try await withTaskCancellationHandler {
+            try await withCheckedContinuation { continuation in
+                 Task {
+                     await actor.responseCodableObject(responseDataSourceType,target: target, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
+                         continuation.resume(returning: dataResponse)
+                     })
+                 }
+            }
+        } onCancel: {
+            Task { await actor.cancel() }
+        }
+    }
 }

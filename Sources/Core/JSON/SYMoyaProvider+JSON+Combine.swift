@@ -5,7 +5,6 @@
 //  Created by Shannon Yang on 2023/6/1.
 //
 
-import Foundation
 #if canImport(Combine)
 import Foundation
 import Moya
@@ -16,10 +15,9 @@ import Combine
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 public extension SYMoyaProvider {
     
-   
     func responseJSONFromCachePublisher(_ target: Target,failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none) -> Future <SYMoyaNetworkDataResponse<Any>,SYMoyaNetworkError> {
         return Future() { [weak self] promise in
-            self?.responseStringFromCache(target, atKeyPath: atKeyPath, callbackQueue: callbackQueue) { dataResponse in
+            self?.responseJSONFromCache(target, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue, completion: { dataResponse in
                 switch dataResponse.result {
                 case .success(let value):
 //                    promise(.success(value))
@@ -27,13 +25,13 @@ public extension SYMoyaProvider {
                 case .failure(let error):
                     promise(.failure(error))
                 }
-            }
+            })
         }
     }
     
-    func responseStringFromCacheDiskCachePublisher(_ target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none) -> Future <SYMoyaNetworkDataResponse<String>,SYMoyaNetworkError> {
+    func responseJSONFromCacheDiskCachePublisher(_ target: Target,failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none) -> Future <SYMoyaNetworkDataResponse<Any>,SYMoyaNetworkError> {
         return Future() { [weak self] promise in
-            self?.responseStringFromDiskCache(target, atKeyPath: atKeyPath, callbackQueue: callbackQueue) { dataResponse in
+            self?.responseJSONFromDiskCache(target, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue, completion: { dataResponse in
                 switch dataResponse.result {
                 case .success(let value):
 //                    promise(.success(value))
@@ -41,21 +39,20 @@ public extension SYMoyaProvider {
                 case .failure(let error):
                     promise(.failure(error))
                 }
-            }
+            })
         }
     }
     
-    func responseStringPublisher(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> AnyPublisher <SYMoyaNetworkDataResponse<String>,SYMoyaNetworkError> {
+    func responseJSONPublisher(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> AnyPublisher <SYMoyaNetworkDataResponse<Any>,SYMoyaNetworkError> {
         return SYMoyaPublisher { [weak self] subscriber in
-            return self?.responseString(responseDataSourceType,target: target, atKeyPath: atKeyPath, callbackQueue: callbackQueue, progress: progress) { dataResponse in
-                switch dataResponse.result {
-                case .success(let response):
-                    _ = subscriber.receive(response.rawValue as! SYMoyaNetworkDataResponse<String>)
-                    subscriber.receive(completion: .finished)
-                case .failure(let error):
+            return self?.responseJSON(target: target, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
+                if case let .failure(error) = dataResponse.result {
                     subscriber.receive(completion: .failure(error))
+                } else {
+                    _ = subscriber.receive(dataResponse)
+                    subscriber.receive(completion: .finished)
                 }
-            }
+            })
         }
         .eraseToAnyPublisher()
     }

@@ -12,7 +12,7 @@ import Moya
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public extension SYMoyaProvider {
 
-    func responseStringFromCacheContinuation(_ target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<String> {
+    func responseStringFromCache(_ target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<String> {
         return await withCheckedContinuation { continuation in
             self.responseStringFromCache(target, atKeyPath: atKeyPath, callbackQueue: callbackQueue) { dataResponse in
                 continuation.resume(returning: dataResponse)
@@ -20,7 +20,7 @@ public extension SYMoyaProvider {
         }
     }
     
-    func responseStringFromDiskCacheContinuation(_ target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<String> {
+    func responseStringFromDiskCache(_ target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<String> {
         return await withCheckedContinuation{ continuation in
             self.responseStringFromDiskCache(target,atKeyPath: atKeyPath,callbackQueue: callbackQueue) { dataResponse in
                 continuation.resume(returning: dataResponse)
@@ -28,7 +28,7 @@ public extension SYMoyaProvider {
         }
     }
     
-    func responseStringContinuation(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<String> {
+    func responseString(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<String> {
         let actor = SYDataResponseActor(provider: self)
         return try await withTaskCancellationHandler {
             try await withCheckedContinuation { continuation in

@@ -13,7 +13,7 @@ import SwiftyJSON
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public extension SYMoyaProvider {
 
-    func responseSwiftyJSONFromCacheContinuation(_ target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
+    func responseSwiftyJSONFromCache(_ target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
         return await withCheckedContinuation { continuation in
             self.responseSwiftyJSONFromCache(target, options: opt, callbackQueue: callbackQueue) { dataResponse in
                 continuation.resume(returning: dataResponse)
@@ -21,7 +21,7 @@ public extension SYMoyaProvider {
         }
     }
     
-    func responseSwiftyJSONFromDiskCacheContinuation(_ target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
+    func responseSwiftyJSONFromDiskCache(_ target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
         return await withCheckedContinuation{ continuation in
             self.responseSwiftyJSONFromDiskCache(target, options: opt, callbackQueue: callbackQueue) { dataResponse in
                 continuation.resume(returning: dataResponse)
@@ -29,18 +29,18 @@ public extension SYMoyaProvider {
         }
     }
     
-//    func responseSwiftyJSONContinuation(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
-//        let actor = SYDataResponseActor(provider: self)
-//        return try await withTaskCancellationHandler {
-//            try await withCheckedContinuation { continuation in
-//                 Task {
-//                     await actor.responseSwiftyJSON(responseDataSourceType,target: target, options: opt, callbackQueue: callbackQueue, progress: progress) { dataResponse in
-//                         continuation.resume(returning: dataResponse)
-//                     }
-//                 }
-//            }
-//        } onCancel: {
-//            Task { await actor.cancel() }
-//        }
-//    }
+    func responseSwiftyJSON(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
+        let actor = SYDataResponseActor(provider: self)
+        return try await withTaskCancellationHandler {
+            try await withCheckedContinuation { continuation in
+                Swift.Task {
+                    await actor.responseSwiftyJSON(responseDataSourceType,target: target, options: opt, callbackQueue: callbackQueue, progress: progress) { dataResponse in
+                        continuation.resume(returning: dataResponse)
+                    }
+                }
+            }
+        } onCancel: {
+            Swift.Task { await actor.cancel() }
+        }
+    }
 }

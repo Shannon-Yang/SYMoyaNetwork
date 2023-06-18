@@ -149,9 +149,6 @@ extension DataResponsePublisher where Value == Data? {
         responseHandler = { request.response(queue: queue, completionHandler: $0) }
     }
 }
-
-
-
 #endif
 
 
