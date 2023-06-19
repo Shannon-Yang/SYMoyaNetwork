@@ -33,7 +33,7 @@ public extension SYMoyaProvider {
         let actor = SYDataResponseActor(provider: self)
         return try await withTaskCancellationHandler {
             try await withCheckedContinuation { continuation in
-                Swift.Task {
+                Task {
                     await actor.responseSwiftyJSON(responseDataSourceType,target: target, options: opt, callbackQueue: callbackQueue, progress: progress) { dataResponse in
                         continuation.resume(returning: dataResponse)
                     }

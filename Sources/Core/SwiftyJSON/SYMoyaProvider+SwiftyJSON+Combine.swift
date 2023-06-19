@@ -27,8 +27,7 @@ public extension SYMoyaProvider {
             self?.responseSwiftyJSONFromCache(target, options: opt, callbackQueue: callbackQueue) { dataResponse in
                 switch dataResponse.result {
                 case .success(let value):
-//                    promise(.success(value))
-                    debugPrint("🔥🔥🔥🔥🔥----> \(value) <---- < Class: \(type(of: self)) Function:\(#function) Line: \(#line) >🔥🔥🔥🔥🔥")
+                    promise(.success(value))
                 case .failure(let error):
                     promise(.failure(error))
                 }
@@ -41,8 +40,7 @@ public extension SYMoyaProvider {
             self?.responseSwiftyJSONFromDiskCache(target, options: opt, callbackQueue: callbackQueue) { dataResponse in
                 switch dataResponse.result {
                 case .success(let value):
-//                    promise(.success(value))
-                    debugPrint("🔥🔥🔥🔥🔥----> \(value) <---- < Class: \(type(of: self)) Function:\(#function) Line: \(#line) >🔥🔥🔥🔥🔥")
+                    promise(.success(value))
                 case .failure(let error):
                     promise(.failure(error))
                 }

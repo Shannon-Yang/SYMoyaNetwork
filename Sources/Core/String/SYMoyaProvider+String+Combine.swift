@@ -8,21 +8,18 @@
 #if canImport(Combine)
 import Foundation
 import Moya
-import SwiftyJSON
 import Combine
 
 //MARK: - SwiftyJSON Provider Combine
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 public extension SYMoyaProvider {
     
-   
     func responseStringFromCachePublisher(_ target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none) -> Future <SYMoyaNetworkDataResponse<String>,SYMoyaNetworkError> {
         return Future() { [weak self] promise in
             self?.responseStringFromCache(target, atKeyPath: atKeyPath, callbackQueue: callbackQueue) { dataResponse in
                 switch dataResponse.result {
                 case .success(let value):
-//                    promise(.success(value))
-                    debugPrint("🔥🔥🔥🔥🔥----> \(value) <---- < Class: \(type(of: self)) Function:\(#function) Line: \(#line) >🔥🔥🔥🔥🔥")
+                    promise(.success(value))
                 case .failure(let error):
                     promise(.failure(error))
                 }
@@ -35,8 +32,7 @@ public extension SYMoyaProvider {
             self?.responseStringFromDiskCache(target, atKeyPath: atKeyPath, callbackQueue: callbackQueue) { dataResponse in
                 switch dataResponse.result {
                 case .success(let value):
-//                    promise(.success(value))
-                    debugPrint("🔥🔥🔥🔥🔥----> \(value) <---- < Class: \(type(of: self)) Function:\(#function) Line: \(#line) >🔥🔥🔥🔥🔥")
+                    promise(.success(value))
                 case .failure(let error):
                     promise(.failure(error))
                 }
