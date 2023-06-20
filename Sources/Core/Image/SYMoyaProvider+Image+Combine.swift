@@ -20,7 +20,7 @@ public extension SYMoyaProvider {
                 switch dataResponse.result {
                 case .success(let value):
 //                    promise(.success(value))
-                    debugPrint("🔥🔥🔥🔥🔥----> \(value) <---- < Class: \(type(of: self)) Function:\(#function) Line: \(#line) >🔥🔥🔥🔥🔥")
+                    break
                 case .failure(let error):
                     promise(.failure(error))
                 }
@@ -34,7 +34,7 @@ public extension SYMoyaProvider {
                 switch dataResponse.result {
                 case .success(let value):
 //                    promise(.success(value))
-                    debugPrint("🔥🔥🔥🔥🔥----> \(value) <---- < Class: \(type(of: self)) Function:\(#function) Line: \(#line) >🔥🔥🔥🔥🔥")
+                    break
                 case .failure(let error):
                     promise(.failure(error))
                 }

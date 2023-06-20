@@ -31,16 +31,16 @@ public extension SYMoyaProvider {
     
     func responseSwiftyJSON(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
         let actor = SYDataResponseActor(provider: self)
-        return try await withTaskCancellationHandler {
-            try await withCheckedContinuation { continuation in
-                Task {
+        return await withTaskCancellationHandler {
+            await withCheckedContinuation { continuation in
+                _Concurrency.Task {
                     await actor.responseSwiftyJSON(responseDataSourceType,target: target, options: opt, callbackQueue: callbackQueue, progress: progress) { dataResponse in
                         continuation.resume(returning: dataResponse)
                     }
                 }
             }
         } onCancel: {
-            Swift.Task { await actor.cancel() }
+            _Concurrency.Task { await actor.cancel() }
         }
     }
 }

@@ -22,45 +22,42 @@ public extension SYMoyaProvider {
     ///   - opt: A class for converting JSON to Foundation objects and converting Foundation objects to JSON.
     ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
     ///   - completion: Callback after completion
-    func responseSwiftyJSONFromCachePublisher(_ target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none) -> Future <SYMoyaNetworkDataResponse<SwiftyJSON.JSON>,SYMoyaNetworkError> {
-        return Future() { [weak self] promise in
-            self?.responseSwiftyJSONFromCache(target, options: opt, callbackQueue: callbackQueue) { dataResponse in
-                switch dataResponse.result {
-                case .success(let value):
-                    promise(.success(value))
-                case .failure(let error):
-                    promise(.failure(error))
-                }
+    func responseSwiftyJSONFromCachePublisher(_ target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>> {
+        return SYMoyaPublisher { subscriber in
+            self.responseSwiftyJSONFromCache(target, options: opt, callbackQueue: callbackQueue) { dataResponse in
+                _ = subscriber.receive(dataResponse)
+                subscriber.receive(completion: .finished)
             }
+            return nil
         }
     }
     
-    func responseSwiftyJSONFromDiskCachePublisher(_ target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none) -> Future <SYMoyaNetworkDataResponse<SwiftyJSON.JSON>,SYMoyaNetworkError> {
-        return Future() { [weak self] promise in
-            self?.responseSwiftyJSONFromDiskCache(target, options: opt, callbackQueue: callbackQueue) { dataResponse in
-                switch dataResponse.result {
-                case .success(let value):
-                    promise(.success(value))
-                case .failure(let error):
-                    promise(.failure(error))
-                }
+    func responseSwiftyJSONFromDiskCachePublisher(_ target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>> {
+        return SYMoyaPublisher { subscriber in
+            self.responseSwiftyJSONFromDiskCache(target, options: opt, callbackQueue: callbackQueue) { dataResponse in
+                _ = subscriber.receive(dataResponse)
+                subscriber.receive(completion: .finished)
             }
+            return nil
         }
     }
     
-    func responseSwiftyJSONPublisher(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> AnyPublisher <SYMoyaNetworkDataResponse<SwiftyJSON.JSON>,SYMoyaNetworkError> {
-        return SYMoyaPublisher { [weak self] subscriber in
-            return self?.responseSwiftyJSON(responseDataSourceType,target: target, options: opt, callbackQueue: callbackQueue, progress: progress) { dataResponse in
-                switch dataResponse.result {
-                case .success(let response):
-                    _ = subscriber.receive(response.rawValue as! SYMoyaNetworkDataResponse<JSON>)
-                    subscriber.receive(completion: .finished)
-                case .failure(let error):
-                    subscriber.receive(completion: .failure(error))
-                }
+    func responseSwiftyJSONFromMemoryCachePublisher(_ target: Target, options opt: JSONSerialization.ReadingOptions = [], failsOnEmptyData: Bool = true) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>> {
+        return SYMoyaPublisher { subscriber in
+           let json = self.responseSwiftyJSONFromMemoryCache(target, options: opt, failsOnEmptyData: failsOnEmptyData)
+            _ = subscriber.receive(json)
+            subscriber.receive(completion: .finished)
+            return nil
+        }
+    }
+    
+    func responseSwiftyJSONPublisher(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher <SYMoyaNetworkDataResponse<SwiftyJSON.JSON>> {
+        return SYMoyaPublisher { subscriber in
+            return self.responseSwiftyJSON(responseDataSourceType,target: target, options: opt, callbackQueue: callbackQueue, progress: progress) { dataResponse in
+                _ = subscriber.receive(dataResponse)
+                subscriber.receive(completion: .finished)
             }
         }
-        .eraseToAnyPublisher()
     }
 }
 #endif

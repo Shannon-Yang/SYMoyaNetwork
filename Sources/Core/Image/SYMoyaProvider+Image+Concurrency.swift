@@ -30,16 +30,16 @@ public extension SYMoyaProvider {
     
     func responseImage(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<Image> {
         let actor = SYDataResponseActor(provider: self)
-        return try await withTaskCancellationHandler {
-            try await withCheckedContinuation { continuation in
-                Task {
+        return await withTaskCancellationHandler {
+            await withCheckedContinuation { continuation in
+                _Concurrency.Task {
                      await actor.responseImage(responseDataSourceType,target: target, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
                          continuation.resume(returning: dataResponse)
                      })
                  }
             }
         } onCancel: {
-            Task { await actor.cancel() }
+            _Concurrency.Task { await actor.cancel() }
         }
     }
 }

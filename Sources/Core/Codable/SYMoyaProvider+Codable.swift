@@ -8,9 +8,6 @@
 
 import Foundation
 import Moya
-#if canImport(Combine)
-import Combine
-#endif
 
 //MARK: - Codable Provider
 public extension SYMoyaProvider {
@@ -37,17 +34,6 @@ public extension SYMoyaProvider {
             }
         }
     }
-    
-    
-//    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-//    func responseCodableObjectFromCachePublisher<T: Decodable>(_ target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> AnyPublisher<SYMoyaNetworkDataResponse<T>, SYMoyaNetworkError> {
-//        
-//        let publisher = AnyPublisher
-//    }
-    
-//    func responseCodableObjectFromCache<T: Decodable>(_ target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<T> {
-//        
-//    }
     
     /// Get Codable data from disk cache
     /// - Parameters:
@@ -195,12 +181,6 @@ public extension SYMoyaProvider {
         }
         return nil
     }
-    
-//    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-//    func responsePublisher<T: Decodable>(_ target: Target, callbackQueue: DispatchQueue? = nil) -> AnyPublisher<SYMoyaNetworkDataResponse<T>, SYMoyaNetworkError> {
-//        let publisher = self.requestPublisher(target,callbackQueue: callbackQueue)
-//        
-//    }
 }
 
 //MARK: - Extension

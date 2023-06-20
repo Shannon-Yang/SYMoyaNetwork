@@ -30,16 +30,16 @@ public extension SYMoyaProvider {
     
     func responseCodable<T: Decodable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<T> {
         let actor = SYDataResponseActor(provider: self)
-        return try await withTaskCancellationHandler {
-            try await withCheckedContinuation { continuation in
-                 Task {
+        return await withTaskCancellationHandler {
+            await withCheckedContinuation { continuation in
+                _Concurrency.Task {
                      await actor.responseCodableObject(responseDataSourceType,target: target, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
                          continuation.resume(returning: dataResponse)
                      })
                  }
             }
         } onCancel: {
-            Task { await actor.cancel() }
+            _Concurrency.Task { await actor.cancel() }
         }
     }
 }
