@@ -15,10 +15,6 @@
 		FB47093C2A28F1FE00A4C721 /* SYMoyaProvider+Codable+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47093B2A28F1FE00A4C721 /* SYMoyaProvider+Codable+Combine.swift */; };
 		FB47093E2A28F21700A4C721 /* SYMoyaProvider+Codable+Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47093D2A28F21700A4C721 /* SYMoyaProvider+Codable+Concurrency.swift */; };
 		FB4709402A28F24B00A4C721 /* SYMoyaProvider+Image+Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47093F2A28F24B00A4C721 /* SYMoyaProvider+Image+Concurrency.swift */; };
-		FB4709422A28F2F500A4C721 /* SYMoyaProvider+HandyJSON+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4709412A28F2F500A4C721 /* SYMoyaProvider+HandyJSON+Combine.swift */; };
-		FB4709442A28F30E00A4C721 /* SYMoyaProvider+HandyJSON+Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4709432A28F30E00A4C721 /* SYMoyaProvider+HandyJSON+Concurrency.swift */; };
-		FB4709462A28F32E00A4C721 /* SYMoyaProvider+ObjectMapper+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4709452A28F32E00A4C721 /* SYMoyaProvider+ObjectMapper+Combine.swift */; };
-		FB4709482A28F34000A4C721 /* SYMoyaProvider+ObjectMapper+Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4709472A28F34000A4C721 /* SYMoyaProvider+ObjectMapper+Concurrency.swift */; };
 		FB63547F2705A61E003F1D7C /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63544A2705A61D003F1D7C /* Storage.swift */; };
 		FB6354802705A61E003F1D7C /* MemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63544B2705A61D003F1D7C /* MemoryStorage.swift */; };
 		FB6354812705A61E003F1D7C /* DiskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63544C2705A61D003F1D7C /* DiskStorage.swift */; };
@@ -79,6 +75,16 @@
 		FB9E2D1728A2105D001F73FC /* ResponseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB9E2D1528A2105D001F73FC /* ResponseViewController.xib */; };
 		FB9E2D1A28A21BF4001F73FC /* BatchResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9E2D1828A21BF4001F73FC /* BatchResponseViewController.swift */; };
 		FB9E2D1B28A21BF4001F73FC /* BatchResponseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB9E2D1928A21BF4001F73FC /* BatchResponseViewController.xib */; };
+		FBA24F642A45FA12008D35A6 /* SYMoyaProvider+ObjectMapper+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4709452A28F32E00A4C721 /* SYMoyaProvider+ObjectMapper+Combine.swift */; };
+		FBA24F652A45FA12008D35A6 /* SYMoyaProvider+ObjectMapper+Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4709472A28F34000A4C721 /* SYMoyaProvider+ObjectMapper+Concurrency.swift */; };
+		FBA24F662A45FA25008D35A6 /* SYMoyaProvider+HandyJSON+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4709412A28F2F500A4C721 /* SYMoyaProvider+HandyJSON+Combine.swift */; };
+		FBA24F672A45FA25008D35A6 /* SYMoyaProvider+HandyJSON+Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4709432A28F30E00A4C721 /* SYMoyaProvider+HandyJSON+Concurrency.swift */; };
+		FBA24F682A45FAF2008D35A6 /* ObjectMapper.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F25E29A623D0004D5C4B /* ObjectMapper.xcframework */; };
+		FBA24F692A45FAF2008D35A6 /* ObjectMapper.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F25E29A623D0004D5C4B /* ObjectMapper.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FBA24F6B2A45FB01008D35A6 /* HandyJSON.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F25F29A623D0004D5C4B /* HandyJSON.xcframework */; };
+		FBA24F6C2A45FB01008D35A6 /* HandyJSON.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F25F29A623D0004D5C4B /* HandyJSON.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FBA24F6E2A45FB5D008D35A6 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
+		FBA24F6F2A45FB5D008D35A6 /* SYMoyaNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FBEE35632A1BC361001AFD6C /* Moya.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F26129A623D0004D5C4B /* Moya.xcframework */; };
 		FBEE35662A1BC384001AFD6C /* SwiftyJSON.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F26829A62409004D5C4B /* SwiftyJSON.xcframework */; };
 		FBEE35672A1BC5A4001AFD6C /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F26029A623D0004D5C4B /* Alamofire.xcframework */; };
@@ -107,13 +113,9 @@
 		FBEE36082A1E46C0001AFD6C /* SYMoyaReactiveHandyJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEE36072A1E46C0001AFD6C /* SYMoyaReactiveHandyJSONTests.swift */; };
 		FBEE36092A1E46C0001AFD6C /* SYMoyaReactiveHandyJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = FBEE35FB2A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FBEE36102A1E46E7001AFD6C /* Response+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354682705A61E003F1D7C /* Response+ObjectMapper.swift */; };
-		FBEE36112A1E46EB001AFD6C /* Response+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354682705A61E003F1D7C /* Response+ObjectMapper.swift */; };
 		FBEE36122A1E46F0001AFD6C /* SYMoyaProvider+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354692705A61E003F1D7C /* SYMoyaProvider+ObjectMapper.swift */; };
-		FBEE36132A1E46F1001AFD6C /* SYMoyaProvider+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354692705A61E003F1D7C /* SYMoyaProvider+ObjectMapper.swift */; };
 		FBEE36142A1E4849001AFD6C /* SYMoyaProvider+HandyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354782705A61E003F1D7C /* SYMoyaProvider+HandyJSON.swift */; };
-		FBEE36152A1E484A001AFD6C /* SYMoyaProvider+HandyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354782705A61E003F1D7C /* SYMoyaProvider+HandyJSON.swift */; };
 		FBEE36162A1E4853001AFD6C /* Response+HandyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354792705A61E003F1D7C /* Response+HandyJSON.swift */; };
-		FBEE36172A1E4855001AFD6C /* Response+HandyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354792705A61E003F1D7C /* Response+HandyJSON.swift */; };
 		FBEE36182A1E4872001AFD6C /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
 		FBEE36192A1E4872001AFD6C /* SYMoyaNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FBEE361D2A1E4881001AFD6C /* HandyJSON.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F25F29A623D0004D5C4B /* HandyJSON.xcframework */; };
@@ -147,6 +149,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = FB9E2CBF28A204B4001F73FC;
 			remoteInfo = SYMoyaNetworkExample;
+		};
+		FBA24F702A45FB5D008D35A6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB8072E526F32C070042B30D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FB8072ED26F32C070042B30D;
+			remoteInfo = SYMoyaNetwork;
 		};
 		FBEE35782A1E460F001AFD6C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -217,6 +226,29 @@
 			dstSubfolderSpec = 10;
 			files = (
 				FB9E2D0628A20B39001F73FC /* SYMoyaNetwork.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FBA24F6A2A45FAF3008D35A6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FBA24F692A45FAF2008D35A6 /* ObjectMapper.xcframework in Embed Frameworks */,
+				FBA24F6F2A45FB5D008D35A6 /* SYMoyaNetwork.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FBA24F6D2A45FB02008D35A6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FBA24F6C2A45FB01008D35A6 /* HandyJSON.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -406,6 +438,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBA24F682A45FAF2008D35A6 /* ObjectMapper.xcframework in Frameworks */,
+				FBA24F6E2A45FB5D008D35A6 /* SYMoyaNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,6 +470,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBA24F6B2A45FB01008D35A6 /* HandyJSON.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -600,17 +635,6 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
-		FB6354672705A61E003F1D7C /* ObjectMapper */ = {
-			isa = PBXGroup;
-			children = (
-				FB6354682705A61E003F1D7C /* Response+ObjectMapper.swift */,
-				FB6354692705A61E003F1D7C /* SYMoyaProvider+ObjectMapper.swift */,
-				FB4709452A28F32E00A4C721 /* SYMoyaProvider+ObjectMapper+Combine.swift */,
-				FB4709472A28F34000A4C721 /* SYMoyaProvider+ObjectMapper+Concurrency.swift */,
-			);
-			path = ObjectMapper;
-			sourceTree = "<group>";
-		};
 		FB63546A2705A61E003F1D7C /* String */ = {
 			isa = PBXGroup;
 			children = (
@@ -651,19 +675,6 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
-		FB6354772705A61E003F1D7C /* HandyJSON */ = {
-			isa = PBXGroup;
-			children = (
-				FB6354782705A61E003F1D7C /* SYMoyaProvider+HandyJSON.swift */,
-				FB4709412A28F2F500A4C721 /* SYMoyaProvider+HandyJSON+Combine.swift */,
-				FB4709432A28F30E00A4C721 /* SYMoyaProvider+HandyJSON+Concurrency.swift */,
-				FB6354792705A61E003F1D7C /* Response+HandyJSON.swift */,
-				FB668FB828D3518500AE74F4 /* ReactiveSwift */,
-				FB668FB628D3507100AE74F4 /* RxSwift */,
-			);
-			path = HandyJSON;
-			sourceTree = "<group>";
-		};
 		FB63547A2705A61E003F1D7C /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -685,26 +696,12 @@
 			path = SYMoyaBatchRequestProvider;
 			sourceTree = "<group>";
 		};
-		FB668FB628D3507100AE74F4 /* RxSwift */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = RxSwift;
-			sourceTree = "<group>";
-		};
 		FB668FB728D3517A00AE74F4 /* Combine */ = {
 			isa = PBXGroup;
 			children = (
 				FB668FBF28D3596F00AE74F4 /* SYMoyaPublisher.swift */,
 			);
 			path = Combine;
-			sourceTree = "<group>";
-		};
-		FB668FB828D3518500AE74F4 /* ReactiveSwift */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ReactiveSwift;
 			sourceTree = "<group>";
 		};
 		FB6A3A2C287BBDD400454481 /* Core */ = {
@@ -784,8 +781,6 @@
 			children = (
 				FB45ACB7288BEAC300626EA7 /* Supporting Files */,
 				FB6A3A2C287BBDD400454481 /* Core */,
-				FB6354772705A61E003F1D7C /* HandyJSON */,
-				FB6354672705A61E003F1D7C /* ObjectMapper */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -839,6 +834,10 @@
 		FBEE356E2A1E460F001AFD6C /* SYMoyaObjectMapper */ = {
 			isa = PBXGroup;
 			children = (
+				FB6354682705A61E003F1D7C /* Response+ObjectMapper.swift */,
+				FB6354692705A61E003F1D7C /* SYMoyaProvider+ObjectMapper.swift */,
+				FB4709452A28F32E00A4C721 /* SYMoyaProvider+ObjectMapper+Combine.swift */,
+				FB4709472A28F34000A4C721 /* SYMoyaProvider+ObjectMapper+Concurrency.swift */,
 				FBEE356F2A1E460F001AFD6C /* SYMoyaObjectMapper.h */,
 				FBEE35702A1E460F001AFD6C /* SYMoyaObjectMapper.docc */,
 			);
@@ -890,6 +889,10 @@
 		FBEE35C22A1E4691001AFD6C /* SYMoyaHandyJSON */ = {
 			isa = PBXGroup;
 			children = (
+				FB6354782705A61E003F1D7C /* SYMoyaProvider+HandyJSON.swift */,
+				FB4709412A28F2F500A4C721 /* SYMoyaProvider+HandyJSON+Combine.swift */,
+				FB4709432A28F30E00A4C721 /* SYMoyaProvider+HandyJSON+Concurrency.swift */,
+				FB6354792705A61E003F1D7C /* Response+HandyJSON.swift */,
 				FBEE35C32A1E4691001AFD6C /* SYMoyaHandyJSON.h */,
 				FBEE35C42A1E4691001AFD6C /* SYMoyaHandyJSON.docc */,
 			);
@@ -1122,10 +1125,12 @@
 				FBEE35692A1E460F001AFD6C /* Sources */,
 				FBEE356A2A1E460F001AFD6C /* Frameworks */,
 				FBEE356B2A1E460F001AFD6C /* Resources */,
+				FBA24F6A2A45FAF3008D35A6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FBA24F712A45FB5D008D35A6 /* PBXTargetDependency */,
 			);
 			name = SYMoyaObjectMapper;
 			productName = SYMoyaObjectMapper;
@@ -1194,6 +1199,7 @@
 				FBEE35A12A1E4676001AFD6C /* Sources */,
 				FBEE35A22A1E4676001AFD6C /* Frameworks */,
 				FBEE35A32A1E4676001AFD6C /* Resources */,
+				FBA24F6D2A45FB02008D35A6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1594,7 +1600,6 @@
 				FB63547F2705A61E003F1D7C /* Storage.swift in Sources */,
 				FB6354A22705A61E003F1D7C /* String+MD5.swift in Sources */,
 				FB4709312A28E3AF00A4C721 /* SYMoyaProvider+String+Combine.swift in Sources */,
-				FB4709422A28F2F500A4C721 /* SYMoyaProvider+HandyJSON+Combine.swift in Sources */,
 				FB6354822705A61E003F1D7C /* CacheSerializer.swift in Sources */,
 				FB6354A12705A61E003F1D7C /* CallbackQueue.swift in Sources */,
 				FB63548B2705A61E003F1D7C /* SYMoyaURLCache.swift in Sources */,
@@ -1613,7 +1618,6 @@
 				FB63548C2705A61E003F1D7C /* SYMoyaProvider+URLCache.swift in Sources */,
 				FB65207728A48E06009457DD /* SYMoyaProviderTargetResponseStatePlugin.swift in Sources */,
 				FB63549D2705A61E003F1D7C /* NetworkConfig.swift in Sources */,
-				FB4709442A28F30E00A4C721 /* SYMoyaProvider+HandyJSON+Concurrency.swift in Sources */,
 				FB6354A32705A61E003F1D7C /* Date+Extensions.swift in Sources */,
 				FB63549C2705A61E003F1D7C /* SYMoyaProvider+Cache.swift in Sources */,
 				FB6A3A2B287BB49200454481 /* HTTPStatusCodes+Extensions.swift in Sources */,
@@ -1630,7 +1634,6 @@
 				FB6354862705A61E003F1D7C /* SYMoyaNetworkLoggerPlugin.swift in Sources */,
 				FB63549A2705A61E003F1D7C /* URL+SYMoya.swift in Sources */,
 				FB6354812705A61E003F1D7C /* DiskStorage.swift in Sources */,
-				FB4709462A28F32E00A4C721 /* SYMoyaProvider+ObjectMapper+Combine.swift in Sources */,
 				FBEE36252A1E4913001AFD6C /* MoyaProvider+Combine.swift in Sources */,
 				FB6354842705A61E003F1D7C /* SYMoyaNetworkOptionsInfo.swift in Sources */,
 				FBEE36232A1E4913001AFD6C /* MoyaPublisher.swift in Sources */,
@@ -1642,7 +1645,6 @@
 				FB63548E2705A61E003F1D7C /* Response+SwiftyJSON.swift in Sources */,
 				FB6354872705A61E003F1D7C /* SYMoyaProvider+Image.swift in Sources */,
 				FB6A3A29287BB48900454481 /* HTTPStatusCode.swift in Sources */,
-				FB4709482A28F34000A4C721 /* SYMoyaProvider+ObjectMapper+Concurrency.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1689,9 +1691,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBA24F642A45FA12008D35A6 /* SYMoyaProvider+ObjectMapper+Combine.swift in Sources */,
 				FBEE36102A1E46E7001AFD6C /* Response+ObjectMapper.swift in Sources */,
 				FBEE36122A1E46F0001AFD6C /* SYMoyaProvider+ObjectMapper.swift in Sources */,
 				FBEE35712A1E460F001AFD6C /* SYMoyaObjectMapper.docc in Sources */,
+				FBA24F652A45FA12008D35A6 /* SYMoyaProvider+ObjectMapper+Concurrency.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1699,8 +1703,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBEE36112A1E46EB001AFD6C /* Response+ObjectMapper.swift in Sources */,
-				FBEE36132A1E46F1001AFD6C /* SYMoyaProvider+ObjectMapper.swift in Sources */,
 				FBEE357C2A1E460F001AFD6C /* SYMoyaObjectMapperTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1742,8 +1744,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBEE36162A1E4853001AFD6C /* Response+HandyJSON.swift in Sources */,
+				FBA24F672A45FA25008D35A6 /* SYMoyaProvider+HandyJSON+Concurrency.swift in Sources */,
 				FBEE35C52A1E4691001AFD6C /* SYMoyaHandyJSON.docc in Sources */,
 				FBEE36142A1E4849001AFD6C /* SYMoyaProvider+HandyJSON.swift in Sources */,
+				FBA24F662A45FA25008D35A6 /* SYMoyaProvider+HandyJSON+Combine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1751,9 +1755,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBEE36172A1E4855001AFD6C /* Response+HandyJSON.swift in Sources */,
 				FBEE35D02A1E4692001AFD6C /* SYMoyaHandyJSONTests.swift in Sources */,
-				FBEE36152A1E484A001AFD6C /* SYMoyaProvider+HandyJSON.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1806,6 +1808,11 @@
 			isa = PBXTargetDependency;
 			target = FB9E2CBF28A204B4001F73FC /* SYMoyaNetworkExample */;
 			targetProxy = FB9E2CE028A204B6001F73FC /* PBXContainerItemProxy */;
+		};
+		FBA24F712A45FB5D008D35A6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FB8072ED26F32C070042B30D /* SYMoyaNetwork */;
+			targetProxy = FBA24F702A45FB5D008D35A6 /* PBXContainerItemProxy */;
 		};
 		FBEE35792A1E460F001AFD6C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2184,6 +2191,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork.SYMoyaNetworkExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2221,6 +2229,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork.SYMoyaNetworkExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2567,7 +2576,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
@@ -2576,16 +2585,18 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork.SYMoyaRxHandyJSON;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3,4";
 			};
 			name = Debug;
 		};
@@ -2603,7 +2614,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
@@ -2612,16 +2623,18 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork.SYMoyaRxHandyJSON;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3,4";
 			};
 			name = Release;
 		};
@@ -2681,7 +2694,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
@@ -2690,16 +2703,18 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork.SYMoyaHandyJSON;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3,4";
 			};
 			name = Debug;
 		};
@@ -2717,7 +2732,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
@@ -2726,16 +2741,18 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork.SYMoyaHandyJSON;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3,4";
 			};
 			name = Release;
 		};
@@ -2797,7 +2814,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
@@ -2806,16 +2823,18 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork.SYMoyaReactiveObjectMapper;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3,4";
 			};
 			name = Debug;
 		};
@@ -2833,7 +2852,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
@@ -2842,16 +2861,18 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork.SYMoyaReactiveObjectMapper;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3,4";
 			};
 			name = Release;
 		};
@@ -2911,7 +2932,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
@@ -2920,16 +2941,18 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork.SYMoyaReactiveHandyJSON;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3,4";
 			};
 			name = Debug;
 		};
@@ -2947,7 +2970,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
@@ -2956,16 +2979,18 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork.SYMoyaReactiveHandyJSON;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3,4";
 			};
 			name = Release;
 		};

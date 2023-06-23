@@ -36,9 +36,9 @@ public class SYMoyaPublisher<Output>: Publisher {
         }
     }
 
-    private let callback: (AnySubscriber<Output, Failure>) -> Moya.Cancellable?
+    let callback: (AnySubscriber<Output, Failure>) -> Moya.Cancellable?
 
-    init(callback: @escaping (AnySubscriber<Output, Failure>) -> Moya.Cancellable?) {
+    public init(callback: @escaping (AnySubscriber<Output, Failure>) -> Moya.Cancellable?) {
         self.callback = callback
     }
 
