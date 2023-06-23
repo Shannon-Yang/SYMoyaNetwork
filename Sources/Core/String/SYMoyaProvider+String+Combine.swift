@@ -14,39 +14,42 @@ import Combine
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 public extension SYMoyaProvider {
     
-    func responseStringFromCachePublisher(_ target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none) -> Future <SYMoyaNetworkDataResponse<String>,Never> {
-        return Future() { [weak self] promise in
-            self?.responseStringFromCache(target, atKeyPath: atKeyPath, callbackQueue: callbackQueue) { dataResponse in
-                promise(.success(dataResponse))
+    func responseStringFromCachePublisher(_ target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<String>> {
+        return SYMoyaPublisher { subscriber in
+            self.responseStringFromCache(target, atKeyPath: atKeyPath, callbackQueue: callbackQueue) { dataResponse in
+                _ = subscriber.receive(dataResponse)
+                subscriber.receive(completion: .finished)
             }
+            return nil
         }
     }
     
-    func responseStringFromDiskCachePublisher(_ target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none) -> Future <SYMoyaNetworkDataResponse<String>,Never> {
-        return Future() { [weak self] promise in
-            self?.responseStringFromDiskCache(target, atKeyPath: atKeyPath, callbackQueue: callbackQueue) { dataResponse in
-                switch dataResponse.result {
-                case .success(let value):
-                    promise(.success(value))
-                case .failure(let error):
-                    promise(.failure(error))
-                }
+    func responseStringFromDiskCachePublisher(_ target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<String>> {
+        return SYMoyaPublisher { subscriber in
+            self.responseStringFromDiskCache(target, atKeyPath: atKeyPath, callbackQueue: callbackQueue) { dataResponse in
+                _ = subscriber.receive(dataResponse)
+                subscriber.receive(completion: .finished)
             }
+            return nil
         }
     }
     
-    func responseStringPublisher(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> AnyPublisher <SYMoyaNetworkDataResponse<String>,SYMoyaNetworkError> {
+    func responseStringFromMemoryCachePublisher(_ target: Target, atKeyPath: String? = nil) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<String>> {
+        return SYMoyaPublisher { subscriber in 
+            let dataResponse = self.responseStringFromMemoryCache(target, atKeyPath: atKeyPath)
+            _ = subscriber.receive(dataResponse)
+            subscriber.receive(completion: .finished)
+            return nil
+        }
+    }
+    
+    func responseStringPublisher(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher <SYMoyaNetworkDataResponse<String>> {
         return SYMoyaPublisher { [weak self] subscriber in
             return self?.responseString(responseDataSourceType,target: target, atKeyPath: atKeyPath, callbackQueue: callbackQueue, progress: progress) { dataResponse in
-                if case let .failure(error) = dataResponse.result {
-                    subscriber.receive(completion: .failure(error))
-                } else {
-                    _ = subscriber.receive(dataResponse)
-                    subscriber.receive(completion: .finished)
-                }
+                _ = subscriber.receive(dataResponse)
+                subscriber.receive(completion: .finished)
             }
         }
-        .eraseToAnyPublisher()
     }
 }
 #endif

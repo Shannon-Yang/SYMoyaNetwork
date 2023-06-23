@@ -14,46 +14,42 @@ import Combine
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 public extension SYMoyaProvider {
     
-    func responseImageFromCachePublisher(_ target: Target, callbackQueue: DispatchQueue? = .none) -> Future <SYMoyaNetworkDataResponse<Image>,SYMoyaNetworkError> {
-        return Future() { [weak self] promise in
-            self?.responseImageFromCache(target,callbackQueue: callbackQueue, completion: { dataResponse in
-                switch dataResponse.result {
-                case .success(let value):
-//                    promise(.success(value))
-                    break
-                case .failure(let error):
-                    promise(.failure(error))
-                }
+    func responseImageFromCachePublisher(_ target: Target, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher <SYMoyaNetworkDataResponse<Image>> {
+        return SYMoyaPublisher { subscriber in
+            self.responseImageFromCache(target,callbackQueue: callbackQueue, completion: { dataResponse in
+                _ = subscriber.receive(dataResponse)
+                subscriber.receive(completion: .finished)
             })
+            return nil
         }
     }
     
-    func responseImageFromDiskCachePublisher(_ target: Target, callbackQueue: DispatchQueue? = .none) -> Future <SYMoyaNetworkDataResponse<Image>,SYMoyaNetworkError> {
-        return Future() { [weak self] promise in
-            self?.responseImageFromDiskCache(target, callbackQueue: callbackQueue,completion: { dataResponse in
-                switch dataResponse.result {
-                case .success(let value):
-//                    promise(.success(value))
-                    break
-                case .failure(let error):
-                    promise(.failure(error))
-                }
+    func responseImageFromDiskCachePublisher(_ target: Target, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher <SYMoyaNetworkDataResponse<Image>> {
+        return SYMoyaPublisher { subscriber in
+            self.responseImageFromDiskCache(target, callbackQueue: callbackQueue,completion: { dataResponse in
+                _ = subscriber.receive(dataResponse)
+                subscriber.receive(completion: .finished)
             })
+            return nil
         }
     }
     
-    func responseImagePublisher(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> AnyPublisher <SYMoyaNetworkDataResponse<Image>,SYMoyaNetworkError> {
+    func responseImageFromMemoryCachePublisher(_ target: Target) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<Image>> {
+        return SYMoyaPublisher { subscriber in
+            let dataResponse = self.responseImageFromMemoryCache(target)
+            _ = subscriber.receive(dataResponse)
+            subscriber.receive(completion: .finished)
+            return nil
+        }
+    }
+    
+    func responseImagePublisher(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher <SYMoyaNetworkDataResponse<Image>> {
         return SYMoyaPublisher { [weak self] subscriber in
             return self?.responseImage(responseDataSourceType,target: target, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
-                if case let .failure(error) = dataResponse.result {
-                    subscriber.receive(completion: .failure(error))
-                } else {
-                    _ = subscriber.receive(dataResponse)
-                    subscriber.receive(completion: .finished)
-                }
+                _ = subscriber.receive(dataResponse)
+                subscriber.receive(completion: .finished)
             })
         }
-        .eraseToAnyPublisher()
     }
 }
 #endif

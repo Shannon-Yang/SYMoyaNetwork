@@ -28,6 +28,13 @@ public extension SYMoyaProvider {
         }
     }
     
+    func responseImageFromMemoryCachePublisher(_ target: Target) async -> SYMoyaNetworkDataResponse<Image> {
+        return await withCheckedContinuation{ continuation in
+            let dataResponse = self.responseImageFromMemoryCache(target)
+            continuation.resume(returning: dataResponse)
+        }
+    }
+    
     func responseImage(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<Image> {
         let actor = SYDataResponseActor(provider: self)
         return await withTaskCancellationHandler {

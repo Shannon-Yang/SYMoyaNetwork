@@ -28,6 +28,13 @@ public extension SYMoyaProvider {
         }
     }
     
+    func responseCodableObjectFromMemoryCache<T: Decodable>(_ target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) async -> SYMoyaNetworkDataResponse<T> {
+        return await withCheckedContinuation{ continuation in
+            let dataResponse: SYMoyaNetworkDataResponse<T> = self.responseCodableObjectFromMemoryCache(target, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
+            continuation.resume(returning: dataResponse)
+        }
+    }
+    
     func responseCodable<T: Decodable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<T> {
         let actor = SYDataResponseActor(provider: self)
         return await withTaskCancellationHandler {

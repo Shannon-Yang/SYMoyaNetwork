@@ -36,7 +36,7 @@ public extension SYMoyaProvider {
     
     func responseCodableObjectFromMemoryCachePublisher<T: Decodable>(_ target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
         return SYMoyaPublisher { subscriber in
-            let codable = self.responseCodableObjectFromMemoryCache(target, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
+            let codable: SYMoyaNetworkDataResponse<T> = self.responseCodableObjectFromMemoryCache(target, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
             _ = subscriber.receive(codable)
             subscriber.receive(completion: .finished)
             return nil

@@ -29,6 +29,13 @@ public extension SYMoyaProvider {
         }
     }
     
+    func responseSwiftyJSONFromMemoryCache(_ target: Target, options opt: JSONSerialization.ReadingOptions = [], failsOnEmptyData: Bool = true) async ->  SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
+        return await withCheckedContinuation{ continuation in
+            let dataResponse = self.responseSwiftyJSONFromMemoryCache(target, options: opt, failsOnEmptyData: failsOnEmptyData)
+            continuation.resume(returning: dataResponse)
+        }
+    }
+    
     func responseSwiftyJSON(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
         let actor = SYDataResponseActor(provider: self)
         return await withTaskCancellationHandler {
