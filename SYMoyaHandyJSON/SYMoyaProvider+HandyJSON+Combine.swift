@@ -9,53 +9,87 @@
 import Foundation
 import Moya
 import Combine
-//import HandlyJSON
+import HandyJSON
+import SYMoyaNetwork
 
-/*
 //MARK: - HandyJSON Provider Combine
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 public extension SYMoyaProvider {
- 
-    func responseHandyJSONFromCachePublisher<T: HandyJSON>(_ target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none) -> Future <SYMoyaNetworkDataResponse<T>,SYMoyaNetworkError> {
-        return Future() { [weak self] promise in
-            self?.responseCodableObjectFromCache(target, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue, completion: { dataResponse in
-                switch dataResponse.result {
-                case .success(let value):
-                    promise(.success(value))
-                    debugPrint("🔥🔥🔥🔥🔥----> \(value) <---- < Class: \(type(of: self)) Function:\(#function) Line: \(#line) >🔥🔥🔥🔥🔥")
-                case .failure(let error):
-                    promise(.failure(error))
-                }
-            })
+    
+    func responseObjectFromCachePublisher<T: HandyJSON>(_ target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
+        return SYMoyaPublisher { subscriber in
+            self.responseObjectFromCache(target, designatedPath: designatedPath, callbackQueue: callbackQueue) { dataResponse in
+                _ = subscriber.receive(dataResponse)
+                subscriber.receive(completion: .finished)
+            }
+            return nil
         }
     }
     
-    func responseHandyJSONFromDiskCachePublisher<T: Decodable>(_ target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none) -> Future <SYMoyaNetworkDataResponse<T>,SYMoyaNetworkError> {
-        return Future() { [weak self] promise in
-            self?.responseCodableObjectFromDiskCache(target, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue, completion: { dataResponse in
-                switch dataResponse.result {
-                case .success(let value):
-//                    promise(.success(value))
-                    debugPrint("🔥🔥🔥🔥🔥----> \(value) <---- < Class: \(type(of: self)) Function:\(#function) Line: \(#line) >🔥🔥🔥🔥🔥")
-                case .failure(let error):
-                    promise(.failure(error))
-                }
-            })
+    func responseObjectFromDiskCachePublisher<T: HandyJSON>(_ target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
+        return SYMoyaPublisher { subscriber in
+            self.responseObjectFromDiskCache(target, designatedPath: designatedPath, callbackQueue: callbackQueue) { dataResponse in
+                _ = subscriber.receive(dataResponse)
+                subscriber.receive(completion: .finished)
+            }
+            return nil
         }
     }
     
-    func responseHandyJSONPublisher<T: Decodable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> AnyPublisher <SYMoyaNetworkDataResponse<T>,SYMoyaNetworkError> {
-        return SYMoyaPublisher<T> { [weak self] subscriber in
-            self?.responseCodableObject(responseDataSourceType,target: target, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue, progress: progress) { dataResponse in
-                if case let .failure(error) = dataResponse.result {
-                    subscriber.receive(completion: .failure(error))
-                } else {
-                    _ = subscriber.receive(dataResponse)
-                    subscriber.receive(completion: .finished)
-                }
+    func responseObjectFromMemoryCachePublisher<T: HandyJSON>(_ target: Target, designatedPath: String? = nil) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
+        return SYMoyaPublisher { subscriber in
+           let dataResponse: SYMoyaNetworkDataResponse<T> = self.responseObjectFromMemoryCache(target, designatedPath: designatedPath)
+            _ = subscriber.receive(dataResponse)
+            subscriber.receive(completion: .finished)
+            return nil
+        }
+    }
+    
+    func responseObjectPublisher<T: HandyJSON>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
+        return SYMoyaPublisher { subscriber in
+            return self.responseObject(responseDataSourceType,target: target, designatedPath: designatedPath, callbackQueue: callbackQueue, progress: progress) { dataResponse in
+                _ = subscriber.receive(dataResponse)
+                subscriber.receive(completion: .finished)
             }
         }
-        .eraseToAnyPublisher()
     }
-}*/
+    
+    func responseObjectsFromCachePublisher<T: HandyJSON>(_ target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<[T?]?>> {
+        return SYMoyaPublisher { subscriber in
+            self.responseObjectsFromCache(target, designatedPath: designatedPath, callbackQueue: callbackQueue) { dataResponse in
+                _ = subscriber.receive(dataResponse)
+                subscriber.receive(completion: .finished)
+            }
+            return nil
+        }
+    }
+    
+    func responseObjectsFromDiskCachePublisher<T: HandyJSON>(_ target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<[T?]?>> {
+        return SYMoyaPublisher { subscriber in
+            self.responseObjectsFromDiskCache(target, designatedPath: designatedPath, callbackQueue: callbackQueue) { dataResponse in
+                _ = subscriber.receive(dataResponse)
+                subscriber.receive(completion: .finished)
+            }
+            return nil
+        }
+    }
+    
+    func responseObjectsFromMemoryCachePublisher<T: HandyJSON>(_ target: Target, designatedPath: String? = nil) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<[T?]?>> {
+        return SYMoyaPublisher { subscriber in
+           let dataResponse: SYMoyaNetworkDataResponse<[T?]?> = self.responseObjectsFromMemoryCache(target, designatedPath: designatedPath)
+            _ = subscriber.receive(dataResponse)
+            subscriber.receive(completion: .finished)
+            return nil
+        }
+    }
+    
+    func responseObjectsPublisher<T: HandyJSON>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<[T?]?>> {
+        return SYMoyaPublisher { subscriber in
+            return self.responseObjects(responseDataSourceType,target: target, designatedPath: designatedPath, callbackQueue: callbackQueue, progress: progress) { dataResponse in
+                _ = subscriber.receive(dataResponse)
+                subscriber.receive(completion: .finished)
+            }
+        }
+    }
+}
 #endif

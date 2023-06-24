@@ -10,14 +10,20 @@ import Moya
 import SwiftyJSON
 
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-actor SYDataResponseActor<Target: SYTargetType> {
-    private var cancellable: Moya.Cancellable?
-    private let provider: SYMoyaProvider<Target>
+public actor SYDataResponseActor<Target: SYTargetType> {
+    public var cancellable: Moya.Cancellable?
+    public let provider: SYMoyaProvider<Target>
     
-    init(provider: SYMoyaProvider<Target>) {
+    public init(provider: SYMoyaProvider<Target>) {
         self.provider = provider
     }
     
+    public func cancel() {
+        cancellable?.cancel()
+    }
+}
+
+extension SYDataResponseActor {
     func responseSwiftyJSON(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @Sendable @escaping (SYMoyaNetworkDataResponse<SwiftyJSON.JSON>) -> Void) {
         cancellable = provider.responseSwiftyJSON(responseDataSourceType,target: target, options: opt, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
             completion(dataResponse)
@@ -39,17 +45,4 @@ actor SYDataResponseActor<Target: SYTargetType> {
     func responseCodableObject<T: Decodable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
         cancellable = provider.responseCodableObject(responseDataSourceType,target: target, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
-    
-//    func responseObject<T: HandyJSON>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
-//        
-//    }
-//    
-//    func responseObjects<T: HandyJSON>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T?]>) -> Void) {
-//        
-//    }
-    
-    func cancel() {
-        cancellable?.cancel()
-    }
 }
-

@@ -22,30 +22,68 @@ public extension SYMoyaProvider {
         }
     }
     
-    func responseCodableFromDiskCache<T: Decodable>(_ target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<T> {
+    func responseObjectFromDiskCache<T: BaseMappable>(_ target: Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<T> {
         return await withCheckedContinuation{ continuation in
-            self.responseCodableObjectFromDiskCache(target, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue) { dataResponse in
+            self.responseObjectFromDiskCache(target, keyPath: keyPath, context: context, callbackQueue: callbackQueue) { dataResponse in
                 continuation.resume(returning: dataResponse)
             }
         }
     }
     
-    func responseCodableObjectFromMemoryCache<T: Decodable>(_ target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) async -> SYMoyaNetworkDataResponse<T> {
+    func responseObjectFromMemoryCache<T: BaseMappable>(_ target: Target, keyPath: String? = nil, context: MapContext? = nil) async -> SYMoyaNetworkDataResponse<T> {
         return await withCheckedContinuation{ continuation in
-            let dataResponse: SYMoyaNetworkDataResponse<T> = self.responseCodableObjectFromMemoryCache(target, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
+            let dataResponse: SYMoyaNetworkDataResponse<T> = self.responseObjectFromMemoryCache(target, keyPath: keyPath, context: context)
             continuation.resume(returning: dataResponse)
         }
     }
     
-    func responseCodable<T: Decodable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<T> {
+    func responseObject<T: BaseMappable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<T> {
         let actor = SYDataResponseActor(provider: self)
         return await withTaskCancellationHandler {
             await withCheckedContinuation { continuation in
                 _Concurrency.Task {
-                     await actor.responseCodableObject(responseDataSourceType,target: target, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
-                         continuation.resume(returning: dataResponse)
-                     })
-                 }
+                    await actor.responseObject(responseDataSourceType,target: target, keyPath: keyPath, context: context, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
+                        continuation.resume(returning: dataResponse)
+                    })
+                }
+            }
+        } onCancel: {
+            _Concurrency.Task { await actor.cancel() }
+        }
+    }
+    
+    func responseObjectsFromCache<T: BaseMappable>(_ target: Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<[T]> {
+        return await withCheckedContinuation { continuation in
+            self.responseObjectsFromCache(target, keyPath: keyPath, context: context, callbackQueue: callbackQueue) { dataResponse in
+                continuation.resume(returning: dataResponse)
+            }
+        }
+    }
+    
+    func responseObjectsFromDiskCache<T: BaseMappable>(_ target: Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<[T]> {
+        return await withCheckedContinuation { continuation in
+            self.responseObjectsFromDiskCache(target, keyPath: keyPath, context: context, callbackQueue: callbackQueue) { dataResponse in
+                continuation.resume(returning: dataResponse)
+            }
+        }
+    }
+    
+    func responseObjectsFromMemoryCache<T: BaseMappable>(_ target: Target, keyPath: String? = nil, context: MapContext? = nil) async -> SYMoyaNetworkDataResponse<[T]> {
+        return await withCheckedContinuation{ continuation in
+            let dataResponse: SYMoyaNetworkDataResponse<[T]> = self.responseObjectsFromMemoryCache(target, keyPath: keyPath, context: context)
+            continuation.resume(returning: dataResponse)
+        }
+    }
+    
+    func responseObjects<T: BaseMappable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<[T]> {
+        let actor = SYDataResponseActor(provider: self)
+        return await withTaskCancellationHandler {
+            await withCheckedContinuation { continuation in
+                _Concurrency.Task {
+                    await actor.responseObjects(responseDataSourceType,target: target, keyPath: keyPath, context: context, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
+                        continuation.resume(returning: dataResponse)
+                    })
+                }
             }
         } onCancel: {
             _Concurrency.Task { await actor.cancel() }

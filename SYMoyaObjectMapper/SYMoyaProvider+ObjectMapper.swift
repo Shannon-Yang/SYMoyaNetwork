@@ -307,7 +307,6 @@ public extension SYMoyaProvider {
                 }
             case .cacheAndServer:
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-                
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
                     case .success(let response):
@@ -321,9 +320,7 @@ public extension SYMoyaProvider {
                     }
                 }
             case .custom(let customizable):
-                
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-                
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
                     case .success(let response):
