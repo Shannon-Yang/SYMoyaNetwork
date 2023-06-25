@@ -48,6 +48,17 @@
                ReferencedContainer = "container:SYMoyaNetwork.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FBA24F8E2A48A096008D35A6"
+               BuildableName = "RxSYMoyaNetworkTests.xctest"
+               BlueprintName = "RxSYMoyaNetworkTests"
+               ReferencedContainer = "container:SYMoyaNetwork.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
