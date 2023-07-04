@@ -11,7 +11,7 @@ import Moya
 
 /// The provider proxy method is called back. When the completion method of moya is called back, the corresponding proxy method will be called back. When the network request is completed, the requestCompleteFilter method will be called back. When the request fails, the requestFailedFilter method will be called back.
 public protocol SYMoyaProviderDelegate: AnyObject {
-    
+
     /// When moya's completion method is called back, the requestCompleteFilter method will be called back when the network request is completed
     /// - Parameters:
     ///   - provider: The chained request provider is used to manage interdependent network requests
@@ -33,6 +33,7 @@ public protocol SYMoyaProviderDelegate: AnyObject {
     ///   - error: network request error message
     func provider<Target: SYTargetType>(_ provider: SYMoyaProvider<Target>, target: Target?, requestFailedFilter error: SYMoyaNetworkError)
 }
+
 
 // A request provider class that inherits from MoyaProvider. Requests can only be made through this class.
 open class SYMoyaProvider<Target: SYTargetType>: Moya.MoyaProvider<Target> {

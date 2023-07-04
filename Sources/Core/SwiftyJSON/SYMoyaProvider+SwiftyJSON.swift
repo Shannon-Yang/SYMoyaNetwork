@@ -11,7 +11,7 @@ import Moya
 import SwiftyJSON
 
 //MARK: - SwiftyJSON Provider
-public extension SYMoyaProvider {
+extension SYMoyaProvider {
     
     /// Get SwiftyJSON data from cache，If there is a cache, it will be obtained in memory first. If there is no cache in the memory, the cache will be read from the disk. If there is no cached data, the completion will callback nil object
     ///
@@ -43,7 +43,6 @@ public extension SYMoyaProvider {
     ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
     ///   - completion: Callback after completion
     func responseSwiftyJSONFromDiskCache(_ target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<SwiftyJSON.JSON>) -> Void) {
-        
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieveResponseInDiskCache(target, options: options, callbackQueue: callbackQueue) { result in
             switch result {
@@ -64,7 +63,6 @@ public extension SYMoyaProvider {
     ///   - opt: A class for converting JSON to Foundation objects and converting Foundation objects to JSON.
     /// - Returns: SYMoyaNetworkDataResponse object
     func responseSwiftyJSONFromMemoryCache(_ target: Target, options opt: JSONSerialization.ReadingOptions = [], failsOnEmptyData: Bool = true) -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
-        
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         var dataRes: SYMoyaNetworkDataResponse<SwiftyJSON.JSON>
         do {
@@ -88,7 +86,6 @@ public extension SYMoyaProvider {
     /// - Returns: Protocol to define the opaque type returned from a request.
     @discardableResult
     func responseSwiftyJSON(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<SwiftyJSON.JSON>) -> Void) -> Cancellable? {
-        
         @discardableResult
         func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<SwiftyJSON.JSON>) -> Void) -> Cancellable {
             self.req(target, callbackQueue: callbackQueue, progress: progress) { result in
@@ -102,7 +99,7 @@ public extension SYMoyaProvider {
                 }
             }
         }
-        
+
         switch target.networkCacheType {
         case .urlRequestCache,.none:
             return req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)

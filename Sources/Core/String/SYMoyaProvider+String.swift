@@ -9,16 +9,44 @@
 import Foundation
 import Moya
 
-//MARK: - String Provider
-public extension SYMoyaProvider {
-    
+public protocol SYMoyaProviderStringType: AnyObject {
+    associatedtype Target: SYTargetType
     /// Get String data from cache，If there is a cache, it will be obtained in memory first. If there is no cache in the memory, the cache will be read from the disk. If there is no cached data, the completion will callback nil object
     /// - Parameters:
     ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
     ///   - atKeyPath: Optional key path at which to parse string.
     ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
     ///   - completion: Callback after completion
-    func responseStringFromCache(_ target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<String>) -> Void) {
+    func responseStringFromCache(_ target: Target, atKeyPath: String?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<String>) -> Void)
+    /// Get String data from disk cache
+    /// - Parameters:
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - atKeyPath: Optional key path at which to parse string.
+    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
+    ///   - completion: Callback after completion
+    func responseStringFromDiskCache(_ target: Target, atKeyPath: String?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<String>) -> Void)
+    /// Get String data from memory cache
+    /// - Parameters:
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - atKeyPath: Optional key path at which to parse string.
+    /// - Returns: SYMoyaNetworkDataResponse object
+    func responseStringFromMemoryCache(_ target: Target, atKeyPath: String?) -> SYMoyaNetworkDataResponse<String>
+    /// According to responseDataSourceType, request String data. The default responseDataSourceType is .server, which will request data directly from the server. The rules for requesting data refer to: ResponseDataSourceType
+    /// - Parameters:
+    ///   - responseDataSourceType: Request's responseData source type, implementing different type responseData source type
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - atKeyPath: Optional key path at which to parse string.
+    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
+    ///   - progress: Data request progress, the data progress is called back only when a request is sent to obtain server data
+    ///   - completion: Callback after completion
+    /// - Returns: Protocol to define the opaque type returned from a request.
+    @discardableResult
+    func responseString(_ responseDataSourceType: ResponseDataSourceType, target: Target, atKeyPath: String?, callbackQueue: DispatchQueue?, progress: ProgressBlock?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<String>) -> Void) -> Cancellable?
+}
+
+//MARK: - SYMoyaProviderStringType
+extension SYMoyaProvider: SYMoyaProviderStringType {
+    public func responseStringFromCache(_ target: Target, atKeyPath: String?, callbackQueue: DispatchQueue?, completion: @escaping (SYMoyaNetworkDataResponse<String>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
             switch result {
@@ -33,16 +61,8 @@ public extension SYMoyaProvider {
         }
     }
     
-    /// Get String data from disk cache
-    /// - Parameters:
-    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
-    ///   - atKeyPath: Optional key path at which to parse string.
-    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
-    ///   - completion: Callback after completion
-    func responseStringFromDiskCache(_ target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<String>) -> Void) {
-        
+    public func responseStringFromDiskCache(_ target: Target, atKeyPath: String?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<String>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-        
         self.retrieveResponseInDiskCache(target, options: options, callbackQueue: callbackQueue) { result in
             switch result {
             case .success(let response):
@@ -56,13 +76,7 @@ public extension SYMoyaProvider {
         }
     }
     
-    /// Get String data from memory cache
-    /// - Parameters:
-    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
-    ///   - atKeyPath: Optional key path at which to parse string.
-    /// - Returns: SYMoyaNetworkDataResponse object
-    func responseStringFromMemoryCache(_ target: Target, atKeyPath: String? = nil) -> SYMoyaNetworkDataResponse<String> {
-        
+    public func responseStringFromMemoryCache(_ target: Target, atKeyPath: String?) -> SYMoyaNetworkDataResponse<String> {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         var dataRes: SYMoyaNetworkDataResponse<String>
         do {
@@ -75,18 +89,8 @@ public extension SYMoyaProvider {
         return dataRes
     }
     
-    
-    /// According to responseDataSourceType, request String data. The default responseDataSourceType is .server, which will request data directly from the server. The rules for requesting data refer to: ResponseDataSourceType
-    /// - Parameters:
-    ///   - responseDataSourceType: Request's responseData source type, implementing different type responseData source type
-    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
-    ///   - atKeyPath: Optional key path at which to parse string.
-    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
-    ///   - progress: Data request progress, the data progress is called back only when a request is sent to obtain server data
-    ///   - completion: Callback after completion
-    /// - Returns: Protocol to define the opaque type returned from a request.
     @discardableResult
-    func responseString(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<String>) -> Void) -> Cancellable? {
+    public func responseString(_ responseDataSourceType: ResponseDataSourceType, target: Target, atKeyPath: String?, callbackQueue: DispatchQueue?, progress: ProgressBlock?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<String>) -> Void) -> Cancellable? {
         @discardableResult
         func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<String>) -> Void) -> Cancellable {
             self.req(target, callbackQueue: callbackQueue, progress: progress) { result in
@@ -174,6 +178,27 @@ public extension SYMoyaProvider {
             }
         }
         return nil
+    }
+}
+
+
+//MARK: - String Provider
+public extension SYMoyaProvider {
+    func responseStringFromCache(_ target: Target, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<String>) -> Void) {
+        self.responseStringFromCache(target, atKeyPath: nil, callbackQueue: callbackQueue, completion: completion)
+    }
+
+    func responseStringFromDiskCache(_ target: Target, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<String>) -> Void) {
+        self.responseStringFromDiskCache(target, atKeyPath: nil, callbackQueue: callbackQueue, completion: completion)
+    }
+    
+    func responseStringFromMemoryCache(_ target: Target) -> SYMoyaNetworkDataResponse<String> {
+        self.responseStringFromMemoryCache(target, atKeyPath: nil)
+    }
+    
+    @discardableResult
+    func responseString(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<String>) -> Void) -> Cancellable? {
+        return self.responseString(responseDataSourceType, target: target, atKeyPath: nil, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
 }
 

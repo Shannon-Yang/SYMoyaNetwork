@@ -112,13 +112,10 @@ public class SYMoyaChainRequestProvider<Target: SYTargetType> {
         }
         _ = self.startNext()
     }
-    
 }
 
 // MARK: - ChainRequestProvider
-
 extension SYMoyaChainRequestProvider {
-    
     func req(_ chainProvider: ChainProvider<Target>) {
         chainProvider.provider.request(chainProvider.target, callbackQueue: chainProvider.callbackQueue, progress: chainProvider.progress) { result in
             switch result {
