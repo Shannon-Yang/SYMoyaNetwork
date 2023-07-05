@@ -87,7 +87,7 @@ public protocol SYMoyaProviderObjectType: AnyObject {
 
 //MARK: - SYMoyaProviderObjectType
 extension SYMoyaProvider: SYMoyaProviderObjectType {
-    func responseObjectFromCache<T: BaseMappable>(_ target: Target, keyPath: String?, context: MapContext?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void){
+    public func responseObjectFromCache<T: BaseMappable>(_ target: Target, keyPath: String?, context: MapContext?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void){
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
             switch result {
@@ -102,7 +102,7 @@ extension SYMoyaProvider: SYMoyaProviderObjectType {
         }
     }
     
-    func responseObjectFromDiskCache<T: BaseMappable>(_ target: Target, keyPath: String?, context: MapContext?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void){
+    public func responseObjectFromDiskCache<T: BaseMappable>(_ target: Target, keyPath: String?, context: MapContext?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void){
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieveResponseInDiskCache(target, options: options, callbackQueue: callbackQueue) { result in
             switch result {
@@ -117,7 +117,7 @@ extension SYMoyaProvider: SYMoyaProviderObjectType {
         }
     }
     
-    func responseObjectFromMemoryCache<T: BaseMappable>(_ target: Target, keyPath: String?, context: MapContext?) -> SYMoyaNetworkDataResponse<T>{
+    public func responseObjectFromMemoryCache<T: BaseMappable>(_ target: Target, keyPath: String?, context: MapContext?) -> SYMoyaNetworkDataResponse<T>{
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         var dataRes: SYMoyaNetworkDataResponse<T>
         do {
@@ -131,7 +131,7 @@ extension SYMoyaProvider: SYMoyaProviderObjectType {
     }
     
     @discardableResult
-    func responseObject<T: BaseMappable>(_ responseDataSourceType: ResponseDataSourceType, target: Target, keyPath: String?, context: MapContext?, callbackQueue: DispatchQueue?, progress: ProgressBlock?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable?{
+    public func responseObject<T: BaseMappable>(_ responseDataSourceType: ResponseDataSourceType, target: Target, keyPath: String?, context: MapContext?, callbackQueue: DispatchQueue?, progress: ProgressBlock?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable?{
         @discardableResult
         func req<T: BaseMappable>(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable {
             self.req(target, callbackQueue: callbackQueue, progress: progress) { result in
@@ -220,7 +220,7 @@ extension SYMoyaProvider: SYMoyaProviderObjectType {
         return nil
     }
     
-    func responseObjectsFromCache<T: BaseMappable>(_ target: Target, keyPath: String?, context: MapContext?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void){
+    public func responseObjectsFromCache<T: BaseMappable>(_ target: Target, keyPath: String?, context: MapContext?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void){
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
             switch result {
@@ -235,7 +235,7 @@ extension SYMoyaProvider: SYMoyaProviderObjectType {
         }
     }
     
-    func responseObjectsFromDiskCache<T: BaseMappable>(_ target: Target, keyPath: String?, context: MapContext?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void){
+    public func responseObjectsFromDiskCache<T: BaseMappable>(_ target: Target, keyPath: String?, context: MapContext?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void){
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieveResponseInDiskCache(target, options: options, callbackQueue: callbackQueue) { result in
             switch result {
@@ -250,7 +250,7 @@ extension SYMoyaProvider: SYMoyaProviderObjectType {
         }
     }
     
-    func responseObjectsFromMemoryCache<T: BaseMappable>(_ target: Target, keyPath: String?, context: MapContext?) -> SYMoyaNetworkDataResponse<[T]>{
+    public func responseObjectsFromMemoryCache<T: BaseMappable>(_ target: Target, keyPath: String?, context: MapContext?) -> SYMoyaNetworkDataResponse<[T]>{
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         var dataRes: SYMoyaNetworkDataResponse<[T]>
         do {
@@ -264,7 +264,7 @@ extension SYMoyaProvider: SYMoyaProviderObjectType {
     }
     
     @discardableResult
-    func responseObjects<T: BaseMappable>(_ responseDataSourceType: ResponseDataSourceType, target: Target, keyPath: String?, context: MapContext?, callbackQueue: DispatchQueue?, progress: ProgressBlock?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void) -> Cancellable?{
+    public func responseObjects<T: BaseMappable>(_ responseDataSourceType: ResponseDataSourceType, target: Target, keyPath: String?, context: MapContext?, callbackQueue: DispatchQueue?, progress: ProgressBlock?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void) -> Cancellable?{
         @discardableResult
         func req<T: BaseMappable>(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void) -> Cancellable {
             self.req(target, callbackQueue: callbackQueue, progress: progress) { result in
@@ -391,29 +391,43 @@ public extension SYMoyaProvider {
     }
     
   
-    func responseObjectsFromCache<T: BaseMappable>(_ target: Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void) {
-        
+    func responseObjectsFromCache<T: BaseMappable>(_ target: Target, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void) {
+        self.responseObjectsFromCache(target, keyPath: nil, context: context, callbackQueue: callbackQueue, completion: completion)
     }
     
-    func responseObjectsFromDiskCache<T: BaseMappable>(_ target: Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void) {
-        
-       
+    func responseObjectsFromCache<T: BaseMappable>(_ target: Target, keyPath: String? = nil, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void) {
+        self.responseObjectsFromCache(target, keyPath: keyPath, context: nil, callbackQueue: callbackQueue, completion: completion)
+    }
+    
+    func responseObjectsFromDiskCache<T: BaseMappable>(_ target: Target, keyPath: String? = nil, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void) {
+        self.responseObjectsFromDiskCache(target, keyPath: keyPath, context: nil, callbackQueue: callbackQueue, completion: completion)
+    }
+    
+    func responseObjectsFromDiskCache<T: BaseMappable>(_ target: Target, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void) {
+        self.responseObjectsFromDiskCache(target, keyPath: nil, context: context, callbackQueue: callbackQueue, completion: completion)
     }
    
-    func responseObjectsFromMemoryCache<T: BaseMappable>(_ target: Target, keyPath: String? = nil, context: MapContext? = nil) -> SYMoyaNetworkDataResponse<[T]> {
-       
+    func responseObjectsFromMemoryCache<T: BaseMappable>(_ target: Target, context: MapContext? = nil) -> SYMoyaNetworkDataResponse<[T]> {
+        self.responseObjectsFromMemoryCache(target, keyPath: nil, context: context)
+    }
+    
+    func responseObjectsFromMemoryCache<T: BaseMappable>(_ target: Target, keyPath: String? = nil) -> SYMoyaNetworkDataResponse<[T]> {
+        self.responseObjectsFromMemoryCache(target, keyPath: keyPath, context: nil)
     }
     
     @discardableResult
-    func responseObjects<T: BaseMappable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void) -> Cancellable? {
-        
-       
+    func responseObjects<T: BaseMappable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void) -> Cancellable? {
+        return self.responseObjects(responseDataSourceType, target: target, keyPath: nil, context: context, callbackQueue: callbackQueue, progress: progress, completion: completion)
+    }
+    
+    @discardableResult
+    func responseObjects<T: BaseMappable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, keyPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void) -> Cancellable? {
+        return self.responseObjects(responseDataSourceType, target: target, keyPath: keyPath, context: nil, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
 }
 
 //MARK: - Extension
 public extension SYMoyaProvider {
-    
     func serializerObjectDataResponse<T: BaseMappable>(_ response: Moya.Response, keyPath: String? = nil, context: MapContext? = nil) -> SYMoyaNetworkDataResponse<T> {
         let dataRes: SYMoyaNetworkDataResponse<T>
         do {

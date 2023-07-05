@@ -11,16 +11,77 @@ import Moya
 import HandyJSON
 import SYMoyaNetwork
 
-//MARK: - HandyJSON Provider
-public extension SYMoyaProvider {
-    
+public protocol SYMoyaProviderHandyJSONType: AnyObject {
+    associatedtype Target: SYTargetType
     /// Get HandyJSON generic object data from cache，If there is a cache, it will be obtained in memory first. If there is no cache in the memory, the cache will be read from the disk. If there is no cached data, the completion will callback nil object
     /// - Parameters:
     ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
     ///   - designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
     ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
     ///   - completion: The callback after completion, returns the HandyJSON generic object
-    func responseObjectFromCache<T: HandyJSON>(_ target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
+    func responseObjectFromCache<T: HandyJSON>(_ target: Target, designatedPath: String?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void)
+    /// Get HandyJSON generic object data from disk cache
+    /// - Parameters:
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
+    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
+    ///   - completion: The callback after completion, returns the HandyJSON generic object
+    func responseObjectFromDiskCache<T: HandyJSON>(_ target: Target, designatedPath: String?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void)
+    /// Get HandyJSON generic object data from memory cache
+    /// - Parameters:
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
+    /// - Returns: SYMoyaNetworkDataResponse object
+    func responseObjectFromMemoryCache<T: HandyJSON>(_ target: Target, designatedPath: String?) -> SYMoyaNetworkDataResponse<T>
+    /// According to responseDataSourceType, request HandyJSON generic object data. The default responseDataSourceType is .server, which will request data directly from the server. The rules for requesting data refer to: ResponseDataSourceType
+    /// - Parameters:
+    ///   - responseDataSourceType: Request's responseData source type, implementing different type responseData source type
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
+    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
+    ///   - progress: Data request progress, the data progress is called back only when a request is sent to obtain server data
+    ///   - completion: The callback after completion, returns the HandyJSON generic object
+    /// - Returns: Protocol to define the opaque type returned from a request.
+    @discardableResult
+    func responseObject<T: HandyJSON>(_ responseDataSourceType: ResponseDataSourceType, target: Target, designatedPath: String?, callbackQueue: DispatchQueue?, progress: ProgressBlock?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable?
+    /// Get HandyJSON generic object array data from cache，If there is a cache, it will be obtained in memory first. If there is no cache in the memory, the cache will be read from the disk. If there is no cached data, the completion will callback nil object
+    /// - Parameters:
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
+    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
+    ///   - completion: The callback after completion, returns the HandyJSON generic object array
+    func responseObjectsFromCache<T: HandyJSON>(_ target: Target, designatedPath: String?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T?]?>) -> Void)
+    /// Get HandyJSON generic object array data from disk cache
+    /// - Parameters:
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
+    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
+    ///   - completion: The callback after completion, returns the HandyJSON generic object array
+    func responseObjectsFromDiskCache<T: HandyJSON>(_ target: Target, designatedPath: String?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T?]?>) -> Void)
+    /// Get HandyJSON generic object array data from memory cache
+    /// - Parameters:
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
+    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
+    ///   - completion: The callback after completion, returns the HandyJSON generic object array
+    func responseObjectsFromMemoryCache<T: HandyJSON>(_ target: Target, designatedPath: String?) -> SYMoyaNetworkDataResponse<[T?]?>
+    /// According to responseDataSourceType, request HandyJSON generic object array data. The default responseDataSourceType is .server, which will request data directly from the server. The rules for requesting data refer to: ResponseDataSourceType
+    /// - Parameters:
+    ///   - responseDataSourceType: Request's responseData source type, implementing different type responseData source type
+    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
+    ///   - designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
+    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
+    ///   - progress: Data request progress, the data progress is called back only when a request is sent to obtain server data
+    ///   - completion: The callback after completion, returns the HandyJSON generic object array
+    /// - Returns: Protocol to define the opaque type returned from a request.
+    @discardableResult
+    func responseObjects<T: HandyJSON>(_ responseDataSourceType: ResponseDataSourceType, target: Target, designatedPath: String?, callbackQueue: DispatchQueue?, progress: ProgressBlock?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T?]?>) -> Void) -> Cancellable?
+}
+
+
+//MARK: - SYMoyaProviderHandyJSONType
+extension SYMoyaProvider: SYMoyaProviderHandyJSONType {
+    public func responseObjectFromCache<T: HandyJSON>(_ target: Target, designatedPath: String?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
             switch result {
@@ -35,16 +96,9 @@ public extension SYMoyaProvider {
         }
     }
     
-    /// Get HandyJSON generic object data from disk cache
-    /// - Parameters:
-    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
-    ///   - designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
-    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
-    ///   - completion: The callback after completion, returns the HandyJSON generic object
-    func responseObjectFromDiskCache<T: HandyJSON>(_ target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
-        
+    
+    public func responseObjectFromDiskCache<T: HandyJSON>(_ target: Target, designatedPath: String?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-        
         self.retrieveResponseInDiskCache(target, options: options, callbackQueue: callbackQueue) { result in
             switch result {
             case .success(let response):
@@ -58,12 +112,8 @@ public extension SYMoyaProvider {
         }
     }
     
-    /// Get HandyJSON generic object data from memory cache
-    /// - Parameters:
-    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
-    ///   - designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
-    /// - Returns: SYMoyaNetworkDataResponse object
-    func responseObjectFromMemoryCache<T: HandyJSON>(_ target: Target, designatedPath: String? = nil) -> SYMoyaNetworkDataResponse<T> {
+    
+    public func responseObjectFromMemoryCache<T: HandyJSON>(_ target: Target, designatedPath: String?) -> SYMoyaNetworkDataResponse<T> {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         var dataRes: SYMoyaNetworkDataResponse<T>
         do {
@@ -76,17 +126,9 @@ public extension SYMoyaProvider {
         return dataRes
     }
     
-    /// According to responseDataSourceType, request HandyJSON generic object data. The default responseDataSourceType is .server, which will request data directly from the server. The rules for requesting data refer to: ResponseDataSourceType
-    /// - Parameters:
-    ///   - responseDataSourceType: Request's responseData source type, implementing different type responseData source type
-    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
-    ///   - designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
-    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
-    ///   - progress: Data request progress, the data progress is called back only when a request is sent to obtain server data
-    ///   - completion: The callback after completion, returns the HandyJSON generic object
-    /// - Returns: Protocol to define the opaque type returned from a request.
+    
     @discardableResult
-    func responseObject<T: HandyJSON>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable? {
+    public func responseObject<T: HandyJSON>(_ responseDataSourceType: ResponseDataSourceType, target: Target, designatedPath: String?, callbackQueue: DispatchQueue?, progress: ProgressBlock?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable? {
         @discardableResult
         func req<T: HandyJSON>(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable {
             self.req(target, callbackQueue: callbackQueue, progress: progress) { result in
@@ -176,13 +218,8 @@ public extension SYMoyaProvider {
         return nil
     }
     
-    /// Get HandyJSON generic object array data from cache，If there is a cache, it will be obtained in memory first. If there is no cache in the memory, the cache will be read from the disk. If there is no cached data, the completion will callback nil object
-    /// - Parameters:
-    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
-    ///   - designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
-    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
-    ///   - completion: The callback after completion, returns the HandyJSON generic object array
-    func responseObjectsFromCache<T: HandyJSON>(_ target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T?]?>) -> Void) {
+    
+    public func responseObjectsFromCache<T: HandyJSON>(_ target: Target, designatedPath: String?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T?]?>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
             switch result {
@@ -197,16 +234,9 @@ public extension SYMoyaProvider {
         }
     }
     
-    /// Get HandyJSON generic object array data from disk cache
-    /// - Parameters:
-    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
-    ///   - designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
-    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
-    ///   - completion: The callback after completion, returns the HandyJSON generic object array
-    func responseObjectsFromDiskCache<T: HandyJSON>(_ target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T?]?>) -> Void) {
-        
+    
+    public func responseObjectsFromDiskCache<T: HandyJSON>(_ target: Target, designatedPath: String?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T?]?>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-        
         self.retrieveResponseInDiskCache(target, options: options, callbackQueue: callbackQueue) { result in
             switch result {
             case .success(let response):
@@ -220,14 +250,8 @@ public extension SYMoyaProvider {
         }
     }
     
-    /// Get HandyJSON generic object array data from memory cache
-    /// - Parameters:
-    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
-    ///   - designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
-    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
-    ///   - completion: The callback after completion, returns the HandyJSON generic object array
-    func responseObjectsFromMemoryCache<T: HandyJSON>(_ target: Target, designatedPath: String? = nil) -> SYMoyaNetworkDataResponse<[T?]?> {
-        
+    
+    public func responseObjectsFromMemoryCache<T: HandyJSON>(_ target: Target, designatedPath: String?) -> SYMoyaNetworkDataResponse<[T?]?> {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         var dataRes: SYMoyaNetworkDataResponse<[T?]?>
         do {
@@ -241,18 +265,9 @@ public extension SYMoyaProvider {
     }
     
     
-    /// According to responseDataSourceType, request HandyJSON generic object array data. The default responseDataSourceType is .server, which will request data directly from the server. The rules for requesting data refer to: ResponseDataSourceType
-    /// - Parameters:
-    ///   - responseDataSourceType: Request's responseData source type, implementing different type responseData source type
-    ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
-    ///   - designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
-    ///   - callbackQueue: Callback thread, the default is none, the default is the main thread
-    ///   - progress: Data request progress, the data progress is called back only when a request is sent to obtain server data
-    ///   - completion: The callback after completion, returns the HandyJSON generic object array
-    /// - Returns: Protocol to define the opaque type returned from a request.
+    
     @discardableResult
-    func responseObjects<T: HandyJSON>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T?]?>) -> Void) -> Cancellable? {
-        
+    public func responseObjects<T: HandyJSON>(_ responseDataSourceType: ResponseDataSourceType, target: Target, designatedPath: String?, callbackQueue: DispatchQueue?, progress: ProgressBlock?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T?]?>) -> Void) -> Cancellable? {
         @discardableResult
         func req<T: HandyJSON>(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T?]?>) -> Void) -> Cancellable {
             self.req(target, callbackQueue: callbackQueue, progress: progress) { result in
@@ -340,6 +355,49 @@ public extension SYMoyaProvider {
             }
         }
         return nil
+    }
+}
+
+
+//MARK: - HandyJSON Provider
+public extension SYMoyaProvider {
+    
+    func responseObjectFromCache<T: HandyJSON>(_ target: Target, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
+        self.responseObjectFromCache(target, designatedPath: nil, callbackQueue: callbackQueue, completion: completion)
+    }
+    
+    func responseObjectFromDiskCache<T: HandyJSON>(_ target: Target, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
+        self.responseObjectFromDiskCache(target, designatedPath: nil, callbackQueue: callbackQueue, completion: completion)
+    }
+    
+    
+    func responseObjectFromMemoryCache<T: HandyJSON>(_ target: Target) -> SYMoyaNetworkDataResponse<T> {
+        self.responseObjectFromMemoryCache(target, designatedPath: nil)
+    }
+    
+    
+    @discardableResult
+    func responseObject<T: HandyJSON>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable? {
+        return self.responseObject(responseDataSourceType, target: target, designatedPath: nil, callbackQueue: callbackQueue, progress: progress, completion: completion)
+    }
+    
+    
+    func responseObjectsFromCache<T: HandyJSON>(_ target: Target, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T?]?>) -> Void) {
+        self.responseObjectsFromCache(target, designatedPath: nil, callbackQueue: callbackQueue, completion: completion)
+    }
+    
+    
+    func responseObjectsFromDiskCache<T: HandyJSON>(_ target: Target, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T?]?>) -> Void) {
+        self.responseObjectsFromDiskCache(target, designatedPath: nil, callbackQueue: callbackQueue, completion: completion)
+    }
+    
+    func responseObjectsFromMemoryCache<T: HandyJSON>(_ target: Target) -> SYMoyaNetworkDataResponse<[T?]?> {
+        self.responseObjectsFromMemoryCache(target, designatedPath: nil)
+    }
+    
+    @discardableResult
+    func responseObjects<T: HandyJSON>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T?]?>) -> Void) -> Cancellable? {
+        return self.responseObjects(responseDataSourceType, target: target, designatedPath: nil, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
 }
 

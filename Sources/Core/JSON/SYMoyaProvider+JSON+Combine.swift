@@ -46,7 +46,7 @@ public extension SYMoyaProvider {
     
     func responseJSONPublisher(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher <SYMoyaNetworkDataResponse<Any>> {
         return SYMoyaPublisher { subscriber in
-            return self.responseJSON(target: target, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
+            return self.responseJSON(responseDataSourceType, target: target, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
                 _ = subscriber.receive(dataResponse)
                 subscriber.receive(completion: .finished)
             })
