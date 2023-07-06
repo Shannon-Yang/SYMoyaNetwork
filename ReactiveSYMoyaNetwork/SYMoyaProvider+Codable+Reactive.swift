@@ -12,42 +12,42 @@ import SYMoyaNetwork
 
 extension Reactive where Base: SYMoyaProviderCodableType {
     func responseCodableObjectFromCache<T: Decodable>(_ target: Base.Target, atKeyPath keyPath: String?, using decoder: JSONDecoder, failsOnEmptyData: Bool, callbackQueue: DispatchQueue?) -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
-        return Observable.create { [weak base] observer in
+        SignalProducer { [weak base] observer, lifetime in
             base?.responseCodableObjectFromCache(target, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.on(.next(dataResponse))
-                observer.on(.completed)
+                observer.send(value: dataResponse)
+                observer.sendCompleted()
             })
-            return Disposables.create()
+            lifetime.observeEnded { }
         }
     }
     
     func responseCodableObjectFromDiskCache<T: Decodable>(_ target: Base.Target, atKeyPath keyPath: String?, using decoder: JSONDecoder, failsOnEmptyData: Bool, callbackQueue: DispatchQueue?) -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
-        return Observable.create { [weak base] observer in
+        SignalProducer { [weak base] observer, lifetime in
             base?.responseCodableObjectFromDiskCache(target, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.on(.next(dataResponse))
-                observer.on(.completed)
+                observer.send(value: dataResponse)
+                observer.sendCompleted()
             })
-            return Disposables.create()
+            lifetime.observeEnded { }
         }
     }
     
     func responseCodableObjectFromMemoryCache<T: Decodable>(_ target: Base.Target, atKeyPath keyPath: String?, using decoder: JSONDecoder, failsOnEmptyData: Bool)  -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
         let dataResponse: SYMoyaNetworkDataResponse<T> = base.responseCodableObjectFromMemoryCache(target, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
-        return Observable.create { observer in
-            observer.on(.next(dataResponse))
-            observer.on(.completed)
-            return Disposables.create()
+        return SignalProducer<SYMoyaNetworkDataResponse<T>, Never> { observer, lifetime in
+            observer.send(value: dataResponse)
+            observer.sendCompleted()
+            lifetime.observeEnded { }
         }
     }
     
     
     func responseCodableObject<T: Decodable>(_ responseDataSourceType: ResponseDataSourceType, target: Base.Target, atKeyPath keyPath: String?, using decoder: JSONDecoder, failsOnEmptyData: Bool, callbackQueue: DispatchQueue?, progress: ProgressBlock?) -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
-        return Observable.create { [weak base] observer in
+        SignalProducer { [weak base] observer, lifetime in
             let cancellable = base?.responseCodableObject(responseDataSourceType, target: target, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
-                observer.on(.next(dataResponse))
-                observer.on(.completed)
+                observer.send(value: dataResponse)
+                observer.sendCompleted()
             })
-            return Disposables.create { cancellable?.cancel() }
+            lifetime.observeEnded { cancellable?.cancel() }
         }
     }
 }

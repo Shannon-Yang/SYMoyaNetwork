@@ -12,41 +12,41 @@ import SYMoyaNetwork
 
 extension Reactive where Base: SYMoyaProviderImageType {
     func responseImageFromCache(_ target: Base.Target, callbackQueue: DispatchQueue?) -> SignalProducer<SYMoyaNetworkDataResponse<Image>, Never> {
-        return Observable.create { [weak base] observer in
+        SignalProducer { [weak base] observer, lifetime in
             base?.responseImageFromCache(target, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.on(.next(dataResponse))
-                observer.on(.completed)
+                observer.send(value: dataResponse)
+                observer.sendCompleted()
             })
-            return Disposables.create()
+            lifetime.observeEnded { }
         }
     }
    
     func responseImageFromDiskCache(_ target: Base.Target, callbackQueue: DispatchQueue?) -> SignalProducer<SYMoyaNetworkDataResponse<Image>, Never> {
-        return Observable.create { [weak base] observer in
+        SignalProducer { [weak base] observer, lifetime in
             base?.responseImageFromDiskCache(target, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.on(.next(dataResponse))
-                observer.on(.completed)
+                observer.send(value: dataResponse)
+                observer.sendCompleted()
             })
-            return Disposables.create()
+            lifetime.observeEnded { }
         }
     }
     
     func responseImageFromMemoryCache(_ target: Base.Target) -> SignalProducer<SYMoyaNetworkDataResponse<Image>, Never> {
         let dataResponse = base.responseImageFromMemoryCache(target)
-        return Observable.create { observer in
-            observer.on(.next(dataResponse))
-            observer.on(.completed)
-            return Disposables.create()
+        return SignalProducer<SYMoyaNetworkDataResponse<Image>, Never> { observer, lifetime in
+            observer.send(value: dataResponse)
+            observer.sendCompleted()
+            lifetime.observeEnded { }
         }
     }
     
     func responseImage(_ responseDataSourceType: ResponseDataSourceType, target: Base.Target, callbackQueue: DispatchQueue?, progress: ProgressBlock?) -> SignalProducer<SYMoyaNetworkDataResponse<Image>, Never> {
-        return Observable.create { [weak base] observer in
+        SignalProducer { [weak base] observer, lifetime in
             let cancellable = base?.responseImage(responseDataSourceType, target: target, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
-                observer.on(.next(dataResponse))
-                observer.on(.completed)
+                observer.send(value: dataResponse)
+                observer.sendCompleted()
             })
-            return Disposables.create { cancellable?.cancel() }
+            lifetime.observeEnded { cancellable?.cancel() }
         }
     }
 }
