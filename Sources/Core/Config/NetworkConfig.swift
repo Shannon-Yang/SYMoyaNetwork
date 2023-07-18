@@ -9,11 +9,11 @@
 import Foundation
 import Moya
 
+/// Default Log Configuation
+public typealias LogConfiguration = SYMoyaNetworkLoggerPlugin.Configuration
+
 // Network configuration object, you can configure network log and network cache objects by setting logConfiguration and networkCache
 public struct NetworkConfig {
-    
-    /// Default Log Configuation
-    public typealias LogConfiguration = SYMoyaNetworkLoggerPlugin.Configuration
     
     /// Single Object
     public static var sharedInstance : NetworkConfig = NetworkConfig()
@@ -27,7 +27,6 @@ public struct NetworkConfig {
 
 // MARK: - Internal
 extension NetworkConfig {
-    
    static func defaultLogConfiguration() -> LogConfiguration {
         return LogConfiguration()
     }
@@ -35,5 +34,4 @@ extension NetworkConfig {
     static func defaultNetworkCache() -> NetworkCache {
         return NetworkCache(name: "Default")
     }
-
 }

@@ -27,7 +27,6 @@ public class SYMoyaPublisher<Output>: Publisher {
 
         func request(_ demand: Subscribers.Demand) {
             guard demand > .none else { return }
-
             cancellable = performCall()
         }
 

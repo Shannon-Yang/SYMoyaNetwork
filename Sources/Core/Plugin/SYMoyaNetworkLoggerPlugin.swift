@@ -67,14 +67,12 @@ public extension SYMoyaNetworkLoggerPlugin.Configuration {
 public extension SYMoyaNetworkLoggerPlugin {
     
     struct Configuration {
-        
         // MARK: - Typealiases
         // swiftlint:disable nesting
         public typealias OutputType = (_ target: TargetType, _ items: [String]) -> Void
         // swiftlint:enable nesting
         
         // MARK: - Properties
-        
         public var formatter: Formatter
         public var output: OutputType
         public var logOptions: LogOptions
@@ -98,7 +96,6 @@ public extension SYMoyaNetworkLoggerPlugin {
         }
         
         // MARK: - Defaults
-        
         public static func defaultOutput(target: TargetType, items: [String]) {
             items.forEach({ print($0) })
         }
@@ -108,7 +105,6 @@ public extension SYMoyaNetworkLoggerPlugin {
 public extension SYMoyaNetworkLoggerPlugin.Configuration {
     
     struct Formatter {
-        
         // MARK: Typealiases
         // swiftlint:disable nesting
         public typealias DataFormatterType = (Data) -> (String)
@@ -116,7 +112,6 @@ public extension SYMoyaNetworkLoggerPlugin.Configuration {
         // swiftlint:enable nesting
         
         // MARK: Properties
-        
         public var entry: EntryFormatterType
         public var requestData: DataFormatterType
         public var responseData: DataFormatterType
@@ -137,7 +132,6 @@ public extension SYMoyaNetworkLoggerPlugin.Configuration {
         }
         
         // MARK: Defaults
-        
         public static func defaultDataFormatter(_ data: Data) -> String {
             do {
                 guard let rawString = try JSON(data: data).rawString() else { return "## Cannot map data to String ##" }

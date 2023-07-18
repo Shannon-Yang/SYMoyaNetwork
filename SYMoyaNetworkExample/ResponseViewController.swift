@@ -14,6 +14,7 @@ class ResponseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Example Detail"
+
         
 //        let pro = SYMoyaProvider<GitHub>()
 //        pro.responseString(target: .zen) { dataResponse in

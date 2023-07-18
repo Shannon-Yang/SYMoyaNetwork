@@ -1,14 +1,13 @@
 //
-//  ReactiveSYMoyaNetworkTests.swift
-//  ReactiveSYMoyaNetworkTests
+//  SYMoyaNetworkTests.swift
+//  SYMoyaNetworkTests
 //
-//  Created by Shannon Yang on 2023/7/5.
+//  Created by Shannon Yang on 2023/7/18.
 //
 
 import XCTest
-@testable import ReactiveSYMoyaNetwork
 
-class ReactiveSYMoyaNetworkTests: XCTestCase {
+final class SYMoyaNetworkTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -28,7 +27,7 @@ class ReactiveSYMoyaNetworkTests: XCTestCase {
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
-        self.measure {
+        measure {
             // Put the code you want to measure the time of here.
         }
     }
