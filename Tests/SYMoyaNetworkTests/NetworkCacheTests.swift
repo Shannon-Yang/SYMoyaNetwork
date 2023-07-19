@@ -7,6 +7,7 @@
 
 import Foundation
 import XCTest
+import Moya
 @testable import SYMoyaNetwork
 
 func clearCaches(_ caches: [NetworkCache]) {
@@ -16,15 +17,37 @@ func clearCaches(_ caches: [NetworkCache]) {
     }
 }
 
+let testKeys = [
+    "Key1",
+    "Key2",
+    "Key3",
+    "Key4"
+]
+
+func cleanDefaultCache() {
+    let cache = NetworkConfig.sharedInstance.networkCache
+    cache.clearMemoryCache()
+    try? cache.diskStorage.removeAll()
+}
+
 class NetworkCacheTest: XCTestCase {
     
     var cache: NetworkCache!
+    var response: Moya.Response!
+    var observer: NSObjectProtocol!
+
     override func setUp() {
         super.setUp()
         
         let uuid = UUID().uuidString
         let cacheName = "test-\(uuid)"
         cache = NetworkCache(name: cacheName)
+        
+        
+        let fileURL = Bundle.main.url(forResource: "test", withExtension: ".json")!
+        let data = try! Data(contentsOf: fileURL)
+        
+        response = Moya.Response(statusCode: 200, data: data)
     }
     
     override func tearDown() {
@@ -91,14 +114,14 @@ class NetworkCacheTest: XCTestCase {
     func testClearDiskCache() {
         let exp = expectation(description: #function)
         let key = testKeys[0]
-        cache.store(testImage, original: testImageData, forKey: key, toDisk: true) { _ in
+        cache.store(response, forKey: key, toDisk: true) { _ in
             self.cache.clearMemoryCache()
-            let cacheResult = self.cache.imageCachedType(forKey: key)
+            let cacheResult = self.cache.responseCachedType(forKey: key)
             XCTAssertTrue(cacheResult.cached)
             XCTAssertEqual(cacheResult, .disk)
             
             self.cache.clearDiskCache {
-                let cacheResult = self.cache.imageCachedType(forKey: key)
+                let cacheResult = self.cache.responseCachedType(forKey: key)
                 XCTAssertFalse(cacheResult.cached)
                 exp.fulfill()
             }
@@ -109,11 +132,11 @@ class NetworkCacheTest: XCTestCase {
     func testClearMemoryCache() {
         let exp = expectation(description: #function)
         let key = testKeys[0]
-        cache.store(testImage, original: testImageData, forKey: key, toDisk: true) { _ in
+        cache.store(response, forKey: key, toDisk: true) { _ in
             self.cache.clearMemoryCache()
-            self.cache.retrieveImage(forKey: key) { result in
-                XCTAssertNotNil(result.value?.image)
-                XCTAssertEqual(result.value?.cacheType, .disk)
+            self.cache.retrieveResponse(forKey: key) { result in
+                XCTAssertNotNil(result.success?.response)
+                XCTAssertEqual(result.success?.cacheType, .disk)
                 exp.fulfill()
             }
         }
@@ -122,9 +145,9 @@ class NetworkCacheTest: XCTestCase {
     
     func testNoImageFound() {
         let exp = expectation(description: #function)
-        cache.retrieveImage(forKey: testKeys[0]) { result in
-            XCTAssertNotNil(result.value)
-            XCTAssertNil(result.value!.image)
+        cache.retrieveResponse(forKey: testKeys[0]) { result in
+            XCTAssertNotNil(result.success)
+            XCTAssertNil(result.success!.response)
             exp.fulfill()
         }
         waitForExpectations(timeout: 3, handler: nil)
@@ -134,17 +157,17 @@ class NetworkCacheTest: XCTestCase {
         let URLString = testKeys[0]
         let url = URL(string: URLString)!
         
-        let exists = cache.imageCachedType(forKey: url.cacheKey).cached
+        let exists = cache.responseCachedType(forKey: "default").cached
         XCTAssertFalse(exists)
     }
     
     func testStoreImageInMemory() {
         let exp = expectation(description: #function)
         let key = testKeys[0]
-        cache.store(testImage, forKey: key, toDisk: false) { _ in
-            self.cache.retrieveImage(forKey: key) { result in
-                XCTAssertNotNil(result.value?.image)
-                XCTAssertEqual(result.value?.cacheType, .memory)
+        cache.store(response, forKey: key, toDisk: false) { _ in
+            self.cache.retrieveResponse(forKey: key) { result in
+                XCTAssertNotNil(result.success?.response)
+                XCTAssertEqual(result.success?.cacheType, .memory)
                 exp.fulfill()
             }
         }
@@ -172,29 +195,29 @@ class NetworkCacheTest: XCTestCase {
         let key = testKeys[0]
         let url = URL(string: key)!
         
-        let exists = cache.imageCachedType(forKey: url.cacheKey).cached
+        let exists = cache.responseCachedType(forKey: "default").cached
         XCTAssertFalse(exists)
         
-        cache.retrieveImage(forKey: key) { result in
+        cache.retrieveResponse(forKey: key) { result in
             switch result {
             case .success(let value):
-                XCTAssertNil(value.image)
+                XCTAssertNil(value.response)
                 XCTAssertEqual(value.cacheType, .none)
             case .failure:
                 XCTFail()
                 return
             }
             
-            self.cache.store(testImage, forKey: key, toDisk: true) { _ in
-                self.cache.retrieveImage(forKey: key) { result in
+            self.cache.store(self.response, forKey: key, toDisk: true) { _ in
+                self.cache.retrieveResponse(forKey: key) { result in
                     
-                    XCTAssertNotNil(result.value?.image)
-                    XCTAssertEqual(result.value?.cacheType, .memory)
+                    XCTAssertNotNil(result.success?.response)
+                    XCTAssertEqual(result.success?.cacheType, .memory)
                     
                     self.cache.clearMemoryCache()
-                    self.cache.retrieveImage(forKey: key) { result in
-                        XCTAssertNotNil(result.value?.image)
-                        XCTAssertEqual(result.value?.cacheType, .disk)
+                    self.cache.retrieveResponse(forKey: key) { result in
+                        XCTAssertNotNil(result.success?.response)
+                        XCTAssertEqual(result.success?.cacheType, .disk)
                         
                         exp.fulfill()
                     }
@@ -205,38 +228,22 @@ class NetworkCacheTest: XCTestCase {
         waitForExpectations(timeout: 3, handler: nil)
     }
     
-    func testCachedFileWithCustomPathExtensionExists() {
-        cache.diskStorage.config.pathExtension = "jpg"
-        let exp = expectation(description: #function)
-        
-        let key = testKeys[0]
-        let url = URL(string: key)!
-        
-        cache.store(testImage, forKey: key, toDisk: true) { _ in
-            let cachePath = self.cache.cachePath(forKey: url.cacheKey)
-            XCTAssertTrue(cachePath.hasSuffix(".jpg"))
-            exp.fulfill()
-        }
-        
-        waitForExpectations(timeout: 3, handler: nil)
-    }
-    
     
     func testCachedImageIsFetchedSyncronouslyFromTheMemoryCache() {
-        cache.store(testImage, forKey: testKeys[0], toDisk: false)
-        var foundImage: KFCrossPlatformImage?
-        cache.retrieveImage(forKey: testKeys[0]) { result in
-            foundImage = result.value?.image
+        cache.store(response, forKey: testKeys[0], toDisk: false)
+        var foundResponse: Moya.Response?
+        cache.retrieveResponse(forKey: testKeys[0]) { result in
+            foundResponse = result.success?.response
         }
-        XCTAssertEqual(testImage, foundImage)
+        XCTAssertEqual(response, foundResponse)
     }
     
     func testIsImageCachedForKey() {
         let exp = expectation(description: #function)
         let key = testKeys[0]
-        XCTAssertFalse(cache.imageCachedType(forKey: key).cached)
-        cache.store(testImage, original: testImageData, forKey: key, toDisk: true) { _ in
-            XCTAssertTrue(self.cache.imageCachedType(forKey: key).cached)
+        XCTAssertFalse(cache.responseCachedType(forKey: key).cached)
+        cache.store(response, forKey: key, toDisk: true) { _ in
+            XCTAssertTrue(self.cache.responseCachedType(forKey: key).cached)
             exp.fulfill()
         }
         waitForExpectations(timeout: 3, handler: nil)
@@ -248,18 +255,18 @@ class NetworkCacheTest: XCTestCase {
         
         cache.diskStorage.config.expiration = .seconds(0.01)
         
-        cache.store(testImage, original: testImageData, forKey: key, toDisk: true) { _ in
+        cache.store(response, forKey: key, toDisk: true) { _ in
             self.observer = NotificationCenter.default.addObserver(
-                forName: .KingfisherDidCleanDiskCache,
+                forName: .SYMoyaNetworkDidCleanDiskCache,
                 object: self.cache,
                 queue: .main) {
                     noti in
-                    let receivedCache = noti.object as? ImageCache
+                    let receivedCache = noti.object as? NetworkCache
                     XCTAssertNotNil(receivedCache)
                     XCTAssertTrue(receivedCache === self.cache)
                     
-                    guard let hashes = noti.userInfo?[KingfisherDiskCacheCleanedHashKey] as? [String] else {
-                        XCTFail("Notification should contains Strings in key 'KingfisherDiskCacheCleanedHashKey'")
+                    guard let hashes = noti.userInfo?[SYMoyaNetworkDiskCacheCleanedHashKey] as? [String] else {
+                        XCTFail("Notification should contains Strings in key 'SYMoyaNetworkDiskCacheCleanedHashKey'")
                         exp.fulfill()
                         return
                     }
@@ -278,45 +285,11 @@ class NetworkCacheTest: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
     }
     
-    func testCannotRetrieveCacheWithProcessorIdentifier() {
-        let exp = expectation(description: #function)
-        let key = testKeys[0]
-        let p = RoundCornerImageProcessor(cornerRadius: 40)
-        cache.store(testImage, original: testImageData, forKey: key, toDisk: true) { _ in
-            self.cache.retrieveImage(forKey: key, options: [.processor(p)]) { result in
-                XCTAssertNotNil(result.value)
-                XCTAssertNil(result.value!.image)
-                exp.fulfill()
-            }
-        }
-        waitForExpectations(timeout: 3, handler: nil)
-    }
-    
-    func testRetrieveCacheWithProcessorIdentifier() {
-        let exp = expectation(description: #function)
-        let key = testKeys[0]
-        let p = RoundCornerImageProcessor(cornerRadius: 40)
-        cache.store(
-            testImage,
-            original: testImageData,
-            forKey: key,
-            processorIdentifier: p.identifier,
-            toDisk: true)
-        {
-            _ in
-            self.cache.retrieveImage(forKey: key, options: [.processor(p)]) { result in
-                XCTAssertNotNil(result.value?.image)
-                exp.fulfill()
-            }
-        }
-        waitForExpectations(timeout: 3, handler: nil)
-    }
-    
     func testDefaultCache() {
         let exp = expectation(description: #function)
         let key = testKeys[0]
-        let cache = ImageCache.default
-        cache.store(testImage, forKey: key) { _ in
+        let cache = NetworkConfig.sharedInstance.networkCache
+        cache.store(response, forKey: key) { _ in
             XCTAssertTrue(cache.memoryStorage.isCached(forKey: key))
             XCTAssertTrue(cache.diskStorage.isCached(forKey: key))
             cleanDefaultCache()
@@ -328,16 +301,16 @@ class NetworkCacheTest: XCTestCase {
     func testRetrieveDiskCacheSynchronously() {
         let exp = expectation(description: #function)
         let key = testKeys[0]
-        cache.store(testImage, forKey: key, toDisk: true) { _ in
-            var cacheType = self.cache.imageCachedType(forKey: key)
+        cache.store(response, forKey: key, toDisk: true) { _ in
+            var cacheType = self.cache.responseCachedType(forKey: key)
             XCTAssertEqual(cacheType, .memory)
             
             self.cache.memoryStorage.remove(forKey: key)
-            cacheType = self.cache.imageCachedType(forKey: key)
+            cacheType = self.cache.responseCachedType(forKey: key)
             XCTAssertEqual(cacheType, .disk)
             
             var dispatched = false
-            self.cache.retrieveImageInDiskCache(forKey: key, options:  [.loadDiskFileSynchronously]) {
+            self.cache.retrieveResponseInDiskCache(forKey: key, options:  [.loadDiskFileSynchronously]) {
                 result in
                 XCTAssertFalse(dispatched)
                 exp.fulfill()
@@ -351,16 +324,16 @@ class NetworkCacheTest: XCTestCase {
     func testRetrieveDiskCacheAsynchronously() {
         let exp = expectation(description: #function)
         let key = testKeys[0]
-        cache.store(testImage, forKey: key, toDisk: true) { _ in
-            var cacheType = self.cache.imageCachedType(forKey: key)
+        cache.store(response, forKey: key, toDisk: true) { _ in
+            var cacheType = self.cache.responseCachedType(forKey: key)
             XCTAssertEqual(cacheType, .memory)
             
             self.cache.memoryStorage.remove(forKey: key)
-            cacheType = self.cache.imageCachedType(forKey: key)
+            cacheType = self.cache.responseCachedType(forKey: key)
             XCTAssertEqual(cacheType, .disk)
             
             var dispatched = false
-            self.cache.retrieveImageInDiskCache(forKey: key, options:  nil) {
+            self.cache.retrieveResponseInDiskCache(forKey: key, options:  nil) {
                 result in
                 XCTAssertTrue(dispatched)
                 exp.fulfill()
@@ -371,63 +344,19 @@ class NetworkCacheTest: XCTestCase {
         waitForExpectations(timeout: 3, handler: nil)
     }
     
-#if os(iOS) || os(tvOS) || os(watchOS)
-    func testModifierShouldOnlyApplyForFinalResultWhenMemoryLoad() {
-        let exp = expectation(description: #function)
-        let key = testKeys[0]
-        
-        var modifierCalled = false
-        let modifier = AnyImageModifier { image in
-            modifierCalled = true
-            return image.withRenderingMode(.alwaysTemplate)
-        }
-        
-        cache.store(testImage, original: testImageData, forKey: key) { _ in
-            self.cache.retrieveImage(forKey: key, options: [.imageModifier(modifier)]) { result in
-                XCTAssertFalse(modifierCalled)
-                XCTAssertEqual(result.value?.image?.renderingMode, .automatic)
-                exp.fulfill()
-            }
-        }
-        waitForExpectations(timeout: 3, handler: nil)
-    }
-    
-    func testModifierShouldOnlyApplyForFinalResultWhenDiskLoad() {
-        let exp = expectation(description: #function)
-        let key = testKeys[0]
-        
-        var modifierCalled = false
-        let modifier = AnyImageModifier { image in
-            modifierCalled = true
-            return image.withRenderingMode(.alwaysTemplate)
-        }
-        
-        cache.store(testImage, original: testImageData, forKey: key) { _ in
-            self.cache.clearMemoryCache()
-            self.cache.retrieveImage(forKey: key, options: [.imageModifier(modifier)]) { result in
-                XCTAssertFalse(modifierCalled)
-                XCTAssertEqual(result.value?.image?.renderingMode, .automatic)
-                exp.fulfill()
-            }
-        }
-        waitForExpectations(timeout: 3, handler: nil)
-    }
-#endif
-    
     func testStoreToMemoryWithExpiration() {
         let exp = expectation(description: #function)
         let key = testKeys[0]
         cache.store(
-            testImage,
-            original: testImageData,
+            response,
             forKey: key,
-            options: KingfisherParsedOptionsInfo([.memoryCacheExpiration(.seconds(0.2))]),
+            options: SYMoyaNetworkParsedOptionsInfo([.memoryCacheExpiration(.seconds(0.2))]),
             toDisk: true)
         {
             _ in
-            XCTAssertEqual(self.cache.imageCachedType(forKey: key), .memory)
+            XCTAssertEqual(self.cache.responseCachedType(forKey: key), .memory)
             delay(1) {
-                XCTAssertEqual(self.cache.imageCachedType(forKey: key), .disk)
+                XCTAssertEqual(self.cache.responseCachedType(forKey: key), .disk)
                 exp.fulfill()
             }
         }
@@ -438,16 +367,15 @@ class NetworkCacheTest: XCTestCase {
         let exp = expectation(description: #function)
         let key = testKeys[0]
         cache.store(
-            testImage,
-            original: testImageData,
+            response,
             forKey: key,
-            options: KingfisherParsedOptionsInfo([.diskCacheExpiration(.expired)]),
+            options: SYMoyaNetworkParsedOptionsInfo([.diskCacheExpiration(.expired)]),
             toDisk: true)
         {
             _ in
-            XCTAssertEqual(self.cache.imageCachedType(forKey: key), .memory)
+            XCTAssertEqual(self.cache.responseCachedType(forKey: key), .memory)
             self.cache.clearMemoryCache()
-            XCTAssertEqual(self.cache.imageCachedType(forKey: key), .none)
+            XCTAssertEqual(self.cache.responseCachedType(forKey: key), .none)
             exp.fulfill()
         }
         waitForExpectations(timeout: 3, handler: nil)
@@ -463,7 +391,7 @@ class NetworkCacheTest: XCTestCase {
                     self.cache.calculateDiskStorageSize { result in
                         switch result {
                         case .success(let size):
-                            XCTAssertEqual(size, UInt(testImagePNGData.count * testKeys.count))
+                            XCTAssertEqual(size, UInt(self.response.data.count * testKeys.count))
                         case .failure:
                             XCTAssert(false)
                         }
@@ -486,7 +414,7 @@ class NetworkCacheTest: XCTestCase {
         XCTAssertEqual(size, 0)
         _ = await storeMultipleImagesAsync()
         let sizeAfterStoreMultipleImages = try await cache.diskStorageSize
-        XCTAssertEqual(sizeAfterStoreMultipleImages, UInt(testImagePNGData.count * testKeys.count))
+        XCTAssertEqual(sizeAfterStoreMultipleImages, UInt(response.data.count * testKeys.count))
     }
 #endif
 #endif
@@ -496,7 +424,7 @@ class NetworkCacheTest: XCTestCase {
         let group = DispatchGroup()
         testKeys.forEach {
             group.enter()
-            cache.store(testImage, original: testImageData, forKey: $0, toDisk: true) { _ in
+            cache.store(response, forKey: $0, toDisk: true) { _ in
                 group.leave()
             }
         }

@@ -28,6 +28,8 @@ public enum GitHub {
     case zen
     case userProfile(String)
     case userRepositories(String)
+    case userDevkapilbansal
+    case userDevkapilbansalFollowers
 }
 
 extension GitHub: SYTargetType {
@@ -40,6 +42,10 @@ extension GitHub: SYTargetType {
             return "/users/\(name.urlEscaped)"
         case .userRepositories(let name):
             return "/users/\(name.urlEscaped)/repos"
+        case .userDevkapilbansal:
+            return "/users/devkapilbansal"
+        case .userDevkapilbansalFollowers:
+            return "/devkapilbansal/followers"
         }
     }
     public var method: Moya.Method { .get }
@@ -75,6 +81,10 @@ extension GitHub: SYTargetType {
             return "{\"login\": \"\(name)\", \"id\": 100}".data(using: String.Encoding.utf8)!
         case .userRepositories(let name):
             return "[{\"name\": \"\(name)\"}]".data(using: String.Encoding.utf8)!
+        case .userDevkapilbansal:
+            return "test".data(using: .utf8)!
+        case .userDevkapilbansalFollowers:
+            return "test2".data(using: .utf8)!
         }
     }
     public var headers: [String: String]? { nil }
