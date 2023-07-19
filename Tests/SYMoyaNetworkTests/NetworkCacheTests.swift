@@ -44,7 +44,7 @@ class NetworkCacheTest: XCTestCase {
         cache = NetworkCache(name: cacheName)
         
         
-        let fileURL = Bundle.main.url(forResource: "test", withExtension: ".json")!
+        let fileURL = Bundle(for: Self.self).url(forResource: "test", withExtension: "json")!
         let data = try! Data(contentsOf: fileURL)
         
         response = Moya.Response(statusCode: 200, data: data)
@@ -92,7 +92,7 @@ class NetworkCacheTest: XCTestCase {
             for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         XCTAssertEqual(
             cache.diskStorage.directoryURL.path,
-            (cacheURL.path as NSString).appendingPathComponent("com.onevcat.Kingfisher.ImageCache.test-modified"))
+            (cacheURL.path as NSString).appendingPathComponent("com.shannonyang.SYMoyaNetwork.NetworkCache.test-modified"))
         clearCaches([cache])
     }
     
@@ -143,25 +143,21 @@ class NetworkCacheTest: XCTestCase {
         waitForExpectations(timeout: 3, handler: nil)
     }
     
-    func testNoImageFound() {
+    func testNoResponseFound() {
         let exp = expectation(description: #function)
-        cache.retrieveResponse(forKey: testKeys[0]) { result in
-            XCTAssertNotNil(result.success)
-            XCTAssertNil(result.success!.response)
+        cache.retrieveResponse(forKey: "test") { result in
+            XCTAssertNil(result.success?.response)
             exp.fulfill()
         }
         waitForExpectations(timeout: 3, handler: nil)
     }
     
     func testCachedFileDoesNotExist() {
-        let URLString = testKeys[0]
-        let url = URL(string: URLString)!
-        
         let exists = cache.responseCachedType(forKey: "default").cached
         XCTAssertFalse(exists)
     }
     
-    func testStoreImageInMemory() {
+    func testStoreResponseInMemory() {
         let exp = expectation(description: #function)
         let key = testKeys[0]
         cache.store(response, forKey: key, toDisk: false) { _ in
@@ -176,7 +172,7 @@ class NetworkCacheTest: XCTestCase {
     
     func testStoreMultipleImages() {
         let exp = expectation(description: #function)
-        storeMultipleImages {
+        storeMultipleResponses {
             let diskCachePath = self.cache.diskStorage.directoryURL.path
             var files: [String] = []
             do {
@@ -193,9 +189,8 @@ class NetworkCacheTest: XCTestCase {
     func testCachedFileExists() {
         let exp = expectation(description: #function)
         let key = testKeys[0]
-        let url = URL(string: key)!
         
-        let exists = cache.responseCachedType(forKey: "default").cached
+        let exists = cache.responseCachedType(forKey: key).cached
         XCTAssertFalse(exists)
         
         cache.retrieveResponse(forKey: key) { result in
@@ -387,7 +382,7 @@ class NetworkCacheTest: XCTestCase {
             switch result {
             case .success(let size):
                 XCTAssertEqual(size, 0)
-                self.storeMultipleImages {
+                self.storeMultipleResponses {
                     self.cache.calculateDiskStorageSize { result in
                         switch result {
                         case .success(let size):
@@ -420,7 +415,7 @@ class NetworkCacheTest: XCTestCase {
 #endif
     
     // MARK: - Helper
-    private func storeMultipleImages(_ completionHandler: @escaping () -> Void) {
+    private func storeMultipleResponses(_ completionHandler: @escaping () -> Void) {
         let group = DispatchGroup()
         testKeys.forEach {
             group.enter()
@@ -436,7 +431,7 @@ class NetworkCacheTest: XCTestCase {
     @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
     private func storeMultipleImagesAsync() async {
         await withCheckedContinuation { continuation in
-            storeMultipleImages {
+            storeMultipleResponses {
                 continuation.resume()
             }
         }
