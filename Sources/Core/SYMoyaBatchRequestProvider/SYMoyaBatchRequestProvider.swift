@@ -9,21 +9,30 @@
 import Foundation
 import Moya
 
+public protocol SYBatchMoyaProviderType {
+    func requestTargets(_ callbackQueue: DispatchQueue?, completion: ([SYMoyaNetworkDataResponse<Data>]) -> Void)
+}
+
 /// Batch request item object
-public struct BatchMoyaProvider<Target: SYTargetType> {
-    public let targetType: Target
+public struct SYBatchMoyaProvider<Target: SYTargetType>: SYBatchMoyaProviderType {
+    public func requestTargets(_ callbackQueue: DispatchQueue?, completion: ([SYMoyaNetworkDataResponse<Data>]) -> Void) {
+        for item in targetTypes {
+            provider.req(item, callbackQueue: callbackQueue, progress: <#T##ProgressBlock?##ProgressBlock?##(_ progress: ProgressResponse) -> Void#>, completion: <#T##((Result<Response, SYMoyaNetworkError>) -> Void)##((Result<Response, SYMoyaNetworkError>) -> Void)##(_ result: Result<Response, SYMoyaNetworkError>) -> Void#>)
+        }
+    }
+    
+    public let targetTypes: [Target]
     public let provider: SYMoyaProvider<Target>
     
     // MARK: - Initallization
-    public init(targetType: Target,provider: SYMoyaProvider<Target>) {
-        self.targetType = targetType
-        self.provider = provider
+    public init(targets: [Target]) {
+        self.provider = SYMoyaProvider<Target>()
     }
 }
 
 /// Batch request returns result object
-public struct BatchResult<Target: SYTargetType> {
-    public let batchProvider: BatchMoyaProvider<Target>
+public struct SYBatchRequestResult {
+    public let batchProvider: SYBatchMoyaProviderType
     public let response: Moya.Response
     
     // MARK: - Initallization
@@ -60,12 +69,46 @@ public class BatchDataResponse<Target: SYTargetType> {
     }
 }
 
-// Batch request management object, used to manage the sending and callback of batch requests
-public class SYMoyaBatchRequestProvider<Target: SYTargetType> {
+/// Closure to be executed when progress changes.
+public typealias SYBatchProgressBlock = (_ progress: SYBatchProgressResponse) -> Void
+
+public struct SYBatchProgressResponse {
+    /// The optional response of the request.
+    public let responses: [SYMoyaNetworkDataResponse<Data>]?
+
+    /// An object that conveys ongoing progress for a given request.
+    public let progressObject: Progress?
+
+    /// Initializes a `ProgressResponse`.
+    public init(progress: Progress? = nil, responses: [SYMoyaNetworkDataResponse<Data>]? = nil) {
+        self.progressObject = progress
+        self.responses = responses
+    }
+
+    /// The fraction of the overall work completed by the progress object.
+    public var progress: Double {
+        if completed {
+            return 1.0
+        } else if let progressObject = progressObject, progressObject.totalUnitCount > 0 {
+            // if the Content-Length is specified we can rely on `fractionCompleted`
+            return progressObject.fractionCompleted
+        } else {
+            // if the Content-Length is not specified, return progress 0.0 until it's completed
+            return 0.0
+        }
+    }
+
+    /// A Boolean value stating whether the request is completed.
+    public var completed: Bool { response != nil }
+}
+
+
+// Batch request session object, used to session the sending and callback of batch requests
+public class SYMoyaBatchProviderSession {
+    private let providers: [SYBatchMoyaProviderType]
     
-    private let providers: [BatchMoyaProvider<Target>]
-    
-    public init(providers: [BatchMoyaProvider<Target>]) {
+
+    public init(providers: [SYBatchMoyaProviderType]) {
         self.providers = providers
     }
     
@@ -103,4 +146,5 @@ public class SYMoyaBatchRequestProvider<Target: SYTargetType> {
             }
         }
     }
+ 
 }

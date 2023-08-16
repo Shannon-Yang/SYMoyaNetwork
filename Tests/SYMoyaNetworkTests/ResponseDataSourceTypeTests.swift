@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import XCTest
+@testable import SYMoyaNetwork
+
+class ResponseDataSourceTypeTest: XCTestCase {
+    
+}

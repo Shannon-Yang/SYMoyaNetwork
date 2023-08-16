@@ -24,6 +24,32 @@ private extension String {
     }
 }
 
+public struct GitHub2: SYTargetType {
+    public var baseURL: URL { URL(string: "https://api.github.com")! }
+    public var path: String {
+        return "/zen"
+    }
+    public var method: Moya.Method { .get }
+    
+    public var networkCacheType: NetworkCacheType {
+        var conf = DiskStorage.Config(name: "", sizeLimit: 0)
+        conf.expiration = .seconds(100)
+        let info = NetworkCacheType.NetworkCacheOptionsInfo.init(diskStorageConfig: conf)
+        return .syMoyaNetworkCache(networkCacheOptionsInfo: info)
+    }
+
+    public var task: Task {
+        return .requestPlain
+    }
+    public var validationType: ValidationType {
+        return .successCodes
+    }
+    public var sampleData: Data {
+        return "Half measures are as bad as nothing at all.".data(using: String.Encoding.utf8)!
+    }
+    public var headers: [String: String]? { nil }
+}
+
 public enum GitHub {
     case zen
     case userProfile(String)

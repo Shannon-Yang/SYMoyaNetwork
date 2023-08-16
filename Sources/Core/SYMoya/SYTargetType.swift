@@ -80,9 +80,7 @@ public protocol SYTargetType: Moya.TargetType {
 }
 
 //MARK: - Default Value
-
 public extension SYTargetType {
-    
     var method: Moya.Method {
         return .post
     }
@@ -150,9 +148,7 @@ public extension SYTargetType {
 }
 
 //MARK: - Internal
-
 internal extension SYTargetType {
-    
     func requestBaseURL() -> URL {
         if self.useCDN {
             if let cdnURL = self.cdnURL {
