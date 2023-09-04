@@ -10,11 +10,17 @@ import XCTest
 @testable import SYMoyaNetwork
 
 class SYMoyaBatchRequestProviderTests: XCTestCase {
+    
+//    let s = SYBatchMoyaProviderItem.init(serializer: <#T##_#>)
 
-    let batch = SYBatchMoyaProvider<GitHub>.init(targets: [.zen,.userDevkapilbansal,.userDevkapilbansalFollowers])
-    let batch2 = SYBatchMoyaProvider<GitHub2>.init(targets: [])
+    
+
+//    let batch2 = SYBatchMoyaProvider<GitHub2>.init(targets: [])
     
     override func setUp() {
+        
+        let batch = SYBatchMoyaProvider<GitHub>.init(items: [.zen])
+        
         let zen = BatchMoyaProvider<GitHub>()
         let userProfile = BatchMoyaProvider(targetType: GitHub.userProfile("Shannon"))
         let post = BatchMoyaProvider(targetType: HTTPBin.post)

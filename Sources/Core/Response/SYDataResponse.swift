@@ -9,18 +9,28 @@
 import Foundation
 import Moya
 
+public protocol SYMoyaNetworkDataResponseProtocol {
+    associatedtype Success
+    associatedtype Failure: Error
+    var response: Moya.Response? { get set }
+    var isDataFromCache: Bool { get set }
+    var result: Result<Success, Failure> { get set }
+    var value: Success? { get }
+    var error: Failure? { get }
+}
+
 public typealias SYMoyaNetworkDataResponse<Success> = SYDataResponse<Success, SYMoyaNetworkError>
 
 /// Represents a response to a `SYMoyaProvider.request`.
-public struct SYDataResponse<Success, Failure: Error> {
+public struct SYDataResponse<Success, Failure: Error>: SYMoyaNetworkDataResponseProtocol {
     /// Represents a response to a `MoyaProvider.request`.
-    public let response: Moya.Response?
+    public var response: Moya.Response?
     
     /// a boolean indicating whether the current data is from the cache
     public var isDataFromCache: Bool
     
     /// The result of response serialization.
-    public let result: Result<Success, Failure>
+    public var result: Result<Success, Failure>
     
     /// Returns the associated value of the result if it is a success, `nil` otherwise.
     public var value: Success? { result.success }

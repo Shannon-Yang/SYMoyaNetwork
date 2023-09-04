@@ -34,6 +34,7 @@ public protocol SYMoyaProviderDelegate: AnyObject {
     func provider<Target: SYTargetType>(_ provider: SYMoyaProvider<Target>, target: Target?, requestFailedFilter error: SYMoyaNetworkError)
 }
 
+public typealias SYMoyaNetworkResult = Result<Moya.Response, SYMoyaNetworkError>
 
 // A request provider class that inherits from MoyaProvider. Requests can only be made through this class.
 open class SYMoyaProvider<Target: SYTargetType>: Moya.MoyaProvider<Target> {
@@ -182,7 +183,7 @@ public extension SYMoyaProvider {
 public extension SYMoyaProvider {
     /// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
     @discardableResult
-    func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping ((_ result: Result<Moya.Response, SYMoyaNetworkError>) -> Void)) -> Cancellable {
+    func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping ((_ result: SYMoyaNetworkResult) -> Void)) -> Cancellable {
         return self.request(target, callbackQueue: callbackQueue, progress: progress, completion: { result in
             let value = try? result.get()
             
