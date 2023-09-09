@@ -15,5 +15,11 @@ public protocol BatchDataResponseSerializerProtocol {
 
 public protocol SYBatchTatgetType: SYTargetType {
     associatedtype Serializer: BatchDataResponseSerializerProtocol
-    var serializer: Serializer { get }
+    var serializer: Serializer? { get }
+}
+
+extension SYBatchTatgetType {
+    var serializer: Serializer? {
+        return nil
+    }
 }
