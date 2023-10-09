@@ -531,7 +531,7 @@ open class NetworkCache {
         forKey key: String,
         options: SYMoyaNetworkParsedOptionsInfo,
         callbackQueue: CallbackQueue = .untouch,
-        completionHandler: @escaping (Result<Moya.Response, SYMoyaNetworkError>) -> Void)
+        completionHandler: @escaping (SYMoyaNetworkResult) -> Void)
     {
         let loadingQueue: CallbackQueue = options.loadDiskFileSynchronously ? .untouch : .dispatch(ioQueue)
         loadingQueue.execute {
@@ -564,7 +564,7 @@ open class NetworkCache {
         forKey key: String,
         options: SYMoyaNetworkOptionsInfo? = nil,
         callbackQueue: CallbackQueue = .untouch,
-        completionHandler: @escaping (Result<Moya.Response, SYMoyaNetworkError>) -> Void)
+        completionHandler: @escaping (SYMoyaNetworkResult) -> Void)
     {
         retrieveResponseInDiskCache(
             forKey: key,

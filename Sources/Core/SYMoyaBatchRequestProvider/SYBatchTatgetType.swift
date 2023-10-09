@@ -13,6 +13,7 @@ public protocol BatchDataResponseSerializerProtocol {
     func serialize(response: SYMoyaNetworkResult) -> SYMoyaNetworkDataResponse<SerializedObject>
 }
 
+//MARK: - SYBatchTatgetType
 public protocol SYBatchTatgetType: SYTargetType {
     associatedtype Serializer: BatchDataResponseSerializerProtocol
     var serializer: Serializer? { get }

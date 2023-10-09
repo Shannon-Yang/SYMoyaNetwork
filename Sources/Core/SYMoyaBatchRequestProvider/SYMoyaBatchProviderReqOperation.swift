@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 public class SYMoyaBatchProviderReqOperation<TargetType: SYBatchTatgetType>: AsyncOperation {
-    private let provider: SYMoyaProvider<TargetType>
+    private weak var provider: SYMoyaProvider<TargetType>?
     let targetType: TargetType
     private var cancellable: Cancellable?
     var completion : ((_ result: SYMoyaNetworkResult) -> Void)?
@@ -20,7 +20,7 @@ public class SYMoyaBatchProviderReqOperation<TargetType: SYBatchTatgetType>: Asy
     }
     
     public override func main() {
-        self.cancellable = provider.req(targetType, progress: nil) { [weak self] result in
+        self.cancellable = provider?.req(targetType, progress: nil) { [weak self] result in
             self?.completion?(result)
             self?.finish()
         }
@@ -28,6 +28,5 @@ public class SYMoyaBatchProviderReqOperation<TargetType: SYBatchTatgetType>: Asy
     
     public override func cancel() {
         self.cancellable?.cancel()
-        super.cancel()
     }
 }

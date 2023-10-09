@@ -114,7 +114,7 @@ jobs:
     name: "Test Old iOS"
     runs-on: firebreak
     env:
-      DEVELOPER_DIR: "/Applications/Xcode_14.2.app/Contents/Developer"
+      DEVELOPER_DIR: "/Applications/Xcode_14.3.app/Contents/Developer"
     timeout-minutes: 10
     strategy:
       fail-fast: false
@@ -135,11 +135,35 @@ jobs:
         run: brew install alamofire/alamofire/firewalk || brew upgrade alamofire/alamofire/firewalk && firewalk &
       - name: ${{ matrix.name }}
         run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -project "Alamofire.xcodeproj" -scheme "Alamofire iOS" -destination "${{ matrix.destination }}" -testPlan "${{ matrix.testPlan }}" clean test | xcpretty
+  Beta:
+    name: "Test Beta iOS"
+    runs-on: firebreak
+    env:
+      DEVELOPER_DIR: "/Applications/Xcode_15.0.app/Contents/Developer"
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - destination: "OS=17.0,name=iPhone 14 Pro"
+            name: "iOS 17.0"
+            testPlan: "iOS"
+            scheme: "Alamofire iOS"
+          - destination: "OS=1.0,name=Apple Vision Pro"
+            name: "visionOS 1.0"
+            testPlan: "visionOS"
+            scheme: "Alamofire visionOS"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Firewalk
+        run: brew install alamofire/alamofire/firewalk || brew upgrade alamofire/alamofire/firewalk && firewalk &
+      - name: ${{ matrix.name }}
+        run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -project "Alamofire.xcodeproj" -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}" -testPlan "${{ matrix.testPlan }}" clean test | xcpretty
   tvOS:
     name: Test Old tvOS
     runs-on: firebreak
     env:
-      DEVELOPER_DIR: /Applications/Xcode_14.2.app/Contents/Developer
+      DEVELOPER_DIR: /Applications/Xcode_14.3.app/Contents/Developer
     timeout-minutes: 10
     strategy:
       fail-fast: false
@@ -164,7 +188,7 @@ jobs:
     name: Test Old watchOS
     runs-on: firebreak
     env:
-      DEVELOPER_DIR: /Applications/Xcode_14.2.app/Contents/Developer
+      DEVELOPER_DIR: /Applications/Xcode_14.3.app/Contents/Developer
     timeout-minutes: 10
     strategy:
       fail-fast: false
@@ -192,8 +216,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - xcode: "Xcode_14.3"
+          - xcode: "Xcode_15.0"
             runsOn: firebreak
+            name: "macOS 13, SPM 5.9.0 Test"
+          - xcode: "Xcode_14.3"
+            runsOn: macOS-13
             name: "macOS 13, SPM 5.8.0 Test"
           - xcode: "Xcode_14.2"
             runsOn: macOS-12
@@ -248,6 +275,14 @@ jobs:
       - uses: actions/checkout@v3
       - name: ${{ matrix.image }}
         run: swift build --build-tests -c debug
+  Android:
+    name: Android
+    uses: hggz/swift-android-sdk/.github/workflows/sdks.yml@ci
+    strategy:
+      fail-fast: false
+    with:
+      target-repo: ${{ github.repository }}
+      checkout-hash: ${{ github.sha }}
   Windows:
     name: Windows
     runs-on: windows-latest
@@ -261,18 +296,13 @@ jobs:
       - name: Clone
         uses: actions/checkout@v3
       - name: SPM Windows Build
-        shell: cmd
         run: |
-          cd ${{ github.workspace }}
-          set SDKROOT=%SystemDrive%\Library\Developer\Platforms\Windows.platform\Developer\SDKs\Windows.sdk
-          %SystemDrive%\Library\Developer\Toolchains\unknown-Asserts-development.xctoolchain\usr\bin\swift-build.exe --build-tests -c debug -Xlinker /INCREMENTAL:NO -v
-          if not exist .build\x86_64-unknown-windows-msvc\debug\Alamofire.swiftmodule exit 1
+          swift build --build-tests -c debug -Xlinker /INCREMENTAL:NO -v
   CodeQL:
     name: Analyze with CodeQL
-    runs-on: macOS-12
+    runs-on: macOS-13
     env:
-      DEVELOPER_DIR: "/Applications/Xcode_14.2.app/Contents/Developer"
-      CODEQL_ENABLE_EXPERIMENTAL_FEATURES_SWIFT: true
+      DEVELOPER_DIR: "/Applications/Xcode_14.3.1.app/Contents/Developer"
     timeout-minutes: 10
     steps:
       - name: Clone

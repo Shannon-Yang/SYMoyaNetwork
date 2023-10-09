@@ -58,7 +58,7 @@ public enum GitHub {
     case userDevkapilbansalFollowers
 }
 
-extension GitHub: BatchTatgetType {
+extension GitHub {
     public var baseURL: URL { URL(string: "https://api.github.com")! }
     public var path: String {
         switch self {
@@ -115,9 +115,9 @@ extension GitHub: BatchTatgetType {
     }
     public var headers: [String: String]? { nil }
     
-    public var dataResponseSerializer: some DataResponseSerializerProtocol {
-        return StringResponseSerializer2()
-    }
+//    public var dataResponseSerializer: some BatchDataResponseSerializerProtocol {
+//        return StringResponseSerializer2()
+//    }
 }
 
 public func url(_ route: TargetType) -> String {

@@ -17,7 +17,6 @@ public enum SYMoyaBatchProviderSessionType {
     case  ifOneFailureBatchContinue
 }
 
-
 /// Closure to be executed when progress changes.
 public typealias SYBatchProgressBlock = (_ progress: SYBatchProgress) -> Void
 
@@ -31,20 +30,20 @@ public struct SYBatchProgress {
     }
 
     /// The fraction of the overall work completed by the progress object.
-    public var progress: Double {
-        if completed {
-            return 1.0
-        } else if let progressObject = progressObject, progressObject.totalUnitCount > 0 {
-            // if the Content-Length is specified we can rely on `fractionCompleted`
-            return progressObject.fractionCompleted
-        } else {
-            // if the Content-Length is not specified, return progress 0.0 until it's completed
-            return 0.0
-        }
-    }
+//    public var progress: Double {
+//        if completed {
+//            return 1.0
+//        } else if let progressObject = progressObject, progressObject.totalUnitCount > 0 {
+//            // if the Content-Length is specified we can rely on `fractionCompleted`
+//            return progressObject.fractionCompleted
+//        } else {
+//            // if the Content-Length is not specified, return progress 0.0 until it's completed
+//            return 0.0
+//        }
+//    }
 
     /// A Boolean value stating whether the request is completed.
-    public var completed: Bool { response != nil }
+//    public var completed: Bool { response != nil }
 }
 
 //public struct SYBatchDataResponse<Success> {
@@ -92,19 +91,18 @@ public class SYMoyaBatchProviderSession {
         let reponses = [[SYBatchMoyaProviderResponse]]()
         self.providers.forEach { provider in
             queue.async(group: grop) {
-                
-                provider.requestTargets(<#T##progress: SYBatchProgressBlock?##SYBatchProgressBlock?##(_ progress: SYBatchProgress) -> Void#>, completion: <#T##([SYBatchMoyaProviderResponse]) -> Void#>)
-                
-                provider.provider.request(provider.targetType, callbackQueue: callbackQueue, progress: progress) { result in
-                    switch result {
-                    case .success(let response):
-                        reponses.append(response)
-                    case .failure(let error):
-                        completion(.failure(error.transformToSYMoyaNetworkError()))
-                    }
-                }
-                
-                
+//                
+//                provider.requestTargets(<#T##progress: SYBatchProgressBlock?##SYBatchProgressBlock?##(_ progress: SYBatchProgress) -> Void#>, completion: <#T##([SYBatchMoyaProviderResponse]) -> Void#>)
+//                
+//                provider.provider.request(provider.targetType, callbackQueue: callbackQueue, progress: progress) { result in
+//                    switch result {
+//                    case .success(let response):
+//                        reponses.append(response)
+//                    case .failure(let error):
+//                        completion(.failure(error.transformToSYMoyaNetworkError()))
+//                    }
+//                }
+//
                 
             }
         }

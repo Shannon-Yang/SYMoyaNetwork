@@ -60,59 +60,33 @@ extension SYMoyaProvider: SYMoyaProviderCodableType {
     public func responseCodableObjectFromCache<T: Decodable>(_ target: Target, atKeyPath keyPath: String?, using decoder: JSONDecoder, failsOnEmptyData: Bool, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
-            switch result {
-            case .success(let response):
-                var codableObjectDataResponse: SYMoyaNetworkDataResponse<T> = self.serializerCodableObjectDataResponse(response, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
-                codableObjectDataResponse.isDataFromCache = true
-                completion(codableObjectDataResponse)
-            case .failure(let error):
-                let dataRes = SYMoyaNetworkDataResponse<T>(response: nil, isDataFromCache: true, result: .failure(error))
-                completion(dataRes)
-            }
+            let response: SYMoyaNetworkDataResponse<T> = result.serializerCodableObjectDataResponse(atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, isDataFromCache: true)
+            completion(response)
         }
     }
     
     public func responseCodableObjectFromDiskCache<T: Decodable>(_ target: Target, atKeyPath keyPath: String?, using decoder: JSONDecoder, failsOnEmptyData: Bool, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieveResponseInDiskCache(target, options: options, callbackQueue: callbackQueue) { result in
-            switch result {
-            case .success(let response):
-                var codableObjectDataResponse: SYMoyaNetworkDataResponse<T> = self.serializerCodableObjectDataResponse(response, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
-                codableObjectDataResponse.isDataFromCache = true
-                completion(codableObjectDataResponse)
-            case .failure(let error):
-                let dataRes = SYMoyaNetworkDataResponse<T>(response: nil, isDataFromCache: true, result: .failure(error))
-                completion(dataRes)
-            }
+            let response: SYMoyaNetworkDataResponse<T> = result.serializerCodableObjectDataResponse(atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, isDataFromCache: true)
+            completion(response)
         }
     }
     
     public func responseCodableObjectFromMemoryCache<T: Decodable>(_ target: Target, atKeyPath keyPath: String?, using decoder: JSONDecoder, failsOnEmptyData: Bool) -> SYMoyaNetworkDataResponse<T> {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-        var dataRes: SYMoyaNetworkDataResponse<T>
-        do {
-            let response = try self.retrieveResponseInMemoryCache(target, options: options)
-            dataRes = self.serializerCodableObjectDataResponse(response, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
-        } catch let error {
-            dataRes = SYMoyaNetworkDataResponse<T>(response: nil, result: .failure(error as! SYMoyaNetworkError))
-        }
-        dataRes.isDataFromCache = true
-        return dataRes
+        let result = self.retrieveResponseInMemoryCache(target, options: options)
+        let response: SYMoyaNetworkDataResponse<T> = result.serializerCodableObjectDataResponse(atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, isDataFromCache: true)
+        return response
     }
     
     @discardableResult
     public func responseCodableObject<T: Decodable>(_ responseDataSourceType: ResponseDataSourceType, target: Target, atKeyPath keyPath: String?, using decoder: JSONDecoder, failsOnEmptyData: Bool, callbackQueue: DispatchQueue?, progress: ProgressBlock?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Moya.Cancellable? {
         @discardableResult
-        func req<T: Decodable>(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Moya.Cancellable {
+        func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Moya.Cancellable {
             self.req(target, callbackQueue: callbackQueue, progress: progress) { result in
-                switch result {
-                case .success(let response):
-                    var codableObjectDataResponse: SYMoyaNetworkDataResponse<T> = self.serializerCodableObjectDataResponse(response, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
-                    codableObjectDataResponse.isDataFromCache = false
-                    completion(codableObjectDataResponse)
-                case .failure(let error):
-                    completion(SYMoyaNetworkDataResponse(response: nil, result: .failure(error)))
-                }
+                let response: SYMoyaNetworkDataResponse<T> = result.serializerCodableObjectDataResponse(atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, isDataFromCache: false)
+                completion(response)
             }
         }
         
@@ -126,24 +100,17 @@ extension SYMoyaProvider: SYMoyaProviderCodableType {
             case .cache:
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
-                    switch result {
-                    case .success(let response):
-                        var codableObjectDataResponse: SYMoyaNetworkDataResponse<T> = self.serializerCodableObjectDataResponse(response, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
-                        codableObjectDataResponse.isDataFromCache = true
-                        completion(codableObjectDataResponse)
-                    case .failure(let error):
-                        completion(SYMoyaNetworkDataResponse(response: nil, result: .failure(error)))
-                    }
+                    let response: SYMoyaNetworkDataResponse<T> = result.serializerCodableObjectDataResponse(atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, isDataFromCache: true)
+                    completion(response)
                 }
             case .cacheIfPossible:
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
                 
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
-                    case .success(let response):
-                        var codableObjectDataResponse: SYMoyaNetworkDataResponse<T> = self.serializerCodableObjectDataResponse(response, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
-                        codableObjectDataResponse.isDataFromCache = true
-                        completion(codableObjectDataResponse)
+                    case .success(_):
+                        let response: SYMoyaNetworkDataResponse<T> = result.serializerCodableObjectDataResponse(atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, isDataFromCache: true)
+                        completion(response)
                     case .failure(_):
                         req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
                     }
@@ -153,10 +120,10 @@ extension SYMoyaProvider: SYMoyaProviderCodableType {
                 
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
-                    case .success(let response):
-                        var codableObjectDataResponse: SYMoyaNetworkDataResponse<T> = self.serializerCodableObjectDataResponse(response, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
-                        codableObjectDataResponse.isDataFromCache = true
-                        completion(codableObjectDataResponse)
+                    case .success(_):
+                        let response: SYMoyaNetworkDataResponse<T> = result.serializerCodableObjectDataResponse(atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, isDataFromCache: true)
+                        completion(response)
+                        
                         // make the request again
                         req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
                     case .failure(_):
@@ -169,10 +136,9 @@ extension SYMoyaProvider: SYMoyaProviderCodableType {
                 
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
-                    case .success(let response):
-                        var codableObjectDataResponse: SYMoyaNetworkDataResponse<T> = self.serializerCodableObjectDataResponse(response, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
-                        codableObjectDataResponse.isDataFromCache = true
-                        let isSendRequest = customizable.shouldSendRequest(target, dataResponse: codableObjectDataResponse)
+                    case .success(_):
+                        let response: SYMoyaNetworkDataResponse<T> = result.serializerCodableObjectDataResponse(atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData, isDataFromCache: true)
+                        let isSendRequest = customizable.shouldSendRequest(target, dataResponse: response)
                         if isSendRequest {
                             // request
                             req(target, completion: completion)
@@ -224,21 +190,6 @@ public extension SYMoyaProvider {
     @discardableResult
     func responseCodableObject<T: Decodable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath keyPath: String? = nil, failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Moya.Cancellable? {
         return self.responseCodableObject(responseDataSourceType, target: target, atKeyPath: keyPath, using: JSONDecoder(), failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue, progress: progress, completion: completion)
-    }
-}
-
-//MARK: - Extension
-private extension SYMoyaProvider {
-    func serializerCodableObjectDataResponse<T: Decodable>(_ response: Moya.Response, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) -> SYMoyaNetworkDataResponse<T> {
-        let dataRes: SYMoyaNetworkDataResponse<T>
-        do {
-            let codableObject: T = try response.mapCodableObject(atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
-            dataRes = SYMoyaNetworkDataResponse(response: response, result: .success(codableObject))
-        } catch let error {
-            let e = (error as! MoyaError).transformToSYMoyaNetworkError()
-            dataRes = SYMoyaNetworkDataResponse(response: response, result: .failure(e))
-        }
-        return dataRes
     }
 }
 

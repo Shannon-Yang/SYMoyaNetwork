@@ -47,7 +47,6 @@ public class AsyncOperation: Operation {
     }
 
     public override func start() {
-        print("Starting")
         guard !isCancelled else {
             finish()
             return

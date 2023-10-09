@@ -8,17 +8,12 @@
 import Foundation
 import Moya
 
-
 public struct SYBatchDataResponse {
     /// The result of response serialization.
     public var result: Result<[SYBatchMoyaProviderResponse], SYMoyaNetworkError>
     
     /// Returns the associated value of the result if it is a success, `nil` otherwise.
     public var value: [SYBatchMoyaProviderResponse]? { result.success }
-    
-    /// Returns the associated error value if the result if it is a failure, `nil` otherwise.
-    public var error: SYMoyaNetworkError? { result.failure }
-    
 
     public init(result: Result<[SYBatchMoyaProviderResponse], SYMoyaNetworkError>) {
         self.result = result
@@ -40,24 +35,17 @@ public struct SYMoyaBatchProvider<TargetType: SYBatchTatgetType>: SYBatchMoyaPro
     
     private lazy var operationQueue: OperationQueue = {
         let operationQueue = OperationQueue()
-        operationQueue.maxConcurrentOperationCount = 1
         operationQueue.name = "com.shannonyang.SYMoyaNetwork.BatchRequest.operationQueue"
         return operationQueue
     }()
     
-    private let provider: SYMoyaProvider<TargetType>
+    private let provider = SYMoyaProvider<TargetType>()
     public var targetResponsesCompletion: ((_ response: SYBatchDataResponse) -> Void)?
 
     public mutating func requestTargets(_ progress: SYBatchProgressBlock?, sessionType: SYMoyaBatchProviderSessionType, completion: (SYBatchDataResponse) -> Void) {
         var responses = [SYBatchMoyaProviderResponse]()
         
-        let result: Result<[SYBatchMoyaProviderResponse], SYMoyaNetworkError>
-
-//        grop.notify(queue: gropNotifyQueue) {
-//            let response = SYBatchDataResponse(result: .success(<#T##[SYBatchMoyaProviderResponse]#>))
-//            self.targetResponsesCompletion?(response)
-//            completion(response)
-//        }
+        var batchResult: Result<[SYBatchMoyaProviderResponse], SYMoyaNetworkError>?
         
         for operation in reqOperations {
             operation.completion = { result in
@@ -66,17 +54,12 @@ public struct SYMoyaBatchProvider<TargetType: SYBatchTatgetType>: SYBatchMoyaPro
                     switch result {
                     case .success(_):
                         appendResponse()
-
-                    case .failure(let error):
+                    case .failure(_):
                         operationQueue.cancelAllOperations()
+                        batchResult = .failure(.batchRequestError(reason: .batchSomeOperationFailure))
                     }
                 case .ifOneFailureBatchContinue:
-                    switch result {
-                    case .success(_):
-                        appendResponse()
-                    case .failure(let error):
-                        operationQueue.cancelAllOperations()
-                    }
+                    appendResponse()
                 }
                 func appendResponse() {
                     let data: any SYMoyaNetworkDataResponseProtocol
@@ -90,18 +73,19 @@ public struct SYMoyaBatchProvider<TargetType: SYBatchTatgetType>: SYBatchMoyaPro
             }
             operationQueue.addOperation(operation)
         }
+        
+//        SYBatchDataResponse.init(result: <#T##Result<[SYBatchMoyaProviderResponse], SYMoyaNetworkError>#>)
         operationQueue.addBarrierBlock {
             
         }
     }
     
     public let targetTypes: [TargetType]
-    private let reqOperations: [SYMoyaBatchProviderReqOperation<TargetType>]
+    private var reqOperations = [SYMoyaBatchProviderReqOperation<TargetType>]()
     
     // MARK: - Initallization
     public init(targetTypes: [TargetType]) {
         self.targetTypes = targetTypes
-        self.provider = SYMoyaProvider<TargetType>()
         self.reqOperations = targetTypes.map({ SYMoyaBatchProviderReqOperation(provider: self.provider, targetType: $0) })
     }
 }

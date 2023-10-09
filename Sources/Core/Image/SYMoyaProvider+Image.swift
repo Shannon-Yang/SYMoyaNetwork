@@ -45,44 +45,24 @@ extension SYMoyaProvider: SYMoyaProviderImageType {
     public func responseImageFromCache(_ target: Target, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<Image>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
-            switch result {
-            case .success(let response):
-                var imageDataResponse = self.serializerImageDataResponse(response)
-                imageDataResponse.isDataFromCache = true
-                completion(imageDataResponse)
-            case .failure(let error):
-                let dataRes = SYMoyaNetworkDataResponse<Image>(response: nil, isDataFromCache: true, result: .failure(error))
-                completion(dataRes)
-            }
+            let response = result.serializerImageDataResponse(isDataFromCache: true)
+            completion(response)
         }
     }
     
     public func responseImageFromDiskCache(_ target: Target, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<Image>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieveResponseInDiskCache(target, options: options, callbackQueue: callbackQueue) { result in
-            switch result {
-            case .success(let response):
-                var imageDataResponse = self.serializerImageDataResponse(response)
-                imageDataResponse.isDataFromCache = true
-                completion(imageDataResponse)
-            case .failure(let error):
-                let dataRes = SYMoyaNetworkDataResponse<Image>(response: nil, isDataFromCache: true, result: .failure(error))
-                completion(dataRes)
-            }
+            let response = result.serializerImageDataResponse(isDataFromCache: true)
+            completion(response)
         }
     }
     
     public func responseImageFromMemoryCache(_ target: Target) -> SYMoyaNetworkDataResponse<Image> {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-        var dataRes: SYMoyaNetworkDataResponse<Image>
-        do {
-            let response = try self.retrieveResponseInMemoryCache(target, options: options)
-            dataRes = self.serializerImageDataResponse(response)
-        } catch let error {
-            dataRes = SYMoyaNetworkDataResponse<Image>(response: nil, isDataFromCache: true, result: .failure(error as! SYMoyaNetworkError))
-        }
-        dataRes.isDataFromCache = true
-        return dataRes
+        let result = self.retrieveResponseInMemoryCache(target, options: options)
+        let response = result.serializerImageDataResponse(isDataFromCache: true)
+        return response
     }
     
     @discardableResult
@@ -90,14 +70,8 @@ extension SYMoyaProvider: SYMoyaProviderImageType {
         @discardableResult
         func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<Image>) -> Void) -> Cancellable {
             self.req(target, callbackQueue: callbackQueue, progress: progress) { result in
-                switch result {
-                case .success(let response):
-                    var imageDataResponse = self.serializerImageDataResponse(response)
-                    imageDataResponse.isDataFromCache = false
-                    completion(imageDataResponse)
-                case .failure(let error):
-                    completion(SYMoyaNetworkDataResponse(response: nil, result: .failure(error)))
-                }
+                let response = result.serializerImageDataResponse(isDataFromCache: false)
+                completion(response)
             }
         }
         
@@ -111,24 +85,16 @@ extension SYMoyaProvider: SYMoyaProviderImageType {
             case .cache:
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
-                    switch result {
-                    case .success(let response):
-                        var imageDataResponse = self.serializerImageDataResponse(response)
-                        imageDataResponse.isDataFromCache = true
-                        completion(imageDataResponse)
-                    case .failure(let error):
-                        completion(SYMoyaNetworkDataResponse(response: nil, result: .failure(error)))
-                    }
+                    let response = result.serializerImageDataResponse(isDataFromCache: true)
+                    completion(response)
                 }
             case .cacheIfPossible:
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-                
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
-                    case .success(let response):
-                        var imageDataResponse = self.serializerImageDataResponse(response)
-                        imageDataResponse.isDataFromCache = true
-                        completion(imageDataResponse)
+                    case .success(_):
+                        let response = result.serializerImageDataResponse(isDataFromCache: true)
+                        completion(response)
                     case .failure(_):
                         req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
                     }
@@ -138,10 +104,10 @@ extension SYMoyaProvider: SYMoyaProviderImageType {
                 
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
-                    case .success(let response):
-                        var imageDataResponse = self.serializerImageDataResponse(response)
-                        imageDataResponse.isDataFromCache = true
-                        completion(imageDataResponse)
+                    case .success(_):
+                        let response = result.serializerImageDataResponse(isDataFromCache: true)
+                        completion(response)
+                        
                         // make the request again
                         req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
                     case .failure(_):
@@ -152,10 +118,9 @@ extension SYMoyaProvider: SYMoyaProviderImageType {
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
-                    case .success(let response):
-                        var imageDataResponse = self.serializerImageDataResponse(response)
-                        imageDataResponse.isDataFromCache = true
-                        let isSendRequest = customizable.shouldSendRequest(target, dataResponse: imageDataResponse)
+                    case .success(_):
+                        let response = result.serializerImageDataResponse(isDataFromCache: true)
+                        let isSendRequest = customizable.shouldSendRequest(target, dataResponse: response)
                         if isSendRequest {
                             // request
                             req(target, completion: completion)
@@ -189,17 +154,3 @@ extension SYMoyaProvider {
     }
 }
 
-//MARK: - Extension
-private extension SYMoyaProvider {
-    func serializerImageDataResponse(_ response: Moya.Response) -> SYMoyaNetworkDataResponse<Image> {
-        let dataRes: SYMoyaNetworkDataResponse<Image>
-        do {
-            let image = try response.mapImage()
-            dataRes = SYMoyaNetworkDataResponse(response: response, result: .success(image))
-        } catch let error {
-            let e = (error as! MoyaError).transformToSYMoyaNetworkError()
-            dataRes = SYMoyaNetworkDataResponse(response: response, result: .failure(e))
-        }
-        return dataRes
-    }
-}

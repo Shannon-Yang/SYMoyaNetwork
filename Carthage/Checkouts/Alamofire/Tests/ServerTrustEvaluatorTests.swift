@@ -1,5 +1,5 @@
 //
-//  ServerTrustPolicyTests.swift
+//  ServerTrustEvaluatorTests.swift
 //
 //  Copyright (c) 2014-2018 Alamofire Software Foundation (http://alamofire.org/)
 //
@@ -22,7 +22,7 @@
 //  THE SOFTWARE.
 //
 
-#if !(os(Linux) || os(Windows))
+#if canImport(Security)
 
 import Alamofire
 import Foundation
@@ -155,11 +155,19 @@ extension SecTrust {
 
     /// Evaluates `self` and returns `true` if the evaluation succeeds with a value of `.unspecified` or `.proceed`.
     var isValid: Bool {
+        #if swift(>=5.9)
+        if #available(iOS 12, macOS 10.14, tvOS 12, watchOS 5, visionOS 1, *) {
+            return Result { try af.evaluate() }.isSuccess
+        } else {
+            return Result { try af.validate { _, _ in TrustError.invalid } }.isSuccess
+        }
+        #else
         if #available(iOS 12, macOS 10.14, tvOS 12, watchOS 5, *) {
             return Result { try af.evaluate() }.isSuccess
         } else {
             return Result { try af.validate { _, _ in TrustError.invalid } }.isSuccess
         }
+        #endif
     }
 }
 
