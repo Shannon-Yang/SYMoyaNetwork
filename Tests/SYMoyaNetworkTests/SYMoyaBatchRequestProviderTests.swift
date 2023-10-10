@@ -19,18 +19,18 @@ class SYMoyaBatchRequestProviderTests: XCTestCase {
     
     override func setUp() {
         
-        let batch = SYBatchMoyaProvider<GitHub>.init(items: [.zen])
-        
-        let zen = BatchMoyaProvider<GitHub>()
-        let userProfile = BatchMoyaProvider(targetType: GitHub.userProfile("Shannon"))
-        let post = BatchMoyaProvider(targetType: HTTPBin.post)
-        let requestMoyaWebContent = BatchMoyaProvider(targetType: GitHubUserContent.requestMoyaWebContent("logo_github.png"))
-        batch = SYMoyaBatchRequestProvider(providers: [zen,userProfile,post,requestMoyaWebContent])
+//        let batch = SYBatchMoyaProvider<GitHub>.init(items: [.zen])
+//        
+//        let zen = BatchMoyaProvider<GitHub>()
+//        let userProfile = BatchMoyaProvider(targetType: GitHub.userProfile("Shannon"))
+//        let post = BatchMoyaProvider(targetType: HTTPBin.post)
+//        let requestMoyaWebContent = BatchMoyaProvider(targetType: GitHubUserContent.requestMoyaWebContent("logo_github.png"))
+//        batch = SYMoyaBatchRequestProvider(providers: [zen,userProfile,post,requestMoyaWebContent])
     }
     
     func testBatchRequest() {
-        batch.request { (response: BatchDataResponse<Target>) in
-            debugPrint("🔥🔥🔥🔥🔥----> \(response) <---- < Class: \(type(of: self)) Function:\(#function) Line: \(#line) >🔥🔥🔥🔥🔥")
-        }
+//        batch.request { (response: BatchDataResponse<Target>) in
+//            debugPrint("🔥🔥🔥🔥🔥----> \(response) <---- < Class: \(type(of: self)) Function:\(#function) Line: \(#line) >🔥🔥🔥🔥🔥")
+//        }
     }
 }

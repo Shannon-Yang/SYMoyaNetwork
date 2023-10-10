@@ -12,7 +12,7 @@ import Moya
 import ObjectMapper
 
 //MARK: - ObjectMapper
-public extension Response {
+extension Response {
     
     /// Maps data received from the signal into an object which implements the Mappable protocol.
     /// If the conversion fails, the signal errors.

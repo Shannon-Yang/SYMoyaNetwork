@@ -22,13 +22,13 @@ public struct SYBatchDataResponse {
 
 
 public protocol SYBatchMoyaProviderType {
-    mutating func requestTargets(_ progress: SYBatchProgressBlock?, sessionType: SYMoyaBatchProviderSessionType, completion: (_ response: SYBatchDataResponse) -> Void)
+    mutating func requestTargets(_ progress: SYBatchProgressBlock?, sessionType: SYMoyaBatchProviderSessionType, completion: @escaping (_ response: SYBatchDataResponse) -> Void)
 }
 
 public typealias SYBatchMoyaProviderResponse = (SYTargetType, any SYMoyaNetworkDataResponseProtocol)
 
 /// Batch request item object
-public struct SYMoyaBatchProvider<TargetType: SYBatchTatgetType>: SYBatchMoyaProviderType {
+public class SYMoyaBatchProvider<TargetType: SYBatchTatgetType>: SYBatchMoyaProviderType {
     
 //    private let grop = DispatchGroup()
 //    private let gropNotifyQueue = DispatchQueue(label: "com.shannonyang.SYMoyaNetwork.SYBatchMoyaProvider.grop.notify.queue.\(UUID().uuidString)")
@@ -42,7 +42,7 @@ public struct SYMoyaBatchProvider<TargetType: SYBatchTatgetType>: SYBatchMoyaPro
     private let provider = SYMoyaProvider<TargetType>()
     public var targetResponsesCompletion: ((_ response: SYBatchDataResponse) -> Void)?
 
-    public mutating func requestTargets(_ progress: SYBatchProgressBlock?, sessionType: SYMoyaBatchProviderSessionType, completion: (SYBatchDataResponse) -> Void) {
+    public func requestTargets(_ progress: SYBatchProgressBlock?, sessionType: SYMoyaBatchProviderSessionType, completion: @escaping (SYBatchDataResponse) -> Void) {
         var responses = [SYBatchMoyaProviderResponse]()
         
         var batchResult: Result<[SYBatchMoyaProviderResponse], SYMoyaNetworkError>?
@@ -55,7 +55,7 @@ public struct SYMoyaBatchProvider<TargetType: SYBatchTatgetType>: SYBatchMoyaPro
                     case .success(_):
                         appendResponse()
                     case .failure(_):
-                        operationQueue.cancelAllOperations()
+                        self.operationQueue.cancelAllOperations()
                         batchResult = .failure(.batchRequestError(reason: .batchSomeOperationFailure))
                     }
                 case .ifOneFailureBatchContinue:
@@ -64,7 +64,7 @@ public struct SYMoyaBatchProvider<TargetType: SYBatchTatgetType>: SYBatchMoyaPro
                 func appendResponse() {
                     let data: any SYMoyaNetworkDataResponseProtocol
                     if let serializer = operation.targetType.serializer {
-                        data = serializer.serialize(response: result)
+                        data = serializer.serialize(result: result)
                     } else {
                         data = self.convertToDefaultBatchDataResponse(with: result)
                     }

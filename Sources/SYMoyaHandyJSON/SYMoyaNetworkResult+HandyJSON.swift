@@ -7,10 +7,10 @@
 
 import Foundation
 import HandyJSON
+import Moya
 import SYMoyaNetwork
 
 extension SYMoyaNetworkResult {
-
     func serializerObjectDataResponse<T: HandyJSON>(designatedPath: String?, isDataFromCache: Bool) -> SYMoyaNetworkDataResponse<T> {
         var dataRes: SYMoyaNetworkDataResponse<T>
         let object: T?

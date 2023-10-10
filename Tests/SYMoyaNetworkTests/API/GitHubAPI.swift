@@ -115,9 +115,9 @@ extension GitHub {
     }
     public var headers: [String: String]? { nil }
     
-//    public var dataResponseSerializer: some BatchDataResponseSerializerProtocol {
-//        return StringResponseSerializer2()
-//    }
+    public var dataResponseSerializer: some BatchDataResponseSerializerProtocol {
+        return .string(atKeyPath: nil)
+    }
 }
 
 public func url(_ route: TargetType) -> String {

@@ -8,11 +8,6 @@
 import Foundation
 import Moya
 
-public protocol BatchDataResponseSerializerProtocol {
-    associatedtype SerializedObject
-    func serialize(response: SYMoyaNetworkResult) -> SYMoyaNetworkDataResponse<SerializedObject>
-}
-
 //MARK: - SYBatchTatgetType
 public protocol SYBatchTatgetType: SYTargetType {
     associatedtype Serializer: BatchDataResponseSerializerProtocol
@@ -24,3 +19,4 @@ extension SYBatchTatgetType {
         return nil
     }
 }
+

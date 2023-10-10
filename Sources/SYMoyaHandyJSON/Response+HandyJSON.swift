@@ -11,7 +11,7 @@ import Moya
 import HandyJSON
 
 //MARK: - HandyJSON
-public extension Response {
+extension Response {
     
     /// Convert response to HandyJSON format data
     /// - Parameters:

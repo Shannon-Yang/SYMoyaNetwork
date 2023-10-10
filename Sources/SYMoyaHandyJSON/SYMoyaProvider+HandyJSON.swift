@@ -84,15 +84,8 @@ extension SYMoyaProvider: SYMoyaProviderHandyJSONType {
     public func responseObjectFromCache<T: HandyJSON>(_ target: Target, designatedPath: String?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
-            switch result {
-            case .success(let response):
-                var objectDataResponse: SYMoyaNetworkDataResponse<T> = self.serializerObjectDataResponse(response, designatedPath: designatedPath)
-                objectDataResponse.isDataFromCache = true
-                completion(objectDataResponse)
-            case .failure(let error):
-                let dataRes = SYMoyaNetworkDataResponse<T>(response: nil, isDataFromCache: true, result: .failure(error))
-                completion(dataRes)
-            }
+            let response: SYMoyaNetworkDataResponse<T> = result.serializerObjectDataResponse(designatedPath: designatedPath, isDataFromCache: true)
+            completion(response)
         }
     }
     
@@ -100,46 +93,26 @@ extension SYMoyaProvider: SYMoyaProviderHandyJSONType {
     public func responseObjectFromDiskCache<T: HandyJSON>(_ target: Target, designatedPath: String?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieveResponseInDiskCache(target, options: options, callbackQueue: callbackQueue) { result in
-            switch result {
-            case .success(let response):
-                var objectDataResponse: SYMoyaNetworkDataResponse<T> = self.serializerObjectDataResponse(response, designatedPath: designatedPath)
-                objectDataResponse.isDataFromCache = true
-                completion(objectDataResponse)
-            case .failure(let error):
-                let dataRes = SYMoyaNetworkDataResponse<T>(response: nil, isDataFromCache: true, result: .failure(error))
-                completion(dataRes)
-            }
+            let response: SYMoyaNetworkDataResponse<T> = result.serializerObjectDataResponse(designatedPath: designatedPath, isDataFromCache: true)
+            completion(response)
         }
     }
     
     
     public func responseObjectFromMemoryCache<T: HandyJSON>(_ target: Target, designatedPath: String?) -> SYMoyaNetworkDataResponse<T> {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-        var dataRes: SYMoyaNetworkDataResponse<T>
-        do {
-            let response = try self.retrieveResponseInMemoryCache(target, options: options)
-            dataRes = self.serializerObjectDataResponse(response, designatedPath: designatedPath)
-        } catch let error {
-            dataRes = SYMoyaNetworkDataResponse<T>(response: nil, result: .failure(error as! SYMoyaNetworkError))
-        }
-        dataRes.isDataFromCache = true
-        return dataRes
+        let result = self.retrieveResponseInMemoryCache(target, options: options)
+        let response: SYMoyaNetworkDataResponse<T> = result.serializerObjectDataResponse(designatedPath: designatedPath, isDataFromCache: true)
+        return response
     }
-    
     
     @discardableResult
     public func responseObject<T: HandyJSON>(_ responseDataSourceType: ResponseDataSourceType, target: Target, designatedPath: String?, callbackQueue: DispatchQueue?, progress: ProgressBlock?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable? {
         @discardableResult
-        func req<T: HandyJSON>(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable {
+        func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable {
             self.req(target, callbackQueue: callbackQueue, progress: progress) { result in
-                switch result {
-                case .success(let response):
-                    var objectDataResponse: SYMoyaNetworkDataResponse<T> = self.serializerObjectDataResponse(response, designatedPath: designatedPath)
-                    objectDataResponse.isDataFromCache = false
-                    completion(objectDataResponse)
-                case .failure(let error):
-                    completion(SYMoyaNetworkDataResponse(response: nil, result: .failure(error)))
-                }
+                let response: SYMoyaNetworkDataResponse<T> = result.serializerObjectDataResponse(designatedPath: designatedPath, isDataFromCache: false)
+                completion(response)
             }
         }
         
@@ -153,24 +126,16 @@ extension SYMoyaProvider: SYMoyaProviderHandyJSONType {
             case .cache:
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
-                    switch result {
-                    case .success(let response):
-                        var objectDataResponse: SYMoyaNetworkDataResponse<T> = self.serializerObjectDataResponse(response, designatedPath: designatedPath)
-                        objectDataResponse.isDataFromCache = true
-                        completion(objectDataResponse)
-                    case .failure(let error):
-                        completion(SYMoyaNetworkDataResponse(response: nil, result: .failure(error)))
-                    }
+                    let response: SYMoyaNetworkDataResponse<T> = result.serializerObjectDataResponse(designatedPath: designatedPath, isDataFromCache: true)
+                    completion(response)
                 }
             case .cacheIfPossible:
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-                
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
-                    case .success(let response):
-                        var objectDataResponse: SYMoyaNetworkDataResponse<T> = self.serializerObjectDataResponse(response, designatedPath: designatedPath)
-                        objectDataResponse.isDataFromCache = true
-                        completion(objectDataResponse)
+                    case .success(_):
+                        let response: SYMoyaNetworkDataResponse<T> = result.serializerObjectDataResponse(designatedPath: designatedPath, isDataFromCache: true)
+                        completion(response)
                     case .failure(_):
                         req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
                     }
@@ -180,10 +145,9 @@ extension SYMoyaProvider: SYMoyaProviderHandyJSONType {
                 
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
-                    case .success(let response):
-                        var objectDataResponse: SYMoyaNetworkDataResponse<T> = self.serializerObjectDataResponse(response, designatedPath: designatedPath)
-                        objectDataResponse.isDataFromCache = true
-                        completion(objectDataResponse)
+                    case .success(_):
+                        let response: SYMoyaNetworkDataResponse<T> = result.serializerObjectDataResponse(designatedPath: designatedPath, isDataFromCache: true)
+                        completion(response)
                         // make the request again
                         req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
                     case .failure(_):
@@ -196,10 +160,10 @@ extension SYMoyaProvider: SYMoyaProviderHandyJSONType {
                 
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
-                    case .success(let response):
-                        var objectDataResponse: SYMoyaNetworkDataResponse<T> = self.serializerObjectDataResponse(response, designatedPath: designatedPath)
-                        objectDataResponse.isDataFromCache = true
-                        let isSendRequest = customizable.shouldSendRequest(target, dataResponse: objectDataResponse)
+                    case .success(_):
+                        let response: SYMoyaNetworkDataResponse<T> = result.serializerObjectDataResponse(designatedPath: designatedPath, isDataFromCache: true)
+                        
+                        let isSendRequest = customizable.shouldSendRequest(target, dataResponse: response)
                         if isSendRequest {
                             // request
                             req(target, completion: completion)
@@ -222,15 +186,8 @@ extension SYMoyaProvider: SYMoyaProviderHandyJSONType {
     public func responseObjectsFromCache<T: HandyJSON>(_ target: Target, designatedPath: String?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T?]?>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
-            switch result {
-            case .success(let response):
-                var objectsDataResponse: SYMoyaNetworkDataResponse<[T?]?> = self.serializerObjectsDataResponse(response, designatedPath: designatedPath)
-                objectsDataResponse.isDataFromCache = true
-                completion(objectsDataResponse)
-            case .failure(let error):
-                let dataRes = SYMoyaNetworkDataResponse<[T?]?>(response: nil, isDataFromCache: true, result: .failure(error))
-                completion(dataRes)
-            }
+            let response: SYMoyaNetworkDataResponse<[T?]?> = result.serializerObjectsDataResponse(designatedPath: designatedPath, isDataFromCache: true)
+            completion(response)
         }
     }
     
@@ -238,30 +195,17 @@ extension SYMoyaProvider: SYMoyaProviderHandyJSONType {
     public func responseObjectsFromDiskCache<T: HandyJSON>(_ target: Target, designatedPath: String?, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T?]?>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieveResponseInDiskCache(target, options: options, callbackQueue: callbackQueue) { result in
-            switch result {
-            case .success(let response):
-                var objectsDataResponse: SYMoyaNetworkDataResponse<[T?]?> = self.serializerObjectsDataResponse(response, designatedPath: designatedPath)
-                objectsDataResponse.isDataFromCache = true
-                completion(objectsDataResponse)
-            case .failure(let error):
-                let dataRes = SYMoyaNetworkDataResponse<[T?]?>(response: nil, isDataFromCache: true, result: .failure(error))
-                completion(dataRes)
-            }
+            let response: SYMoyaNetworkDataResponse<[T?]?> = result.serializerObjectsDataResponse(designatedPath: designatedPath, isDataFromCache: true)
+            completion(response)
         }
     }
     
     
     public func responseObjectsFromMemoryCache<T: HandyJSON>(_ target: Target, designatedPath: String?) -> SYMoyaNetworkDataResponse<[T?]?> {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-        var dataRes: SYMoyaNetworkDataResponse<[T?]?>
-        do {
-            let response = try self.retrieveResponseInMemoryCache(target, options: options)
-            dataRes = self.serializerObjectsDataResponse(response, designatedPath: designatedPath)
-        } catch let error {
-            dataRes = SYMoyaNetworkDataResponse<[T?]?>(response: nil, isDataFromCache: true, result: .failure(error as! SYMoyaNetworkError))
-        }
-        dataRes.isDataFromCache = true
-        return dataRes
+        let result = self.retrieveResponseInMemoryCache(target, options: options)
+        let response: SYMoyaNetworkDataResponse<[T?]?> = result.serializerObjectsDataResponse(designatedPath: designatedPath, isDataFromCache: true)
+        return response
     }
     
     
@@ -269,16 +213,10 @@ extension SYMoyaProvider: SYMoyaProviderHandyJSONType {
     @discardableResult
     public func responseObjects<T: HandyJSON>(_ responseDataSourceType: ResponseDataSourceType, target: Target, designatedPath: String?, callbackQueue: DispatchQueue?, progress: ProgressBlock?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T?]?>) -> Void) -> Cancellable? {
         @discardableResult
-        func req<T: HandyJSON>(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T?]?>) -> Void) -> Cancellable {
+        func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T?]?>) -> Void) -> Cancellable {
             self.req(target, callbackQueue: callbackQueue, progress: progress) { result in
-                switch result {
-                case .success(let response):
-                    var objectsDataResponse: SYMoyaNetworkDataResponse<[T?]?> = self.serializerObjectsDataResponse(response, designatedPath: designatedPath)
-                    objectsDataResponse.isDataFromCache = false
-                    completion(objectsDataResponse)
-                case .failure(let error):
-                    completion(SYMoyaNetworkDataResponse(response: nil, result: .failure(error)))
-                }
+                let response: SYMoyaNetworkDataResponse<[T?]?> = result.serializerObjectsDataResponse(designatedPath: designatedPath, isDataFromCache: false)
+                completion(response)
             }
         }
         
@@ -292,24 +230,17 @@ extension SYMoyaProvider: SYMoyaProviderHandyJSONType {
             case .cache:
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
-                    switch result {
-                    case .success(let response):
-                        var objectsDataResponse: SYMoyaNetworkDataResponse<[T?]?> = self.serializerObjectsDataResponse(response, designatedPath: designatedPath)
-                        objectsDataResponse.isDataFromCache = true
-                        completion(objectsDataResponse)
-                    case .failure(let error):
-                        completion(SYMoyaNetworkDataResponse(response: nil, result: .failure(error)))
-                    }
+                    let response: SYMoyaNetworkDataResponse<[T?]?> = result.serializerObjectsDataResponse(designatedPath: designatedPath, isDataFromCache: true)
+                    completion(response)
                 }
             case .cacheIfPossible:
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
                 
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
-                    case .success(let response):
-                        var objectsDataResponse: SYMoyaNetworkDataResponse<[T?]?> = self.serializerObjectsDataResponse(response, designatedPath: designatedPath)
-                        objectsDataResponse.isDataFromCache = true
-                        completion(objectsDataResponse)
+                    case .success(_):
+                        let response: SYMoyaNetworkDataResponse<[T?]?> = result.serializerObjectsDataResponse(designatedPath: designatedPath, isDataFromCache: true)
+                        completion(response)
                     case .failure(_):
                         req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
                     }
@@ -319,10 +250,10 @@ extension SYMoyaProvider: SYMoyaProviderHandyJSONType {
                 
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
-                    case .success(let response):
-                        var objectsDataResponse: SYMoyaNetworkDataResponse<[T?]?> = self.serializerObjectsDataResponse(response, designatedPath: designatedPath)
-                        objectsDataResponse.isDataFromCache = true
-                        completion(objectsDataResponse)
+                    case .success(_):
+                        let response: SYMoyaNetworkDataResponse<[T?]?> = result.serializerObjectsDataResponse(designatedPath: designatedPath, isDataFromCache: true)
+                        completion(response)
+                        
                         // make the request again
                         req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
                     case .failure(_):
@@ -330,15 +261,13 @@ extension SYMoyaProvider: SYMoyaProviderHandyJSONType {
                     }
                 }
             case .custom(let customizable):
-                
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-                
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
-                    case .success(let response):
-                        var objectsDataResponse: SYMoyaNetworkDataResponse<[T?]?> = self.serializerObjectsDataResponse(response, designatedPath: designatedPath)
-                        objectsDataResponse.isDataFromCache = true
-                        let isSendRequest = customizable.shouldSendRequest(target, dataResponse: objectsDataResponse)
+                    case .success(_):
+                        let response: SYMoyaNetworkDataResponse<[T?]?> = result.serializerObjectsDataResponse(designatedPath: designatedPath, isDataFromCache: true)
+                        
+                        let isSendRequest = customizable.shouldSendRequest(target, dataResponse: response)
                         if isSendRequest {
                             // request
                             req(target, completion: completion)
