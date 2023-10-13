@@ -448,7 +448,7 @@ open class NetworkCache {
             self.retrieveResponseInDiskCache(forKey: key, options: options, callbackQueue: callbackQueue) {
                 result in
                 switch result {
-                case .success(let response):
+                case .success(let resultResponse):
                     
                     // Cache the disk response to memory.
                     // We are passing `false` to `toDisk`, the memory cache does not change
@@ -456,13 +456,15 @@ open class NetworkCache {
                     var cacheOptions = options
                     cacheOptions.callbackQueue = .untouch
                     self.store(
-                        response,
+                        resultResponse.response,
                         forKey: key,
                         options: cacheOptions,
                         toDisk: false)
                     {
                         _ in
-                        callbackQueue.execute { completionHandler(.success(.disk(response))) }
+                        callbackQueue.execute {
+                            completionHandler(.success(.disk(resultResponse.response)))
+                        }
                     }
                 case .failure(let error):
                     callbackQueue.execute { completionHandler(.failure(error)) }
@@ -538,7 +540,10 @@ open class NetworkCache {
             do {
                 if let data = try self.diskStorage.value(forKey: key, extendingExpiration: options.diskCacheAccessExtendingExpiration) {
                     let response = options.cacheSerializer.response(with: 0, data: data, request: nil, response: nil, options: options)
-                    callbackQueue.execute { completionHandler(.success(response)) }
+                    callbackQueue.execute { 
+                        let resultResponse = (response,true)
+                        completionHandler(.success(resultResponse))
+                    }
                 } else {
                     let error = SYMoyaNetworkError.cacheError(reason: .responseNotExisting(key: key))
                     callbackQueue.execute { completionHandler(.failure(error)) }

@@ -9,38 +9,37 @@ import Foundation
 import Moya
 
 //MARK: - String Provider Concurrency
-@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public extension SYMoyaProvider {
 
-    func responseJSONFromCache(_ target: Target,failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<Any> {
+    func responseJSONFromCache(_ target: Target,serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<Any> {
         return await withCheckedContinuation { continuation in
-            self.responseJSONFromCache(target, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue) { dataResponse in
+            self.responseJSONFromCache(target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
                 continuation.resume(returning: dataResponse)
             }
         }
     }
 
-    func responseJSONFromDiskCache(_ target: Target,failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<Any> {
+    func responseJSONFromDiskCache(_ target: Target,serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<Any> {
         return await withCheckedContinuation{ continuation in
-            self.responseJSONFromDiskCache(target, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue) { dataResponse in
+            self.responseJSONFromDiskCache(target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
                 continuation.resume(returning: dataResponse)
             }
         }
     }
     
-    func responseJSONFromMemoryCache(_ target: Target,failsOnEmptyData: Bool = true) async -> SYMoyaNetworkDataResponse<Any> {
+    func responseJSONFromMemoryCache(_ target: Target,serializer: JSONResponseSerializer = .defaultJSONSerializer) async -> SYMoyaNetworkDataResponse<Any> {
         return await withCheckedContinuation{ continuation in
-            let dataResponse = self.responseJSONFromMemoryCache(target, failsOnEmptyData: failsOnEmptyData)
+            let dataResponse = self.responseJSONFromMemoryCache(target, serializer: serializer)
             continuation.resume(returning: dataResponse)
         }
     }
 
-    func responseJSON(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, failsOnEmptyData: Bool = true, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<Any> {
+    func responseJSON(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<Any> {
         let actor = SYDataResponseActor(provider: self)
         return await withTaskCancellationHandler {
              await withCheckedContinuation { continuation in
                 _Concurrency.Task {
-                     await actor.responseJSON(responseDataSourceType,target: target, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
+                     await actor.responseJSON(responseDataSourceType,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
                          continuation.resume(returning: dataResponse)
                      })
                  }

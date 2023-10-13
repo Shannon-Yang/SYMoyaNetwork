@@ -9,21 +9,20 @@ import Foundation
 import Moya
 
 extension SYMoyaNetworkResult {
-    func serializerImageDataResponse(isDataFromCache: Bool) -> SYMoyaNetworkDataResponse<Image> {
+    func serializerImageDataResponse() -> SYMoyaNetworkDataResponse<Image> {
         var dataRes: SYMoyaNetworkDataResponse<Image>
         switch self {
-        case .success(let response):
+        case .success(let resultResponse):
             do {
-                let image = try response.mapImage()
-                dataRes = SYMoyaNetworkDataResponse(response: response, result: .success(image))
+                let image = try resultResponse.response.mapImage()
+                dataRes = SYMoyaNetworkDataResponse(resultResponse: resultResponse, result: .success(image))
             } catch let error {
                 let e = (error as! MoyaError).transformToSYMoyaNetworkError()
-                dataRes = SYMoyaNetworkDataResponse(response: response, result: .failure(e))
+                dataRes = SYMoyaNetworkDataResponse(resultResponse: resultResponse, result: .failure(e))
             }
         case .failure(let error):
-            dataRes = SYMoyaNetworkDataResponse<Image>(response: nil, result: .failure(error))
+            dataRes = SYMoyaNetworkDataResponse<Image>(result: .failure(error))
         }
-        dataRes.isDataFromCache = isDataFromCache
         return dataRes
     }
 }

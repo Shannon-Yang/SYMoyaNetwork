@@ -10,7 +10,7 @@ import Moya
 
 //MARK: - SYBatchTatgetType
 public protocol SYBatchTatgetType: SYTargetType {
-    associatedtype Serializer: BatchDataResponseSerializerProtocol
+    associatedtype Serializer: ResponseSerializer
     var serializer: Serializer? { get }
 }
 

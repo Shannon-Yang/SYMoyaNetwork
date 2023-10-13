@@ -45,7 +45,7 @@ extension SYMoyaProvider: SYMoyaProviderImageType {
     public func responseImageFromCache(_ target: Target, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<Image>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
-            let response = result.serializerImageDataResponse(isDataFromCache: true)
+            let response = result.serializerImageDataResponse()
             completion(response)
         }
     }
@@ -53,7 +53,7 @@ extension SYMoyaProvider: SYMoyaProviderImageType {
     public func responseImageFromDiskCache(_ target: Target, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<Image>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieveResponseInDiskCache(target, options: options, callbackQueue: callbackQueue) { result in
-            let response = result.serializerImageDataResponse(isDataFromCache: true)
+            let response = result.serializerImageDataResponse()
             completion(response)
         }
     }
@@ -61,7 +61,7 @@ extension SYMoyaProvider: SYMoyaProviderImageType {
     public func responseImageFromMemoryCache(_ target: Target) -> SYMoyaNetworkDataResponse<Image> {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         let result = self.retrieveResponseInMemoryCache(target, options: options)
-        let response = result.serializerImageDataResponse(isDataFromCache: true)
+        let response = result.serializerImageDataResponse()
         return response
     }
     
@@ -70,7 +70,7 @@ extension SYMoyaProvider: SYMoyaProviderImageType {
         @discardableResult
         func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<Image>) -> Void) -> Cancellable {
             self.req(target, callbackQueue: callbackQueue, progress: progress) { result in
-                let response = result.serializerImageDataResponse(isDataFromCache: false)
+                let response = result.serializerImageDataResponse()
                 completion(response)
             }
         }
@@ -85,7 +85,7 @@ extension SYMoyaProvider: SYMoyaProviderImageType {
             case .cache:
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
-                    let response = result.serializerImageDataResponse(isDataFromCache: true)
+                    let response = result.serializerImageDataResponse()
                     completion(response)
                 }
             case .cacheIfPossible:
@@ -93,7 +93,7 @@ extension SYMoyaProvider: SYMoyaProviderImageType {
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
                     case .success(_):
-                        let response = result.serializerImageDataResponse(isDataFromCache: true)
+                        let response = result.serializerImageDataResponse()
                         completion(response)
                     case .failure(_):
                         req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
@@ -105,7 +105,7 @@ extension SYMoyaProvider: SYMoyaProviderImageType {
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
                     case .success(_):
-                        let response = result.serializerImageDataResponse(isDataFromCache: true)
+                        let response = result.serializerImageDataResponse()
                         completion(response)
                         
                         // make the request again
@@ -119,7 +119,7 @@ extension SYMoyaProvider: SYMoyaProviderImageType {
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
                     case .success(_):
-                        let response = result.serializerImageDataResponse(isDataFromCache: true)
+                        let response = result.serializerImageDataResponse()
                         let isSendRequest = customizable.shouldSendRequest(target, dataResponse: response)
                         if isSendRequest {
                             // request
@@ -129,7 +129,7 @@ extension SYMoyaProvider: SYMoyaProviderImageType {
                         if customizable.shouldRequestIfCacheFeatchFailure() {
                             req(target, completion: completion)
                         } else {
-                            let re = SYMoyaNetworkDataResponse<Image>(response: nil, isDataFromCache: true, result: .failure(error))
+                            let re = SYMoyaNetworkDataResponse<Image>(result: .failure(error))
                             completion(re)
                         }
                     }

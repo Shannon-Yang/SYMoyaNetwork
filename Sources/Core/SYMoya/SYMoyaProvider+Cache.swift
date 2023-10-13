@@ -90,13 +90,17 @@ extension SYMoyaProvider {
         }
         self.cache.retrieveResponse(forKey: key, options: options, callbackQueue: queue) { result in
             DispatchQueue.main.async {
+                let resultResponse: SYMoyaNetworkResultResponse
+                resultResponse.isDataFromCache = true
                 switch result {
                 case .success(let networkCacheResult):
                     switch networkCacheResult {
                     case .memory(let response):
-                        completion(.success(response))
+                        resultResponse.response = response
+                        completion(.success(resultResponse))
                     case .disk(let response):
-                        completion(.success(response))
+                        resultResponse.response = response
+                        completion(.success(resultResponse))
                     case .none:
                         // cache Not Existing
                         completion(.failure(.cacheError(reason: .responseNotExisting(key: key))))
@@ -111,7 +115,8 @@ extension SYMoyaProvider {
     public func retrieveResponseInMemoryCache(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo) -> SYMoyaNetworkResult {
         let key = self.generateCacheKey(target)
         if let response = self.cache.retrieveResponseInMemoryCache(forKey: key, options: options) {
-            return .success(response)
+            let resultResponse = (response,true)
+            return .success(resultResponse)
         }
         return .failure(SYMoyaNetworkError.cacheError(reason: .responseNotExisting(key: key)))
     }

@@ -52,7 +52,7 @@ extension SYMoyaProvider: SYMoyaProviderSwiftyJSONType {
     public func responseSwiftyJSONFromCache(_ target: Target, options opt: JSONSerialization.ReadingOptions, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<SwiftyJSON.JSON>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
-            let response = result.serializerSwiftyJSON(ptions: opt, isDataFromCache: true)
+            let response = result.serializerSwiftyJSON(ptions: opt)
             completion(response)
         }
     }
@@ -60,7 +60,7 @@ extension SYMoyaProvider: SYMoyaProviderSwiftyJSONType {
     public func responseSwiftyJSONFromDiskCache(_ target: Target, options opt: JSONSerialization.ReadingOptions, callbackQueue: DispatchQueue?, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<SwiftyJSON.JSON>) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieveResponseInDiskCache(target, options: options, callbackQueue: callbackQueue) { result in
-            let response = result.serializerSwiftyJSON(ptions: opt, isDataFromCache: true)
+            let response = result.serializerSwiftyJSON(ptions: opt)
             completion(response)
         }
     }
@@ -68,7 +68,7 @@ extension SYMoyaProvider: SYMoyaProviderSwiftyJSONType {
     public func responseSwiftyJSONFromMemoryCache(_ target: Target, options opt: JSONSerialization.ReadingOptions, failsOnEmptyData: Bool) -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         let result = self.retrieveResponseInMemoryCache(target, options: options)
-        let response = result.serializerSwiftyJSON(ptions: opt, isDataFromCache: true)
+        let response = result.serializerSwiftyJSON(ptions: opt)
         return response
     }
     
@@ -77,7 +77,7 @@ extension SYMoyaProvider: SYMoyaProviderSwiftyJSONType {
         @discardableResult
         func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<SwiftyJSON.JSON>) -> Void) -> Cancellable {
             self.req(target, callbackQueue: callbackQueue, progress: progress) { result in
-                let response = result.serializerSwiftyJSON(ptions: opt, isDataFromCache: false)
+                let response = result.serializerSwiftyJSON(ptions: opt)
                 completion(response)
             }
         }
@@ -92,7 +92,7 @@ extension SYMoyaProvider: SYMoyaProviderSwiftyJSONType {
             case .cache:
                 let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
-                    let response = result.serializerSwiftyJSON(ptions: opt, isDataFromCache: true)
+                    let response = result.serializerSwiftyJSON(ptions: opt)
                     completion(response)
                 }
             case .cacheIfPossible:
@@ -101,7 +101,7 @@ extension SYMoyaProvider: SYMoyaProviderSwiftyJSONType {
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
                     case .success(_):
-                        let response = result.serializerSwiftyJSON(ptions: opt, isDataFromCache: true)
+                        let response = result.serializerSwiftyJSON(ptions: opt)
                         completion(response)
                     case .failure(_):
                         req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
@@ -113,7 +113,7 @@ extension SYMoyaProvider: SYMoyaProviderSwiftyJSONType {
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
                     case .success(_):
-                        let response = result.serializerSwiftyJSON(ptions: opt, isDataFromCache: true)
+                        let response = result.serializerSwiftyJSON(ptions: opt)
                         completion(response)
                         
                         // make the request again
@@ -127,7 +127,7 @@ extension SYMoyaProvider: SYMoyaProviderSwiftyJSONType {
                 self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
                     case .success(_):
-                        let response = result.serializerSwiftyJSON(ptions: opt, isDataFromCache: true)
+                        let response = result.serializerSwiftyJSON(ptions: opt)
                         let isSendRequest = customizable.shouldSendRequest(target, dataResponse: response)
                         if isSendRequest {
                             // request
@@ -137,7 +137,7 @@ extension SYMoyaProvider: SYMoyaProviderSwiftyJSONType {
                         if customizable.shouldRequestIfCacheFeatchFailure() {
                             req(target, completion: completion)
                         } else {
-                            let re = SYMoyaNetworkDataResponse<SwiftyJSON.JSON>(response: nil, isDataFromCache: true, result: .failure(error))
+                            let re = SYMoyaNetworkDataResponse<SwiftyJSON.JSON>(result: .failure(error))
                             completion(re)
                         }
                     }

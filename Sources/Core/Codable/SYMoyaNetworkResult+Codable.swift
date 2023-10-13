@@ -9,21 +9,20 @@ import Foundation
 import Moya
 
 extension SYMoyaNetworkResult {
-    func serializerCodableObjectDataResponse<T: Decodable>(atKeyPath keyPath: String?, using decoder: JSONDecoder, failsOnEmptyData: Bool, isDataFromCache: Bool) -> SYMoyaNetworkDataResponse<T> {
+    func serializerCodableObjectDataResponse<T: Decodable>(atKeyPath keyPath: String?, using decoder: JSONDecoder, failsOnEmptyData: Bool) -> SYMoyaNetworkDataResponse<T> {
         var dataRes: SYMoyaNetworkDataResponse<T>
         switch self {
-        case .success(let response):
+        case .success(let resultResponse):
             do {
-                let codableObject: T = try response.mapCodableObject(atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
-                dataRes = SYMoyaNetworkDataResponse(response: response, result: .success(codableObject))
+                let codableObject: T = try resultResponse.response.mapCodableObject(atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
+                dataRes = SYMoyaNetworkDataResponse(resultResponse: resultResponse, result: .success(codableObject))
             } catch let error {
                 let e = (error as! MoyaError).transformToSYMoyaNetworkError()
-                dataRes = SYMoyaNetworkDataResponse(response: response, result: .failure(e))
+                dataRes = SYMoyaNetworkDataResponse(resultResponse: resultResponse, result: .failure(e))
             }
         case .failure(let error):
-            dataRes = SYMoyaNetworkDataResponse<T>(response: nil, result: .failure(error))
+            dataRes = SYMoyaNetworkDataResponse<T>(result: .failure(error))
         }
-        dataRes.isDataFromCache = isDataFromCache
         return dataRes
     }
 }

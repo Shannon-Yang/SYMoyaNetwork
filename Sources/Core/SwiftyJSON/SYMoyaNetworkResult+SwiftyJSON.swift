@@ -10,21 +10,20 @@ import SwiftyJSON
 import Moya
 
 extension SYMoyaNetworkResult {
-    func serializerSwiftyJSON(ptions opt: JSONSerialization.ReadingOptions = [], isDataFromCache: Bool) -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
+    func serializerSwiftyJSON(ptions opt: JSONSerialization.ReadingOptions = []) -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
         var dataRes: SYMoyaNetworkDataResponse<SwiftyJSON.JSON>
         switch self {
-        case .success(let response):
+        case .success(let resultResponse):
             do {
-                let json = try response.mapSwiftyJSON(options: opt)
-                dataRes = SYMoyaNetworkDataResponse(response: response, result: .success(json))
+                let json = try resultResponse.response.mapSwiftyJSON(options: opt)
+                dataRes = SYMoyaNetworkDataResponse(resultResponse: resultResponse, result: .success(json))
             } catch let error {
                 let e = (error as! MoyaError).transformToSYMoyaNetworkError()
-                dataRes = SYMoyaNetworkDataResponse(response: response, result: .failure(e))
+                dataRes = SYMoyaNetworkDataResponse(resultResponse: resultResponse, result: .failure(e))
             }
         case .failure(let error):
-            dataRes = SYMoyaNetworkDataResponse<SwiftyJSON.JSON>(response: nil, result: .failure(error))
+            dataRes = SYMoyaNetworkDataResponse<SwiftyJSON.JSON>(result: .failure(error))
         }
-        dataRes.isDataFromCache = isDataFromCache
         return dataRes
     }
 }

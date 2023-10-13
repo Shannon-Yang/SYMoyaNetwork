@@ -57,6 +57,7 @@ public class SYMoyaBatchProvider<TargetType: SYBatchTatgetType>: SYBatchMoyaProv
                     case .failure(_):
                         self.operationQueue.cancelAllOperations()
                         batchResult = .failure(.batchRequestError(reason: .batchSomeOperationFailure))
+                        self.operationQueue.
                     }
                 case .ifOneFailureBatchContinue:
                     appendResponse()
@@ -66,7 +67,7 @@ public class SYMoyaBatchProvider<TargetType: SYBatchTatgetType>: SYBatchMoyaProv
                     if let serializer = operation.targetType.serializer {
                         data = serializer.serialize(result: result)
                     } else {
-                        data = self.convertToDefaultBatchDataResponse(with: result)
+                        data = result.serializerDefaultDataResponse()
                     }
                     responses.append((operation.targetType,data))
                 }
@@ -87,19 +88,5 @@ public class SYMoyaBatchProvider<TargetType: SYBatchTatgetType>: SYBatchMoyaProv
     public init(targetTypes: [TargetType]) {
         self.targetTypes = targetTypes
         self.reqOperations = targetTypes.map({ SYMoyaBatchProviderReqOperation(provider: self.provider, targetType: $0) })
-    }
-}
-
-// MARK: - Private
-private extension SYMoyaBatchProvider {
-    func convertToDefaultBatchDataResponse(with result: SYMoyaNetworkResult) -> SYMoyaNetworkDataResponse<Data> {
-        var dataRes: SYMoyaNetworkDataResponse<Data>
-        switch result {
-        case .success(let response):
-            dataRes = SYMoyaNetworkDataResponse<Data>(response: response, result: .success(response.data))
-        case .failure(let error):
-            dataRes = SYMoyaNetworkDataResponse<Data>(response: nil, result: .failure(error))
-        }
-        return dataRes
     }
 }

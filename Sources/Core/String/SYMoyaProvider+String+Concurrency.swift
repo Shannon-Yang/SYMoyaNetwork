@@ -9,38 +9,37 @@ import Foundation
 import Moya
 
 //MARK: - String Provider Concurrency
-@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public extension SYMoyaProvider {
 
-    func responseStringFromCache(_ target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<String> {
+    func responseStringFromCache(_ target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<String> {
         return await withCheckedContinuation { continuation in
-            self.responseStringFromCache(target, atKeyPath: atKeyPath, callbackQueue: callbackQueue) { dataResponse in
+            self.responseStringFromCache(target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
                 continuation.resume(returning: dataResponse)
             }
         }
     }
     
-    func responseStringFromDiskCache(_ target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<String> {
+    func responseStringFromDiskCache(_ target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<String> {
         return await withCheckedContinuation{ continuation in
-            self.responseStringFromDiskCache(target,atKeyPath: atKeyPath,callbackQueue: callbackQueue) { dataResponse in
+            self.responseStringFromDiskCache(target,serializer: serializer,callbackQueue: callbackQueue) { dataResponse in
                 continuation.resume(returning: dataResponse)
             }
         }
     }
     
-    func responseStringFromMemoryCache(_ target: Target, atKeyPath: String? = nil) async -> SYMoyaNetworkDataResponse<String> {
+    func responseStringFromMemoryCache(_ target: Target, serializer: StringResponseSerializer = .defaultStringSerializer) async -> SYMoyaNetworkDataResponse<String> {
         return await withCheckedContinuation{ continuation in
-            let dataResponse = self.responseStringFromMemoryCache(target, atKeyPath: atKeyPath)
+            let dataResponse = self.responseStringFromMemoryCache(target, serializer: serializer)
             continuation.resume(returning: dataResponse)
         }
     }
     
-    func responseString(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, atKeyPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<String> {
+    func responseString(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<String> {
         let actor = SYDataResponseActor(provider: self)
         return await withTaskCancellationHandler {
             await withCheckedContinuation { continuation in
                 _Concurrency.Task {
-                     await actor.responseString(responseDataSourceType,target: target,atKeyPath: atKeyPath,callbackQueue: callbackQueue,progress: progress, completion: { dataResponse in
+                     await actor.responseString(responseDataSourceType,target: target,serializer: serializer,callbackQueue: callbackQueue,progress: progress, completion: { dataResponse in
                          continuation.resume(returning: dataResponse)
                      })
                  }

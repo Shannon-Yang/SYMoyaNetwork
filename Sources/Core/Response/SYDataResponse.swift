@@ -12,8 +12,8 @@ import Moya
 public protocol SYMoyaNetworkDataResponseProtocol {
     associatedtype Success
     associatedtype Failure: Error
-    var response: Moya.Response? { get set }
-    var isDataFromCache: Bool { get set }
+    var resultResponse: SYMoyaNetworkResultResponse? { get set }
+    var isDataFromCache: Bool { get }
     var result: Result<Success, Failure> { get set }
     var value: Success? { get }
     var error: Failure? { get }
@@ -24,10 +24,10 @@ public typealias SYMoyaNetworkDataResponse<Success> = SYDataResponse<Success, SY
 /// Represents a response to a `SYMoyaProvider.request`.
 public struct SYDataResponse<Success, Failure: Error>: SYMoyaNetworkDataResponseProtocol {
     /// Represents a response to a `MoyaProvider.request`.
-    public var response: Moya.Response?
+    public var resultResponse: SYMoyaNetworkResultResponse?
     
     /// a boolean indicating whether the current data is from the cache
-    public var isDataFromCache: Bool
+    public var isDataFromCache: Bool { resultResponse?.isDataFromCache ?? false }
     
     /// The result of response serialization.
     public var result: Result<Success, Failure>
@@ -47,10 +47,9 @@ public struct SYDataResponse<Success, Failure: Error>: SYMoyaNetworkDataResponse
     ///   - metrics:               The `URLSessionTaskMetrics` of the `DataRequest` or `UploadRequest`.
     ///   - serializationDuration: The duration taken by serialization.
     ///   - result:                The `Result` of response serialization.
-    public init(response: Moya.Response?, isDataFromCache: Bool = false,
+    public init(resultResponse: SYMoyaNetworkResultResponse? = nil,
                 result: Result<Success, Failure>) {
-        self.response = response
-        self.isDataFromCache = isDataFromCache
+        self.resultResponse = resultResponse
         self.result = result
     }
 }
@@ -70,7 +69,7 @@ extension SYDataResponse {
     /// - returns: A `SYDataResponse` whose result wraps the value returned by the given closure. If this instance's
     ///            result is a failure, returns a response wrapping the same failure.
     public func map<NewSuccess>(_ transform: (Success) -> NewSuccess) -> SYDataResponse<NewSuccess, Failure> {
-        SYDataResponse<NewSuccess, Failure>(response: response, isDataFromCache: isDataFromCache, result: result.map(transform))
+        SYDataResponse<NewSuccess, Failure>(resultResponse: resultResponse, result: result.map(transform))
     }
     
     /// Evaluates the given closure when the result of this `SYDataResponse` is a success, passing the unwrapped result
@@ -88,7 +87,7 @@ extension SYDataResponse {
     /// - returns: A success or failure `SYDataResponse` depending on the result of the given closure. If this instance's
     ///            result is a failure, returns the same failure.
     public func tryMap<NewSuccess>(_ transform: (Success) throws -> NewSuccess) -> SYDataResponse<NewSuccess, Error> {
-        SYDataResponse<NewSuccess, Error>(response: response, isDataFromCache: isDataFromCache, result: result.tryMap(transform))
+        SYDataResponse<NewSuccess, Error>(resultResponse: resultResponse, result: result.tryMap(transform))
         
     }
     
@@ -103,7 +102,7 @@ extension SYDataResponse {
     ///
     /// - Returns: A `SYDataResponse` instance containing the result of the transform.
     public func mapError<NewFailure: Error>(_ transform: (Failure) -> NewFailure) -> SYDataResponse<Success, NewFailure> {
-        SYDataResponse<Success, NewFailure>(response: response, isDataFromCache: isDataFromCache, result: result.mapError(transform))
+        SYDataResponse<Success, NewFailure>(resultResponse: resultResponse, result: result.mapError(transform))
     }
     
     /// Evaluates the specified closure when the `SYDataResponse` is a failure, passing the unwrapped error as a parameter.
@@ -119,6 +118,6 @@ extension SYDataResponse {
     ///
     /// - Returns: A `SYDataResponse` instance containing the result of the transform.
     public func tryMapError<NewFailure: Error>(_ transform: (Failure) throws -> NewFailure) -> SYDataResponse<Success,Error> {
-        SYDataResponse<Success,Error>(response: response, isDataFromCache: isDataFromCache, result: result.tryMapError(transform))
+        SYDataResponse<Success,Error>(resultResponse: resultResponse, result: result.tryMapError(transform))
     }
 }

@@ -34,8 +34,6 @@ public protocol SYMoyaProviderDelegate: AnyObject {
     func provider<Target: SYTargetType>(_ provider: SYMoyaProvider<Target>, target: Target?, requestFailedFilter error: SYMoyaNetworkError)
 }
 
-public typealias SYMoyaNetworkResult = Result<Moya.Response, SYMoyaNetworkError>
-
 // A request provider class that inherits from MoyaProvider. Requests can only be made through this class.
 open class SYMoyaProvider<Target: SYTargetType>: Moya.MoyaProvider<Target> {
     
@@ -202,8 +200,9 @@ public extension SYMoyaProvider {
                 // Cache
                 self.cacheIfNeeded(target, response: response)
                 
+                let resultResponse = (response,false)
                 // completion
-                completion(.success(response))
+                completion(.success(resultResponse))
                 
             case .failure(let error):
                 let e = error.transformToSYMoyaNetworkError()
