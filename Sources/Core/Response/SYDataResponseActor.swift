@@ -23,8 +23,8 @@ public actor SYDataResponseActor<Target: SYTargetType> {
 }
 
 extension SYDataResponseActor {
-    func responseSwiftyJSON(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @Sendable @escaping (SYMoyaNetworkDataResponse<SwiftyJSON.JSON>) -> Void) {
-        cancellable = provider.responseSwiftyJSON(responseDataSourceType,target: target, options: opt, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
+    func responseSwiftyJSON(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @Sendable @escaping (SYMoyaNetworkDataResponse<SwiftyJSON.JSON>) -> Void) {
+        cancellable = provider.responseSwiftyJSON(responseDataSourceType,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
             completion(dataResponse)
         })
     }

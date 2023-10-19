@@ -5,14 +5,11 @@
 //  Created by Shannon Yang on 2022/9/15.
 //
 
-#if canImport(Combine)
 import Combine
 import Moya
 
 // This should be already provided in Combine, but it's not.
 // Ideally we would like to remove it, in favor of a framework-provided solution, ASAP.
-
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public class SYMoyaPublisher<Output>: Publisher {
     public typealias Failure = Never
     private class Subscription: Combine.Subscription {
@@ -44,8 +41,6 @@ public class SYMoyaPublisher<Output>: Publisher {
         subscriber.receive(subscription: subscription)
     }
 }
-
-#endif
 
 
 

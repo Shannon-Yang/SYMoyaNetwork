@@ -21,7 +21,6 @@ public class StringResponseSerializer: ResponseSerializer {
     init(atKeyPath: String? = nil) {
         self.atKeyPath = atKeyPath
     }
-    
     public func serialize(result: SYMoyaNetworkResult) -> SYMoyaNetworkDataResponse<SerializedObject> {
         return result.serializerStringDataResponse(atKeyPath: atKeyPath)
     }
@@ -102,7 +101,7 @@ public class CodableResponseSerializer<T: Decodable>: ResponseSerializer {
     }
 }
 
-public extension ResponseSerializer where SerializedObject: Decodable {
+public extension ResponseSerializer where Self == CodableResponseSerializer<CodableResponseSerializer.SerializedObject> {
     
     static var defaultCodableSerializer: CodableResponseSerializer<SerializedObject> {
         CodableResponseSerializer<SerializedObject>()

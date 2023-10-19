@@ -14,8 +14,8 @@ public extension SYMoyaProvider {
     
     func responseStringFromCachePublisher(_ target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<String>> {
         return SYMoyaPublisher { subscriber in
-            self.responseStringFromCache(target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
-                _ = subscriber.receive(dataResponse)
+            self.responseStringFromCache(target, serializer: serializer, callbackQueue: callbackQueue) { response in
+                _ = subscriber.receive(response)
                 subscriber.receive(completion: .finished)
             }
             return nil
@@ -24,8 +24,8 @@ public extension SYMoyaProvider {
     
     func responseStringFromDiskCachePublisher(_ target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<String>> {
         return SYMoyaPublisher { subscriber in
-            self.responseStringFromDiskCache(target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
-                _ = subscriber.receive(dataResponse)
+            self.responseStringFromDiskCache(target, serializer: serializer, callbackQueue: callbackQueue) { response in
+                _ = subscriber.receive(response)
                 subscriber.receive(completion: .finished)
             }
             return nil
@@ -34,8 +34,8 @@ public extension SYMoyaProvider {
     
     func responseStringFromMemoryCachePublisher(_ target: Target, serializer: StringResponseSerializer = .defaultStringSerializer) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<String>> {
         return SYMoyaPublisher { subscriber in
-            let dataResponse = self.responseStringFromMemoryCache(target, serializer: serializer)
-            _ = subscriber.receive(dataResponse)
+            let response = self.responseStringFromMemoryCache(target, serializer: serializer)
+            _ = subscriber.receive(response)
             subscriber.receive(completion: .finished)
             return nil
         }
@@ -43,8 +43,8 @@ public extension SYMoyaProvider {
     
     func responseStringPublisher(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher <SYMoyaNetworkDataResponse<String>> {
         return SYMoyaPublisher { [weak self] subscriber in
-            return self?.responseString(responseDataSourceType,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress) { dataResponse in
-                _ = subscriber.receive(dataResponse)
+            return self?.responseString(target, responseDataSourceType: responseDataSourceType, serializer: serializer, callbackQueue: callbackQueue, progress: progress) { response in
+                _ = subscriber.receive(response)
                 subscriber.receive(completion: .finished)
             }
         }

@@ -13,24 +13,24 @@ public extension SYMoyaProvider {
 
     func responseStringFromCache(_ target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<String> {
         return await withCheckedContinuation { continuation in
-            self.responseStringFromCache(target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
-                continuation.resume(returning: dataResponse)
+            self.responseStringFromCache(target, serializer: serializer, callbackQueue: callbackQueue) { response in
+                continuation.resume(returning: response)
             }
         }
     }
     
     func responseStringFromDiskCache(_ target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<String> {
         return await withCheckedContinuation{ continuation in
-            self.responseStringFromDiskCache(target,serializer: serializer,callbackQueue: callbackQueue) { dataResponse in
-                continuation.resume(returning: dataResponse)
+            self.responseStringFromDiskCache(target,serializer: serializer,callbackQueue: callbackQueue) { response in
+                continuation.resume(returning: response)
             }
         }
     }
     
     func responseStringFromMemoryCache(_ target: Target, serializer: StringResponseSerializer = .defaultStringSerializer) async -> SYMoyaNetworkDataResponse<String> {
         return await withCheckedContinuation{ continuation in
-            let dataResponse = self.responseStringFromMemoryCache(target, serializer: serializer)
-            continuation.resume(returning: dataResponse)
+            let response = self.responseStringFromMemoryCache(target, serializer: serializer)
+            continuation.resume(returning: response)
         }
     }
     
@@ -39,8 +39,8 @@ public extension SYMoyaProvider {
         return await withTaskCancellationHandler {
             await withCheckedContinuation { continuation in
                 _Concurrency.Task {
-                     await actor.responseString(responseDataSourceType,target: target,serializer: serializer,callbackQueue: callbackQueue,progress: progress, completion: { dataResponse in
-                         continuation.resume(returning: dataResponse)
+                     await actor.responseString(responseDataSourceType,target: target,serializer: serializer,callbackQueue: callbackQueue,progress: progress, completion: { response in
+                         continuation.resume(returning: response)
                      })
                  }
             }

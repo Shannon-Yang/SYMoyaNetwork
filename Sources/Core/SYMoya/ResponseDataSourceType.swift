@@ -40,14 +40,14 @@ public protocol ResponseDataSourceCustomizable {
     /// - Parameter request: current request
     /// - Parameter CacheResponse: cache Response
     /// - Returns: true is send request , false It does not send the request
-    func shouldSendRequest<T>(_ target: SYTargetType, dataResponse: SYMoyaNetworkDataResponse<T>) -> Bool
+    func shouldSendRequest(_ target: SYTargetType, result: SYMoyaNetworkResult) -> Bool
     
     /// Custom response cache, By Business Logic Layer to indicate the current cache needs to be updated
     ///
     /// - Parameter request: current request
     /// - Parameter response: current request response
     /// - Returns: if return true, will to update cache,otherwise not update
-    func shouldUpdateCache<T>(_ target: SYTargetType, dataResponse: SYMoyaNetworkDataResponse<T>) -> Bool
+    func shouldUpdateCache(_ target: SYTargetType, result: SYMoyaNetworkResult) -> Bool
 }
 
 //MARK: - ResponseDataSourceCustomizable Implementation

@@ -9,20 +9,11 @@
 import Foundation
 import Moya
 
-public protocol SYMoyaNetworkDataResponseProtocol {
-    associatedtype Success
-    associatedtype Failure: Error
-    var resultResponse: SYMoyaNetworkResultResponse? { get set }
-    var isDataFromCache: Bool { get }
-    var result: Result<Success, Failure> { get set }
-    var value: Success? { get }
-    var error: Failure? { get }
-}
-
 public typealias SYMoyaNetworkDataResponse<Success> = SYDataResponse<Success, SYMoyaNetworkError>
 
 /// Represents a response to a `SYMoyaProvider.request`.
-public struct SYDataResponse<Success, Failure: Error>: SYMoyaNetworkDataResponseProtocol {
+public struct SYDataResponse<Success, Failure: Error> {
+    
     /// Represents a response to a `MoyaProvider.request`.
     public var resultResponse: SYMoyaNetworkResultResponse?
     

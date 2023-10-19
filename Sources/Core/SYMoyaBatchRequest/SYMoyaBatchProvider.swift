@@ -28,7 +28,7 @@ public protocol SYBatchMoyaProviderType {
 public typealias SYBatchMoyaProviderResponse = (SYTargetType, any SYMoyaNetworkDataResponseProtocol)
 
 /// Batch request item object
-public class SYMoyaBatchProvider<TargetType: SYBatchTatgetType>: SYBatchMoyaProviderType {
+public class SYMoyaBatchProvider<TargetType: SYSerializableTatgetType>: SYBatchMoyaProviderType {
     
 //    private let grop = DispatchGroup()
 //    private let gropNotifyQueue = DispatchQueue(label: "com.shannonyang.SYMoyaNetwork.SYBatchMoyaProvider.grop.notify.queue.\(UUID().uuidString)")
@@ -57,7 +57,6 @@ public class SYMoyaBatchProvider<TargetType: SYBatchTatgetType>: SYBatchMoyaProv
                     case .failure(_):
                         self.operationQueue.cancelAllOperations()
                         batchResult = .failure(.batchRequestError(reason: .batchSomeOperationFailure))
-                        self.operationQueue.
                     }
                 case .ifOneFailureBatchContinue:
                     appendResponse()

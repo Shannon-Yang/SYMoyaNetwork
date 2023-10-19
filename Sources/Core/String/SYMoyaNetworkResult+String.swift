@@ -8,7 +8,7 @@
 import Foundation
 import Moya
 
-extension SYMoyaNetworkResult {
+public extension SYMoyaNetworkResult {
     func serializerStringDataResponse(atKeyPath: String?) -> SYMoyaNetworkDataResponse<String> {
         var dataRes: SYMoyaNetworkDataResponse<String>
         switch self {

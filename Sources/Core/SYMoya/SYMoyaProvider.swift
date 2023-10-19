@@ -181,7 +181,7 @@ public extension SYMoyaProvider {
 public extension SYMoyaProvider {
     /// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
     @discardableResult
-    func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping ((_ result: SYMoyaNetworkResult) -> Void)) -> Cancellable {
+    func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, shouldCacheIfNeeded: Bool = true, completion: @escaping ((_ result: SYMoyaNetworkResult) -> Void)) -> Cancellable {
         return self.request(target, callbackQueue: callbackQueue, progress: progress, completion: { result in
             let value = try? result.get()
             
@@ -198,7 +198,9 @@ public extension SYMoyaProvider {
                 self.delegate?.provider(self, target: item?.target, requestSuccessFilter: response)
                 
                 // Cache
-                self.cacheIfNeeded(target, response: response)
+                if shouldCacheIfNeeded {
+                    self.cacheIfNeeded(target, response: response)
+                }
                 
                 let resultResponse = (response,false)
                 // completion

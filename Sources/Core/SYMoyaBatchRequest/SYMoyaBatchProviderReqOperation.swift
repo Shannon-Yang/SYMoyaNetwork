@@ -8,7 +8,7 @@
 import Foundation
 import Moya
 
-public class SYMoyaBatchProviderReqOperation<TargetType: SYBatchTatgetType>: AsyncOperation {
+public class SYMoyaBatchProviderReqOperation<TargetType: SYSerializableTatgetType>: AsyncOperation {
     private weak var provider: SYMoyaProvider<TargetType>?
     let targetType: TargetType
     private var cancellable: Cancellable?

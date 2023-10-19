@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 extension SYMoyaNetworkResult {
-    func serializerCodableObjectDataResponse<T: Decodable>(atKeyPath keyPath: String?, using decoder: JSONDecoder, failsOnEmptyData: Bool) -> SYMoyaNetworkDataResponse<T> {
+    func serializerCodableObjectDataResponse<T: Decodable>(type: T.Type = T.self, atKeyPath keyPath: String?, using decoder: JSONDecoder, failsOnEmptyData: Bool) -> SYMoyaNetworkDataResponse<T> {
         var dataRes: SYMoyaNetworkDataResponse<T>
         switch self {
         case .success(let resultResponse):

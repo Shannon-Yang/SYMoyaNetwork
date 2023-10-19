@@ -12,35 +12,35 @@ import SwiftyJSON
 //MARK: - SwiftyJSON Provider Concurrency
 public extension SYMoyaProvider {
 
-    func responseSwiftyJSONFromCache(_ target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
+    func responseSwiftyJSONFromCache(_ target: Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
         return await withCheckedContinuation { continuation in
-            self.responseSwiftyJSONFromCache(target, options: opt, callbackQueue: callbackQueue) { dataResponse in
+            self.responseSwiftyJSONFromCache(target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
                 continuation.resume(returning: dataResponse)
             }
         }
     }
     
-    func responseSwiftyJSONFromDiskCache(_ target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
+    func responseSwiftyJSONFromDiskCache(_ target: Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
         return await withCheckedContinuation{ continuation in
-            self.responseSwiftyJSONFromDiskCache(target, options: opt, callbackQueue: callbackQueue) { dataResponse in
+            self.responseSwiftyJSONFromDiskCache(target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
                 continuation.resume(returning: dataResponse)
             }
         }
     }
     
-    func responseSwiftyJSONFromMemoryCache(_ target: Target, options opt: JSONSerialization.ReadingOptions = [], failsOnEmptyData: Bool = true) async ->  SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
+    func responseSwiftyJSONFromMemoryCache(_ target: Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer) async ->  SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
         return await withCheckedContinuation{ continuation in
-            let dataResponse = self.responseSwiftyJSONFromMemoryCache(target, options: opt, failsOnEmptyData: failsOnEmptyData)
+            let dataResponse = self.responseSwiftyJSONFromMemoryCache(target, serializer: serializer)
             continuation.resume(returning: dataResponse)
         }
     }
     
-    func responseSwiftyJSON(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
+    func responseSwiftyJSON(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
         let actor = SYDataResponseActor(provider: self)
         return await withTaskCancellationHandler {
             await withCheckedContinuation { continuation in
                 _Concurrency.Task {
-                    await actor.responseSwiftyJSON(responseDataSourceType,target: target, options: opt, callbackQueue: callbackQueue, progress: progress) { dataResponse in
+                    await actor.responseSwiftyJSON(responseDataSourceType,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress) { dataResponse in
                         continuation.resume(returning: dataResponse)
                     }
                 }
