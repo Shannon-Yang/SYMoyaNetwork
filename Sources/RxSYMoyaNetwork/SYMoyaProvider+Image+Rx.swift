@@ -10,40 +10,44 @@ import RxSwift
 import Moya
 import SYMoyaNetwork
 
-extension Reactive where Base: SYMoyaProviderImageType {
-    func responseImageFromCache(_ target: Base.Target, callbackQueue: DispatchQueue?) -> Observable<SYMoyaNetworkDataResponse<Image>> {
+public extension Reactive where Base: SYMoyaProviderRequestable {
+    func responseImageFromCache(_ target: Base.Target, serializer: ImageResponseSerializer = .defaultImageSerializer, callbackQueue: DispatchQueue? = .none) -> Observable<SYMoyaNetworkDataResponse<Image>> {
         return Observable.create { [weak base] observer in
-            base?.responseImageFromCache(target, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.on(.next(dataResponse))
+            base?.requestFromCache(target, callbackQueue: callbackQueue, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.on(.next(response))
                 observer.on(.completed)
             })
             return Disposables.create()
         }
     }
    
-    func responseImageFromDiskCache(_ target: Base.Target, callbackQueue: DispatchQueue?) -> Observable<SYMoyaNetworkDataResponse<Image>> {
+    func responseImageFromDiskCache(_ target: Base.Target, serializer: ImageResponseSerializer = .defaultImageSerializer, callbackQueue: DispatchQueue? = .none) -> Observable<SYMoyaNetworkDataResponse<Image>> {
         return Observable.create { [weak base] observer in
-            base?.responseImageFromDiskCache(target, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.on(.next(dataResponse))
+            base?.requestFromDiskCache(target, callbackQueue: callbackQueue, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.on(.next(response))
                 observer.on(.completed)
             })
             return Disposables.create()
         }
     }
     
-    func responseImageFromMemoryCache(_ target: Base.Target) -> Observable<SYMoyaNetworkDataResponse<Image>> {
-        let dataResponse = base.responseImageFromMemoryCache(target)
+    func responseImageFromMemoryCache(_ target: Base.Target, serializer: ImageResponseSerializer = .defaultImageSerializer) -> Observable<SYMoyaNetworkDataResponse<Image>> {
+        let result = base.requestFromMemoryCache(target)
+        let response = serializer.serialize(result: result)
         return Observable.create { observer in
-            observer.on(.next(dataResponse))
+            observer.on(.next(response))
             observer.on(.completed)
             return Disposables.create()
         }
     }
     
-    func responseImage(_ responseDataSourceType: ResponseDataSourceType, target: Base.Target, callbackQueue: DispatchQueue?, progress: ProgressBlock?) -> Observable<SYMoyaNetworkDataResponse<Image>> {
+    func responseImage(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: ImageResponseSerializer = .defaultImageSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> Observable<SYMoyaNetworkDataResponse<Image>> {
         return Observable.create { [weak base] observer in
-            let cancellable = base?.responseImage(responseDataSourceType, target: target, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
-                observer.on(.next(dataResponse))
+            let cancellable = base?.request(type, target: target, callbackQueue: callbackQueue, progress: progress, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.on(.next(response))
                 observer.on(.completed)
             })
             return Disposables.create { cancellable?.cancel() }

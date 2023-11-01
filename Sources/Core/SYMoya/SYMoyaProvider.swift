@@ -149,10 +149,8 @@ public extension SYMoyaProvider {
             request.allowsCellularAccess = target.allowsCellularAccess
             request.httpShouldHandleCookies = target.httpShouldHandleCookies
             request.httpShouldUsePipelining = target.httpShouldUsePipelining
-            if #available(iOS 13.0,watchOS 6.0,tvOS 13.0, macOS 10.15, *) {
-                request.allowsExpensiveNetworkAccess = target.allowsExpensiveNetworkAccess
-                request.allowsConstrainedNetworkAccess = target.allowsConstrainedNetworkAccess
-            }
+            request.allowsExpensiveNetworkAccess = target.allowsExpensiveNetworkAccess
+            request.allowsConstrainedNetworkAccess = target.allowsConstrainedNetworkAccess
             if #available(iOS 14.5,tvOS 14.5,macOS 11.3,watchOS 7.4, *) {
                 request.assumesHTTP3Capable = target.assumesHTTP3Capable
             }

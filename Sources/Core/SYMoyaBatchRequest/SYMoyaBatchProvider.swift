@@ -20,19 +20,14 @@ public struct SYBatchDataResponse {
     }
 }
 
-
 public protocol SYBatchMoyaProviderType {
-    mutating func requestTargets(_ progress: SYBatchProgressBlock?, sessionType: SYMoyaBatchProviderSessionType, completion: @escaping (_ response: SYBatchDataResponse) -> Void)
+    func requestTargets(_ sessionType: SYMoyaBatchProviderSessionType, completion: @escaping (_ response: SYBatchDataResponse) -> Void)
 }
 
-public typealias SYBatchMoyaProviderResponse = (SYTargetType, any SYMoyaNetworkDataResponseProtocol)
+public typealias SYBatchMoyaProviderResponse = (SYTargetType, SYMoyaNetworkResult)
 
 /// Batch request item object
-public class SYMoyaBatchProvider<TargetType: SYSerializableTatgetType>: SYBatchMoyaProviderType {
-    
-//    private let grop = DispatchGroup()
-//    private let gropNotifyQueue = DispatchQueue(label: "com.shannonyang.SYMoyaNetwork.SYBatchMoyaProvider.grop.notify.queue.\(UUID().uuidString)")
-    
+public class SYMoyaBatchProvider<TargetType: SYTargetType>: SYBatchMoyaProviderType {
     private lazy var operationQueue: OperationQueue = {
         let operationQueue = OperationQueue()
         operationQueue.name = "com.shannonyang.SYMoyaNetwork.BatchRequest.operationQueue"
@@ -40,52 +35,46 @@ public class SYMoyaBatchProvider<TargetType: SYSerializableTatgetType>: SYBatchM
     }()
     
     private let provider = SYMoyaProvider<TargetType>()
+    private var reqOperations = [SYMoyaBatchProviderReqOperation<TargetType>]()
+    
     public var targetResponsesCompletion: ((_ response: SYBatchDataResponse) -> Void)?
+    public let targetTypes: [TargetType]
+    
+    // MARK: - Initallization
+    public init(targetTypes: [TargetType]) {
+        self.targetTypes = targetTypes
+        self.reqOperations = targetTypes.map({ SYMoyaBatchProviderReqOperation(targetType: $0, provider: self.provider) })
+    }
 
-    public func requestTargets(_ progress: SYBatchProgressBlock?, sessionType: SYMoyaBatchProviderSessionType, completion: @escaping (SYBatchDataResponse) -> Void) {
+    public func requestTargets(_ sessionType: SYMoyaBatchProviderSessionType, completion: @escaping (SYBatchDataResponse) -> Void) {
         var responses = [SYBatchMoyaProviderResponse]()
-        
         var batchResult: Result<[SYBatchMoyaProviderResponse], SYMoyaNetworkError>?
-        
         for operation in reqOperations {
             operation.completion = { result in
                 switch sessionType {
                 case .ifOneFailureBatchFail:
                     switch result {
                     case .success(_):
-                        appendResponse()
+                        responses.append((operation.targetType,result))
                     case .failure(_):
                         self.operationQueue.cancelAllOperations()
                         batchResult = .failure(.batchRequestError(reason: .batchSomeOperationFailure))
                     }
                 case .ifOneFailureBatchContinue:
-                    appendResponse()
-                }
-                func appendResponse() {
-                    let data: any SYMoyaNetworkDataResponseProtocol
-                    if let serializer = operation.targetType.serializer {
-                        data = serializer.serialize(result: result)
-                    } else {
-                        data = result.serializerDefaultDataResponse()
-                    }
-                    responses.append((operation.targetType,data))
+                    responses.append((operation.targetType,result))
                 }
             }
             operationQueue.addOperation(operation)
         }
         
-//        SYBatchDataResponse.init(result: <#T##Result<[SYBatchMoyaProviderResponse], SYMoyaNetworkError>#>)
         operationQueue.addBarrierBlock {
-            
+            let batchDataResponse: SYBatchDataResponse
+            if let batchResult {
+                batchDataResponse = SYBatchDataResponse(result: batchResult)
+            } else {
+                batchDataResponse = SYBatchDataResponse(result: .success(responses))
+            }
+            completion(batchDataResponse)
         }
-    }
-    
-    public let targetTypes: [TargetType]
-    private var reqOperations = [SYMoyaBatchProviderReqOperation<TargetType>]()
-    
-    // MARK: - Initallization
-    public init(targetTypes: [TargetType]) {
-        self.targetTypes = targetTypes
-        self.reqOperations = targetTypes.map({ SYMoyaBatchProviderReqOperation(provider: self.provider, targetType: $0) })
     }
 }

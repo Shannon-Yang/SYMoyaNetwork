@@ -10,14 +10,12 @@ import Moya
 import ObjectMapper
 import SYMoyaNetwork
 
-@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension SYDataResponseActor {
-    
-    func responseObject<T: BaseMappable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
-        cancellable = provider.responseObject(responseDataSourceType,target: target, keyPath: keyPath, context: context, callbackQueue: callbackQueue, progress: progress, completion: completion)
+    func responseObject<T: BaseMappable>(_ type: ResponseDataSourceType = .server, target: Target, serializer: ObjectMapperObjectResponseSerializer<T> = .defaultMapperObjectSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
+        cancellable = provider.responseObject(type,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
     
-    func responseObjects<T: BaseMappable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void) {
-        cancellable = provider.responseObjects(responseDataSourceType,target: target, keyPath: keyPath, context: context, callbackQueue: callbackQueue, progress: progress, completion: completion)
+    func responseObjects<T: BaseMappable>(_ type: ResponseDataSourceType = .server, target: Target, serializer: ObjectMapperObjectsResponseSerializer<T> = .defaultMapperObjectsSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T]>) -> Void) {
+        cancellable = provider.responseObjects(type,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
 }

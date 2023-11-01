@@ -10,40 +10,44 @@ import RxSwift
 import Moya
 import SYMoyaNetwork
 
-extension Reactive where Base: SYMoyaProviderJSONType {
-    func responseJSONFromCache(_ target: Base.Target, failsOnEmptyData: Bool, callbackQueue: DispatchQueue?) -> Observable<SYMoyaNetworkDataResponse<Any>> {
+public extension Reactive where Base: SYMoyaProviderRequestable {
+    func responseJSONFromCache(_ target: Base.Target, serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none) -> Observable<SYMoyaNetworkDataResponse<Any>> {
         return Observable.create { [weak base] observer in
-            base?.responseJSONFromCache(target, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.on(.next(dataResponse))
+            base?.requestFromCache(target, callbackQueue: callbackQueue, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.on(.next(response))
                 observer.on(.completed)
             })
             return Disposables.create()
         }
     }
    
-    func responseJSONFromDiskCache(_ target: Base.Target, failsOnEmptyData: Bool, callbackQueue: DispatchQueue?) -> Observable<SYMoyaNetworkDataResponse<Any>> {
+    func responseJSONFromDiskCache(_ target: Base.Target, serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none) -> Observable<SYMoyaNetworkDataResponse<Any>> {
         return Observable.create { [weak base] observer in
-            base?.responseJSONFromDiskCache(target, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.on(.next(dataResponse))
+            base?.requestFromDiskCache(target, callbackQueue: callbackQueue, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.on(.next(response))
                 observer.on(.completed)
             })
             return Disposables.create()
         }
     }
    
-    func responseJSONFromMemoryCache(_ target: Base.Target, failsOnEmptyData: Bool) -> Observable<SYMoyaNetworkDataResponse<Any>> {
-        let dataResponse = base.responseJSONFromMemoryCache(target, failsOnEmptyData: failsOnEmptyData)
-        return Observable.create { observer in            
-            observer.on(.next(dataResponse))
+    func responseJSONFromMemoryCache(_ target: Base.Target, serializer: JSONResponseSerializer = .defaultJSONSerializer) -> Observable<SYMoyaNetworkDataResponse<Any>> {
+        let result = base.requestFromMemoryCache(target)
+        let response = serializer.serialize(result: result)
+        return Observable.create { observer in
+            observer.on(.next(response))
             observer.on(.completed)
             return Disposables.create()
         }
     }
    
-    func responseJSON(_ responseDataSourceType: ResponseDataSourceType, target: Base.Target, failsOnEmptyData: Bool, callbackQueue: DispatchQueue?, progress: ProgressBlock?) -> Observable<SYMoyaNetworkDataResponse<Any>> {
+    func responseJSON(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> Observable<SYMoyaNetworkDataResponse<Any>> {
         return Observable.create { [weak base] observer in
-            let cancellable = base?.responseJSON(responseDataSourceType, target: target, failsOnEmptyData: failsOnEmptyData, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
-                observer.on(.next(dataResponse))
+            let cancellable = base?.request(type, target: target, callbackQueue: callbackQueue, progress: progress, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.on(.next(response))
                 observer.on(.completed)
             })
             return Disposables.create { cancellable?.cancel() }

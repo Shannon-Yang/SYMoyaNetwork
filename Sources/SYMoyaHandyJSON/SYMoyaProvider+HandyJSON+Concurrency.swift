@@ -11,38 +11,37 @@ import HandyJSON
 import SYMoyaNetwork
 
 //MARK: - HandyJSON Provider Concurrency
-@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public extension SYMoyaProvider {
     
-    func responseObjectFromCache<T: HandyJSON>(_ target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<T> {
+    func responseObjectFromCache<T: HandyJSON>(_ target: Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<T> {
         return await withCheckedContinuation { continuation in
-            self.responseObjectFromCache(target, designatedPath: designatedPath, callbackQueue: callbackQueue) { dataResponse in
+            self.responseObjectFromCache(target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
                 continuation.resume(returning: dataResponse)
             }
         }
     }
     
-    func responseObjectFromDiskCache<T: HandyJSON>(_ target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<T> {
+    func responseObjectFromDiskCache<T: HandyJSON>(_ target: Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<T> {
         return await withCheckedContinuation{ continuation in
-            self.responseObjectFromDiskCache(target, designatedPath: designatedPath, callbackQueue: callbackQueue) { dataResponse in
+            self.responseObjectFromDiskCache(target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
                 continuation.resume(returning: dataResponse)
             }
         }
     }
     
-    func responseObjectFromMemoryCache<T: HandyJSON>(_ target: Target, designatedPath: String? = nil) async -> SYMoyaNetworkDataResponse<T> {
+    func responseObjectFromMemoryCache<T: HandyJSON>(_ target: Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer) async -> SYMoyaNetworkDataResponse<T> {
         return await withCheckedContinuation{ continuation in
-            let dataResponse: SYMoyaNetworkDataResponse<T> = self.responseObjectFromMemoryCache(target, designatedPath: designatedPath)
+            let dataResponse: SYMoyaNetworkDataResponse<T> = self.responseObjectFromMemoryCache(target, serializer: serializer)
             continuation.resume(returning: dataResponse)
         }
     }
     
-    func responseObject<T: HandyJSON>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<T> {
+    func responseObject<T: HandyJSON>(_ type: ResponseDataSourceType = .server, target: Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<T> {
         let actor = SYDataResponseActor(provider: self)
         return await withTaskCancellationHandler {
             await withCheckedContinuation { continuation in
                 _Concurrency.Task {
-                    await actor.responseObject(responseDataSourceType,target: target, designatedPath: designatedPath, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
+                    await actor.responseObject(type,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
                         continuation.resume(returning: dataResponse)
                     })
                 }
@@ -52,37 +51,28 @@ public extension SYMoyaProvider {
         }
     }
     
-    func responseObjectsFromCache<T: HandyJSON>(_ target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<[T?]?> {
+    func responseObjectsFromCache<T: HandyJSON>(_ target: Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<[T?]> {
         return await withCheckedContinuation { continuation in
-            self.responseObjectsFromCache(target, designatedPath: designatedPath, callbackQueue: callbackQueue) { dataResponse in
+            self.responseObjectsFromCache(target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
                 continuation.resume(returning: dataResponse)
             }
         }
     }
     
-    func responseObjectsFromDiskCache<T: HandyJSON>(_ target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<[T?]?> {
+    func responseObjectsFromDiskCache<T: HandyJSON>(_ target: Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<[T?]> {
         return await withCheckedContinuation{ continuation in
-            self.responseObjectsFromDiskCache(target, designatedPath: designatedPath, callbackQueue: callbackQueue) { dataResponse in
+            self.responseObjectsFromDiskCache(target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
                 continuation.resume(returning: dataResponse)
             }
         }
     }
     
-    func responseObjectsFromMemoryCache<T: HandyJSON>(_ target: Target, designatedPath: String? = nil) async -> SYMoyaNetworkDataResponse<[T?]?> {
-        return await withCheckedContinuation{ continuation in
-            let dataResponse: SYMoyaNetworkDataResponse<[T?]?> = self.responseObjectsFromMemoryCache(target, designatedPath: designatedPath)
-            continuation.resume(returning: dataResponse)
-        }
-    }
-    
-    
-    
-    func responseObjects<T: HandyJSON>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<[T?]?> {
+    func responseObjects<T: HandyJSON>(_ type: ResponseDataSourceType = .server, target: Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<[T?]> {
         let actor = SYDataResponseActor(provider: self)
         return await withTaskCancellationHandler {
             await withCheckedContinuation { continuation in
                 _Concurrency.Task {
-                    await actor.responseObjects(responseDataSourceType,target: target, designatedPath: designatedPath, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
+                    await actor.responseObjects(type,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
                         continuation.resume(returning: dataResponse)
                     })
                 }

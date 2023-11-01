@@ -11,7 +11,6 @@ import Combine
 
 //MARK: - SwiftyJSON Provider Combine
 public extension SYMoyaProvider {
-    
     func responseStringFromCachePublisher(_ target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<String>> {
         return SYMoyaPublisher { subscriber in
             self.responseStringFromCache(target, serializer: serializer, callbackQueue: callbackQueue) { response in
@@ -41,9 +40,9 @@ public extension SYMoyaProvider {
         }
     }
     
-    func responseStringPublisher(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher <SYMoyaNetworkDataResponse<String>> {
+    func responseStringPublisher(_ type: ResponseDataSourceType = .server, target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher <SYMoyaNetworkDataResponse<String>> {
         return SYMoyaPublisher { [weak self] subscriber in
-            return self?.responseString(target, responseDataSourceType: responseDataSourceType, serializer: serializer, callbackQueue: callbackQueue, progress: progress) { response in
+            return self?.responseString(type, target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress) { response in
                 _ = subscriber.receive(response)
                 subscriber.receive(completion: .finished)
             }

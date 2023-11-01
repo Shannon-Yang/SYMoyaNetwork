@@ -12,86 +12,88 @@ import Moya
 import HandyJSON
 import SYMoyaHandyJSON
 
-extension Reactive where Base: SYMoyaProviderHandyJSONType {
-    public func responseObjectFromCache<T: HandyJSON>(_ target: Base.Target, designatedPath: String?, callbackQueue: DispatchQueue?) -> Observable<SYMoyaNetworkDataResponse<T>> {
+extension Reactive where Base: SYMoyaProviderRequestable {
+    public func responseObjectFromCache<T: HandyJSON>(_ target: Base.Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none) -> Observable<SYMoyaNetworkDataResponse<T>> {
         return Observable.create { [weak base] observer in
-            base?.responseObjectFromCache(target, designatedPath: designatedPath, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.onNext(dataResponse)
-                observer.onCompleted()
+            base?.requestFromCache(target, callbackQueue: callbackQueue, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.on(.next(response))
+                observer.on(.completed)
             })
             return Disposables.create()
         }
     }
     
-    
-    public func responseObjectFromDiskCache<T: HandyJSON>(_ target: Base.Target, designatedPath: String?, callbackQueue: DispatchQueue?) -> Observable<SYMoyaNetworkDataResponse<T>> {
+    public func responseObjectFromDiskCache<T: HandyJSON>(_ target: Base.Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none) -> Observable<SYMoyaNetworkDataResponse<T>> {
         return Observable.create { [weak base] observer in
-            base?.responseObjectFromDiskCache(target, designatedPath: designatedPath, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.onNext(dataResponse)
-                observer.onCompleted()
+            base?.requestFromDiskCache(target, callbackQueue: callbackQueue, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.on(.next(response))
+                observer.on(.completed)
             })
             return Disposables.create()
         }
     }
     
-    
-    public func responseObjectFromMemoryCache<T: HandyJSON>(_ target: Base.Target, designatedPath: String?) -> Observable<SYMoyaNetworkDataResponse<T>> {
-        let dataResponse: SYMoyaNetworkDataResponse<T> = base.responseObjectFromMemoryCache(target, designatedPath: designatedPath)
+    public func responseObjectFromMemoryCache<T: HandyJSON>(_ target: Base.Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer) -> Observable<SYMoyaNetworkDataResponse<T>> {
+        let result = base.requestFromMemoryCache(target)
+        let response = serializer.serialize(result: result)
         return Observable.create { observer in
-            observer.on(.next(dataResponse))
+            observer.on(.next(response))
             observer.on(.completed)
             return Disposables.create()
         }
         
     }
     
-    public func responseObject<T: HandyJSON>(_ responseDataSourceType: ResponseDataSourceType, target: Base.Target, designatedPath: String?, callbackQueue: DispatchQueue?, progress: ProgressBlock?) -> Observable<SYMoyaNetworkDataResponse<T>> {
+    public func responseObject<T: HandyJSON>(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> Observable<SYMoyaNetworkDataResponse<T>> {
         return Observable.create { [weak base] observer in
-            let cancellable = base?.responseObject(responseDataSourceType, target: target, designatedPath: designatedPath, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
-                observer.on(.next(dataResponse))
+            let cancellable = base?.request(type, target: target, callbackQueue: callbackQueue, progress: progress, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.on(.next(response))
                 observer.on(.completed)
             })
             return Disposables.create { cancellable?.cancel() }
         }
     }
     
-    
-    public func responseObjectsFromCache<T: HandyJSON>(_ target: Base.Target, designatedPath: String?, callbackQueue: DispatchQueue?) -> Observable<SYMoyaNetworkDataResponse<[T?]?>> {
+    public func responseObjectsFromCache<T: HandyJSON>(_ target: Base.Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none) -> Observable<SYMoyaNetworkDataResponse<[T?]>> {
         return Observable.create { [weak base] observer  in
-            base?.responseObjectsFromCache(target, designatedPath: designatedPath, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.onNext(dataResponse)
-                observer.onCompleted()
+            base?.requestFromCache(target, callbackQueue: callbackQueue, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.on(.next(response))
+                observer.on(.completed)
             })
             return Disposables.create()
         }
     }
     
-    
-    public func responseObjectsFromDiskCache<T: HandyJSON>(_ target: Base.Target, designatedPath: String?, callbackQueue: DispatchQueue?) -> Observable<SYMoyaNetworkDataResponse<[T?]?>> {
+    public func responseObjectsFromDiskCache<T: HandyJSON>(_ target: Base.Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none) -> Observable<SYMoyaNetworkDataResponse<[T?]>> {
         return Observable.create { [weak base] observer  in
-            base?.responseObjectsFromDiskCache(target, designatedPath: designatedPath, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.onNext(dataResponse)
-                observer.onCompleted()
+            base?.requestFromDiskCache(target, callbackQueue: callbackQueue, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.on(.next(response))
+                observer.on(.completed)
             })
             return Disposables.create()
         }
     }
     
-    
-    public func responseObjectsFromMemoryCache<T: HandyJSON>(_ target: Base.Target, designatedPath: String?) -> Observable<SYMoyaNetworkDataResponse<[T?]?>> {
-        let dataResponse: SYMoyaNetworkDataResponse<[T?]?> = base.responseObjectsFromMemoryCache(target, designatedPath: designatedPath)
+    public func responseObjectsFromMemoryCache<T: HandyJSON>(_ target: Base.Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer) -> Observable<SYMoyaNetworkDataResponse<[T?]>> {
+        let result = base.requestFromMemoryCache(target)
+        let response = serializer.serialize(result: result)
         return Observable.create { observer in
-            observer.on(.next(dataResponse))
+            observer.on(.next(response))
             observer.on(.completed)
             return Disposables.create()
         }
     }
     
-    
-    public func responseObjects<T: HandyJSON>(_ responseDataSourceType: ResponseDataSourceType, target: Base.Target, designatedPath: String?, callbackQueue: DispatchQueue?, progress: ProgressBlock?) -> Observable<SYMoyaNetworkDataResponse<[T?]?>> {
+    public func responseObjects<T: HandyJSON>(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> Observable<SYMoyaNetworkDataResponse<[T?]>> {
         return Observable.create { [weak base] observer in
-            let cancellable = base?.responseObjects(responseDataSourceType, target: target, designatedPath: designatedPath, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
-                observer.on(.next(dataResponse))
+            let cancellable = base?.request(type, target: target, callbackQueue: callbackQueue, progress: progress, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.on(.next(response))
                 observer.on(.completed)
             })
             return Disposables.create { cancellable?.cancel() }

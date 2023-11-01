@@ -5,7 +5,6 @@
 //  Created by Shannon Yang on 2023/6/1.
 //
 
-#if canImport(Combine)
 import Foundation
 import Moya
 import Combine
@@ -13,12 +12,10 @@ import HandyJSON
 import SYMoyaNetwork
 
 //MARK: - HandyJSON Provider Combine
-@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 public extension SYMoyaProvider {
-    
-    func responseObjectFromCachePublisher<T: HandyJSON>(_ target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
+    func responseObjectFromCachePublisher<T: HandyJSON>(_ target: Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
         return SYMoyaPublisher { subscriber in
-            self.responseObjectFromCache(target, designatedPath: designatedPath, callbackQueue: callbackQueue) { dataResponse in
+            self.responseObjectFromCache(target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
                 _ = subscriber.receive(dataResponse)
                 subscriber.receive(completion: .finished)
             }
@@ -26,9 +23,9 @@ public extension SYMoyaProvider {
         }
     }
     
-    func responseObjectFromDiskCachePublisher<T: HandyJSON>(_ target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
+    func responseObjectFromDiskCachePublisher<T: HandyJSON>(_ target: Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
         return SYMoyaPublisher { subscriber in
-            self.responseObjectFromDiskCache(target, designatedPath: designatedPath, callbackQueue: callbackQueue) { dataResponse in
+            self.responseObjectFromDiskCache(target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
                 _ = subscriber.receive(dataResponse)
                 subscriber.receive(completion: .finished)
             }
@@ -36,37 +33,27 @@ public extension SYMoyaProvider {
         }
     }
     
-    func responseObjectFromMemoryCachePublisher<T: HandyJSON>(_ target: Target, designatedPath: String? = nil) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
+    func responseObjectFromMemoryCachePublisher<T: HandyJSON>(_ target: Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
         return SYMoyaPublisher { subscriber in
-           let dataResponse: SYMoyaNetworkDataResponse<T> = self.responseObjectFromMemoryCache(target, designatedPath: designatedPath)
+            let dataResponse: SYMoyaNetworkDataResponse<T> = self.responseObjectFromMemoryCache(target, serializer: serializer)
             _ = subscriber.receive(dataResponse)
             subscriber.receive(completion: .finished)
             return nil
         }
     }
     
-    func responseObjectPublisher<T: HandyJSON>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
+    func responseObjectPublisher<T: HandyJSON>(_ type: ResponseDataSourceType = .server, target: Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
         return SYMoyaPublisher { subscriber in
-            return self.responseObject(responseDataSourceType,target: target, designatedPath: designatedPath, callbackQueue: callbackQueue, progress: progress) { dataResponse in
+            return self.responseObject(type,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress) { dataResponse in
                 _ = subscriber.receive(dataResponse)
                 subscriber.receive(completion: .finished)
             }
         }
     }
     
-    func responseObjectsFromCachePublisher<T: HandyJSON>(_ target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<[T?]?>> {
+    func responseObjectsFromCachePublisher<T: HandyJSON>(_ target: Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<[T?]>> {
         return SYMoyaPublisher { subscriber in
-            self.responseObjectsFromCache(target, designatedPath: designatedPath, callbackQueue: callbackQueue) { dataResponse in
-                _ = subscriber.receive(dataResponse)
-                subscriber.receive(completion: .finished)
-            }
-            return nil
-        }
-    }
-    
-    func responseObjectsFromDiskCachePublisher<T: HandyJSON>(_ target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<[T?]?>> {
-        return SYMoyaPublisher { subscriber in
-            self.responseObjectsFromDiskCache(target, designatedPath: designatedPath, callbackQueue: callbackQueue) { dataResponse in
+            self.responseObjectsFromCache(target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
                 _ = subscriber.receive(dataResponse)
                 subscriber.receive(completion: .finished)
             }
@@ -74,22 +61,31 @@ public extension SYMoyaProvider {
         }
     }
     
-    func responseObjectsFromMemoryCachePublisher<T: HandyJSON>(_ target: Target, designatedPath: String? = nil) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<[T?]?>> {
+    func responseObjectsFromDiskCachePublisher<T: HandyJSON>(_ target: Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<[T?]>> {
         return SYMoyaPublisher { subscriber in
-           let dataResponse: SYMoyaNetworkDataResponse<[T?]?> = self.responseObjectsFromMemoryCache(target, designatedPath: designatedPath)
+            self.responseObjectsFromDiskCache(target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
+                _ = subscriber.receive(dataResponse)
+                subscriber.receive(completion: .finished)
+            }
+            return nil
+        }
+    }
+    
+    func responseObjectsFromMemoryCachePublisher<T: HandyJSON>(_ target: Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<[T?]>> {
+        return SYMoyaPublisher { subscriber in
+            let dataResponse: SYMoyaNetworkDataResponse<[T?]> = self.responseObjectsFromMemoryCache(target, serializer: serializer)
             _ = subscriber.receive(dataResponse)
             subscriber.receive(completion: .finished)
             return nil
         }
     }
     
-    func responseObjectsPublisher<T: HandyJSON>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, designatedPath: String? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<[T?]?>> {
+    func responseObjectsPublisher<T: HandyJSON>(_ type: ResponseDataSourceType = .server, target: Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<[T?]>> {
         return SYMoyaPublisher { subscriber in
-            return self.responseObjects(responseDataSourceType,target: target, designatedPath: designatedPath, callbackQueue: callbackQueue, progress: progress) { dataResponse in
+            return self.responseObjects(type,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress) { dataResponse in
                 _ = subscriber.receive(dataResponse)
                 subscriber.receive(completion: .finished)
             }
         }
     }
 }
-#endif

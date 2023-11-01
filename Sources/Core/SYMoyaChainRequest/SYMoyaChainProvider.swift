@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 // Chain request item object
-public struct SYMoyaChainProvider<Target: SYSerializableTatgetType>: SYChainMoyaProviderType {
+public struct SYMoyaChainProvider<Target: SYTargetType>: SYChainMoyaProviderType {
     public let target: Target
     let provider: SYMoyaProvider<Target>
     public var callbackQueue: DispatchQueue?

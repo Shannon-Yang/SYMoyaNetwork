@@ -10,7 +10,6 @@ import Moya
 
 //MARK: - String Provider Concurrency
 public extension SYMoyaProvider {
-
     func responseStringFromCache(_ target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<String> {
         return await withCheckedContinuation { continuation in
             self.responseStringFromCache(target, serializer: serializer, callbackQueue: callbackQueue) { response in
@@ -27,22 +26,15 @@ public extension SYMoyaProvider {
         }
     }
     
-    func responseStringFromMemoryCache(_ target: Target, serializer: StringResponseSerializer = .defaultStringSerializer) async -> SYMoyaNetworkDataResponse<String> {
-        return await withCheckedContinuation{ continuation in
-            let response = self.responseStringFromMemoryCache(target, serializer: serializer)
-            continuation.resume(returning: response)
-        }
-    }
-    
-    func responseString(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<String> {
+    func responseString(_ type: ResponseDataSourceType = .server, target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<String> {
         let actor = SYDataResponseActor(provider: self)
         return await withTaskCancellationHandler {
             await withCheckedContinuation { continuation in
                 _Concurrency.Task {
-                     await actor.responseString(responseDataSourceType,target: target,serializer: serializer,callbackQueue: callbackQueue,progress: progress, completion: { response in
-                         continuation.resume(returning: response)
-                     })
-                 }
+                    await actor.responseString(type,target: target,serializer: serializer,callbackQueue: callbackQueue,progress: progress, completion: { response in
+                        continuation.resume(returning: response)
+                    })
+                }
             }
         } onCancel: {
             _Concurrency.Task { await actor.cancel() }

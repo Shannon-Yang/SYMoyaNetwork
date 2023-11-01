@@ -11,40 +11,44 @@ import Moya
 import SYMoyaNetwork
 import SwiftyJSON
 
-extension Reactive where Base: SYMoyaProviderSwiftyJSONType {
-    func responseSwiftyJSONFromCache(_ target: Base.Target, options opt: JSONSerialization.ReadingOptions = [], callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>, Never> {
+public extension Reactive where Base: SYMoyaProviderRequestable {
+    func responseSwiftyJSONFromCache(_ target: Base.Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>, Never> {
         SignalProducer { [weak base] observer, lifetime in
-            base?.responseSwiftyJSONFromCache(target, options: opt, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.send(value: dataResponse)
+            base?.requestFromCache(target, callbackQueue: callbackQueue, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.send(value: response)
                 observer.sendCompleted()
             })
             lifetime.observeEnded { }
         }
     }
     
-    func responseSwiftyJSONFromDiskCache(_ target: Base.Target, options opt: JSONSerialization.ReadingOptions, callbackQueue: DispatchQueue?) -> SignalProducer<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>, Never> {
+    func responseSwiftyJSONFromDiskCache(_ target: Base.Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>, Never> {
         SignalProducer { [weak base] observer, lifetime in
-            base?.responseSwiftyJSONFromDiskCache(target, options: opt, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.send(value: dataResponse)
+            base?.requestFromDiskCache(target, callbackQueue: callbackQueue, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.send(value: response)
                 observer.sendCompleted()
             })
             lifetime.observeEnded { }
         }
     }
     
-    func responseSwiftyJSONFromMemoryCache(_ target: Base.Target, options opt: JSONSerialization.ReadingOptions, failsOnEmptyData: Bool) -> SignalProducer<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>, Never> {
-        let dataResponse = base.responseSwiftyJSONFromMemoryCache(target, options: opt, failsOnEmptyData: failsOnEmptyData)
+    func responseSwiftyJSONFromMemoryCache(_ target: Base.Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer) -> SignalProducer<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>, Never> {
+        let result = base.requestFromMemoryCache(target)
+        let response = serializer.serialize(result: result)
         return SignalProducer<SYMoyaNetworkDataResponse<JSON>, Never> { observer, lifetime in
-            observer.send(value: dataResponse)
+            observer.send(value: response)
             observer.sendCompleted()
             lifetime.observeEnded { }
         }
     }
     
-    func responseSwiftyJSON(_ responseDataSourceType: ResponseDataSourceType, target: Base.Target, options opt: JSONSerialization.ReadingOptions, callbackQueue: DispatchQueue?, progress: ProgressBlock?) -> SignalProducer<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>, Never> {
+    func responseSwiftyJSON(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>, Never> {
         SignalProducer { [weak base] observer, lifetime in
-            let cancellable = base?.responseSwiftyJSON(responseDataSourceType, target: target, options: opt, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
-                observer.send(value: dataResponse)
+            let cancellable = base?.request(type, target: target, callbackQueue: callbackQueue, progress: progress, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.send(value: response)
                 observer.sendCompleted()
             })
             lifetime.observeEnded { cancellable?.cancel() }

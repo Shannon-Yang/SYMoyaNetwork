@@ -33,8 +33,8 @@ extension SYMoyaProvider {
     }
     
     @discardableResult
-    public func responseSwiftyJSON(_ responseDataSourceType: ResponseDataSourceType, target: Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<SwiftyJSON.JSON>) -> Void) -> Cancellable? {
-        let cancellable = self.request(responseDataSourceType, target: target, callbackQueue: callbackQueue, progress: progress) { result in
+    public func responseSwiftyJSON(_ type: ResponseDataSourceType = .server, target: Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<SwiftyJSON.JSON>) -> Void) -> Cancellable? {
+        let cancellable = self.request(type, target: target, callbackQueue: callbackQueue, progress: progress) { result in
             let json = serializer.serialize(result: result)
             completion(json)
         }

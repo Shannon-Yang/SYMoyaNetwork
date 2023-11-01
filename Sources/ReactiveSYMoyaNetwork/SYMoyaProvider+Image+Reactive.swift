@@ -10,40 +10,44 @@ import ReactiveSwift
 import Moya
 import SYMoyaNetwork
 
-extension Reactive where Base: SYMoyaProviderImageType {
-    func responseImageFromCache(_ target: Base.Target, callbackQueue: DispatchQueue?) -> SignalProducer<SYMoyaNetworkDataResponse<Image>, Never> {
+public extension Reactive where Base: SYMoyaProviderRequestable {
+    func responseImageFromCache(_ target: Base.Target, serializer: ImageResponseSerializer = .defaultImageSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<Image>, Never> {
         SignalProducer { [weak base] observer, lifetime in
-            base?.responseImageFromCache(target, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.send(value: dataResponse)
+            base?.requestFromCache(target, callbackQueue: callbackQueue, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.send(value: response)
                 observer.sendCompleted()
             })
             lifetime.observeEnded { }
         }
     }
    
-    func responseImageFromDiskCache(_ target: Base.Target, callbackQueue: DispatchQueue?) -> SignalProducer<SYMoyaNetworkDataResponse<Image>, Never> {
+    func responseImageFromDiskCache(_ target: Base.Target, serializer: ImageResponseSerializer = .defaultImageSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<Image>, Never> {
         SignalProducer { [weak base] observer, lifetime in
-            base?.responseImageFromDiskCache(target, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.send(value: dataResponse)
+            base?.requestFromDiskCache(target, callbackQueue: callbackQueue, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.send(value: response)
                 observer.sendCompleted()
             })
             lifetime.observeEnded { }
         }
     }
     
-    func responseImageFromMemoryCache(_ target: Base.Target) -> SignalProducer<SYMoyaNetworkDataResponse<Image>, Never> {
-        let dataResponse = base.responseImageFromMemoryCache(target)
+    func responseImageFromMemoryCache(_ target: Base.Target, serializer: ImageResponseSerializer = .defaultImageSerializer) -> SignalProducer<SYMoyaNetworkDataResponse<Image>, Never> {
+        let result = base.requestFromMemoryCache(target)
+        let response = serializer.serialize(result: result)
         return SignalProducer<SYMoyaNetworkDataResponse<Image>, Never> { observer, lifetime in
-            observer.send(value: dataResponse)
+            observer.send(value: response)
             observer.sendCompleted()
             lifetime.observeEnded { }
         }
     }
     
-    func responseImage(_ responseDataSourceType: ResponseDataSourceType, target: Base.Target, callbackQueue: DispatchQueue?, progress: ProgressBlock?) -> SignalProducer<SYMoyaNetworkDataResponse<Image>, Never> {
+    func responseImage(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: ImageResponseSerializer = .defaultImageSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<Image>, Never> {
         SignalProducer { [weak base] observer, lifetime in
-            let cancellable = base?.responseImage(responseDataSourceType, target: target, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
-                observer.send(value: dataResponse)
+            let cancellable = base?.request(type, target: target, callbackQueue: callbackQueue, progress: progress, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.send(value: response)
                 observer.sendCompleted()
             })
             lifetime.observeEnded { cancellable?.cancel() }

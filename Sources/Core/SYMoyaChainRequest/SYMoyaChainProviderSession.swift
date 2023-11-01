@@ -20,7 +20,7 @@ public protocol SYMoyaChainProviderSessionDelegate: NSObjectProtocol {
     /// - Parameters:
     ///   - provider: The chained request provider is used to manage interdependent network requests
     ///   - error: network request error object
-    func chainProvider<Target: SYSerializableTatgetType>(_ session: SYMoyaChainProviderSession, requestFailed provider: SYMoyaChainProvider<Target>, failedError error: SYMoyaNetworkError)
+    func chainProvider<Target: SYTargetType>(_ session: SYMoyaChainProviderSession, requestFailed provider: SYMoyaChainProvider<Target>, failedError error: SYMoyaNetworkError)
 }
 
 protocol SYChainMoyaProviderType {
@@ -31,7 +31,7 @@ protocol SYChainMoyaProviderType {
 public class SYMoyaChainProviderSession {
     weak var delegate: SYMoyaChainProviderSessionDelegate?
     var providers = [SYChainMoyaProviderType]()
-    var operations = [Operation]()
+    private var operations = [Operation]()
     
     private lazy var queue: OperationQueue = {
         let queue = OperationQueue()
@@ -41,7 +41,7 @@ public class SYMoyaChainProviderSession {
     
     /// Add a network request provider
     /// - Parameter provider: The chained request provider is used to manage interdependent network requests
-    public func addChainProvider<Target: SYSerializableTatgetType>(target: Target, callbackQueue: DispatchQueue? = nil, progress: ProgressBlock? = nil, completion: ((_ result: SYMoyaNetworkResult) -> Void)?) {
+    public func addChainProvider<Target: SYTargetType>(target: Target, callbackQueue: DispatchQueue? = nil, progress: ProgressBlock? = nil, completion: ((_ result: SYMoyaNetworkResult) -> Void)?) {
         let provider = SYMoyaChainProvider<Target>(target: target, callbackQueue: callbackQueue, progress: progress)
         self.providers.append(provider)
         let operation = BlockOperation { [weak self] in

@@ -49,9 +49,9 @@ public extension SYMoyaProvider {
         }
     }
     
-    func responseSwiftyJSONPublisher(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher <SYMoyaNetworkDataResponse<SwiftyJSON.JSON>> {
+    func responseSwiftyJSONPublisher(_ type: ResponseDataSourceType = .server, target: Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher <SYMoyaNetworkDataResponse<SwiftyJSON.JSON>> {
         return SYMoyaPublisher { subscriber in
-            return self.responseSwiftyJSON(responseDataSourceType,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress) { dataResponse in
+            return self.responseSwiftyJSON(type,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress) { dataResponse in
                 _ = subscriber.receive(dataResponse)
                 subscriber.receive(completion: .finished)
             }

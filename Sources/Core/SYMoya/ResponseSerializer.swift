@@ -18,7 +18,7 @@ public class StringResponseSerializer: ResponseSerializer {
     public typealias SerializedObject = String
     
     private let atKeyPath: String?
-    init(atKeyPath: String? = nil) {
+    public init(atKeyPath: String? = nil) {
         self.atKeyPath = atKeyPath
     }
     public func serialize(result: SYMoyaNetworkResult) -> SYMoyaNetworkDataResponse<SerializedObject> {
@@ -39,7 +39,7 @@ public class JSONResponseSerializer: ResponseSerializer {
     public typealias SerializedObject = Any
     
     private let failsOnEmptyData: Bool
-    init(failsOnEmptyData: Bool = true) {
+    public init(failsOnEmptyData: Bool = true) {
         self.failsOnEmptyData = failsOnEmptyData
     }
     
@@ -63,7 +63,7 @@ public class SwiftyJSONResponseSerializer: ResponseSerializer {
     public typealias SerializedObject = SwiftyJSON.JSON
     
     private let opt: JSONSerialization.ReadingOptions
-    init(ptions opt: JSONSerialization.ReadingOptions = []) {
+    public init(ptions opt: JSONSerialization.ReadingOptions = []) {
         self.opt = opt
     }
     
@@ -83,14 +83,13 @@ public extension ResponseSerializer where Self == SwiftyJSONResponseSerializer {
 }
    
 
-public class CodableResponseSerializer<T: Decodable>: ResponseSerializer {
+public class DecodableResponseSerializer<T: Decodable>: ResponseSerializer {
     public typealias SerializedObject = T
-    
     private let keyPath: String?
     private let decoder: JSONDecoder
     private let failsOnEmptyData: Bool
     
-    init(atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) {
+    public init(atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) {
         self.keyPath = keyPath
         self.decoder = decoder
         self.failsOnEmptyData = failsOnEmptyData
@@ -99,16 +98,15 @@ public class CodableResponseSerializer<T: Decodable>: ResponseSerializer {
     public func serialize(result: SYMoyaNetworkResult) -> SYMoyaNetworkDataResponse<SerializedObject> {
         return result.serializerCodableObjectDataResponse(atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
     }
+    
+    public static var defaultDecodableSerializer: DecodableResponseSerializer<SerializedObject> {
+        DecodableResponseSerializer<SerializedObject>()
+    }
 }
 
-public extension ResponseSerializer where Self == CodableResponseSerializer<CodableResponseSerializer.SerializedObject> {
-    
-    static var defaultCodableSerializer: CodableResponseSerializer<SerializedObject> {
-        CodableResponseSerializer<SerializedObject>()
-    }
-    
-    static func codable(atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) -> CodableResponseSerializer<SerializedObject> {
-        return CodableResponseSerializer(atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
+public extension ResponseSerializer {
+    static func decodable<T: Decodable>(atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) -> DecodableResponseSerializer<T> {
+        return DecodableResponseSerializer<T>(atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
     }
 }
 
@@ -120,9 +118,7 @@ public class ImageResponseSerializer: ResponseSerializer {
     }
 }
 
-
 public extension ResponseSerializer where Self == ImageResponseSerializer {
-    
     static var defaultImageSerializer: ImageResponseSerializer {
         ImageResponseSerializer()
     }

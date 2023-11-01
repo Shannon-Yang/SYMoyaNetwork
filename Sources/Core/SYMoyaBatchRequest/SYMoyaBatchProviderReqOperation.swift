@@ -8,15 +8,15 @@
 import Foundation
 import Moya
 
-public class SYMoyaBatchProviderReqOperation<TargetType: SYSerializableTatgetType>: AsyncOperation {
+public class SYMoyaBatchProviderReqOperation<TargetType: SYTargetType>: AsyncOperation {
     private weak var provider: SYMoyaProvider<TargetType>?
-    let targetType: TargetType
     private var cancellable: Cancellable?
+    let targetType: TargetType
     var completion : ((_ result: SYMoyaNetworkResult) -> Void)?
     
-    public init(provider: SYMoyaProvider<TargetType>,targetType: TargetType) {
-        self.provider = provider
+    public init(targetType: TargetType, provider: SYMoyaProvider<TargetType>) {
         self.targetType = targetType
+        self.provider = provider
     }
     
     public override func main() {

@@ -26,20 +26,13 @@ public extension SYMoyaProvider {
             }
         }
     }
-    
-    func responseJSONFromMemoryCache(_ target: Target,serializer: JSONResponseSerializer = .defaultJSONSerializer) async -> SYMoyaNetworkDataResponse<Any> {
-        return await withCheckedContinuation{ continuation in
-            let dataResponse = self.responseJSONFromMemoryCache(target, serializer: serializer)
-            continuation.resume(returning: dataResponse)
-        }
-    }
 
-    func responseJSON(_ responseDataSourceType: ResponseDataSourceType = .server, target: Target, serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<Any> {
+    func responseJSON(_ type: ResponseDataSourceType = .server, target: Target, serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<Any> {
         let actor = SYDataResponseActor(provider: self)
         return await withTaskCancellationHandler {
              await withCheckedContinuation { continuation in
                 _Concurrency.Task {
-                     await actor.responseJSON(responseDataSourceType,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
+                     await actor.responseJSON(type,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
                          continuation.resume(returning: dataResponse)
                      })
                  }

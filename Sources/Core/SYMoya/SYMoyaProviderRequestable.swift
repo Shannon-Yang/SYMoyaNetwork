@@ -1,5 +1,5 @@
 //
-//  SYMoyaProviderResponseable.swift
+//  SYMoyaProviderRequestable.swift
 //  SYMoyaNetwork
 //
 //  Created by Shannon Yang on 2023/10/19.
@@ -8,7 +8,8 @@
 import Foundation
 import Moya
 
-public protocol SYMoyaProviderResponseable: AnyObject {
+//MARK: - SYMoyaProviderRequestable
+public protocol SYMoyaProviderRequestable: AnyObject {
     associatedtype Target: SYTargetType
     
     func requestFromCache(_ target: Target, callbackQueue: DispatchQueue?, completion: @escaping (_ result: SYMoyaNetworkResult) -> Void)
@@ -18,11 +19,11 @@ public protocol SYMoyaProviderResponseable: AnyObject {
     func requestFromMemoryCache(_ target: Target) -> SYMoyaNetworkResult
     
     @discardableResult
-    func request(_ responseDataSourceType: ResponseDataSourceType, target: Target, callbackQueue: DispatchQueue?, progress: ProgressBlock?, completion: @escaping (_ result: SYMoyaNetworkResult) -> Void) -> Cancellable?
+    func request(_ type: ResponseDataSourceType, target: Target, callbackQueue: DispatchQueue?, progress: ProgressBlock?, completion: @escaping (_ result: SYMoyaNetworkResult) -> Void) -> Cancellable?
 }
 
-extension SYMoyaProvider: SYMoyaProviderResponseable {
-    
+//MARK: - SYMoyaProviderRequestable Imp
+extension SYMoyaProvider: SYMoyaProviderRequestable {
     public func requestFromCache(_ target: Target, callbackQueue: DispatchQueue?, completion: @escaping (SYMoyaNetworkResult) -> Void) {
         let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
         self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
@@ -43,7 +44,7 @@ extension SYMoyaProvider: SYMoyaProviderResponseable {
         return result
     }
     
-    public func request(_ responseDataSourceType: ResponseDataSourceType, target: Target, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping (SYMoyaNetworkResult) -> Void) -> Moya.Cancellable? {
+    public func request(_ type: ResponseDataSourceType, target: Target, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping (SYMoyaNetworkResult) -> Void) -> Moya.Cancellable? {
         @discardableResult
         func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none,shouldCacheIfNeeded: Bool = true, completion: @escaping (_ result: SYMoyaNetworkResult) -> Void) -> Cancellable {
             self.req(target, callbackQueue: callbackQueue, progress: progress, shouldCacheIfNeeded: shouldCacheIfNeeded) { result in
@@ -54,7 +55,7 @@ extension SYMoyaProvider: SYMoyaProviderResponseable {
         case .urlRequestCache,.none:
             return req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
         case .syMoyaNetworkCache:
-            switch responseDataSourceType {
+            switch type {
             case .server:
                 return req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
             case .cache:

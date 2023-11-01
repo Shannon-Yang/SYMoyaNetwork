@@ -9,6 +9,7 @@ import Foundation
 import Moya
 
 //MARK: - SYSerializableTatgetType
+/*
 public protocol SYSerializableTatgetType: SYTargetType {
     var serializer: any ResponseSerializer { get }
 }
@@ -17,5 +18,5 @@ extension SYSerializableTatgetType {
     var serializer: any ResponseSerializer {
         return .defaultJSONSerializer
     }
-}
+}*/
 

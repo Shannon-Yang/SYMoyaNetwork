@@ -13,80 +13,87 @@ import ObjectMapper
 import SYMoyaObjectMapper
 
 
-extension Reactive where Base: SYMoyaProviderObjectType {
-    
-    func responseObjectFromCache<T: BaseMappable>(_ target: Base.Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
+extension Reactive where Base: SYMoyaProviderRequestable {
+    func responseObjectFromCache<T: BaseMappable>(_ target: Base.Target, serializer: ObjectMapperObjectResponseSerializer<T> = .defaultMapperObjectSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
         SignalProducer { [weak base] observer, lifetime in
-            base?.responseObjectFromCache(target, keyPath: keyPath, context: context, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.send(value: dataResponse)
+            base?.requestFromCache(target, callbackQueue: callbackQueue, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.send(value: response)
                 observer.sendCompleted()
             })
             lifetime.observeEnded { }
         }
     }
     
-    func responseObjectFromDiskCache<T: BaseMappable>(_ target: Base.Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
+    func responseObjectFromDiskCache<T: BaseMappable>(_ target: Base.Target, serializer: ObjectMapperObjectResponseSerializer<T> = .defaultMapperObjectSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
         SignalProducer { [weak base] observer, lifetime in
-            base?.responseObjectFromCache(target, keyPath: keyPath, context: context, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.send(value: dataResponse)
+            base?.requestFromDiskCache(target, callbackQueue: callbackQueue, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.send(value: response)
                 observer.sendCompleted()
             })
             lifetime.observeEnded { }
         }
     }
     
-    func responseObjectFromMemoryCache<T: BaseMappable>(_ target: Base.Target, keyPath: String? = nil, context: MapContext? = nil) -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
-        let dataResponse: SYMoyaNetworkDataResponse<T> = base.responseObjectFromMemoryCache(target, keyPath: keyPath, context: context)
+    func responseObjectFromMemoryCache<T: BaseMappable>(_ target: Base.Target, serializer: ObjectMapperObjectResponseSerializer<T> = .defaultMapperObjectSerializer) -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
+        let result = base.requestFromMemoryCache(target)
+        let response = serializer.serialize(result: result)
         return SignalProducer<SYMoyaNetworkDataResponse<T>, Never> { observer, lifetime in
-            observer.send(value: dataResponse)
+            observer.send(value: response)
             observer.sendCompleted()
             lifetime.observeEnded { }
         }
     }
     
-    func responseObject<T: BaseMappable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Base.Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
+    func responseObject<T: BaseMappable>(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: ObjectMapperObjectResponseSerializer<T> = .defaultMapperObjectSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
         SignalProducer { [weak base] observer, lifetime in
-            let cancellable = base?.responseObject(responseDataSourceType, target: target, keyPath: keyPath, context: context, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
-                observer.send(value: dataResponse)
+            let cancellable = base?.request(type, target: target, callbackQueue: callbackQueue, progress: progress, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.send(value: response)
                 observer.sendCompleted()
             })
             lifetime.observeEnded { cancellable?.cancel() }
         }
     }
 
-    func responseObjectsFromCache<T: BaseMappable>(_ target: Base.Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<[T]>, Never> {
+    func responseObjectsFromCache<T: BaseMappable>(_ target: Base.Target, serializer: ObjectMapperObjectsResponseSerializer<T> = .defaultMapperObjectsSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<[T]>, Never> {
         SignalProducer { [weak base] observer, lifetime in
-            base?.responseObjectsFromCache(target, keyPath: keyPath, context: context, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.send(value: dataResponse)
+            base?.requestFromCache(target, callbackQueue: callbackQueue, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.send(value: response)
                 observer.sendCompleted()
             })
             lifetime.observeEnded { }
         }
     }
 
-    func responseObjectsFromDiskCache<T: BaseMappable>(_ target: Base.Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<[T]>, Never> {
+    func responseObjectsFromDiskCache<T: BaseMappable>(_ target: Base.Target, serializer: ObjectMapperObjectsResponseSerializer<T> = .defaultMapperObjectsSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<[T]>, Never> {
         SignalProducer { [weak base] observer, lifetime in
-            base?.responseObjectsFromCache(target, keyPath: keyPath, context: context, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.send(value: dataResponse)
+            base?.requestFromDiskCache(target, callbackQueue: callbackQueue, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.send(value: response)
                 observer.sendCompleted()
             })
             lifetime.observeEnded { }
         }
     }
 
-    func responseObjectsFromMemoryCache<T: BaseMappable>(_ target: Base.Target, keyPath: String? = nil, context: MapContext? = nil) -> SignalProducer<SYMoyaNetworkDataResponse<[T]>, Never> {
-        let dataResponse: SYMoyaNetworkDataResponse<[T]> = base.responseObjectsFromMemoryCache(target, keyPath: keyPath, context: context)
+    func responseObjectsFromMemoryCache<T: BaseMappable>(_ target: Base.Target, serializer: ObjectMapperObjectsResponseSerializer<T> = .defaultMapperObjectsSerializer) -> SignalProducer<SYMoyaNetworkDataResponse<[T]>, Never> {
+        let result = base.requestFromMemoryCache(target)
+        let response = serializer.serialize(result: result)
         return SignalProducer { observer, lifetime in
-            observer.send(value: dataResponse)
+            observer.send(value: response)
             observer.sendCompleted()
             lifetime.observeEnded { }
         }
     }
 
-    func responseObjects<T: BaseMappable>(_ responseDataSourceType: ResponseDataSourceType = .server, target: Base.Target, keyPath: String? = nil, context: MapContext? = nil, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<[T]>, Never> {
+    func responseObjects<T: BaseMappable>(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: ObjectMapperObjectsResponseSerializer<T> = .defaultMapperObjectsSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<[T]>, Never> {
         SignalProducer { [weak base] observer, lifetime in
-            let cancellable = base?.responseObjects(responseDataSourceType, target: target, keyPath: keyPath, context: context, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
-                observer.send(value: dataResponse)
+            let cancellable = base?.request(type, target: target, callbackQueue: callbackQueue, progress: progress, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.send(value: response)
                 observer.sendCompleted()
             })
             lifetime.observeEnded { cancellable?.cancel() }

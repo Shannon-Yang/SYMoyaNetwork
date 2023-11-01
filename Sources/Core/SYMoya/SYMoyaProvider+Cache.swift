@@ -11,7 +11,6 @@ import Moya
 
 //MARK: - Cache
 extension SYMoyaProvider {
-    
     func generateCacheKey(_ target: Target) -> String {
         let urlString = URL(target: target).absoluteString
         
@@ -82,7 +81,7 @@ extension SYMoyaProvider {
         }
     }
     
-    public func retrieve(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ result: SYMoyaNetworkResult) -> Void) {
+    func retrieve(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ result: SYMoyaNetworkResult) -> Void) {
         let key = self.generateCacheKey(target)
         var queue = CallbackQueue.untouch
         if let cQueue = callbackQueue {
@@ -112,7 +111,7 @@ extension SYMoyaProvider {
         }
     }
     
-    public func retrieveResponseInMemoryCache(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo) -> SYMoyaNetworkResult {
+    func retrieveResponseInMemoryCache(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo) -> SYMoyaNetworkResult {
         let key = self.generateCacheKey(target)
         if let response = self.cache.retrieveResponseInMemoryCache(forKey: key, options: options) {
             let resultResponse = (response,true)
@@ -121,7 +120,7 @@ extension SYMoyaProvider {
         return .failure(SYMoyaNetworkError.cacheError(reason: .responseNotExisting(key: key)))
     }
     
-    public func retrieveResponseInDiskCache(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo, callbackQueue: DispatchQueue? = .none, completionHandler: @escaping (SYMoyaNetworkResult) -> Void) {
+    func retrieveResponseInDiskCache(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo, callbackQueue: DispatchQueue? = .none, completionHandler: @escaping (SYMoyaNetworkResult) -> Void) {
         let key = self.generateCacheKey(target)
         var queue = CallbackQueue.untouch
         if let cQueue = callbackQueue {
@@ -159,7 +158,6 @@ extension SYMoyaProvider {
 }
 
 //MARK: - Cache Clean
-
 public extension SYMoyaProvider {
     
     /// Clears the memory & disk storage of this cache. This is an async operation.

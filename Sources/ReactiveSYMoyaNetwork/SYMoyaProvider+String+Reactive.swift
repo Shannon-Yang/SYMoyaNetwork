@@ -10,41 +10,45 @@ import ReactiveSwift
 import Moya
 import SYMoyaNetwork
 
-extension Reactive where Base: SYMoyaProviderStringType {
-    func responseStringFromCache(_ target: Base.Target, atKeyPath: String?, callbackQueue: DispatchQueue?) -> SignalProducer<SYMoyaNetworkDataResponse<String>, Never> {
+public extension Reactive where Base: SYMoyaProviderRequestable {
+    func responseStringFromCache(_ target: Base.Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<String>, Never> {
         SignalProducer { [weak base] observer, lifetime in
-            base?.responseStringFromCache(target, atKeyPath: atKeyPath, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.send(value: dataResponse)
+            base?.requestFromCache(target, callbackQueue: callbackQueue, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.send(value: response)
                 observer.sendCompleted()
             })
             lifetime.observeEnded { }
         }
     }
     
-    func responseStringFromDiskCache(_ target: Base.Target, atKeyPath: String?, callbackQueue: DispatchQueue?) -> SignalProducer<SYMoyaNetworkDataResponse<String>, Never> {
+    func responseStringFromDiskCache(_ target: Base.Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<String>, Never> {
         SignalProducer { [weak base] observer, lifetime in
-            base?.responseStringFromDiskCache(target, atKeyPath: atKeyPath, callbackQueue: callbackQueue, completion: { dataResponse in
-                observer.send(value: dataResponse)
+            base?.requestFromDiskCache(target, callbackQueue: callbackQueue, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.send(value: response)
                 observer.sendCompleted()
             })
             lifetime.observeEnded { }
         }
     }
     
-    func responseStringFromMemoryCache(_ target: Base.Target, atKeyPath: String?) -> SignalProducer<SYMoyaNetworkDataResponse<String>, Never> {
-        let dataResponse = base.responseStringFromMemoryCache(target, atKeyPath: atKeyPath)
+    func responseStringFromMemoryCache(_ target: Base.Target, serializer: StringResponseSerializer = .defaultStringSerializer) -> SignalProducer<SYMoyaNetworkDataResponse<String>, Never> {
+        let result = base.requestFromMemoryCache(target)
+        let response = serializer.serialize(result: result)
         return SignalProducer<SYMoyaNetworkDataResponse<String>, Never> { observer, lifetime in
-            observer.send(value: dataResponse)
+            observer.send(value: response)
             observer.sendCompleted()
             lifetime.observeEnded { }
         }
     }
     
     
-    func responseString(_ responseDataSourceType: ResponseDataSourceType, target: Base.Target, atKeyPath: String?, callbackQueue: DispatchQueue?, progress: ProgressBlock?) -> SignalProducer<SYMoyaNetworkDataResponse<String>, Never> {
+    func responseString(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<String>, Never> {
         SignalProducer { [weak base] observer, lifetime in
-            let cancellable = base?.responseString(responseDataSourceType, target: target, atKeyPath: atKeyPath, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
-                observer.send(value: dataResponse)
+            let cancellable = base?.request(type, target: target, callbackQueue: callbackQueue, progress: progress, completion: { result in
+                let response = serializer.serialize(result: result)
+                observer.send(value: response)
                 observer.sendCompleted()
             })
             lifetime.observeEnded { cancellable?.cancel() }

@@ -5,13 +5,24 @@
 //  Created by ShannonYang on 2021/9/16.
 //
 
-import UIKit
+enum ResponseType: String, CaseIterable {
+    case string = "String Response"
+    case json = "JSON Response"
+    case image = "Image Response"
+    case decodable = "Decodable Response"
+    case swiftyJSON = "SwiftyJSON Response"
+    case handyJSON = "HandyJSON Response"
+    case objectMapper = "ObjectMapper Response"
+    case batch = "Batch Response"
+    case chain = "Chain Response"
+}
 
+#if os(iOS)
+import UIKit
 class ViewController: UIViewController {
-    
     @IBOutlet weak var tableView: UITableView!
     
-    fileprivate var data = ["Basic Response","HandyJSON Response","MJExtension Response","ObjectMapper Response","SwiftyJSON Response","Batch Response","Batch Response"]
+    fileprivate var data = ResponseType.allCases
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,16 +32,13 @@ class ViewController: UIViewController {
 }
 
 // MARK: - Private
-
 private extension ViewController {
     func registerCell() {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: String(describing: UITableViewCell.self))
     }
 }
 
-
 //MARK: - UITableViewDataSource
-
 extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -40,8 +48,7 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: UITableViewCell.self), for: indexPath)
         let item = self.data[indexPath.row]
-        cell.textLabel?.text = item
-        
+        cell.textLabel?.text = item.rawValue
         return cell
     }
 }
@@ -49,14 +56,15 @@ extension ViewController: UITableViewDataSource {
 //MARK: - UITableViewDelegate
 
 extension ViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(50)
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let re = ResponseViewController() 
+        let type = self.data[indexPath.row]
+        let re = ResponseViewController(responseType: type)
         self.navigationController?.pushViewController(re, animated: true)
     }
-    
 }
+#endif
