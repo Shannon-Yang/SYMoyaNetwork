@@ -10,7 +10,17 @@ import Moya
 import SYMoyaNetwork
 import Combine
 import RxSwift
+
 import RxSYMoyaNetwork
+import ReactiveSwift
+
+import SYMoyaRxHandyJSON
+import ReactiveSYMoyaNetwork
+
+import SYMoyaRxObjectMapper
+import SYMoyaRxHandyJSON
+import SYMoyaReactiveHandyJSON
+import SYMoyaReactiveObjectMapper
 
 enum ResponseCallbackType: Int {
     case normal = 0
@@ -29,7 +39,13 @@ class ResponseViewController: UIViewController {
             segmentedControl.setTitle("Combine", forSegmentAt: 1)
         }
     }
-    
+
+    @IBOutlet weak var responseImageView: UIImageView! {
+        didSet {
+            responseImageView.isHidden = !(responseType == .image)
+            contentLabel.isHidden  = !(responseImageView.isHidden)
+        }
+    }
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
@@ -66,19 +82,6 @@ class ResponseViewController: UIViewController {
         self.segmentedControl.insertSegment(withTitle: "Rx", at: 3, animated: false)
         self.segmentedControl.insertSegment(withTitle: "Reactive", at: 4, animated: false)
         self.request()
-        
-//        let provider = SYMoyaBatchProvider<HTTPBinDynamicData>(targetTypes: [.getDelay(delay: 1),.stream(n: 1)])
-//        let provider2 = SYMoyaBatchProvider<HTTPBinResponseFormats>(targetTypes: [.brotli,.json,.gzipped])
-//        self.session = SYMoyaBatchProviderSession(providers: [provider,provider2])
-        
-//        let pro = SYMoyaProvider<GitHub>()
-//        pro.responseString(target: .zen) { dataResponse in
-//            debugPrint("🔥🔥🔥🔥🔥----> \(dataResponse) <---- < Class: \(type(of: self)) Function:\(#function) Line: \(#line) >🔥🔥🔥🔥🔥")
-//            let s = pro.responseState(.zen)
-//            debugPrint("🔥🔥🔥🔥🔥----> \(s) <---- < Class: \(type(of: self)) Function:\(#function) Line: \(#line) >🔥🔥🔥🔥🔥")
-//        }
-//       let s = pro.responseState(.zen)
-//        debugPrint("🔥🔥🔥🔥🔥----> \(s) <---- < Class: \(type(of: self)) Function:\(#function) Line: \(#line) >🔥🔥🔥🔥🔥")
     }
 }
 
@@ -97,29 +100,43 @@ private extension ResponseViewController {
     
     func request() {
         loadingState()
-//        switch self.responseType {
-//        case .string:
-//            let provider = SYMoyaProvider<HTTPBinDynamicData>()
-//            switch self.callbackType {
-//            case .normal:
-//                provider.responseString(target: .getDelay(delay: 1)) { response in
-//                    self.contentLabel.text = response.value
-//                    self.resetState()
-//                }
-//            case .combine:
-//                let publisher = provider.responseStringPublisher(target: .getDelay(delay: 1))
-//                publisher.sink { response in
-//                    self.contentLabel.text = response.value
-//                    self.resetState()
-//                }.store(in: &cancellables)
-//            case .concurrency:
-//                _Concurrency.Task {
-//                    let response = await provider.responseString(target: .getDelay(delay: 1))
-//                    self.contentLabel.text = response.value
-//                    self.resetState()
-//                }
-//            }
-//        case .json:
+        switch self.responseType {
+        case .string:
+            let provider = SYMoyaProvider<HTTPBinDynamicData>()
+            switch self.callbackType {
+            case .normal:
+                provider.responseString(target: .getDelay(delay: 1)) { response in
+                    self.contentLabel.text = response.value
+                    self.resetState()
+                }
+            case .combine:
+                let publisher = provider.responseStringPublisher(target: .getDelay(delay: 1))
+                publisher.sink { response in
+                    self.contentLabel.text = response.value
+                    self.resetState()
+                }.store(in: &cancellables)
+            case .concurrency:
+                _Concurrency.Task {
+                    let response = await provider.responseString(target: .getDelay(delay: 1))
+                    self.contentLabel.text = response.value
+                    self.resetState()
+                }
+            case .rx:
+                let observable = provider.rx.responseString(target: .getDelay(delay: 1))
+                observable.subscribe { response in
+                    self.contentLabel.text = response.value
+                    self.resetState()
+                }.disposed(by: bag)
+            case .reactive:
+                let producer = provider.reactive.responseString(target: .getDelay(delay: 1))
+                producer.start { event in
+                    if let value = event.value?.value {
+                        self.contentLabel.text = value
+                        self.resetState()
+                    }
+                }
+            }
+        case .json:
             let provider = SYMoyaProvider<HTTPBinResponseFormats>()
             switch self.callbackType {
             case .normal:
@@ -140,12 +157,19 @@ private extension ResponseViewController {
                     self.resetState()
                 }
             case .rx:
-                let observable: Observable<SYMoyaNetworkDataResponse<Any>> = provider.responseJSON(target: .json)
-                observable.subscribe { event in
-                    
+                let observable = provider.rx.responseJSON(target: .json)
+                observable.subscribe { response in
+                    self.contentLabel.text = toJSONString(response: response)
+                    self.resetState()
                 }.disposed(by: bag)
             case .reactive:
-                break
+                let producer = provider.reactive.responseJSON(target: .json)
+                producer.start { event in
+                    if let value = event.value {
+                        self.contentLabel.text = toJSONString(response: value)
+                        self.resetState()
+                    }
+                }
             }
             func toJSONString(response: SYMoyaNetworkDataResponse<Any>) -> String? {
                 guard let value = response.value else { return nil }
@@ -153,18 +177,183 @@ private extension ResponseViewController {
                 let string = String(data: data, encoding: .utf8)
                 return string
             }
-//        case .image:
-//            <#code#>
-//        case .decodable:
-//            <#code#>
-//        case .swiftyJSON:
-//            <#code#>
-//        case .handyJSON:
-//            <#code#>
-//        case .objectMapper:
-//            <#code#>
-//        default:
-//            break
-//        }
+        case .image:
+            let provider = SYMoyaProvider<HTTPBinImages>()
+            switch self.callbackType {
+            case .normal:
+                provider.responseImage(target: .png) { response in
+                    self.responseImageView.image = response.value
+                    self.resetState()
+                }
+            case .combine:
+                let publisher = provider.responseImagePublisher(target: .png)
+                publisher.sink { response in
+                    self.responseImageView.image = response.value
+                    self.resetState()
+                }.store(in: &cancellables)
+            case .concurrency:
+                _Concurrency.Task {
+                    let response = await provider.responseImage(target: .png)
+                    self.responseImageView.image = response.value
+                    self.resetState()
+                }
+            case .rx:
+                let observable = provider.rx.responseImage(target: .png)
+                observable.subscribe { response in
+                    self.responseImageView.image = response.value
+                    self.resetState()
+                }.disposed(by: bag)
+            case .reactive:
+                let producer = provider.reactive.responseImage(target: .png)
+                producer.start { event in
+                    if let value = event.value?.value {
+                        self.responseImageView.image = value
+                        self.resetState()
+                    }
+                }
+            }
+        case .decodable:
+            let provider = SYMoyaProvider<HTTPBinDynamicData>()
+            switch self.callbackType {
+            case .normal:
+                provider.responseDecodableObject(target: .getDelay(delay: 1)) { (response: SYMoyaNetworkDataResponse<HttpbinPostCodableModel>) in
+                    self.contentLabel.text = response.value?.description
+                    self.resetState()
+                }
+            case .combine:
+                let publisher: SYMoyaPublisher<SYMoyaNetworkDataResponse<HttpbinPostCodableModel>> = provider.responseDecodableObjectPublisher(target: .getDelay(delay: 1))
+                publisher.sink { response in
+                    self.contentLabel.text = response.value?.description
+                    self.resetState()
+                }.store(in: &cancellables)
+            case .concurrency:
+                _Concurrency.Task {
+                    let response: SYMoyaNetworkDataResponse<HttpbinPostCodableModel> = await provider.responseDecodable(target: .getDelay(delay: 1))
+                    self.contentLabel.text = response.value?.description
+                    self.resetState()
+                }
+            case .rx:
+                let observable: Observable<SYMoyaNetworkDataResponse<HttpbinPostCodableModel>> = provider.rx.responseDecodableObject(target: .getDelay(delay: 1))
+                observable.subscribe { response in
+                    self.contentLabel.text = response.value?.description
+                    self.resetState()
+                }.disposed(by: bag)
+            case .reactive:
+                let producer: SignalProducer<SYMoyaNetworkDataResponse<HttpbinPostCodableModel>, Never> = provider.reactive.responseDecodableObject(target: .getDelay(delay: 1))
+                producer.start { event in
+                    if let value = event.value?.value {
+                        self.contentLabel.text = value.description
+                        self.resetState()
+                    }
+                }
+            }
+        case .swiftyJSON:
+            let provider = SYMoyaProvider<HTTPBinResponseFormats>()
+            switch self.callbackType {
+            case .normal:
+                provider.responseSwiftyJSON(target: .json) { response in
+                    self.contentLabel.text = response.value?.description
+                    self.resetState()
+                }
+            case .combine:
+                let publisher = provider.responseSwiftyJSONPublisher(target: .json)
+                publisher.sink { response in
+                    self.contentLabel.text = response.value?.description
+                    self.resetState()
+                }.store(in: &cancellables)
+            case .concurrency:
+                _Concurrency.Task {
+                    let response = await provider.responseSwiftyJSON(target: .json)
+                    self.contentLabel.text = response.value?.description
+                    self.resetState()
+                }
+            case .rx:
+                let observable = provider.rx.responseSwiftyJSON(target: .json)
+                observable.subscribe { response in
+                    self.contentLabel.text = response.value?.description
+                    self.resetState()
+                }.disposed(by: bag)
+            case .reactive:
+                let producer = provider.reactive.responseSwiftyJSON(target: .json)
+                producer.start { event in
+                    if let value = event.value?.value?.description {
+                        self.contentLabel.text = value.description
+                        self.resetState()
+                    }
+                }
+            }
+        case .handyJSON:
+            let provider = SYMoyaProvider<HTTPBinDynamicData>()
+            switch self.callbackType {
+            case .normal:
+                provider.responseObject(target: .getDelay(delay: 1)) { (response: SYMoyaNetworkDataResponse<HttpbinPostHandyJSONModel>) in
+                    self.contentLabel.text = response.value?.description
+                    self.resetState()
+                }
+            case .combine:
+                let publisher: SYMoyaPublisher<SYMoyaNetworkDataResponse<HttpbinPostHandyJSONModel>> = provider.responseObjectPublisher(target: .getDelay(delay: 1))
+                publisher.sink { response in
+                    self.contentLabel.text = response.value?.description
+                    self.resetState()
+                }.store(in: &cancellables)
+            case .concurrency:
+                _Concurrency.Task {
+                    let response: SYMoyaNetworkDataResponse<HttpbinPostHandyJSONModel> = await provider.responseObject(target: .getDelay(delay: 1))
+                    self.contentLabel.text = response.value?.description
+                    self.resetState()
+                }
+            case .rx:
+                let observable: Observable<SYMoyaNetworkDataResponse<HttpbinPostHandyJSONModel>> = provider.rx.responseObject(target: .getDelay(delay: 1))
+                observable.subscribe { response in
+                    self.contentLabel.text = response.value.debugDescription
+                    self.resetState()
+                }.disposed(by: bag)
+            case .reactive:
+                let producer: SignalProducer<SYMoyaNetworkDataResponse<HttpbinPostHandyJSONModel>, Never> = provider.reactive.responseObject(target: .getDelay(delay: 1))
+                producer.start { event in
+                    if let value = event.value?.value?.description {
+                        self.contentLabel.text = value
+                    }
+                    self.resetState()
+                }
+            }
+        case .objectMapper:
+            let provider = SYMoyaProvider<HTTPBinDynamicData>()
+            switch self.callbackType {
+            case .normal:
+                provider.responseObject(target: .getDelay(delay: 1)) { (response: SYMoyaNetworkDataResponse<HttpbinPostObjectMapperModel>) in
+                    self.contentLabel.text = response.value?.description
+                    self.resetState()
+                }
+            case .combine:
+                let publisher: SYMoyaPublisher<SYMoyaNetworkDataResponse<HttpbinPostObjectMapperModel>> = provider.responseObject(target: .getDelay(delay: 1))
+                publisher.sink { response in
+                    self.contentLabel.text = response.value?.description
+                    self.resetState()
+                }.store(in: &cancellables)
+            case .concurrency:
+                _Concurrency.Task {
+                    let response: SYMoyaNetworkDataResponse<HttpbinPostObjectMapperModel> = await provider.responseObject(target: .getDelay(delay: 1))
+                    self.contentLabel.text = response.value?.description
+                    self.resetState()
+                }
+            case .rx:
+                let observable: Observable<SYMoyaNetworkDataResponse<HttpbinPostObjectMapperModel>> = provider.rx.responseObject(target: .getDelay(delay: 1))
+                observable.subscribe { response in
+                    self.contentLabel.text = response.value?.description
+                    self.resetState()
+                }.disposed(by: bag)
+            case .reactive:
+                let producer = provider.reactive.responseString(target: .getDelay(delay: 1))
+                producer.start { event in
+                    if let value = event.value?.value?.description {
+                        self.contentLabel.text = value
+                    }
+                    self.resetState()
+                }
+            }
+        default:
+            break
+        }
     }
 }

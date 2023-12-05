@@ -10,13 +10,6 @@ import Foundation
 import Moya
 import Alamofire
 
-public enum SYMoyaBatchProviderSessionType {
-    // someRequestFail 只要有一个失败，整个批量请求就算失败
-    case  ifOneFailureBatchFail
-    // 如果其中有一个请求失败，继续执行，返回那个失败的为nil
-    case  ifOneFailureBatchContinue
-}
-
 /// Closure to be executed when progress changes.
 public typealias SYBatchProgressBlock = (_ progress: SYBatchProgress) -> Void
 
@@ -59,34 +52,34 @@ public struct SYBatchProgress {
 // Batch request session object, used to session the sending and callback of batch requests
 public class SYMoyaBatchProviderSession {
     private let providers: [SYBatchMoyaProviderType]
-    private let sessionType: SYMoyaBatchProviderSessionType
-
-    public init(providers: [SYBatchMoyaProviderType], sessionType: SYMoyaBatchProviderSessionType = .ifOneFailureBatchContinue) {
+    public init(providers: [SYBatchMoyaProviderType]) {
         self.providers = providers
-        self.sessionType = sessionType
     }
     private let queueName = "com.shannonyang.SYMoyaNetwork.BatchRequest.queue.\(UUID().uuidString)"
     
-    public func request(_ callbackQueue: DispatchQueue? = .none, progressCompletion: SYBatchProgressBlock? = .none, completion: @escaping (_ result: Result<[SYBatchDataResponse], SYMoyaNetworkError>) -> Void) {
+    public func request(_ callbackQueue: DispatchQueue? = .none, progressCompletion: SYBatchProgressBlock? = .none, completion: @escaping (_ result: Result<[SYBatchMoyaProviderResponse?], SYMoyaNetworkError>) -> Void) {
         if providers.isEmpty {
             completion(.failure(.batchRequestError(reason: .providersIsEmpty)))
             return
         }
         let queue = DispatchQueue(label: queueName, attributes: .concurrent)
         let grop = DispatchGroup()
-        var reponses = [SYBatchDataResponse]()
-        
-        let progress = SYBatchProgress(count: providers.count)
-        self.providers.forEach { provider in
+        var reponses = [SYBatchMoyaProviderResponse?]()
+        let count = providers.reduce(0) { partialResult, providerType in
+            partialResult + providerType.targetTypeCount
+        }
+        let progress = SYBatchProgress(count: count)
+        for provider in providers {
             grop.enter()
             queue.async(group: grop) {
-                provider.requestTargets(self.sessionType) { response in
-                    reponses.append(response)
-                    grop.leave()
+                provider.requestTargets {
                     progress.increaseCompletedUnitCount()
                     if let progressCompletion {
                         progressCompletion(progress)
                     }
+                } _: { responses in
+                    reponses.append(contentsOf: responses)
+                    grop.leave()
                 }
             }
         }

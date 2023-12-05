@@ -9,7 +9,7 @@ import Foundation
 import SwiftyJSON
 import Moya
 
-extension SYMoyaNetworkResult {
+public extension SYMoyaNetworkResult {
     func serializerSwiftyJSON(ptions opt: JSONSerialization.ReadingOptions = []) -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
         var dataRes: SYMoyaNetworkDataResponse<SwiftyJSON.JSON>
         switch self {

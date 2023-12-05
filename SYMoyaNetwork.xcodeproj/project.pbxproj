@@ -82,6 +82,20 @@
 		FB6354A32705A61E003F1D7C /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB63547E2705A61E003F1D7C /* Date+Extensions.swift */; };
 		FB65207728A48E06009457DD /* SYMoyaProviderTargetResponseStatePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9E2D1E28A40D2A001F73FC /* SYMoyaProviderTargetResponseStatePlugin.swift */; };
 		FB65207A28A4FBB8009457DD /* SYMoyaBatchProviderSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB65207928A4FBB8009457DD /* SYMoyaBatchProviderSession.swift */; };
+		FB665E582B02785500ECE6B6 /* HTTPBinImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB665E572B02785500ECE6B6 /* HTTPBinImages.swift */; };
+		FB665E5B2B027A3900ECE6B6 /* HttpbinPostObjectMapperModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB665E5A2B027A3900ECE6B6 /* HttpbinPostObjectMapperModel.swift */; };
+		FB665E5C2B027A6C00ECE6B6 /* ObjectMapper.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F25E29A623D0004D5C4B /* ObjectMapper.xcframework */; };
+		FB665E5D2B027A6D00ECE6B6 /* ObjectMapper.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F25E29A623D0004D5C4B /* ObjectMapper.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FB665E5F2B027ABF00ECE6B6 /* HttpbinPostCodableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB665E5E2B027ABF00ECE6B6 /* HttpbinPostCodableModel.swift */; };
+		FB665E612B03D1C300ECE6B6 /* HttpbinPostHandyJSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB665E602B03D1C300ECE6B6 /* HttpbinPostHandyJSONModel.swift */; };
+		FB665E622B051A3C00ECE6B6 /* SYMoyaRxHandyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35A52A1E4676001AFD6C /* SYMoyaRxHandyJSON.framework */; };
+		FB665E632B051A3C00ECE6B6 /* SYMoyaRxHandyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35A52A1E4676001AFD6C /* SYMoyaRxHandyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FB665E662B051A4400ECE6B6 /* SYMoyaRxObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35892A1E4656001AFD6C /* SYMoyaRxObjectMapper.framework */; };
+		FB665E672B051A4400ECE6B6 /* SYMoyaRxObjectMapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35892A1E4656001AFD6C /* SYMoyaRxObjectMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FB665E6A2B051AD200ECE6B6 /* SYMoyaReactiveHandyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35F92A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON.framework */; };
+		FB665E6B2B051AD200ECE6B6 /* SYMoyaReactiveHandyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35F92A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FB665E6E2B051AD300ECE6B6 /* SYMoyaReactiveObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35DD2A1E46AC001AFD6C /* SYMoyaReactiveObjectMapper.framework */; };
+		FB665E6F2B051AD300ECE6B6 /* SYMoyaReactiveObjectMapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35DD2A1E46AC001AFD6C /* SYMoyaReactiveObjectMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FB668FC028D3596F00AE74F4 /* SYMoyaPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB668FBF28D3596F00AE74F4 /* SYMoyaPublisher.swift */; };
 		FB6A3A29287BB48900454481 /* HTTPStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6A3A28287BB48900454481 /* HTTPStatusCode.swift */; };
 		FB6A3A2B287BB49200454481 /* HTTPStatusCodes+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6A3A2A287BB49200454481 /* HTTPStatusCodes+Extensions.swift */; };
@@ -207,6 +221,34 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		FB665E642B051A3C00ECE6B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB8072E526F32C070042B30D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FBEE35A42A1E4676001AFD6C;
+			remoteInfo = SYMoyaRxHandyJSON;
+		};
+		FB665E682B051A4400ECE6B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB8072E526F32C070042B30D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FBEE35882A1E4656001AFD6C;
+			remoteInfo = SYMoyaRxObjectMapper;
+		};
+		FB665E6C2B051AD300ECE6B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB8072E526F32C070042B30D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FBEE35F82A1E46BF001AFD6C;
+			remoteInfo = SYMoyaReactiveHandyJSON;
+		};
+		FB665E702B051AD300ECE6B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB8072E526F32C070042B30D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FBEE35DC2A1E46AC001AFD6C;
+			remoteInfo = SYMoyaReactiveObjectMapper;
+		};
 		FB71AEFF2A55B6CF00952F2C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FB8072E526F32C070042B30D /* Project object */;
@@ -338,10 +380,15 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				FB665E6B2B051AD200ECE6B6 /* SYMoyaReactiveHandyJSON.framework in Embed Frameworks */,
+				FB665E672B051A4400ECE6B6 /* SYMoyaRxObjectMapper.framework in Embed Frameworks */,
 				FB71AF2F2A55C55A00952F2C /* ReactiveSYMoyaNetwork.framework in Embed Frameworks */,
 				FB4CA4662AF2AB0400F43D40 /* RxSwift.xcframework in Embed Frameworks */,
 				FB9E2D0628A20B39001F73FC /* SYMoyaNetwork.framework in Embed Frameworks */,
+				FB665E5D2B027A6D00ECE6B6 /* ObjectMapper.xcframework in Embed Frameworks */,
 				FBA24F9C2A48A096008D35A6 /* RxSYMoyaNetwork.framework in Embed Frameworks */,
+				FB665E6F2B051AD300ECE6B6 /* SYMoyaReactiveObjectMapper.framework in Embed Frameworks */,
+				FB665E632B051A3C00ECE6B6 /* SYMoyaRxHandyJSON.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -484,6 +531,10 @@
 		FB63547D2705A61E003F1D7C /* String+MD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+MD5.swift"; sourceTree = "<group>"; };
 		FB63547E2705A61E003F1D7C /* Date+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		FB65207928A4FBB8009457DD /* SYMoyaBatchProviderSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYMoyaBatchProviderSession.swift; sourceTree = "<group>"; };
+		FB665E572B02785500ECE6B6 /* HTTPBinImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPBinImages.swift; sourceTree = "<group>"; };
+		FB665E5A2B027A3900ECE6B6 /* HttpbinPostObjectMapperModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpbinPostObjectMapperModel.swift; sourceTree = "<group>"; };
+		FB665E5E2B027ABF00ECE6B6 /* HttpbinPostCodableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpbinPostCodableModel.swift; sourceTree = "<group>"; };
+		FB665E602B03D1C300ECE6B6 /* HttpbinPostHandyJSONModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpbinPostHandyJSONModel.swift; sourceTree = "<group>"; };
 		FB668FBF28D3596F00AE74F4 /* SYMoyaPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYMoyaPublisher.swift; sourceTree = "<group>"; };
 		FB6A3A28287BB48900454481 /* HTTPStatusCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPStatusCode.swift; sourceTree = "<group>"; };
 		FB6A3A2A287BB49200454481 /* HTTPStatusCodes+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HTTPStatusCodes+Extensions.swift"; sourceTree = "<group>"; };
@@ -600,10 +651,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB665E6A2B051AD200ECE6B6 /* SYMoyaReactiveHandyJSON.framework in Frameworks */,
+				FB665E662B051A4400ECE6B6 /* SYMoyaRxObjectMapper.framework in Frameworks */,
 				FB71AF2E2A55C55A00952F2C /* ReactiveSYMoyaNetwork.framework in Frameworks */,
 				FB4CA4652AF2AB0400F43D40 /* RxSwift.xcframework in Frameworks */,
 				FB9E2D0528A20B39001F73FC /* SYMoyaNetwork.framework in Frameworks */,
+				FB665E5C2B027A6C00ECE6B6 /* ObjectMapper.xcframework in Frameworks */,
 				FBA24F9B2A48A096008D35A6 /* RxSYMoyaNetwork.framework in Frameworks */,
+				FB665E6E2B051AD300ECE6B6 /* SYMoyaReactiveObjectMapper.framework in Frameworks */,
+				FB665E622B051A3C00ECE6B6 /* SYMoyaRxHandyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -711,6 +767,7 @@
 				FB4CA4562AF1468A00F43D40 /* HTTPBinDynamicData.swift */,
 				FB4CA4572AF1468A00F43D40 /* HTTPBinRequestInspection .swift */,
 				FB4CA4582AF1468A00F43D40 /* HTTPBinAuth.swift */,
+				FB665E572B02785500ECE6B6 /* HTTPBinImages.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -882,6 +939,16 @@
 			path = SYMoyaBatchRequest;
 			sourceTree = "<group>";
 		};
+		FB665E592B027A2100ECE6B6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FB665E5A2B027A3900ECE6B6 /* HttpbinPostObjectMapperModel.swift */,
+				FB665E5E2B027ABF00ECE6B6 /* HttpbinPostCodableModel.swift */,
+				FB665E602B03D1C300ECE6B6 /* HttpbinPostHandyJSONModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		FB668FB728D3517A00AE74F4 /* Combine */ = {
 			isa = PBXGroup;
 			children = (
@@ -977,6 +1044,7 @@
 		FB9E2CC128A204B4001F73FC /* SYMoyaNetworkExample */ = {
 			isa = PBXGroup;
 			children = (
+				FB665E592B027A2100ECE6B6 /* Models */,
 				FB4CA4542AF1468A00F43D40 /* API */,
 				FB9E2CC228A204B4001F73FC /* AppDelegate.swift */,
 				FB9E2CC428A204B4001F73FC /* SceneDelegate.swift */,
@@ -1270,6 +1338,10 @@
 			dependencies = (
 				FBA24F9A2A48A096008D35A6 /* PBXTargetDependency */,
 				FB71AF2D2A55C55A00952F2C /* PBXTargetDependency */,
+				FB665E652B051A3C00ECE6B6 /* PBXTargetDependency */,
+				FB665E692B051A4400ECE6B6 /* PBXTargetDependency */,
+				FB665E6D2B051AD300ECE6B6 /* PBXTargetDependency */,
+				FB665E712B051AD300ECE6B6 /* PBXTargetDependency */,
 			);
 			name = SYMoyaNetworkExample;
 			productName = SYMoyaNetworkExample;
@@ -1684,12 +1756,16 @@
 				FB4CA45B2AF1468A00F43D40 /* HTTPBinRequestInspection .swift in Sources */,
 				FB4CA45F2AF2906000F43D40 /* ChainResponseViewController.swift in Sources */,
 				FB9E2CC728A204B4001F73FC /* ViewController.swift in Sources */,
+				FB665E612B03D1C300ECE6B6 /* HttpbinPostHandyJSONModel.swift in Sources */,
 				FB4CA4632AF29A1300F43D40 /* ResponseCacheViewController.swift in Sources */,
 				FB9E2CC328A204B4001F73FC /* AppDelegate.swift in Sources */,
+				FB665E5B2B027A3900ECE6B6 /* HttpbinPostObjectMapperModel.swift in Sources */,
 				FB4CA45A2AF1468A00F43D40 /* HTTPBinDynamicData.swift in Sources */,
 				FB4CA45C2AF1468A00F43D40 /* HTTPBinAuth.swift in Sources */,
+				FB665E5F2B027ABF00ECE6B6 /* HttpbinPostCodableModel.swift in Sources */,
 				FB4CA4592AF1468A00F43D40 /* HTTPBinResponseFormats .swift in Sources */,
 				FB9E2D1A28A21BF4001F73FC /* BatchResponseViewController.swift in Sources */,
+				FB665E582B02785500ECE6B6 /* HTTPBinImages.swift in Sources */,
 				FB9E2CC528A204B4001F73FC /* SceneDelegate.swift in Sources */,
 				FB9E2D1628A2105D001F73FC /* ResponseViewController.swift in Sources */,
 			);
@@ -1802,6 +1878,26 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		FB665E652B051A3C00ECE6B6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FBEE35A42A1E4676001AFD6C /* SYMoyaRxHandyJSON */;
+			targetProxy = FB665E642B051A3C00ECE6B6 /* PBXContainerItemProxy */;
+		};
+		FB665E692B051A4400ECE6B6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FBEE35882A1E4656001AFD6C /* SYMoyaRxObjectMapper */;
+			targetProxy = FB665E682B051A4400ECE6B6 /* PBXContainerItemProxy */;
+		};
+		FB665E6D2B051AD300ECE6B6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FBEE35F82A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON */;
+			targetProxy = FB665E6C2B051AD300ECE6B6 /* PBXContainerItemProxy */;
+		};
+		FB665E712B051AD300ECE6B6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FBEE35DC2A1E46AC001AFD6C /* SYMoyaReactiveObjectMapper */;
+			targetProxy = FB665E702B051AD300ECE6B6 /* PBXContainerItemProxy */;
+		};
 		FB71AF002A55B6CF00952F2C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FBEE356C2A1E460F001AFD6C /* SYMoyaObjectMapper */;

@@ -12,7 +12,7 @@ import Moya
 import ObjectMapper
 import SYMoyaObjectMapper
 
-extension Reactive where Base: SYMoyaProviderRequestable {
+public extension Reactive where Base: SYMoyaProviderRequestable {
     func responseObjectFromCache<T: BaseMappable>(_ target: Base.Target, serializer: ObjectMapperObjectResponseSerializer<T> = .defaultMapperObjectSerializer, callbackQueue: DispatchQueue? = .none) -> Observable<SYMoyaNetworkDataResponse<T>> {
         return Observable.create { [weak base] observer in
             base?.requestFromCache(target, callbackQueue: callbackQueue, completion: { result in

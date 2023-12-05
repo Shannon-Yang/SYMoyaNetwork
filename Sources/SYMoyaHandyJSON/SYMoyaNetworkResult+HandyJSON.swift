@@ -10,7 +10,7 @@ import HandyJSON
 import Moya
 import SYMoyaNetwork
 
-extension SYMoyaNetworkResult {
+public extension SYMoyaNetworkResult {
     func serializerHandyJSONObjectDataResponse<T: HandyJSON>(designatedPath: String?) -> SYMoyaNetworkDataResponse<T> {
         var dataRes: SYMoyaNetworkDataResponse<T>
         let object: T?

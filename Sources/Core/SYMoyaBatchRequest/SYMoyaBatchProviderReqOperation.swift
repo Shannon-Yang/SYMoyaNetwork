@@ -9,24 +9,25 @@ import Foundation
 import Moya
 
 public class SYMoyaBatchProviderReqOperation<TargetType: SYTargetType>: AsyncOperation {
-    private weak var provider: SYMoyaProvider<TargetType>?
     private var cancellable: Cancellable?
     let targetType: TargetType
-    var completion : ((_ result: SYMoyaNetworkResult) -> Void)?
-    
-    public init(targetType: TargetType, provider: SYMoyaProvider<TargetType>) {
+    var providerResponse: SYBatchMoyaProviderResponse?
+    let provider: SYMoyaProvider<TargetType>
+    public init(targetType: TargetType) {
         self.targetType = targetType
-        self.provider = provider
+        self.provider = SYMoyaProvider<TargetType>()
     }
     
     public override func main() {
-        self.cancellable = provider?.req(targetType, progress: nil) { [weak self] result in
-            self?.completion?(result)
-            self?.finish()
+        self.cancellable = provider.req(targetType) { [weak self] result in
+            guard let self else { return }
+            self.providerResponse = SYBatchMoyaProviderResponse(self.targetType, result)
+            self.finish()
         }
     }
     
     public override func cancel() {
-        self.cancellable?.cancel()
+        finish()
+        cancellable?.cancel()
     }
 }

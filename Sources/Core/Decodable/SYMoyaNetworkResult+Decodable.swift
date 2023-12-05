@@ -8,7 +8,7 @@
 import Foundation
 import Moya
 
-extension SYMoyaNetworkResult {
+public extension SYMoyaNetworkResult {
     func serializerCodableObjectDataResponse<T: Decodable>(atKeyPath keyPath: String?, using decoder: JSONDecoder, failsOnEmptyData: Bool) -> SYMoyaNetworkDataResponse<T> {
         var dataRes: SYMoyaNetworkDataResponse<T>
         switch self {

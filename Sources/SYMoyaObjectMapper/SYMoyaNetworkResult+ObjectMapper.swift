@@ -10,7 +10,7 @@ import Moya
 import ObjectMapper
 import SYMoyaNetwork
 
-extension SYMoyaNetworkResult {
+public extension SYMoyaNetworkResult {
     func serializerMapperObjectDataResponse<T: BaseMappable>(keyPath: String?, context: MapContext?) -> SYMoyaNetworkDataResponse<T> {
         var dataRes: SYMoyaNetworkDataResponse<T>
         switch self {

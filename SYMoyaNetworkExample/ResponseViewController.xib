@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,8 +11,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ResponseViewController" customModule="SYMoyaNetworkExample" customModuleProvider="target">
             <connections>
-                <outlet property="contentLabel" destination="zq7-AT-Sot" id="jQs-hj-h3A"/>
+                <outlet property="contentLabel" destination="zq7-AT-Sot" id="pCc-wz-CRg"/>
                 <outlet property="indicator" destination="KCj-PX-VLF" id="8oE-oz-Ic1"/>
+                <outlet property="responseImageView" destination="eyB-dy-oy4" id="EV3-cR-BII"/>
                 <outlet property="scrollView" destination="FQ6-M8-03x" id="Nnx-BE-aDL"/>
                 <outlet property="segmentedControl" destination="Pnj-7r-3PO" id="tK3-2w-wc2"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -31,7 +32,7 @@
                 </label>
                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="KCj-PX-VLF">
                     <rect key="frame" x="178" y="420" width="37" height="37"/>
-                    <color key="color" red="0.99215686270000003" green="0.2666666667" blue="0.1215686275" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="color" red="1" green="0.1861293521916868" blue="0.14541529374620632" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="displayP3"/>
                 </activityIndicatorView>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Pnj-7r-3PO">
                     <rect key="frame" x="16" y="118.66666666666669" width="361" height="46"/>
@@ -49,6 +50,9 @@
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FQ6-M8-03x">
                     <rect key="frame" x="10" y="179.66666666666669" width="373" height="628.33333333333326"/>
                     <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eyB-dy-oy4">
+                            <rect key="frame" x="0.0" y="0.0" width="373" height="18"/>
+                        </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zq7-AT-Sot">
                             <rect key="frame" x="0.0" y="0.0" width="373" height="18"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
@@ -56,11 +60,16 @@
                         </label>
                     </subviews>
                     <constraints>
+                        <constraint firstItem="eyB-dy-oy4" firstAttribute="top" secondItem="FQ6-M8-03x" secondAttribute="top" id="38C-kX-KbC"/>
                         <constraint firstItem="zq7-AT-Sot" firstAttribute="top" secondItem="FQ6-M8-03x" secondAttribute="top" id="A0z-bZ-o9Q"/>
                         <constraint firstItem="zq7-AT-Sot" firstAttribute="leading" secondItem="FQ6-M8-03x" secondAttribute="leading" id="LkQ-Zd-IYe"/>
                         <constraint firstItem="zq7-AT-Sot" firstAttribute="width" secondItem="FQ6-M8-03x" secondAttribute="width" id="P2T-JK-HQe"/>
+                        <constraint firstItem="eyB-dy-oy4" firstAttribute="width" secondItem="FQ6-M8-03x" secondAttribute="width" id="ZKC-vl-UmL"/>
                         <constraint firstAttribute="bottom" secondItem="zq7-AT-Sot" secondAttribute="bottom" id="b1o-S2-O78"/>
+                        <constraint firstItem="eyB-dy-oy4" firstAttribute="leading" secondItem="FQ6-M8-03x" secondAttribute="leading" id="fiq-Kq-9P0"/>
                         <constraint firstAttribute="trailing" secondItem="zq7-AT-Sot" secondAttribute="trailing" id="sMj-pf-wxq"/>
+                        <constraint firstAttribute="trailing" secondItem="eyB-dy-oy4" secondAttribute="trailing" id="v8h-Nu-PQZ"/>
+                        <constraint firstAttribute="bottom" secondItem="eyB-dy-oy4" secondAttribute="bottom" id="wsv-fQ-DFM"/>
                     </constraints>
                     <viewLayoutGuide key="contentLayoutGuide" id="3e6-As-iVm"/>
                     <viewLayoutGuide key="frameLayoutGuide" id="Mr8-NG-Jpe"/>

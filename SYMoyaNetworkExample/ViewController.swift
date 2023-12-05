@@ -63,8 +63,16 @@ extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let type = self.data[indexPath.row]
-        let re = ResponseViewController(responseType: type)
-        self.navigationController?.pushViewController(re, animated: true)
+        switch type {
+        case .batch:
+            let re = BatchResponseViewController()
+            self.navigationController?.pushViewController(re, animated: true)
+        case .chain:
+            break
+        default:
+            let re = ResponseViewController(responseType: type)
+            self.navigationController?.pushViewController(re, animated: true)
+        }
     }
 }
 #endif

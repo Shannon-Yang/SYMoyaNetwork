@@ -11,8 +11,8 @@ import Moya
 public typealias SYMoyaNetworkResultResponse = (response: Moya.Response, isDataFromCache: Bool)
 public typealias SYMoyaNetworkResult = Result<SYMoyaNetworkResultResponse, SYMoyaNetworkError>
 
-extension SYMoyaNetworkResult {
-    func serializerDefaultDataResponse() -> SYMoyaNetworkDataResponse<Data> {
+public extension SYMoyaNetworkResult {
+    func serializerDataResponse() -> SYMoyaNetworkDataResponse<Data> {
         var dataRes: SYMoyaNetworkDataResponse<Data>
         switch self {
         case .success(let resultResponse):
