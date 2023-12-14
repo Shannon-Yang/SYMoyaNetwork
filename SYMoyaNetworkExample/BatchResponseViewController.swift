@@ -20,9 +20,7 @@ class BatchResponseViewController: UIViewController {
         let provider = SYMoyaBatchProvider<HTTPBinDynamicData>(targetTypes: [.getDelay(delay: 1),.stream(n: 1)])
         let provider2 = SYMoyaBatchProvider<HTTPBinResponseFormats>(targetTypes: [.brotli,.json,.gzipped])
         
-        
-        var contentAtt = NSMutableAttributedString(string: "")
-        
+        let contentString = NSMutableAttributedString(string: String(), attributes: [NSAttributedString.Key.foregroundColor : UIColor.black])
         indicator.startAnimating()
         session = SYMoyaBatchProviderSession(providers: [provider,provider2])
         session?.request { [weak self] progress in
@@ -42,11 +40,17 @@ class BatchResponseViewController: UIViewController {
                         switch dynamicData {
                         case .getDelay:
                             let json = rep.result.serializerJSONDataResponse(failsOnEmptyData: false)
-                            let jsonString = self?.toJSONString(response: json)
-                            debugPrint("🔥getDelay😀😀----> \(jsonString) <---- < Class: \(type(of: self)) Function:\(#function) Line: \(#line) >🔥😀😀")
+                            if let jsonString = self?.toJSONString(response: json) {
+                                contentString.append(NSAttributedString(string: dynamicData.path + "\n", attributes: [NSAttributedString.Key.foregroundColor : UIColor.red]))
+                                
+                                contentString.append(NSAttributedString(string: jsonString + "\n", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black]))
+                            }
                         case .stream:
-                            let stringRep = rep.result.serializerStringDataResponse(atKeyPath: nil)
-                            debugPrint("😯stream----> \(stringRep) <---- < Class: \(type(of: self)) Function:\(#function) Line: \(#line) >🔥😀😀")
+                            if let string = rep.result.serializerStringDataResponse(atKeyPath: nil).value {
+                                contentString.append(NSAttributedString(string: dynamicData.path + "\n", attributes: [NSAttributedString.Key.foregroundColor : UIColor.red]))
+                                
+                                contentString.append(NSAttributedString(string: string + "\n", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black]))
+                            }
                         default:
                             break
                         }
@@ -54,16 +58,31 @@ class BatchResponseViewController: UIViewController {
                         let responseFormats = rep.targetType as! HTTPBinResponseFormats
                         switch responseFormats {
                         case .brotli:
-                            break
+                            let json = rep.result.serializerJSONDataResponse(failsOnEmptyData: false)
+                            if let jsonString = self?.toJSONString(response: json) {
+                                contentString.append(NSAttributedString(string: responseFormats.path + "\n", attributes: [NSAttributedString.Key.foregroundColor : UIColor.red]))
+
+                                contentString.append(NSAttributedString(string: jsonString + "\n", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black]))
+                            }
                         case .json:
-                            break
+                            let json = rep.result.serializerJSONDataResponse(failsOnEmptyData: false)
+                            if let jsonString = self?.toJSONString(response: json) {
+                                contentString.append(NSAttributedString(string: responseFormats.path + "\n", attributes: [NSAttributedString.Key.foregroundColor : UIColor.red]))
+
+                                contentString.append(NSAttributedString(string: jsonString + "\n", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black]))
+                            }
                         case .gzipped:
-                            break
+                            if let string = rep.result.serializerStringDataResponse(atKeyPath: nil).value {
+                                contentString.append(NSAttributedString(string: responseFormats.path + "\n", attributes: [NSAttributedString.Key.foregroundColor : UIColor.red]))
+
+                                contentString.append(NSAttributedString(string: string + "\n", attributes: [NSAttributedString.Key.foregroundColor : UIColor.black]))
+                            }
                         }
                     default:
                         break
                     }
                 }
+                self?.contentLabel.attributedText = contentString
             case .failure(let error):
                 self?.contentLabel.isHidden = false
                 self?.indicator.stopAnimating()

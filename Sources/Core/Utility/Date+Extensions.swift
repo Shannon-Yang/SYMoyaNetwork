@@ -2,7 +2,7 @@
 //  Date+Extensions.swift
 //  SYMoyaNetwork
 //
-//  Created by ShannonYang on 2021/8/24.
+//  Created by Shannon Yang on 2021/8/24.
 //  Copyright © 2021 Shannon Yang. All rights reserved.
 //
 

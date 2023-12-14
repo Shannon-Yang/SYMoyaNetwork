@@ -2,7 +2,7 @@
 //  SYMoyaProvider.swift
 //  SYMoyaNetwork
 //
-//  Created by ShannonYang on 2021/8/20.
+//  Created by Shannon Yang on 2021/8/20.
 //  Copyright © 2021 Shannon Yang. All rights reserved.
 //
 
@@ -158,7 +158,7 @@ public extension SYMoyaProvider {
             fatalError("Endpoint failed to get urlRequest, desc: \(error.localizedDescription)")
         }
         
-        // set
+        // set url cache
         if case let .urlRequestCache(urlCacheInfo) = target.networkCacheType  {
             if target.method == .get {
                 if urlCacheInfo.isCanUseCacheControl {

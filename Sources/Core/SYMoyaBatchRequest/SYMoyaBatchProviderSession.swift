@@ -2,7 +2,7 @@
 //  SYMoyaBatchProviderSession.swift
 //  SYMoyaNetwork
 //
-//  Created by ShannonYang on 2021/9/9.
+//  Created by Shannon Yang on 2021/9/9.
 //  Copyright © 2021 Shannon Yang. All rights reserved.
 //
 
@@ -57,14 +57,14 @@ public class SYMoyaBatchProviderSession {
     }
     private let queueName = "com.shannonyang.SYMoyaNetwork.BatchRequest.queue.\(UUID().uuidString)"
     
-    public func request(_ callbackQueue: DispatchQueue? = .none, progressCompletion: SYBatchProgressBlock? = .none, completion: @escaping (_ result: Result<[SYBatchMoyaProviderResponse?], SYMoyaNetworkError>) -> Void) {
+    public func request(_ callbackQueue: DispatchQueue? = .none, progressCompletion: SYBatchProgressBlock? = .none, completion: @escaping (_ result: Result<[SYMoyaProviderSessionResponse?], SYMoyaNetworkError>) -> Void) {
         if providers.isEmpty {
             completion(.failure(.batchRequestError(reason: .providersIsEmpty)))
             return
         }
         let queue = DispatchQueue(label: queueName, attributes: .concurrent)
         let grop = DispatchGroup()
-        var reponses = [SYBatchMoyaProviderResponse?]()
+        var reponses = [SYMoyaProviderSessionResponse?]()
         let count = providers.reduce(0) { partialResult, providerType in
             partialResult + providerType.targetTypeCount
         }

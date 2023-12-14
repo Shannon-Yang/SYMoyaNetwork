@@ -2,7 +2,7 @@
 //  NetworkConfig.swift
 //  SYMoyaNetwork
 //
-//  Created by ShannonYang on 2021/7/14.
+//  Created by Shannon Yang on 2021/7/14.
 //  Copyright © 2021 Shannon Yang. All rights reserved.
 //
 
@@ -14,7 +14,6 @@ public typealias LogConfiguration = SYMoyaNetworkLoggerPlugin.Configuration
 
 // Network configuration object, you can configure network log and network cache objects by setting logConfiguration and networkCache
 public struct NetworkConfig {
-    
     /// Single Object
     public static var sharedInstance : NetworkConfig = NetworkConfig()
     

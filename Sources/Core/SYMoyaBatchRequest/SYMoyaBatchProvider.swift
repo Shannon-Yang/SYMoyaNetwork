@@ -10,10 +10,8 @@ import Moya
 
 public protocol SYBatchMoyaProviderType {
     var targetTypeCount: Int { get }
-    func requestTargets(_ reqOperationCompletion: @escaping () -> Void, _ completion: @escaping (_ responses: [SYBatchMoyaProviderResponse?]) -> Void)
+    func requestTargets(_ reqOperationCompletion: @escaping () -> Void, _ completion: @escaping (_ responses: [SYMoyaProviderSessionResponse?]) -> Void)
 }
-
-public typealias SYBatchMoyaProviderResponse = (targetType: SYTargetType, result: SYMoyaNetworkResult)
 
 /// Batch request item object
 public class SYMoyaBatchProvider<TargetType: SYTargetType>: SYBatchMoyaProviderType {
@@ -34,7 +32,7 @@ public class SYMoyaBatchProvider<TargetType: SYTargetType>: SYBatchMoyaProviderT
         self.targetTypes = targetTypes
     }
     
-    public func requestTargets(_ reqOperationCompletion: @escaping () -> Void, _ completion: @escaping (_ responses: [SYBatchMoyaProviderResponse?]) -> Void) {
+    public func requestTargets(_ reqOperationCompletion: @escaping () -> Void, _ completion: @escaping (_ responses: [SYMoyaProviderSessionResponse?]) -> Void) {
         let reqOperations: [SYMoyaBatchProviderReqOperation<TargetType>] = targetTypes.map {
             SYMoyaBatchProviderReqOperation(targetType: $0)
         }

@@ -2,7 +2,7 @@
 //  SYMoyaProvider+SwiftyJSON.swift
 //  SYMoyaNetwork
 //
-//  Created by ShannonYang on 2021/8/19.
+//  Created by Shannon Yang on 2021/8/19.
 //  Copyright © 2021 Shannon Yang. All rights reserved.
 //
 

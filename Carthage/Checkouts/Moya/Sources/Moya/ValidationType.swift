@@ -13,10 +13,10 @@ public enum ValidationType {
     case successAndRedirectCodes
 
     /// Validate only the given status codes.
-    case customCodes([Int])
+    case customCodes([HTTPStatusCode])
 
     /// The list of HTTP status codes to validate.
-    var statusCodes: [Int] {
+    var statusCodes: [HTTPStatusCode] {
         switch self {
         case .successCodes:
             return Array(200..<300)

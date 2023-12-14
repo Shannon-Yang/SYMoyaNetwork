@@ -2,7 +2,7 @@
 //  SYMoyaURLCache.swift
 //  SYMoyaNetwork
 //
-//  Created by ShannonYang on 2021/8/25.
+//  Created by Shannon Yang on 2021/8/25.
 //  Copyright © 2021 Shannon Yang. All rights reserved.
 //
 
@@ -17,6 +17,12 @@ public let cachedURLResponseUserInfoValue = "com.shannonyang.SYMoyaNetwork.Cache
 
 /// Cache class for caching URLs
 public class SYMoyaURLCache {
+    private lazy var formate: DateFormatter = {
+        let formate = DateFormatter()
+        formate.dateFormat = "E, dd MMM yyyy HH:mm:ss zzz"
+        formate.timeZone = TimeZone(identifier: "UTC")
+        return formate
+    }()
     
     public let urlCache: URLCache
     
@@ -44,9 +50,6 @@ extension SYMoyaURLCache {
     
     func addExpiresHeaderField(headers:NSDictionary,maxAge:Int) {
         guard let dateString = headers["Date"] as? String else { return }
-        let formate = DateFormatter()
-        formate.dateFormat = "E, dd MMM yyyy HH:mm:ss zzz"
-        formate.timeZone = TimeZone(identifier: "UTC")
         guard let date = formate.date(from: dateString) else { return }
         let expireDate = Date(timeInterval: TimeInterval(maxAge), since: date)
         let cacheValue = formate.string(from: expireDate)

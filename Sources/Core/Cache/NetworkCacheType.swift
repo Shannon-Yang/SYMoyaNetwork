@@ -2,7 +2,7 @@
 //  NetworkCacheType.swift
 //  SYMoyaNetwork
 //
-//  Created by ShannonYang on 2021/8/18.
+//  Created by Shannon Yang on 2021/8/18.
 //  Copyright © 2021 Shannon Yang. All rights reserved.
 //
 
@@ -14,7 +14,6 @@ import Moya
 /// - urlRequestCache: The response is cached by HTTP Protocol.
 /// - syMoyaNetworkCache: The response is cached in disk.
 public enum NetworkCacheType {
-
     /// The Request is not cached yet when retrieving it.
     case none
     /// The Request is cached use HTTP Protocol
@@ -43,7 +42,6 @@ public enum NetworkCacheType {
  
 //MARK: - NetworkCacheOptionsInfo
 public extension NetworkCacheType {
-    
     static let defaultCacheKey: String = "com.shannonyang.SYMoyaNetwork.NetworkCache.Key"
     
     /// When the network type is changed to syMoyaNetworkCache, the cache information configuration category mainly includes diskStorageConfig configuration, memoryStorageConfig configuration, etc. Other cacheKeys have a default value, which can be modified by setting cacheKey
@@ -72,12 +70,9 @@ public extension NetworkCacheType {
 }
 
 //MARK: - URLCacheInfo
-
 public extension NetworkCacheType {
-    
     /// URL cache information, such as ignoreServer, maxAge, autoClearCache and other information
     struct URLCacheInfo {
-        
         /// Indicates whether to ignore the server
         public let ignoreServer: Bool
         

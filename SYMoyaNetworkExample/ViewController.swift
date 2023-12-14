@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  SYMoyaNetwork-Example
 //
-//  Created by ShannonYang on 2021/9/16.
+//  Created by Shannon Yang on 2021/9/16.
 //
 
 enum ResponseType: String, CaseIterable {
@@ -68,7 +68,8 @@ extension ViewController: UITableViewDelegate {
             let re = BatchResponseViewController()
             self.navigationController?.pushViewController(re, animated: true)
         case .chain:
-            break
+            let re = ChainResponseViewController()
+            self.navigationController?.pushViewController(re, animated: true)
         default:
             let re = ResponseViewController(responseType: type)
             self.navigationController?.pushViewController(re, animated: true)

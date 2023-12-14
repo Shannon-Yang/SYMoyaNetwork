@@ -2,7 +2,7 @@
 //  Response+ObjectMapper.swift
 //  SYMoyaNetwork
 //
-//  Created by ShannonYang on 2021/8/17.
+//  Created by Shannon Yang on 2021/8/17.
 //  Copyright © 2021 Shannon Yang. All rights reserved.
 //
 

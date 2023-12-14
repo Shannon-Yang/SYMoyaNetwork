@@ -32,8 +32,8 @@ enum HTTPBinAuth: SYTargetType, AccessTokenAuthorizable {
 
     var task: Task {
         switch self {
-        case .basicAuth, .bearer:
-            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
+        case .basicAuth,.bearer:
+            return .requestPlain
         }
     }
 
@@ -46,7 +46,15 @@ enum HTTPBinAuth: SYTargetType, AccessTokenAuthorizable {
         }
     }
 
-    var headers: [String: String]? { nil }
+    var headers: [String: String]? {
+        switch self {
+        case .basicAuth:
+            return nil
+        case .bearer:
+            let bearer = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikpva"
+            return ["Authorization": bearer]
+        }
+    }
 
     var validationType: ValidationType {
         return .none

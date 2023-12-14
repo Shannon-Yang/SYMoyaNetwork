@@ -2,7 +2,7 @@
 //  SYMoyaNetworkLoggerPlugin.swift
 //  SYMoyaNetwork
 //
-//  Created by ShannonYang on 2021/8/23.
+//  Created by Shannon Yang on 2021/8/23.
 //  Copyright © 2021 Shannon Yang. All rights reserved.
 //
 
