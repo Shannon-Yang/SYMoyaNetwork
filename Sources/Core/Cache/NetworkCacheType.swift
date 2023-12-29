@@ -77,9 +77,9 @@ public extension NetworkCacheType {
         public let ignoreServer: Bool
         
         /// HTTP Version
-        public var HTTPVersion: String {
+        public var httpVersion: HTTPVersion {
             didSet {
-                if self.HTTPVersion.contains("1.0") {
+                if self.httpVersion == .version10 {
                     self.isCanUseCacheControl = false
                 }
             }
@@ -96,12 +96,12 @@ public extension NetworkCacheType {
         /// Indicates if automatic cache cleaning is required
         public var autoClearCache: Bool
         
-        public init(ignoreServer: Bool = true, maxAge: Int, autoClearCache: Bool, isPrivate: Bool = false, HTTPVersion: String = "HTTP/1.1") {
+        public init(ignoreServer: Bool = true, maxAge: Int, autoClearCache: Bool, isPrivate: Bool = false) {
             self.ignoreServer = ignoreServer
             self.maxAge = maxAge
             self.autoClearCache = autoClearCache
             self.isPrivate = isPrivate
-            self.HTTPVersion = HTTPVersion
+            self.httpVersion = HTTPVersion(major: 1.1, minor: 1.0)
         }
     }
 }

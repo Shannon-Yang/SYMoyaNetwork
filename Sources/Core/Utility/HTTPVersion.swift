@@ -19,6 +19,15 @@ public struct HTTPVersion {
         self.major = major
         self.minor = minor
     }
+    
+    /// HTTP/1.0
+    static let version10 = HTTPVersion(major: 1.0, minor: 0.9)
+    /// HTTP/1.1
+    static let version11 = HTTPVersion(major: 1.1, minor: 1.0)
+    /// HTTP/2.0
+    static let version20 = HTTPVersion(major: 2.0, minor: 1.1)
+    /// HTTP/3.0
+    static let version30 = HTTPVersion(major: 3.0, minor: 2.0)
 }
 
 extension HTTPVersion: Hashable {
