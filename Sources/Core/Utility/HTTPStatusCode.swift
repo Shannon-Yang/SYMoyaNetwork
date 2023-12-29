@@ -14,7 +14,7 @@ import Foundation
 ///
 /// - seealso: [Wikipedia page - List of HTTP status codes](http://en.wikipedia.org/wiki/List_of_HTTP_status_codes)
 /// - seealso: [HTTP protocol standard - Status Code Definitions](https://tools.ietf.org/html/rfc2616#section-10)
-@objc public enum HTTPStatusCode: Int, CaseIterable {
+@objc public enum HTTPStatusCode: Int, CaseIterable, Equatable {
     
     /// Continue: 100
     ///
@@ -417,4 +417,134 @@ import Foundation
     ///
     /// This status code is not specified in any RFCs, but is used by some HTTP proxies to signal a network connect timeout behind the proxy to a client in front of the proxy.
     case networkConnectTimeoutError = 599
+    
+    /// :nodoc:
+    public static func == (lhs: HTTPResponseStatus, rhs: HTTPResponseStatus) -> Bool {
+        return lhs.rawValue == rhs.rawValue
+    }
+}
+
+extension HTTPStatusCode {
+    /// :nodoc:
+      public var description: String {
+          return "\(code) \(reasonPhrase)"
+      }
+
+    
+    /// The class of a `HTTPResponseStatus` code
+       /// - See: https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml for more information
+       public enum Class {
+           /// Informational: the request was received, and is continuing to be processed
+           case informational
+           /// Success: the action was successfully received, understood, and accepted
+           case successful
+           /// Redirection: further action must be taken in order to complete the request
+           case redirection
+           /// Client Error: the request contains bad syntax or cannot be fulfilled
+           case clientError
+           /// Server Error: the server failed to fulfill an apparently valid request
+           case serverError
+           /// Invalid: the code does not map to a well known status code class
+           case invalidStatus
+
+           init(code: Int) {
+               switch code {
+                   case 100..<200: self = .informational
+                   case 200..<300: self = .successful
+                   case 300..<400: self = .redirection
+                   case 400..<500: self = .clientError
+                   case 500..<600: self = .serverError
+                   default: self = .invalidStatus
+               }
+           }
+       }
+    
+    // [RFC2616, section 4.4]
+      var bodyAllowed: Bool {
+          switch code {
+              case 100..<200: return false
+              case 204: return false
+              case 304: return false
+              default: return true
+          }
+      }
+
+      var suppressedHeaders: [HTTPHeaders.Name] {
+          if self == .notModified {
+              return ["Content-Type", "Content-Length", "Transfer-Encoding"]
+          } else if !bodyAllowed {
+              return ["Content-Length", "Transfer-Encoding"]
+          } else {
+              return []
+          }
+      }
+    
+}
+
+extension HTTPStatusCode {
+    // swiftlint:disable cyclomatic_complexity switch_case_on_newline
+       static func defaultReasonPhrase(forCode code: Int) -> String {
+           switch code {
+               case 100: return "Continue"
+               case 101: return "Switching Protocols"
+               case 200: return "OK"
+               case 201: return "Created"
+               case 202: return "Accepted"
+               case 203: return "Non-Authoritative Information"
+               case 204: return "No Content"
+               case 205: return "Reset Content"
+               case 206: return "Partial Content"
+               case 207: return "Multi-Status"
+               case 208: return "Already Reported"
+               case 226: return "IM Used"
+               case 300: return "Multiple Choices"
+               case 301: return "Moved Permanently"
+               case 302: return "Found"
+               case 303: return "See Other"
+               case 304: return "Not Modified"
+               case 305: return "Use Proxy"
+               case 307: return "Temporary Redirect"
+               case 308: return "Permanent Redirect"
+               case 400: return "Bad Request"
+               case 401: return "Unauthorized"
+               case 402: return "Payment Required"
+               case 403: return "Forbidden"
+               case 404: return "Not Found"
+               case 405: return "Method Not Allowed"
+               case 406: return "Not Acceptable"
+               case 407: return "Proxy Authentication Required"
+               case 408: return "Request Timeout"
+               case 409: return "Conflict"
+               case 410: return "Gone"
+               case 411: return "Length Required"
+               case 412: return "Precondition Failed"
+               case 413: return "Payload Too Large"
+               case 414: return "URI Too Long"
+               case 415: return "Unsupported Media Type"
+               case 416: return "Range Not Satisfiable"
+               case 417: return "Expectation Failed"
+               case 421: return "Misdirected Request"
+               case 422: return "Unprocessable Entity"
+               case 423: return "Locked"
+               case 424: return "Failed Dependency"
+               case 426: return "Upgrade Required"
+               case 428: return "Precondition Required"
+               case 429: return "Too Many Requests"
+               case 431: return "Request Header Fields Too Large"
+               case 451: return "Unavailable For Legal Reasons"
+               case 500: return "Internal Server Error"
+               case 501: return "Not Implemented"
+               case 502: return "Bad Gateway"
+               case 503: return "Service Unavailable"
+               case 504: return "Gateway Timeout"
+               case 505: return "HTTP Version Not Supported"
+               case 506: return "Variant Also Negotiates"
+               case 507: return "Insufficient Storage"
+               case 508: return "Loop Detected"
+               case 510: return "Not Extended"
+               case 511: return "Network Authentication Required"
+               default: return "http_\(code)"
+           }
+       }
+    
 }

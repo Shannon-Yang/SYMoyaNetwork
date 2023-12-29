@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		20CF11EE2B3ED25A00857882 /* HTTPHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CF11ED2B3ED25A00857882 /* HTTPHeaders.swift */; };
+		20CF11F02B3ED35E00857882 /* HTTPVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CF11EF2B3ED35E00857882 /* HTTPVersion.swift */; };
 		FB1E712F2AA4C7F700BEF135 /* SYSerializableTatgetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1E712E2AA4C7F700BEF135 /* SYSerializableTatgetType.swift */; };
 		FB1E71312AA4CCD200BEF135 /* SYMoyaNetworkResult+SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1E71302AA4CCD200BEF135 /* SYMoyaNetworkResult+SwiftyJSON.swift */; };
 		FB1E71332AA76CE300BEF135 /* SYMoyaBatchProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1E71322AA76CE200BEF135 /* SYMoyaBatchProvider.swift */; };
@@ -456,6 +458,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		20CF11ED2B3ED25A00857882 /* HTTPHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeaders.swift; sourceTree = "<group>"; };
+		20CF11EF2B3ED35E00857882 /* HTTPVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPVersion.swift; sourceTree = "<group>"; };
 		20F6F25E29A623D0004D5C4B /* ObjectMapper.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ObjectMapper.xcframework; path = Carthage/Build/ObjectMapper.xcframework; sourceTree = "<group>"; };
 		20F6F26029A623D0004D5C4B /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Alamofire.xcframework; path = Carthage/Build/Alamofire.xcframework; sourceTree = "<group>"; };
 		20F6F26129A623D0004D5C4B /* Moya.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Moya.xcframework; path = Carthage/Build/Moya.xcframework; sourceTree = "<group>"; };
@@ -929,6 +933,8 @@
 				FB63547C2705A61E003F1D7C /* CallbackQueue.swift */,
 				FB63547D2705A61E003F1D7C /* String+MD5.swift */,
 				FB63547E2705A61E003F1D7C /* Date+Extensions.swift */,
+				20CF11ED2B3ED25A00857882 /* HTTPHeaders.swift */,
+				20CF11EF2B3ED35E00857882 /* HTTPVersion.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1690,6 +1696,7 @@
 				FB6354822705A61E003F1D7C /* CacheSerializer.swift in Sources */,
 				FB6354A12705A61E003F1D7C /* CallbackQueue.swift in Sources */,
 				FB63548B2705A61E003F1D7C /* SYMoyaURLCache.swift in Sources */,
+				20CF11EE2B3ED25A00857882 /* HTTPHeaders.swift in Sources */,
 				FB63549B2705A61E003F1D7C /* SYTargetType.swift in Sources */,
 				FB47093E2A28F21700A4C721 /* SYMoyaProvider+Decodable+Concurrency.swift in Sources */,
 				FB4709362A28F11600A4C721 /* SYMoyaProvider+JSON+Combine.swift in Sources */,
@@ -1711,6 +1718,7 @@
 				FB6354A32705A61E003F1D7C /* Date+Extensions.swift in Sources */,
 				FBAF77742AD6FB99002689E7 /* SYMoyaNetworkResult.swift in Sources */,
 				FB63549C2705A61E003F1D7C /* SYMoyaProvider+Cache.swift in Sources */,
+				20CF11F02B3ED35E00857882 /* HTTPVersion.swift in Sources */,
 				FB6A3A2B287BB49200454481 /* HTTPStatusCodes+Extensions.swift in Sources */,
 				FBEE36312A1FBFE3001AFD6C /* SYDataResponseActor.swift in Sources */,
 				FB6354832705A61E003F1D7C /* NetworkCache.swift in Sources */,
