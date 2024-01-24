@@ -8,6 +8,7 @@
 
 import Foundation
 import Moya
+import Alamofire
 
 /// The provider proxy method is called back. When the completion method of moya is called back, the corresponding proxy method will be called back. When the network request is completed, the requestCompleteFilter method will be called back. When the request fails, the requestFailedFilter method will be called back.
 public protocol SYMoyaProviderDelegate: AnyObject {
@@ -46,15 +47,11 @@ open class SYMoyaProvider<Target: SYTargetType>: Moya.MoyaProvider<Target> {
     /// used instead.
     public let cache: NetworkCache
     
-    /// URLCache
-    public let urlCache: SYMoyaURLCache
-    
     // MARK: - Initallization
 
     /// Initializes a provider.
     public override init(endpointClosure: @escaping EndpointClosure = SYMoyaProvider<Target>.syDefaultEndpointMapping, requestClosure: @escaping RequestClosure = SYMoyaProvider<Target>.defaultRequestMapping, stubClosure: @escaping StubClosure = SYMoyaProvider<Target>.neverStub, callbackQueue: DispatchQueue? = nil, session: Session = SYMoyaProvider<Target>.defaultAlamofireSession(), plugins: [PluginType] = [SYMoyaNetworkLoggerPlugin(),SYMoyaProviderTargetResponseStatePlugin<Target>()], trackInflights: Bool = false) {
         self.cache = NetworkConfig.sharedInstance.networkCache
-        self.urlCache = SYMoyaURLCache(urlCache: session.sessionConfiguration.urlCache ?? URLCache.shared)
         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, callbackQueue: callbackQueue, session: session, plugins: plugins, trackInflights: trackInflights)
     }
     
