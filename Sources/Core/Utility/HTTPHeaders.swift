@@ -150,6 +150,10 @@ extension HTTPHeaders {
         public static func == (lhs: Name, rhs: Name) -> Bool {
             return lhs.lowercased == rhs.lowercased
         }
+        
+        public func hash(into hasher: inout Hasher) {
+            hasher.combine(hashValue)
+        }
 
         // https://www.iana.org/assignments/message-headers/message-headers.xhtml
         // Permanent Message Header Field Names

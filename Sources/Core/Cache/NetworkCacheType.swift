@@ -79,7 +79,7 @@ public extension NetworkCacheType {
         /// HTTP Version
         public var httpVersion: HTTPVersion {
             didSet {
-                if self.httpVersion == .version10 {
+                if self.httpVersion == .http1_1 {
                     self.isCanUseCacheControl = false
                 }
             }
@@ -101,7 +101,7 @@ public extension NetworkCacheType {
             self.maxAge = maxAge
             self.autoClearCache = autoClearCache
             self.isPrivate = isPrivate
-            self.httpVersion = HTTPVersion(major: 1.1, minor: 1.0)
+            self.httpVersion = .http1_1
         }
     }
 }
