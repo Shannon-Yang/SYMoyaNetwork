@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,10 +12,6 @@
 		12F88B3755343FB9DD244AEC /* RxMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A53DF8B33D58E052A78E2BA /* RxMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1425941E1F42FDED00C9E171 /* Single+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FB7A3E1F3E089900308949 /* Single+Response.swift */; };
 		1446FBB31F214C5200C1EFF2 /* URL+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1446FBB21F214C5200C1EFF2 /* URL+Moya.swift */; };
-		1463B87B1F8A8A79002D9C4F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1463B8731F8A8A5B002D9C4F /* Alamofire.framework */; };
-		1463B87C1F8A8A79002D9C4F /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1463B8731F8A8A5B002D9C4F /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		1463B8801F8A8A7F002D9C4F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1463B8731F8A8A5B002D9C4F /* Alamofire.framework */; };
-		1463B8811F8A8A7F002D9C4F /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1463B8731F8A8A5B002D9C4F /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		147E26EC1F5B14B300C1F513 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147E26EB1F5B14B300C1F513 /* Task.swift */; };
 		148FAF0DFB395B4A64314803 /* ReactiveMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62A8C06CC9BA491AE62A431B /* ReactiveMoya.framework */; };
 		149675EC1F81340B0085EDEE /* GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469A06B01F705DDE001153A0 /* GitHubAPI.swift */; };
@@ -97,6 +93,12 @@
 		F88EC83A91FF6DE81246B01C /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4650771638DBA96BDE28F11B /* TestHelpers.swift */; };
 		FA9EE63E068C40C97D7B0156 /* MultipartFormDataSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369649DCA3D957F2F9D8053A /* MultipartFormDataSpec.swift */; };
 		FB223B5C3B7D4AA5261E25EA /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86F3C0EA472C23E786E23CE9 /* Image.swift */; };
+		FBAB5EF42B640C4500016CC9 /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAB5EF32B640C4500016CC9 /* Alamofire.xcframework */; };
+		FBAB5EF52B640C4500016CC9 /* Alamofire.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBAB5EF32B640C4500016CC9 /* Alamofire.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FBAB5EF82B65513900016CC9 /* ReactiveSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAB5EF72B65513900016CC9 /* ReactiveSwift.xcframework */; };
+		FBAB5EF92B65513900016CC9 /* ReactiveSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBAB5EF72B65513900016CC9 /* ReactiveSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FBAB5EFC2B65517600016CC9 /* RxSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAB5EFB2B65517500016CC9 /* RxSwift.xcframework */; };
+		FBAB5EFD2B65517600016CC9 /* RxSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBAB5EFB2B65517500016CC9 /* RxSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,7 +146,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1463B87C1F8A8A79002D9C4F /* Alamofire.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -156,7 +157,39 @@
 			dstSubfolderSpec = 10;
 			files = (
 				D195C09B24748730005F6E98 /* CombineMoya.framework in Embed Frameworks */,
-				1463B8811F8A8A7F002D9C4F /* Alamofire.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FBAB5EF62B640C4500016CC9 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FBAB5EF52B640C4500016CC9 /* Alamofire.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FBAB5EFA2B65513900016CC9 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FBAB5EF92B65513900016CC9 /* ReactiveSwift.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FBAB5EFE2B65517600016CC9 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FBAB5EFD2B65517600016CC9 /* RxSwift.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -166,7 +199,6 @@
 /* Begin PBXFileReference section */
 		019BF5A88BB928EBDFD944FE /* ReactiveMoya.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = ReactiveMoya.h; sourceTree = "<group>"; };
 		1446FBB21F214C5200C1EFF2 /* URL+Moya.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Moya.swift"; sourceTree = "<group>"; };
-		1463B8731F8A8A5B002D9C4F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		147E26EB1F5B14B300C1F513 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		149749421F8923EC00FA4900 /* AnyEncodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyEncodable.swift; sourceTree = "<group>"; };
 		149749441F892E2F00FA4900 /* URLRequest+Encoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Encoding.swift"; sourceTree = "<group>"; };
@@ -243,6 +275,9 @@
 		DCACC7B19F3FFC2DEE74E07B /* TestPlugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TestPlugin.swift; sourceTree = "<group>"; };
 		E825A32256FC030B8BA2684D /* EndpointSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EndpointSpec.swift; sourceTree = "<group>"; };
 		F1AFAFEA29CDFABC559F0BE2 /* SignalProducer+MoyaSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SignalProducer+MoyaSpec.swift"; sourceTree = "<group>"; };
+		FBAB5EF32B640C4500016CC9 /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Alamofire.xcframework; path = ../../Build/Alamofire.xcframework; sourceTree = "<group>"; };
+		FBAB5EF72B65513900016CC9 /* ReactiveSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ReactiveSwift.xcframework; path = ../../Build/ReactiveSwift.xcframework; sourceTree = "<group>"; };
+		FBAB5EFB2B65517500016CC9 /* RxSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxSwift.xcframework; path = ../../Build/RxSwift.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +285,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBAB5EF82B65513900016CC9 /* ReactiveSwift.xcframework in Frameworks */,
 				D6A04B657A83CA2FF80ABCF4 /* Moya.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -260,7 +296,6 @@
 			files = (
 				D195C09A24748730005F6E98 /* CombineMoya.framework in Frameworks */,
 				CCB85FCA228B3D1800AAB253 /* Moya.framework in Frameworks */,
-				1463B8801F8A8A7F002D9C4F /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,7 +304,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				469A06B21F705ECF001153A0 /* Moya.framework in Frameworks */,
-				1463B87B1F8A8A79002D9C4F /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +322,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBAB5EF42B640C4500016CC9 /* Alamofire.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,6 +339,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA5EFFB8EE468F6BCA15480C /* Moya.framework in Frameworks */,
+				FBAB5EFC2B65517600016CC9 /* RxSwift.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,7 +349,9 @@
 		0E7C5E12BDDF8CD3A778D84C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1463B8731F8A8A5B002D9C4F /* Alamofire.framework */,
+				FBAB5EFB2B65517500016CC9 /* RxSwift.xcframework */,
+				FBAB5EF72B65513900016CC9 /* ReactiveSwift.xcframework */,
+				FBAB5EF32B640C4500016CC9 /* Alamofire.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -603,6 +641,7 @@
 				27825A1A1770E680684F9B64 /* Sources */,
 				6C19AE05179816E0E74776FD /* Resources */,
 				E8587D648DDFD802A140D11B /* Frameworks */,
+				FBAB5EFE2B65517600016CC9 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -622,6 +661,7 @@
 				2D769A89D905FD6D03ECF24C /* Sources */,
 				8A60BE8FF1AF8DE50D5C3B8F /* Resources */,
 				154F6A501C7109867E223063 /* Frameworks */,
+				FBAB5EFA2B65513900016CC9 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -683,6 +723,7 @@
 				054614992B184CBD90E510ED /* Sources */,
 				E83509792249AE1FFE8EA7B7 /* Resources */,
 				B2955433F474AC60FE7417A3 /* Frameworks */,
+				FBAB5EF62B640C4500016CC9 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1115,7 +1156,11 @@
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
@@ -1124,7 +1169,8 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TVOS_DEPLOYMENT_TARGET = 12.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1169,7 +1215,11 @@
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cocoapods.RxMoya;
@@ -1217,8 +1267,16 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cocoapods.MoyaTests;
@@ -1282,7 +1340,8 @@
 				OTHER_LDFLAGS_XCODE10 = "";
 				OTHER_LDFLAGS_XCODE11 = "-weak_framework Combine";
 				SDKROOT = macosx;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,3,4";
 				TVOS_DEPLOYMENT_TARGET = 10.0;
@@ -1329,7 +1388,11 @@
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cocoapods.RxMoya;
@@ -1337,7 +1400,8 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TVOS_DEPLOYMENT_TARGET = 12.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1374,7 +1438,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = Examples/Basic/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = Moya.Basic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1416,7 +1483,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = Examples/Basic/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = Moya.Basic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1455,7 +1525,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = "Examples/Multi-Target/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "Moya.Multi-Target";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1497,7 +1570,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = "Examples/Multi-Target/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "Moya.Multi-Target";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1544,7 +1620,11 @@
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cocoapods.ReactiveMoya;
@@ -1620,7 +1700,8 @@
 				OTHER_LDFLAGS_XCODE10 = "";
 				OTHER_LDFLAGS_XCODE11 = "-weak_framework Combine";
 				SDKROOT = macosx;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,3,4";
 				TVOS_DEPLOYMENT_TARGET = 10.0;
@@ -1666,7 +1747,11 @@
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1717,7 +1802,11 @@
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cocoapods.CombineMoya;
@@ -1725,7 +1814,8 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TVOS_DEPLOYMENT_TARGET = 12.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1766,7 +1856,11 @@
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cocoapods.CombineMoya;
@@ -1812,15 +1906,24 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cocoapods.MoyaTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TVOS_DEPLOYMENT_TARGET = 10.0;
 				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
@@ -1863,7 +1966,11 @@
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cocoapods.ReactiveMoya;
@@ -1871,7 +1978,8 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TVOS_DEPLOYMENT_TARGET = 12.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";

@@ -8,22 +8,22 @@
 import UIKit
 
 class ResponseCacheViewController: UIViewController {
+    
+    @IBOutlet weak var segmentedControl: UISegmentedControl! {
+        didSet {
+            segmentedControl.setTitle("Normal", forSegmentAt: 0)
+            segmentedControl.setTitle("Combine", forSegmentAt: 1)
+        }
+    }
+
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
