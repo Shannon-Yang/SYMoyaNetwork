@@ -21,14 +21,7 @@ extension SYMoyaProvider {
         
         let method = target.method.rawValue
         
-        var cacheKey: String = NetworkCacheType.defaultCacheKey
-        switch target.networkCacheType {
-        case .syMoyaNetworkCache(let info):
-            cacheKey = info.cacheKey
-        default:
-            break
-        }
-        
+        let cacheKey = NetworkCacheType.defaultCacheKey
         var key: String = "\(cacheKey)+\(urlString)+\(method)"
         if let string = parametersString {
             key.append("+\(string)")
@@ -39,12 +32,12 @@ extension SYMoyaProvider {
     
     func cache(_ target: Target, response: Moya.Response, toDisk: Bool = true) {
         switch target.networkCacheType {
-        case .syMoyaNetworkCache(let networkCacheOptionsInfo):
+        case .cache(let info):
             // config
-            self.cache.diskStorage.config = networkCacheOptionsInfo.diskStorageConfig
-            self.cache.memoryStorage.config = networkCacheOptionsInfo.memoryStorageConfig
+            self.cache.diskStorage.config = info.diskStorageConfig
+            self.cache.memoryStorage.config = info.memoryStorageConfig
             
-            if networkCacheOptionsInfo.diskStorageConfig.expiration.isExpired {
+            if info.diskStorageConfig.expiration.isExpired {
                 return
             }
             
@@ -74,8 +67,6 @@ extension SYMoyaProvider {
                     print("\(diskResultDes)")
                 }
             }
-        case .urlRequestCache(let urlCacheInfo):
-            self.urlCache(target, response: response, urlCacheInfo: urlCacheInfo)
         case .none:
             break
         }
@@ -132,9 +123,7 @@ extension SYMoyaProvider {
     func cacheIfNeeded(_ target: Target, response: Moya.Response) {
         // Cache
         switch target.networkCacheType {
-        case .urlRequestCache:
-            break
-        case .syMoyaNetworkCache(let info):
+        case .cache(let info):
             switch info.memoryStorageConfig.expiration {
             case .never, .expired:
                 switch info.diskStorageConfig.expiration {

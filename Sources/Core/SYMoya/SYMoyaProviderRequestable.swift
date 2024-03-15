@@ -52,9 +52,9 @@ extension SYMoyaProvider: SYMoyaProviderRequestable {
             }
         }
         switch target.networkCacheType {
-        case .urlRequestCache,.none:
+        case .none:
             return req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
-        case .syMoyaNetworkCache:
+        case .cache:
             switch type {
             case .server:
                 return req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)

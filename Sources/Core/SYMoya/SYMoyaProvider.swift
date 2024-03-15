@@ -154,20 +154,6 @@ public extension SYMoyaProvider {
         } catch let error {
             fatalError("Endpoint failed to get urlRequest, desc: \(error.localizedDescription)")
         }
-        
-        // set url cache
-        if case let .urlRequestCache(urlCacheInfo) = target.networkCacheType  {
-            if target.method == .get {
-                if urlCacheInfo.isCanUseCacheControl {
-                    endpoint = (endpoint.adding(newHTTPHeaderFields: ["Cache-Control" : "no-cache"]))
-                } else {
-                    endpoint = (endpoint.adding(newHTTPHeaderFields: ["Pragma" : "no-cache"]))
-                }
-                endpoint = (endpoint.adding(newHTTPHeaderFields: [SYMoyaURLCache.refreshCacheKey: SYMoyaURLCache.RefreshCacheValue.refreshCache.rawValue]))
-            } else {
-                print("URLRequestCache only supports get requests, if you want to use other request methods for caching, maybe you can try SYMoyaNetworkCache")
-            }
-        }
         return endpoint
     }
 }
@@ -206,16 +192,6 @@ public extension SYMoyaProvider {
                 // callback filter failure
                 // delegate
                 self.delegate?.provider(self, target: item?.target, requestFailedFilter: e)
-                
-                // clear if needed
-                switch target.networkCacheType {
-                case .urlRequestCache(let urlCacheInfo):
-                    if urlCacheInfo.autoClearCache {
-                        self.clearCache(target, urlCacheInfo: urlCacheInfo)
-                    }
-                default:
-                    break
-                }
                 
                 // completion
                 completion(.failure(e))
