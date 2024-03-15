@@ -53,4 +53,10 @@ enum HTTPBinDynamicData: SYTargetType {
         return nil
     }
   
+    var networkCacheType: NetworkCacheType {
+        var info = NetworkCacheType.NetworkCacheOptionsInfo()
+        // Set to expire after one day
+        info.diskStorageConfig.expiration = .days(1)
+        return .cache(networkCacheOptionsInfo: info)
+    }
 }

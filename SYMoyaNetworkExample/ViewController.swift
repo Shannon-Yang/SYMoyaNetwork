@@ -15,6 +15,7 @@ enum ResponseType: String, CaseIterable {
     case objectMapper = "ObjectMapper Response"
     case batch = "Batch Response"
     case chain = "Chain Response"
+    case cache = "Reuqest Cache"
 }
 
 #if os(iOS)
@@ -69,6 +70,9 @@ extension ViewController: UITableViewDelegate {
             self.navigationController?.pushViewController(re, animated: true)
         case .chain:
             let re = ChainResponseViewController()
+            self.navigationController?.pushViewController(re, animated: true)
+        case .cache:
+            let re = ResponseCacheViewController()
             self.navigationController?.pushViewController(re, animated: true)
         default:
             let re = ResponseViewController(responseType: type)

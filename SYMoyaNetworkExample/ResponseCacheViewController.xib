@@ -35,12 +35,17 @@
                         <constraint firstAttribute="height" constant="45" id="Wgy-BM-icg"/>
                     </constraints>
                     <segments>
-                        <segment title="First"/>
-                        <segment title="Second"/>
+                        <segment title="Server"/>
+                        <segment title="Cache"/>
+                        <segment title="DiskCache"/>
+                        <segment title="MemoryCache"/>
                     </segments>
+                    <connections>
+                        <action selector="segmentAction:" destination="-1" eventType="valueChanged" id="ByY-3X-Ark"/>
+                    </connections>
                 </segmentedControl>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5SN-xJ-r0L">
-                    <rect key="frame" x="10" y="179.66666666666669" width="373" height="628.33333333333326"/>
+                    <rect key="frame" x="10" y="258" width="373" height="550"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aiX-Av-Ylg">
                             <rect key="frame" x="0.0" y="0.0" width="373" height="18"/>
@@ -62,24 +67,65 @@
                     <rect key="frame" x="178" y="420" width="37" height="37"/>
                     <color key="color" red="1" green="0.18612935219999999" blue="0.1454152937" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="displayP3"/>
                 </activityIndicatorView>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="bAV-uT-70L">
+                    <rect key="frame" x="16" y="173.66666666666666" width="361" height="74.333333333333343"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H0Y-Md-Zdh">
+                            <rect key="frame" x="0.0" y="0.0" width="120.33333333333333" height="74.333333333333329"/>
+                            <color key="backgroundColor" systemColor="systemMintColor"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Clear Memory Cache">
+                                <color key="baseForegroundColor" systemColor="systemPinkColor"/>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="clearMemoryCacheAction:" destination="-1" eventType="touchUpInside" id="X10-Ie-wKL"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FSS-uG-I6F">
+                            <rect key="frame" x="120.33333333333334" y="0.0" width="120.33333333333334" height="74.333333333333329"/>
+                            <color key="backgroundColor" systemColor="systemYellowColor"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Clear Disk Cache">
+                                <color key="baseForegroundColor" systemColor="systemRedColor"/>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="clearDiskCacheAction:" destination="-1" eventType="touchUpInside" id="aTa-jC-QkO"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9jc-6N-XtY">
+                            <rect key="frame" x="240.66666666666671" y="0.0" width="120.33333333333334" height="74.333333333333329"/>
+                            <color key="backgroundColor" systemColor="systemTealColor"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Clear All Cache">
+                                <color key="baseForegroundColor" systemColor="systemRedColor"/>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="clearAllCacheAction:" destination="-1" eventType="touchUpInside" id="Ggx-gG-ASk"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="dO9-9B-sLt" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="1Iv-yx-q0J"/>
+                <constraint firstItem="bAV-uT-70L" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-16" id="2Nw-LR-8Bj"/>
+                <constraint firstItem="5SN-xJ-r0L" firstAttribute="top" secondItem="bAV-uT-70L" secondAttribute="bottom" constant="10" id="9Xw-eE-aCg"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="leading" secondItem="5SN-xJ-r0L" secondAttribute="leading" constant="-10" id="B09-tw-UxV"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="SHE-1r-MyX" secondAttribute="trailing" constant="16" id="Mpu-6M-U4F"/>
-                <constraint firstItem="5SN-xJ-r0L" firstAttribute="top" secondItem="SHE-1r-MyX" secondAttribute="bottom" constant="16" id="NHE-H4-t5w"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="5SN-xJ-r0L" secondAttribute="bottom" constant="10" id="NUo-gV-nOr"/>
+                <constraint firstItem="bAV-uT-70L" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="OSR-7r-peH"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="leading" secondItem="dO9-9B-sLt" secondAttribute="leading" constant="-10" id="R0n-V9-yU3"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="dO9-9B-sLt" secondAttribute="trailing" constant="10" id="Rsb-KL-8mP"/>
                 <constraint firstItem="SHE-1r-MyX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="amD-7g-WFd"/>
                 <constraint firstItem="tdA-wD-fZa" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="f0t-nN-cMQ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="5SN-xJ-r0L" secondAttribute="trailing" constant="10" id="ffx-Bd-D3m"/>
                 <constraint firstItem="SHE-1r-MyX" firstAttribute="top" secondItem="dO9-9B-sLt" secondAttribute="bottom" constant="16" id="lMP-RR-SIJ"/>
+                <constraint firstItem="bAV-uT-70L" firstAttribute="top" secondItem="SHE-1r-MyX" secondAttribute="bottom" constant="10" id="ttK-Tm-j5b"/>
                 <constraint firstItem="tdA-wD-fZa" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="wcp-q9-93G"/>
             </constraints>
-            <point key="canvasLocation" x="114" y="20"/>
+            <point key="canvasLocation" x="113.74045801526717" y="19.718309859154932"/>
         </view>
     </objects>
     <resources>
@@ -88,6 +134,21 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemMintColor">
+            <color red="0.0" green="0.78039215689999997" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemTealColor">
+            <color red="0.18823529410000001" green="0.69019607839999997" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -132,7 +132,7 @@ public extension SYMoyaProvider {
     
     /// Returns the `Endpoint` converted to a `Target`.
     final class func syDefaultEndpointMapping(for target: Target) -> Endpoint {
-        var endpoint = Endpoint(
+        let endpoint = Endpoint(
             url: URL(target: target).absoluteString,
             sampleResponseClosure: { .networkResponse(200, target.sampleData) },
             method: target.method,

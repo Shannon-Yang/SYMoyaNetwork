@@ -74,30 +74,28 @@ extension SYMoyaProvider {
     
     func retrieve(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ result: SYMoyaNetworkResult) -> Void) {
         let key = self.generateCacheKey(target)
-        var queue = CallbackQueue.untouch
+        var queue = CallbackQueue.mainAsync
         if let cQueue = callbackQueue {
             queue = CallbackQueue.dispatch(cQueue)
         }
         self.cache.retrieveResponse(forKey: key, options: options, callbackQueue: queue) { result in
-            DispatchQueue.main.async {
-                let resultResponse: SYMoyaNetworkResultResponse
-                resultResponse.isDataFromCache = true
-                switch result {
-                case .success(let networkCacheResult):
-                    switch networkCacheResult {
-                    case .memory(let response):
-                        resultResponse.response = response
-                        completion(.success(resultResponse))
-                    case .disk(let response):
-                        resultResponse.response = response
-                        completion(.success(resultResponse))
-                    case .none:
-                        // cache Not Existing
-                        completion(.failure(.cacheError(reason: .responseNotExisting(key: key))))
-                    }
-                case .failure(let error):
-                    completion(.failure(error))
+            let resultResponse: SYMoyaNetworkResultResponse
+            resultResponse.isDataFromCache = true
+            switch result {
+            case .success(let networkCacheResult):
+                switch networkCacheResult {
+                case .memory(let response):
+                    resultResponse.response = response
+                    completion(.success(resultResponse))
+                case .disk(let response):
+                    resultResponse.response = response
+                    completion(.success(resultResponse))
+                case .none:
+                    // cache Not Existing
+                    completion(.failure(.cacheError(reason: .responseNotExisting(key: key))))
                 }
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
@@ -113,7 +111,7 @@ extension SYMoyaProvider {
     
     func retrieveResponseInDiskCache(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo, callbackQueue: DispatchQueue? = .none, completionHandler: @escaping (SYMoyaNetworkResult) -> Void) {
         let key = self.generateCacheKey(target)
-        var queue = CallbackQueue.untouch
+        var queue = CallbackQueue.mainAsync
         if let cQueue = callbackQueue {
             queue = CallbackQueue.dispatch(cQueue)
         }
@@ -148,7 +146,6 @@ extension SYMoyaProvider {
 
 //MARK: - Cache Clean
 public extension SYMoyaProvider {
-    
     /// Clears the memory & disk storage of this cache. This is an async operation.
     ///
     /// - Parameter handler: A closure which is invoked when the cache clearing operation finishes.
@@ -189,5 +186,4 @@ public extension SYMoyaProvider {
     func cleanExpiredDiskCache(completion handler: (() -> Void)? = nil) {
         self.cache.cleanExpiredDiskCache(completion: handler)
     }
-    
 }
