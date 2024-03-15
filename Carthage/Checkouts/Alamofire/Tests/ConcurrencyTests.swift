@@ -22,7 +22,7 @@
 //  THE SOFTWARE.
 //
 
-#if compiler(>=5.6.0) && canImport(_Concurrency)
+#if canImport(_Concurrency)
 
 import Alamofire
 import XCTest
@@ -35,6 +35,19 @@ final class DataRequestConcurrencyTests: BaseTestCase {
 
         // When
         let value = try await session.request(.get)
+            .serializingResponse(using: .data)
+            .value
+
+        // Then
+        XCTAssertNotNil(value)
+    }
+
+    func testThat500ResponseCanBeRetried() async throws {
+        // Given
+        let session = stored(Session())
+
+        // When
+        let value = try await session.request(.endpoints(.status(500), .method(.get)), interceptor: .retryPolicy)
             .serializingResponse(using: .data)
             .value
 
@@ -746,6 +759,40 @@ final class UploadConcurrencyTests: BaseTestCase {
 }
 #endif
 
+#if canImport(Darwin) && !canImport(FoundationNetworking) && swift(>=5.8)
+@_spi(WebSocket) import Alamofire
+
+@available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
+final class WebSocketConcurrencyTests: BaseTestCase {
+    func testThatMessageEventsCanBeStreamed() async throws {
+        // Given
+        let session = stored(Session())
+        let receivedEvent = expectation(description: "receivedEvent")
+        receivedEvent.expectedFulfillmentCount = 4
+
+        // When
+        for await _ in session.webSocketRequest(.websocket()).webSocketTask().streamingMessageEvents() {
+            receivedEvent.fulfill()
+        }
+
+        await fulfillment(of: [receivedEvent])
+
+        // Then
+    }
+
+    func testThatMessagesCanBeStreamed() async throws {
+        // Given
+        let session = stored(Session())
+
+        // When
+        let messages = await session.webSocketRequest(.websocket()).webSocketTask().streamingMessages().collect()
+
+        // Then
+        XCTAssertTrue(messages.count == 1)
+    }
+}
+#endif
+
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
 final class ClosureAPIConcurrencyTests: BaseTestCase {
     func testThatDownloadProgressStreamReturnsProgress() async {
@@ -769,7 +816,7 @@ final class ClosureAPIConcurrencyTests: BaseTestCase {
                      tasks: [URLSessionTask],
                      descriptions: [String],
                      response: AFDataResponse<TestResponse>)
-        #if swift(>=5.10)
+        #if swift(>=5.11)
         values = try! await (httpResponses, uploadProgress, downloadProgress, requests, tasks, descriptions, response)
         #else
         values = await (httpResponses, uploadProgress, downloadProgress, requests, tasks, descriptions, response)

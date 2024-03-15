@@ -1,13 +1,13 @@
 # Change Log
 
 All notable changes to this project will be documented in this file.
-Aside from features marked [🔥 Experimental 🔥], `Alamofire` adheres to [Semantic Versioning](https://semver.org/).
-[🔥 Experimental 🔥] features may require breaking changes in minor, rather than major, releases. This will be rare and
-compatibility should be preserved in most cases, but cannot be guaranteed.
+Aside from features marked [🔥 Experimental 🔥], `Alamofire` adheres to [Semantic Versioning](https://semver.org/) for source stability.
+[🔥 Experimental 🔥] features may require breaking changes in minor, rather than major, releases. This will be rare and compatibility should be preserved in most cases, but cannot be guaranteed.
 
 #### 5.x Releases
 
-- `5.8.x` Releases - [5.8.0](#580)
+- `5.9.x` Releases - [5.9.0](#590)
+- `5.8.x` Releases - [5.8.0](#580) | [5.8.1](#581)
 - `5.7.x` Releases - [5.7.0](#570) | [5.7.1](#571)
 - `5.6.x` Releases - [5.6.0](#560) | [5.6.1](#561) | [5.6.2](#562) | [5.6.3](#563) | [5.6.4](#564)
 - `5.5.x` Releases - [5.5.0](#550)
@@ -56,6 +56,59 @@ compatibility should be preserved in most cases, but cannot be guaranteed.
 - `1.0.x` Releases - [1.0.0](#100) | [1.0.1](#101)
 
 ---
+
+## [5.9.0](https://github.com/Alamofire/Alamofire/releases/tag/5.9.0)
+
+Released on 2024-03-03. All issues associated with this milestone can be found using this [filter](https://github.com/Alamofire/Alamofire/milestone/89?closed=1).
+
+### Added
+
+- [🔥 Experimental 🔥] `WebSocketRequest`, as a wrapper for `URLSessionWebSocketTask`. This preview release is undocumented behind `@_spi(WebSocket)`. Its API _will_ change in the future, especially to adopt typed throws, but it is largely feature complete, tested, and usable now. API feedback, missing use cases, and bug reports are much appreciated before it goes fully public.
+  - Added by [Jon Shier](https://github.com/jshier) in Pull Request [#3455](https://github.com/Alamofire/Alamofire/pull/3455).
+- `PrivacyInfo.xcprivacy` file and integration with SPM, CocoaPods, and Carthage.
+  - Added by [Dmitry Kuleshov](https://github.com/kdvmgn) and [Jon Shier](https://github.com/jshier) in Pull Requests [#3792](https://github.com/Alamofire/Alamofire/pull/3792), [#3831](https://github.com/Alamofire/Alamofire/pull/3831), and [#3839](https://github.com/Alamofire/Alamofire/pull/3839).
+- `AlamofireDynamic` target, to force dynamic linking in Xcode when using SPM. Only use when you know you need it.
+  - Added by [Jon Shier](https://github.com/jshier) in Pull Request [#3808](https://github.com/Alamofire/Alamofire/pull/3808).
+- `AFInfo` enum and a public `version` value to get Alamofire's current version, `AFInfo.version`.
+  - Added by [Jon Shier](https://github.com/jshier) in Pull Request [#3819](https://github.com/Alamofire/Alamofire/pull/3819).
+
+### Updated
+
+- Alamofire to require Swift 5.7.1.
+  - Updated by [Jon Shier](https://github.com/jshier) in Pull Request [#3798](https://github.com/Alamofire/Alamofire/pull/3798).
+- Project structure to break apart large `Request.swift` file and consolidate various `Request` subclasses into their own files.
+  - Updated by [Jon Shier](https://github.com/jshier) in Pull Request [#3798](https://github.com/Alamofire/Alamofire/pull/3798).
+- `Empty` type to be `Sendable`.
+  - Updated by [Antoine van der Lee](https://github.com/AvdLee) in Pull Request [#3816](https://github.com/Alamofire/Alamofire/pull/3816).
+- `.swiftformat` to remove duplicate rules.
+  - Updated by [Fourenn](https://github.com/giftbott) in Pull Request [#3835](https://github.com/Alamofire/Alamofire/pull/3835).
+
+### Fixed
+
+- Platform deprecation warnings in `Package.swift` in newer Xcode versions.
+  - Updated by [fess](https://github.com/apps4everyone) in Pull Request [#3823](https://github.com/Alamofire/Alamofire/pull/3823).
+- `Alamofire.podspec` after project restructuring.
+  - Updated by [mlch](https://github.com/mlch911) in Pull Request [#3825](https://github.com/Alamofire/Alamofire/pull/3825).
+- Various documentation typos.
+  - Fixed by [JaewoongLee-swift](https://github.com/JaewoongLee-swift), [TaeHyun](https://github.com/kth1210), and [hugo-syn](https://github.com/hugo-syn) in various Pull Requests.
+
+---
+
+## [5.8.1](https://github.com/Alamofire/Alamofire/releases/tag/5.8.1)
+
+Released on 2023-10-26. All issues associated with this milestone can be found using this [filter](https://github.com/Alamofire/Alamofire/milestone/88?closed=1).
+
+### Updated
+
+- Internal: `Protected` to no longer be a `@propertyWrapper`.
+  - Updated by [Jon Shier](https://github.com/jshier) in Pull Request [#3777](https://github.com/Alamofire/Alamofire/pull/3777).
+
+### Fixed
+
+- `URLEncodedFormEncoder` encoding of `Encodable` values with optional properties using `encodeIfPresent`.
+  - Fixed by [Jon Shier](https://github.com/jshier) in Pull Request [#3779](https://github.com/Alamofire/Alamofire/pull/3779).
+- Missing "Skip Install" setting for visionOS target.
+  - Fixed by [Sai](https://github.com/Sai) in Pull Request [#3788](https://github.com/Alamofire/Alamofire/pull/3788).
 
 ## [5.8.0](https://github.com/Alamofire/Alamofire/releases/tag/5.8.0)
 
@@ -922,14 +975,14 @@ Released on 2019-03-27. All issues associated with this milestone can be found u
 
 #### Updated
 
-- Project for compatability with Xcode 10.2.
+- Project for compatibility with Xcode 10.2.
   - Updated by [Jon Shier](https://github.com/jshier) in Pull Request [#2767](https://github.com/Alamofire/Alamofire/pull/2767).
 - MultipartFormData to have a mutable boundary.
   - Updated by [Ondrej Stocek](https://github.com/ondrejstocek) in Pull Request [#2705](https://github.com/Alamofire/Alamofire/pull/2705).
 
 #### Fixed
 
-- Compatability with SPM from Xcode 10.2.
+- Compatibility with SPM from Xcode 10.2.
   - Fixed by [Klaas](https://github.com/klaas) in Pull Request [#2762](https://github.com/Alamofire/Alamofire/pull/2762).
 
 ## [4.8.1](https://github.com/Alamofire/Alamofire/releases/tag/4.8.1)

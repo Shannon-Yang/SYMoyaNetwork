@@ -1,4 +1,4 @@
-// swift-tools-version:5.7
+// swift-tools-version:5.7.1
 //
 //  Package.swift
 //
@@ -30,11 +30,13 @@ let package = Package(name: "Alamofire",
                                   .iOS(.v11),
                                   .tvOS(.v11),
                                   .watchOS(.v4)],
-                      products: [.library(name: "Alamofire",
-                                          targets: ["Alamofire"])],
+                      products: [
+                          .library(name: "Alamofire", targets: ["Alamofire"]),
+                          .library(name: "AlamofireDynamic", type: .dynamic, targets: ["Alamofire"])
+                      ],
                       targets: [.target(name: "Alamofire",
                                         path: "Source",
-                                        exclude: ["Info.plist"],
+                                        exclude: ["Info.plist", "PrivacyInfo.xcprivacy"],
                                         linkerSettings: [.linkedFramework("CFNetwork",
                                                                           .when(platforms: [.iOS,
                                                                                             .macOS,
