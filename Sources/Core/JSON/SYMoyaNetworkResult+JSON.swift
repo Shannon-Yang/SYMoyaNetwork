@@ -9,6 +9,10 @@ import Foundation
 import Moya
 
 public extension SYMoyaNetworkResult {
+    
+    /// <#Description#>
+    /// - Parameter failsOnEmptyData: <#failsOnEmptyData description#>
+    /// - Returns: <#description#>
     func serializerJSONDataResponse(failsOnEmptyData: Bool) -> SYMoyaNetworkDataResponse<Any> {
         var dataRes: SYMoyaNetworkDataResponse<Any>
         switch self {

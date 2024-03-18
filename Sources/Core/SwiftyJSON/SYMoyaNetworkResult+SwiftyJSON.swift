@@ -10,6 +10,10 @@ import SwiftyJSON
 import Moya
 
 public extension SYMoyaNetworkResult {
+    /// Data parsed as `SwiftyJSON.JSON`
+    ///
+    /// - Parameter opt: A class for converting JSON to Foundation objects and converting Foundation objects to JSON.
+    /// - Returns: The converted json data
     func serializerSwiftyJSON(ptions opt: JSONSerialization.ReadingOptions = []) -> SYMoyaNetworkDataResponse<SwiftyJSON.JSON> {
         var dataRes: SYMoyaNetworkDataResponse<SwiftyJSON.JSON>
         switch self {

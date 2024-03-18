@@ -13,14 +13,11 @@ import Moya
 extension SYMoyaProvider {
     func generateCacheKey(_ target: Target) -> String {
         let urlString = URL(target: target).absoluteString
-        
         var parametersString: String?
         if let httpBody = try? self.endpoint(target).urlRequest().httpBody {
             parametersString = String(decoding: httpBody, as: UTF8.self)
         }
-        
         let method = target.method.rawValue
-        
         let cacheKey = NetworkCacheType.defaultCacheKey
         var key: String = "\(cacheKey)+\(urlString)+\(method)"
         if let string = parametersString {
@@ -36,31 +33,23 @@ extension SYMoyaProvider {
             // config
             self.cache.diskStorage.config = info.diskStorageConfig
             self.cache.memoryStorage.config = info.memoryStorageConfig
-            
             if info.diskStorageConfig.expiration.isExpired {
                 return
             }
-            
             if response.data.isEmpty {
                 return
             }
-            
             if target.requestBaseURL().absoluteString.isEmpty {
                 return
             }
-            
             if target.path.isEmpty {
                 return
             }
-            
             if URL(target: target).absoluteString.isEmpty {
                 return
             }
-            
             let key = self.generateCacheKey(target)
-            
             let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache),.diskCacheExpiration(.days(7)),.memoryCacheExpiration(.seconds(300))])
-            
             self.cache.store(response, forKey: key, options: options, toDisk: toDisk) { result in
                 if let diskResultDes = result.diskCacheResult.failure?.errorDescription {
                     // disk Cache Failure

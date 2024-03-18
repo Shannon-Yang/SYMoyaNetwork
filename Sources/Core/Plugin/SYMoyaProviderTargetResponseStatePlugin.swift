@@ -47,6 +47,7 @@ public class SYMoyaProviderTargetResponseStateItem<Target: TargetType> {
     }
     
     /// Determine whether it is equal to the current item by Target. Note: Initialize endPoint by target for comparison
+    ///
     /// - Parameter target: The protocol used to define the specifications necessary for a `MoyaProvider`.
     /// - Returns: Are they equal
     func targetEqual(_ target: Target) -> Bool {
@@ -87,7 +88,6 @@ private extension SYMoyaProviderTargetResponseStatePlugin {
 
 //MARK: - PluginType
 extension SYMoyaProviderTargetResponseStatePlugin: PluginType {
-    
     public func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
         let item = SYMoyaProviderTargetResponseStateItem(target: target as! Target, state: .prepare)
         self.addProviderTargetResponseStateItem(item)

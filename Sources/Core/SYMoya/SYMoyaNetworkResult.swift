@@ -8,10 +8,15 @@
 import Foundation
 import Moya
 
+/// Data request response object, `isDataFromCache` indicates whether the currently retrieved data comes from the cache
 public typealias SYMoyaNetworkResultResponse = (response: Moya.Response, isDataFromCache: Bool)
+
+/// A data request result object with `SYMoyaNetworkResultResponse` and `SYMoyaNetworkError`.
 public typealias SYMoyaNetworkResult = Result<SYMoyaNetworkResultResponse, SYMoyaNetworkError>
 
-public extension SYMoyaNetworkResult {
+extension SYMoyaNetworkResult {
+    /// Convert `SYMoyaNetworkDataResponse` to an object of Data type
+    /// - Returns:  Represents a response to a `SYMoyaProvider.request`.
     func serializerDataResponse() -> SYMoyaNetworkDataResponse<Data> {
         var dataRes: SYMoyaNetworkDataResponse<Data>
         switch self {

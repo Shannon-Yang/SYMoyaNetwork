@@ -11,6 +11,13 @@ import Moya
 import SYMoyaNetwork
 
 public extension Reactive where Base: SYMoyaProviderRequestable {
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - target: <#target description#>
+    ///   - serializer: <#serializer description#>
+    ///   - callbackQueue: <#callbackQueue description#>
+    /// - Returns: <#description#>
     func responseJSONFromCache(_ target: Base.Target, serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none) -> Observable<SYMoyaNetworkDataResponse<Any>> {
         return Observable.create { [weak base] observer in
             base?.requestFromCache(target, callbackQueue: callbackQueue, completion: { result in
@@ -22,6 +29,13 @@ public extension Reactive where Base: SYMoyaProviderRequestable {
         }
     }
    
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - target: <#target description#>
+    ///   - serializer: <#serializer description#>
+    ///   - callbackQueue: <#callbackQueue description#>
+    /// - Returns: <#description#>
     func responseJSONFromDiskCache(_ target: Base.Target, serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none) -> Observable<SYMoyaNetworkDataResponse<Any>> {
         return Observable.create { [weak base] observer in
             base?.requestFromDiskCache(target, callbackQueue: callbackQueue, completion: { result in
@@ -33,6 +47,12 @@ public extension Reactive where Base: SYMoyaProviderRequestable {
         }
     }
    
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - target: <#target description#>
+    ///   - serializer: <#serializer description#>
+    /// - Returns: <#description#>
     func responseJSONFromMemoryCache(_ target: Base.Target, serializer: JSONResponseSerializer = .defaultJSONSerializer) -> Observable<SYMoyaNetworkDataResponse<Any>> {
         let result = base.requestFromMemoryCache(target)
         let response = serializer.serialize(result: result)
@@ -43,6 +63,15 @@ public extension Reactive where Base: SYMoyaProviderRequestable {
         }
     }
    
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - type: <#type description#>
+    ///   - target: <#target description#>
+    ///   - serializer: <#serializer description#>
+    ///   - callbackQueue: <#callbackQueue description#>
+    ///   - progress: <#progress description#>
+    /// - Returns: <#description#>
     func responseJSON(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> Observable<SYMoyaNetworkDataResponse<Any>> {
         return Observable.create { [weak base] observer in
             let cancellable = base?.request(type, target: target, callbackQueue: callbackQueue, progress: progress, completion: { result in

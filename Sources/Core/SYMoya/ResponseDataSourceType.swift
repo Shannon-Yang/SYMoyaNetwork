@@ -15,7 +15,8 @@ public enum ResponseDataSourceType {
     /// - server: Normal request, the request does not need to cache data, default is normal type
     case server
     
-    /// - cache: Get data from the cache. If the cache exists, the cache will be retrieved from the memory first. If there is no cached data in the memory, the data will be retrieved from the disk. If there is no data, it will return nil
+    /// - cache: Get data from the cache. If the cache exists, the cache will be retrieved from the memory first. 
+    /// If there is no cached data in the memory, the data will be retrieved from the disk. If there is no data, it will return nil
     case cache
     
     /// - cacheIfPossible: If the request does not cache direct request data,If the current request's cache exist,  will not send network requests, Will return directly to the cache data, This method will only cacheTimeInSeconds set to greater than 0 to store
@@ -52,7 +53,6 @@ public protocol ResponseDataSourceCustomizable {
 
 //MARK: - ResponseDataSourceCustomizable Implementation
 extension ResponseDataSourceCustomizable {
-    
     func shouldRequestIfCacheFeatchFailure() -> Bool {
         return true
     }

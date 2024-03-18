@@ -9,12 +9,13 @@
 import Foundation
 import Moya
 
+/// An object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError`.
 public typealias SYMoyaNetworkDataResponse<Success> = SYDataResponse<Success, SYMoyaNetworkError>
 
 /// Represents a response to a `SYMoyaProvider.request`.
 public struct SYDataResponse<Success, Failure: Error> {
     
-    /// Represents a response to a `MoyaProvider.request`.
+    /// Represents a response to a `SYMoyaProvider.request`.
     public var resultResponse: SYMoyaNetworkResultResponse?
     
     /// a boolean indicating whether the current data is from the cache

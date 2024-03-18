@@ -9,6 +9,8 @@ import Foundation
 import SwiftyJSON
 import Moya
 
+//MARK: - String
+/// A `ResponseSerializer` that decodes the response data as a `String`.
 public protocol ResponseSerializer {
     associatedtype SerializedObject
     func serialize(result: SYMoyaNetworkResult) -> SYMoyaNetworkDataResponse<SerializedObject>
@@ -35,6 +37,8 @@ public extension ResponseSerializer where Self == StringResponseSerializer {
     }
 }
 
+//MARK: - JSON
+/// A `ResponseSerializer` that decodes the response data as a `JSON`.
 public class JSONResponseSerializer: ResponseSerializer {
     public typealias SerializedObject = Any
     
@@ -58,7 +62,8 @@ public extension ResponseSerializer where Self == JSONResponseSerializer {
     }
 }
 
-
+//MARK: - SwiftyJSON
+/// A `ResponseSerializer` that decodes the response data as a `SwiftyJSON`.
 public class SwiftyJSONResponseSerializer: ResponseSerializer {
     public typealias SerializedObject = SwiftyJSON.JSON
     
@@ -82,13 +87,20 @@ public extension ResponseSerializer where Self == SwiftyJSONResponseSerializer {
     }
 }
    
-
+//MARK: - Decodable
+/// A `ResponseSerializer` that decodes the response data as a `Decodable`.
 public class DecodableResponseSerializer<T: Decodable>: ResponseSerializer {
     public typealias SerializedObject = T
     private let keyPath: String?
     private let decoder: JSONDecoder
     private let failsOnEmptyData: Bool
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - keyPath: <#keyPath description#>
+    ///   - decoder: <#decoder description#>
+    ///   - failsOnEmptyData: <#failsOnEmptyData description#>
     public init(atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) {
         self.keyPath = keyPath
         self.decoder = decoder
@@ -110,7 +122,7 @@ public extension ResponseSerializer {
     }
 }
 
-
+//MARK: - Image
 public class ImageResponseSerializer: ResponseSerializer {
     public typealias SerializedObject = Image
     public func serialize(result: SYMoyaNetworkResult) -> SYMoyaNetworkDataResponse<SerializedObject> {

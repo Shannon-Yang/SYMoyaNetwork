@@ -12,6 +12,7 @@ import Moya
 //MARK: - Codable
 extension Response {
     /// Convert response to Codable format data
+    ///
     /// - Parameters:
     ///   - keyPath: Optional key path at which to parse string.
     ///   - decoder: Default json parsing object

@@ -12,7 +12,6 @@ import SwiftyJSON
 
 /// Network request log print plugin object
 public final class SYMoyaNetworkLoggerPlugin {
-    
     enum NetworkLogMark: String {
         case header = "HEADER --> 🚅🪖"
         case success = "SUCCESS --> ✅😊"
@@ -21,6 +20,7 @@ public final class SYMoyaNetworkLoggerPlugin {
         case time = "TIMELINE --> ⏰⏰"
     }
     
+    /// <#Description#>
     public var configuration: Configuration
     private var start: TimeInterval = 0
     private var end: TimeInterval = 0

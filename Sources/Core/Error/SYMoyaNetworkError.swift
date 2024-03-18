@@ -96,7 +96,6 @@ public enum SYMoyaNetworkError: Swift.Error {
     
     public enum BatchRequestErrorReason {
         case providersIsEmpty
-        case batchSomeOperationFailure
     }
     
     public enum SerializeErrorReason {
@@ -229,16 +228,12 @@ extension SYMoyaNetworkError.BatchRequestErrorReason {
         switch self {
         case .providersIsEmpty:
             return "Providers of BatchRequest are empty, please make sure that Providers are not empty"
-        case .batchSomeOperationFailure:
-            // TODO: Shannon Yang 👺
-            return ""
         }
     }
     
     var errorCode: Int {
         switch self {
         case .providersIsEmpty: return 40001
-        case .batchSomeOperationFailure: return 40002
         }
     }
 }

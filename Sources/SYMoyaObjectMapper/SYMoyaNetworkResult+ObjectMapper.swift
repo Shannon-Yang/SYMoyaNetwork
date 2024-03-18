@@ -11,6 +11,12 @@ import ObjectMapper
 import SYMoyaNetwork
 
 public extension SYMoyaNetworkResult {
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - keyPath: <#keyPath description#>
+    ///   - context: <#context description#>
+    /// - Returns: <#description#>
     func serializerMapperObjectDataResponse<T: BaseMappable>(keyPath: String?, context: MapContext?) -> SYMoyaNetworkDataResponse<T> {
         var dataRes: SYMoyaNetworkDataResponse<T>
         switch self {
@@ -33,6 +39,12 @@ public extension SYMoyaNetworkResult {
         return dataRes
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - keyPath: <#keyPath description#>
+    ///   - context: <#context description#>
+    /// - Returns: <#description#>
     func serializerMapperObjectsDataResponse<T: BaseMappable>(keyPath: String?, context: MapContext?) -> SYMoyaNetworkDataResponse<[T]> {
         var dataRes: SYMoyaNetworkDataResponse<[T]>
         switch self {

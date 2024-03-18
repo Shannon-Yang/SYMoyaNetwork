@@ -9,6 +9,10 @@ import Foundation
 import Moya
 
 public extension SYMoyaNetworkResult {
+    /// Data parsed as `String`
+    ///
+    /// - Parameter atKeyPath: Optional key path at which to parse string.
+    /// - Returns: an object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError`, Success value is `String`
     func serializerStringDataResponse(atKeyPath: String?) -> SYMoyaNetworkDataResponse<String> {
         var dataRes: SYMoyaNetworkDataResponse<String>
         switch self {

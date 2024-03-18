@@ -13,6 +13,12 @@ import Combine
 //MARK: - JSON Provider Combine
 public extension SYMoyaProvider {
     
+    /// <#Description#>
+    /// - Parameters:
+    ///   - target: <#target description#>
+    ///   - serializer: <#serializer description#>
+    ///   - callbackQueue: <#callbackQueue description#>
+    /// - Returns: <#description#>
     func responseJSONFromCachePublisher(_ target: Target, serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher <SYMoyaNetworkDataResponse<Any>> {
         return SYMoyaPublisher { subscriber in
             self.responseJSONFromCache(target, serializer: serializer, callbackQueue: callbackQueue, completion: { response in
@@ -23,6 +29,13 @@ public extension SYMoyaProvider {
         }
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - target: <#target description#>
+    ///   - serializer: <#serializer description#>
+    ///   - callbackQueue: <#callbackQueue description#>
+    /// - Returns: <#description#>
     func responseJSONFromDiskCachePublisher(_ target: Target, serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher <SYMoyaNetworkDataResponse<Any>> {
         return SYMoyaPublisher { subscriber in
             self.responseJSONFromDiskCache(target, serializer: serializer, callbackQueue: callbackQueue, completion: { dataResponse in
@@ -33,6 +46,12 @@ public extension SYMoyaProvider {
         }
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - target: <#target description#>
+    ///   - serializer: <#serializer description#>
+    /// - Returns: <#description#>
     func responseJSONFromMemoryCachePublisher(_ target: Target, serializer: JSONResponseSerializer = .defaultJSONSerializer) -> SYMoyaPublisher <SYMoyaNetworkDataResponse<Any>> {
         return SYMoyaPublisher { subscriber in
             let dataResponse = self.responseJSONFromMemoryCache(target, serializer: serializer)
@@ -42,6 +61,15 @@ public extension SYMoyaProvider {
         }
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - type: <#type description#>
+    ///   - target: <#target description#>
+    ///   - serializer: <#serializer description#>
+    ///   - callbackQueue: <#callbackQueue description#>
+    ///   - progress: Closure to be executed when progress changes.
+    /// - Returns: <#description#>
     func responseJSONPublisher(_ type: ResponseDataSourceType = .server, target: Target, serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher <SYMoyaNetworkDataResponse<Any>> {
         return SYMoyaPublisher { subscriber in
             return self.responseJSON(type, target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in

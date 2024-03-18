@@ -11,6 +11,10 @@ import Moya
 import SYMoyaNetwork
 
 public extension SYMoyaNetworkResult {
+    
+    /// <#Description#>
+    /// - Parameter designatedPath: <#designatedPath description#>
+    /// - Returns: <#description#>
     func serializerHandyJSONObjectDataResponse<T: HandyJSON>(designatedPath: String?) -> SYMoyaNetworkDataResponse<T> {
         var dataRes: SYMoyaNetworkDataResponse<T>
         let object: T?
@@ -32,6 +36,10 @@ public extension SYMoyaNetworkResult {
         return dataRes
     }
     
+    
+    /// <#Description#>
+    /// - Parameter designatedPath: <#designatedPath description#>
+    /// - Returns: <#description#>
     func serializerHandyJSONObjectsDataResponse<T: HandyJSON>(designatedPath: String?) -> SYMoyaNetworkDataResponse<[T?]> {
         var dataRes: SYMoyaNetworkDataResponse<[T?]>
         let objects: [T?]?

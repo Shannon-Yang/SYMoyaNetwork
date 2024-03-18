@@ -9,6 +9,9 @@ import Foundation
 import Moya
 
 public extension SYMoyaNetworkResult {
+    
+    /// <#Description#>
+    /// - Returns: <#description#>
     func serializerImageDataResponse() -> SYMoyaNetworkDataResponse<Image> {
         var dataRes: SYMoyaNetworkDataResponse<Image>
         switch self {

@@ -14,6 +14,7 @@ import HandyJSON
 extension Response {
     
     /// Convert response to HandyJSON format data
+    ///
     /// - Parameters:
     ///   - type: A generic object implementing HandyJSON
     /// - Returns: The converted HandyJSON data
@@ -27,6 +28,7 @@ extension Response {
     }
     
     /// Convert response to HandyJSON format data
+    ///
     /// - Parameters:
     ///   - type: A generic object implementing HandyJSON
     ///   - designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
@@ -41,6 +43,7 @@ extension Response {
     }
     
     /// Convert response to HandyJSON array format data
+    ///
     /// - Parameters:
     ///   - type: A generic object implementing HandyJSON
     /// - Returns: The converted HandyJSON data array
@@ -54,6 +57,7 @@ extension Response {
     }
     
     /// Convert response to HandyJSON format data array
+    ///
     /// - Parameters:
     ///   - type: A generic object implementing HandyJSON
     ///   - designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil

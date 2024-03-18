@@ -10,10 +10,12 @@ import Foundation
 import Moya
 import Alamofire
 
-/// The provider proxy method is called back. When the completion method of moya is called back, the corresponding proxy method will be called back. When the network request is completed, the requestCompleteFilter method will be called back. When the request fails, the requestFailedFilter method will be called back.
+/// The provider proxy method is called back. When the completion method of moya is called back, the corresponding proxy method will be called back. 
+/// When the network request is completed, the requestCompleteFilter method will be called back. When the request fails, the requestFailedFilter method will be called back.
 public protocol SYMoyaProviderDelegate: AnyObject {
 
     /// When moya's completion method is called back, the requestCompleteFilter method will be called back when the network request is completed
+    ///
     /// - Parameters:
     ///   - provider: The chained request provider is used to manage interdependent network requests
     ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
@@ -21,6 +23,7 @@ public protocol SYMoyaProviderDelegate: AnyObject {
     func provider<Target: SYTargetType>(_ provider: SYMoyaProvider<Target>, target: Target?, requestCompleteFilter response: Moya.Response?)
     
     /// Delegate callback method when data request success
+    ///
     /// - Parameters:
     ///   - provider: The chained request provider is used to manage interdependent network requests
     ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
@@ -28,6 +31,7 @@ public protocol SYMoyaProviderDelegate: AnyObject {
     func provider<Target: SYTargetType>(_ provider: SYMoyaProvider<Target>, target: Target?, requestSuccessFilter response: Moya.Response)
     
     /// Delegate callback method when data request fails
+    ///
     /// - Parameters:
     ///   - provider: The chained request provider is used to manage interdependent network requests
     ///   - target: The protocol used to define the specifications necessary for a `MoyaProvider`.
@@ -129,7 +133,6 @@ private extension SYMoyaProvider {
 
 //MARK: - Default
 public extension SYMoyaProvider {
-    
     /// Returns the `Endpoint` converted to a `Target`.
     final class func syDefaultEndpointMapping(for target: Target) -> Endpoint {
         let endpoint = Endpoint(
@@ -175,7 +178,6 @@ public extension SYMoyaProvider {
             switch result {
             case .success(let response):
                 // callback filter success
-                // delegate
                 self.delegate?.provider(self, target: item?.target, requestSuccessFilter: response)
                 
                 // Cache
@@ -184,13 +186,11 @@ public extension SYMoyaProvider {
                 }
                 
                 let resultResponse = (response,false)
-                // completion
                 completion(.success(resultResponse))
                 
             case .failure(let error):
                 let e = error.transformToSYMoyaNetworkError()
                 // callback filter failure
-                // delegate
                 self.delegate?.provider(self, target: item?.target, requestFailedFilter: e)
                 
                 // completion

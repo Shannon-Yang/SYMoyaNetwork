@@ -7,4 +7,5 @@
 
 import Foundation
 
+/// 
 public typealias SYMoyaProviderSessionResponse = (targetType: SYTargetType, result: SYMoyaNetworkResult)

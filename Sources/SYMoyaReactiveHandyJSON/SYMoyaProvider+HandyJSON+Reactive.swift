@@ -13,6 +13,13 @@ import HandyJSON
 import SYMoyaHandyJSON
 
 extension Reactive where Base: SYMoyaProviderRequestable {
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - target: <#target description#>
+    ///   - serializer: <#serializer description#>
+    ///   - callbackQueue: <#callbackQueue description#>
+    /// - Returns: <#description#>
     public func responseObjectFromCache<T: HandyJSON>(_ target: Base.Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
         SignalProducer { [weak base] observer, lifetime in
             base?.requestFromCache(target, callbackQueue: callbackQueue, completion: { result in
@@ -25,6 +32,12 @@ extension Reactive where Base: SYMoyaProviderRequestable {
     }
     
     
+    /// <#Description#>
+    /// - Parameters:
+    ///   - target: <#target description#>
+    ///   - serializer: <#serializer description#>
+    ///   - callbackQueue: <#callbackQueue description#>
+    /// - Returns: <#description#>
     public func responseObjectFromDiskCache<T: HandyJSON>(_ target: Base.Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
         SignalProducer { [weak base] observer, lifetime in
             base?.requestFromDiskCache(target, callbackQueue: callbackQueue, completion: { result in
@@ -37,6 +50,12 @@ extension Reactive where Base: SYMoyaProviderRequestable {
     }
     
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - target: <#target description#>
+    ///   - serializer: <#serializer description#>
+    /// - Returns: <#description#>
     public func responseObjectFromMemoryCache<T: HandyJSON>(_ target: Base.Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer) -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
         let result = base.requestFromMemoryCache(target)
         let response = serializer.serialize(result: result)
@@ -47,6 +66,15 @@ extension Reactive where Base: SYMoyaProviderRequestable {
         }
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - type: <#type description#>
+    ///   - target: <#target description#>
+    ///   - serializer: <#serializer description#>
+    ///   - callbackQueue: <#callbackQueue description#>
+    ///   - progress: Closure to be executed when progress changes.
+    /// - Returns: <#description#>
     public func responseObject<T: HandyJSON>(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
         SignalProducer { [weak base] observer, lifetime in
             let cancellable = base?.request(type, target: target, callbackQueue: callbackQueue, progress: progress, completion: { result in
@@ -59,6 +87,13 @@ extension Reactive where Base: SYMoyaProviderRequestable {
     }
     
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - target: <#target description#>
+    ///   - serializer: <#serializer description#>
+    ///   - callbackQueue: <#callbackQueue description#>
+    /// - Returns: <#description#>
     public func responseObjectsFromCache<T: HandyJSON>(_ target: Base.Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<[T?]>, Never> {
         SignalProducer { [weak base] observer, lifetime in
             base?.requestFromCache(target, callbackQueue: callbackQueue, completion: { result in
@@ -70,6 +105,13 @@ extension Reactive where Base: SYMoyaProviderRequestable {
         }
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - target: <#target description#>
+    ///   - serializer: <#serializer description#>
+    ///   - callbackQueue: <#callbackQueue description#>
+    /// - Returns: <#description#>
     public func responseObjectsFromDiskCache<T: HandyJSON>(_ target: Base.Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<[T?]>, Never> {
         SignalProducer { [weak base] observer, lifetime in
             base?.requestFromDiskCache(target, callbackQueue: callbackQueue, completion: { result in
@@ -81,6 +123,12 @@ extension Reactive where Base: SYMoyaProviderRequestable {
         }
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - target: <#target description#>
+    ///   - serializer: <#serializer description#>
+    /// - Returns: <#description#>
     public func responseObjectsFromMemoryCache<T: HandyJSON>(_ target: Base.Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer) -> SignalProducer<SYMoyaNetworkDataResponse<[T?]>, Never> {
         let result = base.requestFromMemoryCache(target)
         let response = serializer.serialize(result: result)
@@ -91,6 +139,15 @@ extension Reactive where Base: SYMoyaProviderRequestable {
         }
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - type: <#type description#>
+    ///   - target: <#target description#>
+    ///   - serializer: <#serializer description#>
+    ///   - callbackQueue: <#callbackQueue description#>
+    ///   - progress: Closure to be executed when progress changes.
+    /// - Returns: <#description#>
     public func responseObjects<T: HandyJSON>(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<[T?]>, Never> {
         SignalProducer { [weak base] observer, lifetime in
             let cancellable = base?.request(type, target: target, callbackQueue: callbackQueue, progress: progress, completion: { result in
