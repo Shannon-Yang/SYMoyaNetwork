@@ -11,6 +11,8 @@ import Moya
 
 //MARK: - SYMoyaProviderCodableType
 public extension SYMoyaProvider {
+    
+
     func responseDecodableObjectFromCache<T: Decodable>(_ target: Target, serializer: DecodableResponseSerializer<T> = .defaultDecodableSerializer, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<T>) -> Void) {
         self.requestFromCache(target, callbackQueue: callbackQueue) { result in
             let decodable = serializer.serialize(result: result)
