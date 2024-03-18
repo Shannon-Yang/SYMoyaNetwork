@@ -9,9 +9,9 @@ import Foundation
 import Moya
 
 public extension SYMoyaNetworkResult {
-    
-    /// <#Description#>
-    /// - Returns: <#description#>
+    /// Data parsed as `JSON`
+    ///
+    /// - Returns: an object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `Image`
     func serializerImageDataResponse() -> SYMoyaNetworkDataResponse<Image> {
         var dataRes: SYMoyaNetworkDataResponse<Image>
         switch self {

@@ -11,7 +11,6 @@ import Moya
 
 //MARK: - SYMoyaProviderImageType
 extension SYMoyaProvider {
-    
     /// <#Description#>
     /// - Parameters:
     ///   - target: <#target description#>

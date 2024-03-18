@@ -8,15 +8,15 @@
 import Foundation
 import Moya
 
-//MARK: - String Provider Concurrency
+//MARK: - JSON Provider Concurrency
 public extension SYMoyaProvider {
-    
-    /// <#Description#>
+    /// Retrieve data from the cache and It will return an object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `JSON`
+    ///
     /// - Parameters:
-    ///   - target: <#target description#>
-    ///   - serializer: <#serializer description#>
-    ///   - callbackQueue: <#callbackQueue description#>
-    /// - Returns: <#description#>
+    ///   - target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
+    ///   - serializer: A `ResponseSerializer` that decodes the response data as a `JSON`.
+    ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
+    /// - Returns: An object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `JSON`
     func responseJSONFromCache(_ target: Target,serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<Any> {
         return await withCheckedContinuation { continuation in
             self.responseJSONFromCache(target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
@@ -24,14 +24,14 @@ public extension SYMoyaProvider {
             }
         }
     }
-
     
-    /// <#Description#>
+    /// Retrieve cached data from disk cache and It will return an object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `JSON`
+    ///
     /// - Parameters:
-    ///   - target: <#target description#>
-    ///   - serializer: <#serializer description#>
-    ///   - callbackQueue: <#callbackQueue description#>
-    /// - Returns: <#description#>
+    ///   - target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
+    ///   - serializer: A `ResponseSerializer` that decodes the response data as a `JSON`.
+    ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
+    /// - Returns: An object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `JSON`
     func responseJSONFromDiskCache(_ target: Target,serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<Any> {
         return await withCheckedContinuation{ continuation in
             self.responseJSONFromDiskCache(target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
@@ -39,15 +39,22 @@ public extension SYMoyaProvider {
             }
         }
     }
-
-    /// <#Description#>
+    
+    /// A data request method It will return an object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `JSON`
+    ///
+    /// depending on the data request strategy. and parses the requested data into an object that is `JSON`.
+    ///
+    /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
+    ///
+    ///  It may retrieve data from cache (memory cache or disk), or by requesting data from the server. refer to the description of ``ResponseDataSourceType``.
+    ///
     /// - Parameters:
-    ///   - type: <#type description#>
-    ///   - target: <#target description#>
-    ///   - serializer: <#serializer description#>
-    ///   - callbackQueue: <#callbackQueue description#>
+    ///   - type: A data request strategy type. Default is `.server`
+    ///   - target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
+    ///   - serializer: A `ResponseSerializer` that decodes the response data as a `JSON`.
+    ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - progress: Closure to be executed when progress changes.
-    /// - Returns: <#description#>
+    /// - Returns: An object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `JSON`
     func responseJSON(_ type: ResponseDataSourceType = .server, target: Target, serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<Any> {
         let actor = SYDataResponseActor(provider: self)
         return await withTaskCancellationHandler {

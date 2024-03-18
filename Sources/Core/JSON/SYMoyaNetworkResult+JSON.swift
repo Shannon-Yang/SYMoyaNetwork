@@ -9,10 +9,10 @@ import Foundation
 import Moya
 
 public extension SYMoyaNetworkResult {
-    
-    /// <#Description#>
-    /// - Parameter failsOnEmptyData: <#failsOnEmptyData description#>
-    /// - Returns: <#description#>
+    /// Data parsed as `JSON`
+    /// 
+    /// - Parameter failsOnEmptyData: A Boolean value determining
+    /// - Returns: an object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `JSON`
     func serializerJSONDataResponse(failsOnEmptyData: Bool) -> SYMoyaNetworkDataResponse<Any> {
         var dataRes: SYMoyaNetworkDataResponse<Any>
         switch self {
