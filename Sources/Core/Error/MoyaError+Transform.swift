@@ -3,7 +3,7 @@
 //  SYMoyaNetwork
 //
 //  Created by Shannon Yang on 2021/9/3.
-//  Copyright © 2021 Shannon Yang. All rights reserved.
+//  Copyright © 2023 Shannon Yang. All rights reserved.
 //
 
 import Foundation

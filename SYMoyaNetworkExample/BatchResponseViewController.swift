@@ -3,7 +3,8 @@
 //  SYMoyaNetworkExample
 //
 //  Created by Shannon Yang on 2022/8/9.
-//
+//  Copyright © 2023 Shannon Yang. All rights reserved.
+// 
 
 import UIKit
 import SYMoyaNetwork

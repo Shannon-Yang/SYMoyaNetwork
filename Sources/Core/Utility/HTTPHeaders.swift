@@ -3,7 +3,9 @@
 //  SYMoyaNetwork
 //
 //  Created by Shannon Yang on 2023/12/29.
+//  Copyright © 2023 Shannon Yang. All rights reserved.
 //
+
 /// Representation of the HTTP headers associated with a `HTTPRequest` or `HTTPResponse`.
 /// Headers are subscriptable using case-insensitive comparison or provide `Name` constants. eg.
 /// ```swift

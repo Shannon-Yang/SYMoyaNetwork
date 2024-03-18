@@ -3,13 +3,14 @@
 //  SYMoyaNetwork
 //
 //  Created by Shannon Yang on 2023/10/10.
+//  Copyright © 2023 Shannon Yang. All rights reserved.
 //
 
 import Foundation
 import Moya
 
 public extension SYMoyaNetworkResult {
-    /// Data parsed as `JSON`
+    /// Data parsed as `Image`
     ///
     /// - Returns: an object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `Image`
     func serializerImageDataResponse() -> SYMoyaNetworkDataResponse<Image> {

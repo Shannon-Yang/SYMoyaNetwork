@@ -3,7 +3,8 @@
 //  SYMoyaNetwork-Example
 //
 //  Created by Shannon Yang on 2021/9/16.
-//
+//  Copyright © 2023 Shannon Yang. All rights reserved.
+// 
 
 enum ResponseType: String, CaseIterable {
     case string = "String Response"

@@ -3,7 +3,8 @@
 //  SYMoyaNetwork
 //
 //  Created by Shannon Yang on 2022/9/15.
-//
+//  Copyright © 2023 Shannon Yang. All rights reserved.
+// 
 
 import Combine
 import Moya
