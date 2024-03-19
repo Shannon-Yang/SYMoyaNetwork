@@ -131,46 +131,29 @@ private extension ResponseCacheViewController {
     }
     
     func fetchDiskCache(provider: SYMoyaProvider<HTTPBinDynamicData>) {
-        // Simulate loading
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-//            provider.responseStringFromDiskCache(.getDelay(delay: 1)) { response in
-//                switch response.result {
-//                case .success(let success):
-//                    self.contentLabel.text = success
-//                case .failure(let failure):
-//                    self.contentLabel.text = failure.localizedDescription
-//                }
-//                self.resetState()
-//            }
-//        })
+        fetch(cacheFromType: .disk, provider: provider)
     }
     
     func fetchMemoryCache(provider: SYMoyaProvider<HTTPBinDynamicData>) {
-        // Simulate loading
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-//            let response = provider.responseStringFromMemoryCache(.getDelay(delay: 1), serializer: .defaultStringSerializer)
-//            switch response.result {
-//            case .success(let success):
-//                self.contentLabel.text = success
-//            case .failure(let failure):
-//                self.contentLabel.text = failure.localizedDescription
-//            }
-//            self.resetState()
-//        })
+        fetch(cacheFromType: .memory, provider: provider)
     }
     
     func fetchCache(provider: SYMoyaProvider<HTTPBinDynamicData>) {
+        fetch(cacheFromType: .memoryOrDisk, provider: provider)
+    }
+    
+    func fetch(cacheFromType: NetworkCacheFromType, provider: SYMoyaProvider<HTTPBinDynamicData>) {
         // Simulate loading
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-//            provider.responseStringFromCache(.getDelay(delay: 1)) { response in
-//                switch response.result {
-//                case .success(let success):
-//                    self.contentLabel.text = success
-//                case .failure(let failure):
-//                    self.contentLabel.text = failure.localizedDescription
-//                }
-//                self.resetState()
-//            }
-//        })
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            provider.responseStringFromCache(cacheFromType,target: .getDelay(delay: 1)) { response in
+                switch response.result {
+                case .success(let success):
+                    self.contentLabel.text = success
+                case .failure(let failure):
+                    self.contentLabel.text = failure.localizedDescription
+                }
+                self.resetState()
+            }
+        })
     }
 }
