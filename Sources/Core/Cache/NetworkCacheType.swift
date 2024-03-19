@@ -11,8 +11,7 @@ import Moya
 
 ///  Network Cache type of a cached Request.
 /// - none: The Request is not cached yet when retrieving it.
-/// - urlRequestCache: The response is cached by HTTP Protocol.
-/// - syMoyaNetworkCache: The response is cached in disk.
+/// - cache: The response is cached in memory or disk.
 public enum NetworkCacheType {
     /// The Request is not cached yet when retrieving it.
     case none
@@ -30,20 +29,17 @@ public enum NetworkCacheType {
  
 //MARK: - NetworkCacheOptionsInfo
 public extension NetworkCacheType {
+    /// The default cache key
     static let defaultCacheKey: String = "com.shannonyang.SYMoyaNetwork.NetworkCache.Key"
     
     /// When the network type is changed to syMoyaNetworkCache, the cache information configuration category mainly includes diskStorageConfig configuration, memoryStorageConfig configuration, etc. Other cacheKeys have a default value, which can be modified by setting cacheKey
     struct NetworkCacheOptionsInfo {
-        
         /// The default cache key
         public var cacheKey: String = defaultCacheKey
-    
         /// Disk storage configuration. The default configuration is the configuration information in NetworkConfig
         public var diskStorageConfig: DiskStorage.Config
-        
         /// Memory storage configuration.  The default configuration is the configuration information in NetworkConfig
         public var memoryStorageConfig: MemoryStorage.Config
- 
         /// Create cache Option object
         /// - Parameters:
         ///   - cacheKey: Cached key, for example: "com.shannonyang.SYMoyaNetwork.NetworkCache.Key"

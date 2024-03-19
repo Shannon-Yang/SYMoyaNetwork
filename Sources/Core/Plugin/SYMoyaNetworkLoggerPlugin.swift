@@ -20,7 +20,7 @@ public final class SYMoyaNetworkLoggerPlugin {
         case time = "TIMELINE --> ⏰⏰"
     }
     
-    /// <#Description#>
+    /// Log configuration object
     public var configuration: Configuration
     private var start: TimeInterval = 0
     private var end: TimeInterval = 0

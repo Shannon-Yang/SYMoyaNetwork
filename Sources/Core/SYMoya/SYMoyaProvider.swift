@@ -13,7 +13,6 @@ import Alamofire
 /// The provider proxy method is called back. When the completion method of moya is called back, the corresponding proxy method will be called back. 
 /// When the network request is completed, the requestCompleteFilter method will be called back. When the request fails, the requestFailedFilter method will be called back.
 public protocol SYMoyaProviderDelegate: AnyObject {
-
     /// When moya's completion method is called back, the requestCompleteFilter method will be called back when the network request is completed
     ///
     /// - Parameters:

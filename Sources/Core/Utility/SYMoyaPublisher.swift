@@ -52,11 +52,11 @@ public class SYMoyaPublisher<Output>: Publisher {
     
     /// Attaches the specified subscriber to this publisher.
     ///
-    /// Implementations of ``Publisher`` must implement this method.
+    /// Implementations of `Publisher` must implement this method.
     ///
-    /// The provided implementation of ``Publisher/subscribe(_:)-4u8kn``calls this method.
+    /// The provided implementation of `Publisher/subscribe(_:)` calls this method.
     ///
-    /// - Parameter subscriber: The subscriber to attach to this ``Publisher``, after which it can receive values.
+    /// - Parameter subscriber: The subscriber to attach to this `Publisher`, after which it can receive values.
     public func receive<S>(subscriber: S) where S: Subscriber, Failure == S.Failure, Output == S.Input {
         let subscription = Subscription(subscriber: AnySubscriber(subscriber), callback: callback)
         subscriber.receive(subscription: subscription)

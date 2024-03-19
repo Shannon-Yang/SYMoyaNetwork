@@ -14,9 +14,7 @@ import Moya
 /// as its error type. To handle errors from SYMoyaNetwork, you switch over the error to get a reason catalog,
 /// then switch over the reason to know error detail.
 public enum SYMoyaNetworkError: Swift.Error {
-    
     // MARK: Error Reason Types
-    
     /// Represents the error reason during SYMoyaNetwork caching system.
     ///
     /// - fileEnumeratorCreationFailed: Cannot create a file enumerator for a certain disk URL. Code 3001.
@@ -30,7 +28,6 @@ public enum SYMoyaNetworkError: Swift.Error {
     /// - cannotCreateCacheFile: Cannot create the cache file at a certain fileURL under a key. Code 3009.
     /// - cannotSetCacheFileAttribute: Cannot set file attributes to a cached file. Code 3010.
     public enum CacheErrorReason: Swift.Error {
-        
         /// Cannot create a file enumerator for a certain disk URL. Code 30001.
         /// - url: The target disk URL from which the file enumerator should be created.
         case fileEnumeratorCreationFailed(url: URL)
@@ -132,7 +129,6 @@ public enum SYMoyaNetworkError: Swift.Error {
 
 // MARK: - LocalizedError Conforming
 extension SYMoyaNetworkError: LocalizedError {
-    
     /// A localized message describing what error occurred.
     public var errorDescription: String? {
         switch self {
@@ -149,7 +145,6 @@ extension SYMoyaNetworkError: LocalizedError {
 
 // MARK: - CustomNSError Conforming
 extension SYMoyaNetworkError: CustomNSError {
-    
     /// The error domain of `SYMoyaNetworkError`. All errors from SYMoyaNetwork is under this domain.
     public static let domain = "com.shannonyang.SYMoyaNetwork.Error"
     
@@ -168,7 +163,6 @@ extension SYMoyaNetworkError: CustomNSError {
 
 // Network cache error cause enumeration
 extension SYMoyaNetworkError.CacheErrorReason {
-    
     var errorDescription: String? {
         switch self {
         case .fileEnumeratorCreationFailed(let url):
@@ -223,7 +217,6 @@ extension SYMoyaNetworkError.CacheErrorReason {
 
 //MARK: - BatchRequestErrorReason
 extension SYMoyaNetworkError.BatchRequestErrorReason {
-    
     var errorDescription: String? {
         switch self {
         case .providersIsEmpty:
@@ -241,7 +234,6 @@ extension SYMoyaNetworkError.BatchRequestErrorReason {
 
 //MARK: - SerializeErrorReason
 extension SYMoyaNetworkError.SerializeErrorReason {
-    
     var errorDescription: String? {
         switch self {
         case .imageMapping(let response):
@@ -300,10 +292,8 @@ extension SYMoyaNetworkError.RequestErrorReason {
     }
 }
 
-
 //MARK: - EndpointMapURLRequestErrorReason
 extension SYMoyaNetworkError.EndpointErrorReason {
-    
     var errorDescription: String? {
         switch self {
         case .urlRequestCreateFail(let string):

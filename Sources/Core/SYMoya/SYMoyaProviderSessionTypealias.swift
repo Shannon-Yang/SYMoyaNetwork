@@ -8,5 +8,5 @@
 
 import Foundation
 
-/// 
+/// Response wrapper object for `SYMoyaBatchProviderSession` and `SYMoyaChainProviderSession`, used for responses to batch and chain requests
 public typealias SYMoyaProviderSessionResponse = (targetType: SYTargetType, result: SYMoyaNetworkResult)

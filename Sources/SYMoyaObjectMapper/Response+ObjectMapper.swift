@@ -13,7 +13,6 @@ import ObjectMapper
 
 //MARK: - ObjectMapper
 extension Response {
-    
     /// Maps data received from the signal into an object which implements the Mappable protocol.
     /// If the conversion fails, the signal errors.
     func mapObject<T: BaseMappable>(_ type: T.Type, context: MapContext? = nil) throws -> T {
@@ -53,10 +52,8 @@ extension Response {
     }
 }
 
-
 // MARK: - ImmutableMappable
 public extension Response {
-    
     /// Maps data received from the signal into an object which implements the ImmutableMappable
     /// protocol.
     /// If the conversion fails, the signal errors.
@@ -93,5 +90,4 @@ public extension Response {
         }
         return try Mapper<T>(context: context).mapArray(JSONArray: array)
     }
-    
 }

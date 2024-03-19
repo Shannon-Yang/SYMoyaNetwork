@@ -14,49 +14,29 @@ import Combine
 public extension SYMoyaProvider {
     /// Retrieve data from the cache and It will return an object that implements `Publisher` and outputs the value `SYMoyaNetworkDataResponse<Image>.
     ///
-    /// - Parameters:
-    ///   - target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
-    ///   - serializer: A `ResponseSerializer` that decodes the response data as a `Image`.
-    ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
-    /// - Returns: An object that implements `Publisher`, its output value is `SYMoyaNetworkDataResponse<Image>`.
-    func responseImageFromCachePublisher(_ target: Target, serializer: ImageResponseSerializer = .defaultImageSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher <SYMoyaNetworkDataResponse<Image>> {
-        return SYMoyaPublisher { subscriber in
-            self.responseImageFromCache(target,serializer: serializer,callbackQueue: callbackQueue, completion: { dataResponse in
-                _ = subscriber.receive(dataResponse)
-                subscriber.receive(completion: .finished)
-            })
-            return nil
-        }
-    }
-    
-    /// Retrieve cached data from disk cache and It will return an object that implements `Publisher` and outputs the value `SYMoyaNetworkDataResponse<Image>.
+    /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
+    ///
+    ///  If there is no data in the memory cache, the disk will continue to be retrieved, and the `completion` will be called back after the retrieval is completed. refer to ``NetworkCache/retrieveResponse(forKey:options:callbackQueue:completionHandler:)-3l55p``
+    ///
+    ///  If the type of `cacheFromType` is `.memory`, this method will retrieve data from the memory cache.
+    ///
+    ///  If the type of `cacheFromType` is `.disk`, this method will retrieve data from the memory cache.
+    ///
+    ///  When cacheFromType is `.memory` or `.disk`, only one retrieval operation will be performed
+    ///  For example: If there is data in the disk cache but not in the memory, and `cacheFromType` is `.memory`, the data will only be retrieved from the memory.
+    ///  If there is no data in the memory, you will get `SYMoyaNetworkError.responseNotExisting` and will not continue to retrieve from the disk.
     ///
     /// - Parameters:
     ///   - target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
     ///   - serializer: A `ResponseSerializer` that decodes the response data as a `Image`.
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     /// - Returns: An object that implements `Publisher`, its output value is `SYMoyaNetworkDataResponse<Image>`.
-    func responseImageFromDiskCachePublisher(_ target: Target, serializer: ImageResponseSerializer = .defaultImageSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher <SYMoyaNetworkDataResponse<Image>> {
+    func responseImageFromCachePublisher(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: ImageResponseSerializer = .defaultImageSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher <SYMoyaNetworkDataResponse<Image>> {
         return SYMoyaPublisher { subscriber in
-            self.responseImageFromDiskCache(target, serializer: serializer, callbackQueue: callbackQueue,completion: { dataResponse in
+            self.responseImageFromCache(cacheFromType,target: target,serializer: serializer,callbackQueue: callbackQueue, completion: { dataResponse in
                 _ = subscriber.receive(dataResponse)
                 subscriber.receive(completion: .finished)
             })
-            return nil
-        }
-    }
-    
-    /// Retrieve cached data from memory cache and It will return an object that implements `Publisher` and outputs the value `SYMoyaNetworkDataResponse<Image>.
-    ///
-    /// - Parameters:
-    ///   - target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
-    ///   - serializer: A `ResponseSerializer` that decodes the response data as a `Image`.
-    /// - Returns: An object that implements `Publisher`, its output value is `SYMoyaNetworkDataResponse<Image>`.
-    func responseImageFromMemoryCachePublisher(_ target: Target, serializer: ImageResponseSerializer = .defaultImageSerializer) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<Image>> {
-        return SYMoyaPublisher { subscriber in
-            let dataResponse = self.responseImageFromMemoryCache(target, serializer: serializer)
-            _ = subscriber.receive(dataResponse)
-            subscriber.receive(completion: .finished)
             return nil
         }
     }

@@ -13,16 +13,28 @@ import SYMoyaNetwork
 import SwiftyJSON
 
 public extension Reactive where Base: SYMoyaProviderRequestable {
-    
-    /// <#Description#>
+    /// Retrieve data from the cache and parses the retrieved data into an object that is `SwiftyJSON.JSON`.
+    ///
+    /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
+    ///
+    ///  If there is no data in the memory cache, the disk will continue to be retrieved, and the `completion` will be called back after the retrieval is completed. refer to ``NetworkCache/retrieveResponse(forKey:options:callbackQueue:completionHandler:)-3l55p``
+    ///
+    ///  If the type of `cacheFromType` is `.memory`, this method will retrieve data from the memory cache.
+    ///
+    ///  If the type of `cacheFromType` is `.disk`, this method will retrieve data from the memory cache.
+    ///
+    ///  When cacheFromType is `.memory` or `.disk`, only one retrieval operation will be performed
+    ///  For example: If there is data in the disk cache but not in the memory, and `cacheFromType` is `.memory`, the data will only be retrieved from the memory.
+    ///  If there is no data in the memory, you will get `SYMoyaNetworkError.responseNotExisting` and will not continue to retrieve from the disk.
+    ///
     /// - Parameters:
-    ///   - target: <#target description#>
-    ///   - serializer: <#serializer description#>
-    ///   - callbackQueue: <#callbackQueue description#>
-    /// - Returns: <#description#>
-    func responseSwiftyJSONFromCache(_ target: Base.Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>, Never> {
+    ///   - target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
+    ///   - serializer: A `ResponseSerializer` that decodes the response data as a `SwiftyJSON.JSON`.
+    ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
+    /// - Returns: A SignalProducer creates Signals that can produce values of type `SYMoyaNetworkDataResponse<SwiftyJSON.JSON>`
+    func responseSwiftyJSONFromCache(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Base.Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>, Never> {
         SignalProducer { [weak base] observer, lifetime in
-            base?.requestFromCache(target, callbackQueue: callbackQueue, completion: { result in
+            base?.requestFromCache(cacheFromType,target: target, callbackQueue: callbackQueue, completion: { result in
                 let response = serializer.serialize(result: result)
                 observer.send(value: response)
                 observer.sendCompleted()
@@ -31,49 +43,19 @@ public extension Reactive where Base: SYMoyaProviderRequestable {
         }
     }
     
-    
-    /// <#Description#>
+    /// A data request method, depending on the data request strategy. and parses the requested data into an object that implements `SwiftyJSON.JSON`
+    ///
+    /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
+    ///
+    ///  It may retrieve data from cache (memory cache or disk), or by requesting data from the server. refer to the description of ``ResponseDataSourceType``.
+    ///
     /// - Parameters:
-    ///   - target: <#target description#>
-    ///   - serializer: <#serializer description#>
-    ///   - callbackQueue: <#callbackQueue description#>
-    /// - Returns: <#description#>
-    func responseSwiftyJSONFromDiskCache(_ target: Base.Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>, Never> {
-        SignalProducer { [weak base] observer, lifetime in
-            base?.requestFromDiskCache(target, callbackQueue: callbackQueue, completion: { result in
-                let response = serializer.serialize(result: result)
-                observer.send(value: response)
-                observer.sendCompleted()
-            })
-            lifetime.observeEnded { }
-        }
-    }
-    
-    
-    /// <#Description#>
-    /// - Parameters:
-    ///   - target: <#target description#>
-    ///   - serializer: <#serializer description#>
-    /// - Returns: <#description#>
-    func responseSwiftyJSONFromMemoryCache(_ target: Base.Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer) -> SignalProducer<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>, Never> {
-        let result = base.requestFromMemoryCache(target)
-        let response = serializer.serialize(result: result)
-        return SignalProducer<SYMoyaNetworkDataResponse<JSON>, Never> { observer, lifetime in
-            observer.send(value: response)
-            observer.sendCompleted()
-            lifetime.observeEnded { }
-        }
-    }
-    
-    
-    /// <#Description#>
-    /// - Parameters:
-    ///   - type: <#type description#>
-    ///   - target: <#target description#>
-    ///   - serializer: <#serializer description#>
-    ///   - callbackQueue: <#callbackQueue description#>
+    ///   - type: A data request strategy type. Default is `.server`
+    ///   - target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
+    ///   - serializer: A `ResponseSerializer` that decodes the response data as a `SwiftyJSON.JSON`.
+    ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - progress: Closure to be executed when progress changes.
-    /// - Returns: <#description#>
+    /// - Returns: A SignalProducer creates Signals that can produce values of type `SYMoyaNetworkDataResponse<SwiftyJSON.JSON>`
     func responseSwiftyJSON(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>, Never> {
         SignalProducer { [weak base] observer, lifetime in
             let cancellable = base?.request(type, target: target, callbackQueue: callbackQueue, progress: progress, completion: { result in

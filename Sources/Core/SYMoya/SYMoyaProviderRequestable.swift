@@ -15,7 +15,7 @@ import Moya
 ///
 /// Including requesting data through `ResponseDataSourceType`, refer to the `ResponseDataSourceType` type description. If the current `SYTarget` implements `NetworkCacheType` and returns a `NetworkCache/cachePath(forKey:)` type
 ///
-///  you can retrieve the data in the cache through three methods: ``SYMoyaProviderRequestable/requestFromCache(_:callbackQueue:completion:)``, ``SYMoyaProviderRequestable/requestFromDiskCache(_:callbackQueue:completion:)``,  ``SYMoyaProviderRequestable/requestFromMemoryCache(_:)``.
+///  you can retrieve the data in the cache through this method: ``SYMoyaProviderRequestable/requestFromCache(_:target:callbackQueue:completion:)``.
 ///
 /// `SYMoyaProvider` has implemented `SYMoyaProviderRequestable` by default
 public protocol SYMoyaProviderRequestable: AnyObject {
@@ -23,29 +23,24 @@ public protocol SYMoyaProviderRequestable: AnyObject {
     
     /// Retrieve data from the disk cache or memory cache
     ///
-    /// This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
+    /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
     ///
-    ///  If there is no data in the memory cache, the disk will continue to be retrieved, and the `completion` will be called back after the retrieval is completed. refer to ``NetworkCache/retrieveResponse(forKey:options:callbackQueue:completionHandler:)``
+    ///  If there is no data in the memory cache, the disk will continue to be retrieved, and the `completion` will be called back after the retrieval is completed. refer to ``NetworkCache/retrieveResponse(forKey:options:callbackQueue:completionHandler:)-3l55p``
+    ///
+    ///  If the type of `cacheFromType` is `.memory`, this method will retrieve data from the memory cache.
+    ///
+    ///  If the type of `cacheFromType` is `.disk`, this method will retrieve data from the memory cache.
+    ///
+    ///  When cacheFromType is `.memory` or `.disk`, only one retrieval operation will be performed
+    ///  For example: If there is data in the disk cache but not in the memory, and `cacheFromType` is `.memory`, the data will only be retrieved from the memory.
+    ///  If there is no data in the memory, you will get `SYMoyaNetworkError.responseNotExisting` and will not continue to retrieve from the disk.
     ///
     /// - Parameters:
+    ///   - cacheFromType: Network cache retrieval type.
     ///   - target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - completion: A closure which is invoked when the cache operation finishes. If not specified, the main queue will be used.
-    func requestFromCache(_ target: Target, callbackQueue: DispatchQueue?, completion: @escaping (SYMoyaNetworkResult) -> Void)
-    
-    /// Retrieve cached data from disk.
-    ///
-    /// - Parameters:
-    ///   - target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
-    ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
-    ///   - completion: A closure which is invoked when the cache operation finishes. If not specified, the main queue will be used.
-    func requestFromDiskCache(_ target: Target, callbackQueue: DispatchQueue?, completion: @escaping (SYMoyaNetworkResult) -> Void)
-    
-    /// Retrieve cached data from memory cache.
-    ///
-    /// - Parameter target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
-    /// - Returns: Return the retrieved data results. Refer to the description of ``SYMoyaNetworkResult``
-    func requestFromMemoryCache(_ target: Target) -> SYMoyaNetworkResult
+    func requestFromCache(_ cacheFromType: NetworkCacheFromType, target: Target, callbackQueue: DispatchQueue?, completion: @escaping (SYMoyaNetworkResult) -> Void)
     
     /// A data request method, depending on the data request strategy.
     ///
@@ -66,24 +61,26 @@ public protocol SYMoyaProviderRequestable: AnyObject {
 
 //MARK: - SYMoyaProviderRequestable Imp
 extension SYMoyaProvider: SYMoyaProviderRequestable {
-    public func requestFromCache(_ target: Target, callbackQueue: DispatchQueue?, completion: @escaping (SYMoyaNetworkResult) -> Void) {
-        let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-        self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
-            completion(result)
+    public func requestFromCache(_ cacheFromType: NetworkCacheFromType, target: Target, callbackQueue: DispatchQueue?, completion: @escaping (SYMoyaNetworkResult) -> Void) {
+        switch cacheFromType {
+        case .memoryOrDisk:
+            let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
+            self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
+                completion(result)
+            }
+        case .disk:
+            let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
+            self.retrieveResponseInDiskCache(target, options: options, callbackQueue: callbackQueue) { result in
+                completion(result)
+            }
+        case .memory:
+            let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
+            let result = self.retrieveResponseInMemoryCache(target, options: options)
+            let queue = callbackQueue ?? DispatchQueue.main
+            queue.async {
+                completion(result)
+            }
         }
-    }
-    
-    public func requestFromDiskCache(_ target: Target, callbackQueue: DispatchQueue?, completion: @escaping (SYMoyaNetworkResult) -> Void) {
-        let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-        self.retrieveResponseInDiskCache(target, options: options, callbackQueue: callbackQueue) { result in
-            completion(result)
-        }
-    }
-    
-    public func requestFromMemoryCache(_ target: Target) -> SYMoyaNetworkResult {
-        let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-        let result = self.retrieveResponseInMemoryCache(target, options: options)
-        return result
     }
     
     public func request(_ type: ResponseDataSourceType, target: Target, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping (SYMoyaNetworkResult) -> Void) -> Moya.Cancellable? {

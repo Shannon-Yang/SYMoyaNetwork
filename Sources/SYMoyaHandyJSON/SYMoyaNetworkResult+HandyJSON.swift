@@ -12,10 +12,10 @@ import Moya
 import SYMoyaNetwork
 
 public extension SYMoyaNetworkResult {
-    
-    /// <#Description#>
-    /// - Parameter designatedPath: <#designatedPath description#>
-    /// - Returns: <#description#>
+    /// Data parsed as `HandyJSON`
+    ///
+    /// - Parameter designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
+    /// - Returns: An object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value imp `HandyJSON`
     func serializerHandyJSONObjectDataResponse<T: HandyJSON>(designatedPath: String?) -> SYMoyaNetworkDataResponse<T> {
         var dataRes: SYMoyaNetworkDataResponse<T>
         let object: T?
@@ -37,10 +37,10 @@ public extension SYMoyaNetworkResult {
         return dataRes
     }
     
-    
-    /// <#Description#>
-    /// - Parameter designatedPath: <#designatedPath description#>
-    /// - Returns: <#description#>
+    /// Data parsed as `HandyJSON` array
+    ///
+    /// - Parameter designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
+    /// - Returns: An object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value imp `HandyJSON` array
     func serializerHandyJSONObjectsDataResponse<T: HandyJSON>(designatedPath: String?) -> SYMoyaNetworkDataResponse<[T?]> {
         var dataRes: SYMoyaNetworkDataResponse<[T?]>
         let objects: [T?]?

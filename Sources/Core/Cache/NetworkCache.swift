@@ -14,7 +14,6 @@ import UIKit
 import Moya
 
 extension Notification.Name {
-
     public static let SYMoyaNetworkDidCleanDiskCache =
         Notification.Name("com.shannonyang.SYMoyaNetwork.SYMoyaNetworkDidCleanDiskCache")
 }

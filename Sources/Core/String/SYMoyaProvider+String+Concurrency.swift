@@ -13,29 +13,26 @@ import Moya
 public extension SYMoyaProvider {
     /// Retrieve data from the cache and It will return an object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `String`
     ///
-    /// - Parameters:
-    ///   - target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
-    ///   - serializer: A `ResponseSerializer` that decodes the response data as a `String`.
-    ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
-    /// - Returns: An object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `String`
-    func responseStringFromCache(_ target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<String> {
-        return await withCheckedContinuation { continuation in
-            self.responseStringFromCache(target, serializer: serializer, callbackQueue: callbackQueue) { response in
-                continuation.resume(returning: response)
-            }
-        }
-    }
-    
-    /// Retrieve cached data from disk cache and It will return an object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `String`
+    /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
+    ///
+    ///  If there is no data in the memory cache, the disk will continue to be retrieved, and the `completion` will be called back after the retrieval is completed. refer to ``NetworkCache/retrieveResponse(forKey:options:callbackQueue:completionHandler:)-3l55p``
+    ///
+    ///  If the type of `cacheFromType` is `.memory`, this method will retrieve data from the memory cache.
+    ///
+    ///  If the type of `cacheFromType` is `.disk`, this method will retrieve data from the memory cache.
+    ///
+    ///  When cacheFromType is `.memory` or `.disk`, only one retrieval operation will be performed
+    ///  For example: If there is data in the disk cache but not in the memory, and `cacheFromType` is `.memory`, the data will only be retrieved from the memory.
+    ///  If there is no data in the memory, you will get `SYMoyaNetworkError.responseNotExisting` and will not continue to retrieve from the disk.
     ///
     /// - Parameters:
     ///   - target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
     ///   - serializer: A `ResponseSerializer` that decodes the response data as a `String`.
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     /// - Returns: An object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `String`
-    func responseStringFromDiskCache(_ target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<String> {
-        return await withCheckedContinuation{ continuation in
-            self.responseStringFromDiskCache(target,serializer: serializer,callbackQueue: callbackQueue) { response in
+    func responseStringFromCache(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<String> {
+        return await withCheckedContinuation { continuation in
+            self.responseStringFromCache(cacheFromType,target: target, serializer: serializer, callbackQueue: callbackQueue) { response in
                 continuation.resume(returning: response)
             }
         }

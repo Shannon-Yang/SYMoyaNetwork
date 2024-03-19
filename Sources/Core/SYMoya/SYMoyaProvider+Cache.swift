@@ -26,7 +26,6 @@ extension SYMoyaProvider {
         return key.md5()
     }
     
-    
     func cache(_ target: Target, response: Moya.Response, toDisk: Bool = true) {
         switch target.networkCacheType {
         case .cache(let info):

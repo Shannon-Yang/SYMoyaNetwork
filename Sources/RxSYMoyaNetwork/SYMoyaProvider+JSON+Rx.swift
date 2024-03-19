@@ -12,16 +12,28 @@ import Moya
 import SYMoyaNetwork
 
 public extension Reactive where Base: SYMoyaProviderRequestable {
-    
-    /// <#Description#>
+    /// Retrieve data from the cache and parses the retrieved data into an object that is `JSON`.
+    ///
+    /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
+    ///
+    ///  If there is no data in the memory cache, the disk will continue to be retrieved, and the `completion` will be called back after the retrieval is completed. refer to ``NetworkCache/retrieveResponse(forKey:options:callbackQueue:completionHandler:)-3l55p``
+    ///
+    ///  If the type of `cacheFromType` is `.memory`, this method will retrieve data from the memory cache.
+    ///
+    ///  If the type of `cacheFromType` is `.disk`, this method will retrieve data from the memory cache.
+    ///
+    ///  When cacheFromType is `.memory` or `.disk`, only one retrieval operation will be performed
+    ///  For example: If there is data in the disk cache but not in the memory, and `cacheFromType` is `.memory`, the data will only be retrieved from the memory.
+    ///  If there is no data in the memory, you will get `SYMoyaNetworkError.responseNotExisting` and will not continue to retrieve from the disk.
+    ///
     /// - Parameters:
-    ///   - target: <#target description#>
-    ///   - serializer: <#serializer description#>
-    ///   - callbackQueue: <#callbackQueue description#>
-    /// - Returns: <#description#>
-    func responseJSONFromCache(_ target: Base.Target, serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none) -> Observable<SYMoyaNetworkDataResponse<Any>> {
+    ///   - target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
+    ///   - serializer: A `ResponseSerializer` that decodes the response data as a `JSON`.
+    ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
+    /// - Returns: A type-erased `ObservableType` that can produce values of type `SYMoyaNetworkDataResponse<JSON>`
+    func responseJSONFromCache(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Base.Target, serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none) -> Observable<SYMoyaNetworkDataResponse<Any>> {
         return Observable.create { [weak base] observer in
-            base?.requestFromCache(target, callbackQueue: callbackQueue, completion: { result in
+            base?.requestFromCache(cacheFromType,target: target, callbackQueue: callbackQueue, completion: { result in
                 let response = serializer.serialize(result: result)
                 observer.on(.next(response))
                 observer.on(.completed)
@@ -29,50 +41,20 @@ public extension Reactive where Base: SYMoyaProviderRequestable {
             return Disposables.create()
         }
     }
-   
     
-    /// <#Description#>
+    /// A data request method, depending on the data request strategy. and parses the requested data into an object that implements `JSON`
+    ///
+    /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
+    ///
+    ///  It may retrieve data from cache (memory cache or disk), or by requesting data from the server. refer to the description of ``ResponseDataSourceType``.
+    ///
     /// - Parameters:
-    ///   - target: <#target description#>
-    ///   - serializer: <#serializer description#>
-    ///   - callbackQueue: <#callbackQueue description#>
-    /// - Returns: <#description#>
-    func responseJSONFromDiskCache(_ target: Base.Target, serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none) -> Observable<SYMoyaNetworkDataResponse<Any>> {
-        return Observable.create { [weak base] observer in
-            base?.requestFromDiskCache(target, callbackQueue: callbackQueue, completion: { result in
-                let response = serializer.serialize(result: result)
-                observer.on(.next(response))
-                observer.on(.completed)
-            })
-            return Disposables.create()
-        }
-    }
-   
-    
-    /// <#Description#>
-    /// - Parameters:
-    ///   - target: <#target description#>
-    ///   - serializer: <#serializer description#>
-    /// - Returns: <#description#>
-    func responseJSONFromMemoryCache(_ target: Base.Target, serializer: JSONResponseSerializer = .defaultJSONSerializer) -> Observable<SYMoyaNetworkDataResponse<Any>> {
-        let result = base.requestFromMemoryCache(target)
-        let response = serializer.serialize(result: result)
-        return Observable.create { observer in
-            observer.on(.next(response))
-            observer.on(.completed)
-            return Disposables.create()
-        }
-    }
-   
-    
-    /// <#Description#>
-    /// - Parameters:
-    ///   - type: <#type description#>
-    ///   - target: <#target description#>
-    ///   - serializer: <#serializer description#>
-    ///   - callbackQueue: <#callbackQueue description#>
-    ///   - progress: <#progress description#>
-    /// - Returns: <#description#>
+    ///   - type: A data request strategy type. Default is `.server`
+    ///   - target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
+    ///   - serializer: A `ResponseSerializer` that decodes the response data as a `JSON`.
+    ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
+    ///   - progress: Closure to be executed when progress changes.
+    /// - Returns: A type-erased `ObservableType` that can produce values of type `SYMoyaNetworkDataResponse<JSON>`
     func responseJSON(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> Observable<SYMoyaNetworkDataResponse<Any>> {
         return Observable.create { [weak base] observer in
             let cancellable = base?.request(type, target: target, callbackQueue: callbackQueue, progress: progress, completion: { result in

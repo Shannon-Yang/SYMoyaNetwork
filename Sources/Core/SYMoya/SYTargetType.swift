@@ -12,7 +12,6 @@ import Moya
 /// The protocol used to define the specifications necessary for a `SYMoyaProvider`.
 /// Inherit Moya.TargetType, extend more properties that can be set for TargetType, and add network cache type settings
 public protocol SYTargetType: Moya.TargetType {
-    
     /// CDN request url
     var cdnURL: URL? { get }
     

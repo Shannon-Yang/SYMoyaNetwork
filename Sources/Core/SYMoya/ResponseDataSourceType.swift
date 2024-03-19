@@ -11,7 +11,6 @@ import Moya
 
 /// Request's responseData source type, implementing different type responseData source type
 public enum ResponseDataSourceType {
-    
     /// - server: Normal request, the request does not need to cache data, default is normal type
     case server
     
@@ -31,7 +30,6 @@ public enum ResponseDataSourceType {
 
 /// CacheCustomizable protocol
 public protocol ResponseDataSourceCustomizable {
-    
     /// Indicates whether to make a request to the server if it fails to get the cache, the default is true
     /// - Returns: Indicates whether a request needs to be made to the server
     func shouldRequestIfCacheFeatchFailure() -> Bool
