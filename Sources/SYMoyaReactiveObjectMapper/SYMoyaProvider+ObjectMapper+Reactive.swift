@@ -13,9 +13,7 @@ import Moya
 import ObjectMapper
 import SYMoyaObjectMapper
 
-
 extension Reactive where Base: SYMoyaProviderRequestable {
-    
     /// <#Description#>
     /// - Parameters:
     ///   - target: <#target description#>

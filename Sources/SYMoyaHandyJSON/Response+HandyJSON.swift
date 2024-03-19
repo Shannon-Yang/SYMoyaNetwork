@@ -12,7 +12,6 @@ import HandyJSON
 
 //MARK: - HandyJSON
 extension Response {
-    
     /// Convert response to HandyJSON format data
     ///
     /// - Parameters:

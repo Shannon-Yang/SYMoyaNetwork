@@ -10,6 +10,7 @@ import Foundation
 import HandyJSON
 import SYMoyaNetwork
 
+//MARK: - HandyJSONObjectResponseSerializer
 public class HandyJSONObjectResponseSerializer<T: HandyJSON>: ResponseSerializer {
     public typealias SerializedObject = T
     
@@ -32,6 +33,7 @@ public extension ResponseSerializer {
     }
 }
 
+//MARK: - HandyJSONObjectsResponseSerializer
 public class HandyJSONObjectsResponseSerializer<T: HandyJSON>: ResponseSerializer {
     public typealias SerializedObject = [T?]
     private let designatedPath: String?

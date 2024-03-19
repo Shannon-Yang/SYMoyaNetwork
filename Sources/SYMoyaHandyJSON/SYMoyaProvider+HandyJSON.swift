@@ -13,7 +13,6 @@ import SYMoyaNetwork
 
 //MARK: - SYMoyaProviderHandyJSONType
 extension SYMoyaProvider {
-    
     /// <#Description#>
     /// - Parameters:
     ///   - target: <#target description#>
