@@ -16,6 +16,7 @@
 		209CFE422BA44B9E002B7C34 /* SYMoyaObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE356D2A1E460F001AFD6C /* SYMoyaObjectMapper.framework */; };
 		209CFE432BA44B9E002B7C34 /* SYMoyaObjectMapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE356D2A1E460F001AFD6C /* SYMoyaObjectMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		20A498E62BA9434200D7FB10 /* NetworkCacheFromType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A498E52BA9434200D7FB10 /* NetworkCacheFromType.swift */; };
+		20A498EC2BAAEFD500D7FB10 /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 20A498EB2BAAEFD500D7FB10 /* Documentation.docc */; };
 		20CF11EE2B3ED25A00857882 /* HTTPHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CF11ED2B3ED25A00857882 /* HTTPHeaders.swift */; };
 		20CF11F02B3ED35E00857882 /* HTTPVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CF11EF2B3ED35E00857882 /* HTTPVersion.swift */; };
 		FB1E71312AA4CCD200BEF135 /* SYMoyaNetworkResult+SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1E71302AA4CCD200BEF135 /* SYMoyaNetworkResult+SwiftyJSON.swift */; };
@@ -515,6 +516,7 @@
 
 /* Begin PBXFileReference section */
 		20A498E52BA9434200D7FB10 /* NetworkCacheFromType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCacheFromType.swift; sourceTree = "<group>"; };
+		20A498EB2BAAEFD500D7FB10 /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		20CF11ED2B3ED25A00857882 /* HTTPHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeaders.swift; sourceTree = "<group>"; };
 		20CF11EF2B3ED35E00857882 /* HTTPVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPVersion.swift; sourceTree = "<group>"; };
 		20F6F25E29A623D0004D5C4B /* ObjectMapper.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ObjectMapper.xcframework; path = Carthage/Build/ObjectMapper.xcframework; sourceTree = "<group>"; };
@@ -1007,7 +1009,7 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		FB6A3A2C287BBDD400454481 /* Core */ = {
+		FB6A3A2C287BBDD400454481 /* SYMoyaNetwork */ = {
 			isa = PBXGroup;
 			children = (
 				FB65207828A4FBB8009457DD /* SYMoyaBatchRequest */,
@@ -1024,8 +1026,9 @@
 				FB6354642705A61E003F1D7C /* Error */,
 				FB6354752705A61E003F1D7C /* Config */,
 				FB6354492705A61D003F1D7C /* Cache */,
+				20A498EB2BAAEFD500D7FB10 /* Documentation.docc */,
 			);
-			path = Core;
+			path = SYMoyaNetwork;
 			sourceTree = "<group>";
 		};
 		FB71AF1A2A55C55900952F2C /* ReactiveSYMoyaNetwork */ = {
@@ -1075,7 +1078,7 @@
 		FB8072F026F32C070042B30D /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				FB6A3A2C287BBDD400454481 /* Core */,
+				FB6A3A2C287BBDD400454481 /* SYMoyaNetwork */,
 				FBEE35FA2A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON */,
 				FBEE35DE2A1E46AC001AFD6C /* SYMoyaReactiveObjectMapper */,
 				FBEE35C22A1E4691001AFD6C /* SYMoyaHandyJSON */,
@@ -1795,6 +1798,7 @@
 				FB63548E2705A61E003F1D7C /* Response+SwiftyJSON.swift in Sources */,
 				FB4CA4342AE180DD00F43D40 /* SYMoyaProviderRequestable.swift in Sources */,
 				FB6354872705A61E003F1D7C /* SYMoyaProvider+Image.swift in Sources */,
+				20A498EC2BAAEFD500D7FB10 /* Documentation.docc in Sources */,
 				FBAF775A2AD45C06002689E7 /* SYMoyaNetworkResult+JSON.swift in Sources */,
 				FB6A3A29287BB48900454481 /* HTTPStatusCode.swift in Sources */,
 				FB1E71372AA7818E00BEF135 /* SYMoyaBatchProviderReqOperation.swift in Sources */,
