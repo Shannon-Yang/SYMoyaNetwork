@@ -11,6 +11,10 @@ import Moya
 
 //MARK: - Cache
 extension SYMoyaProvider {
+    /// Generate cache key by target
+    ///
+    /// - Parameter target: <#target description#>
+    /// - Returns: <#description#>
     func generateCacheKey(_ target: Target) -> String {
         let urlString = URL(target: target).absoluteString
         var parametersString: String?

@@ -13,6 +13,10 @@
 - ``SYMoyaProviderSessionTypealias``
 - ``SYMoyaProviderRequestable``
 - ``ResponseSerializer``
+- ``ResponseSerializer``
+- ``ResponseDataSourceType``
+- ``SYTargetType``
+- ``SYMoyaNetworkResult``
 
 ### Batch Request
 - ``SYMoyaBatchProviderSession``

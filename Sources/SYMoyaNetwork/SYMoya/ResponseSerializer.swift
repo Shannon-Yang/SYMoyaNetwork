@@ -8,8 +8,7 @@
 
 import Foundation
 
-//MARK: - String
-/// A `ResponseSerializer` that decodes the response data as a `String`.
+/// Data serializer abstract protocol, Serializer `SYMoyaNetworkResult` to `SYMoyaNetworkDataResponse` object
 public protocol ResponseSerializer {
     associatedtype SerializedObject
     
