@@ -3,7 +3,7 @@
 </p>
 
 # SYMoyaNetwork
-基于[Moya](https://github.com/Moya/Moya)再次封装的网络抽象层，保持[Moya](https://github.com/Moya/Moya)一样的使用方法，扩展[Moya](https://github.com/Moya/Moya)的TargetType，新增对HandyJSON、ObjectMapper、Codable、SwiftyJSON、MJExtension等数据支持，对[Moya](https://github.com/Moya/Moya)的Response做默认的数据转换，仅仅只需要关心你想要得到什么样的数据，实现不同策略的网络数据缓存，无需再花大量时间再去做这样的工作，获取网络数据将变得如此简单。
+基于[Moya](https://github.com/Moya/Moya)再次封装的网络抽象层，保持[Moya](https://github.com/Moya/Moya)一样的使用方法，扩展[Moya](https://github.com/Moya/Moya)的`TargetType`，新增对[HandyJSON]、ObjectMapper、Codable、SwiftyJSON、MJExtension等数据支持，对[Moya](https://github.com/Moya/Moya)的Response做默认的数据转换，仅仅只需要关心你想要得到什么样的数据，实现不同策略的网络数据缓存，无需再花大量时间再去做这样的工作，获取网络数据将变得如此简单。
 
 
 ## What
