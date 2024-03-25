@@ -528,6 +528,17 @@ open class NetworkCache {
         return retrieveResponseInMemoryCache(forKey: key, options: SYMoyaNetworkParsedOptionsInfo(options))
     }
     
+    
+    /// Gets an response for a given key from the disk storage.
+    ///
+    /// - Parameters:
+    ///   - key: The key used for caching the response.
+    ///   - options: The `SYMoyaNetworkOptionsInfo` options setting used for retrieving the response.
+    ///   - callbackQueue: The callback queue on which `completionHandler` is invoked. Default is `.mainCurrentOrAsync`.
+    ///   - completionHandler: A closure which is invoked when the response getting operation finishes. If the
+    ///                        response retrieving operation finishes without problem, an `NetworkCacheResult` value
+    ///                        will be sent to this closure as result. Otherwise, a `SYMoyaNetworkError` result
+    ///                        with detail failing reason will be sent.
     func retrieveResponseInDiskCache(
         forKey key: String,
         options: SYMoyaNetworkParsedOptionsInfo,
@@ -762,6 +773,7 @@ open class NetworkCache {
 #endif
     
     /// Gets the cache path for the key.
+    ///
     /// - Parameters:
     ///   - key: The key used for caching the response.
     /// - Returns: The disk path of cached response under the given `key`

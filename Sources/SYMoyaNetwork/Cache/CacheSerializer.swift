@@ -13,7 +13,6 @@ import Moya
 /// retrieving it from disk storage, and vice versa, to convert an response to data object
 /// for storing to the disk storage.
 public protocol CacheSerializer {
-    
     /// Gets the serialized data from a provided response
     /// and optional original data for caching to disk.
     ///
@@ -51,17 +50,10 @@ public struct DefaultCacheSerializer: CacheSerializer {
     ///
     public init() { }
 
-    /// - Parameters:
-    ///   - response: The response needed to be serialized.
-    ///   - original: The original data which is just downloaded.
-    ///               If the response is retrieved from cache instead of
-    ///               downloaded, it will be `nil`.
-    /// - Returns: The data object for storing to disk, or `nil` when no valid
-    ///            data could be serialized.
+    /// Gets data from `Moya.Response`.
     ///
-    /// - Note:
-    /// converted to the corresponding data type. Otherwise, if the `original` is provided but it is not
-    /// If `original` is `nil`, the input `response` will be encoded as  data.
+    /// - Parameter response: Represents a response to a `MoyaProvider.request`.
+    /// - Returns: Response data
     public func data(with response: Moya.Response) -> Data {
         return response.data
     }

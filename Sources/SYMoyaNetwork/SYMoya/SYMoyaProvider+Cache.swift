@@ -11,10 +11,10 @@ import Moya
 
 //MARK: - Cache
 extension SYMoyaProvider {
-    /// Generate cache key by target
+    /// Generate cache key by `Target`
     ///
-    /// - Parameter target: <#target description#>
-    /// - Returns: <#description#>
+    /// - Parameter target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
+    /// - Returns: Generated cache key
     func generateCacheKey(_ target: Target) -> String {
         let urlString = URL(target: target).absoluteString
         var parametersString: String?
@@ -30,6 +30,12 @@ extension SYMoyaProvider {
         return key.md5()
     }
     
+    /// Cache `Moya.Response` to Memory or Disk
+    ///
+    /// - Parameters:
+    ///   - target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
+    ///   - response: Represents a response to a `MoyaProvider.request`.
+    ///   - toDisk: Whether to cache to disk
     func cache(_ target: Target, response: Moya.Response, toDisk: Bool = true) {
         switch target.networkCacheType {
         case .cache(let info):
@@ -64,6 +70,16 @@ extension SYMoyaProvider {
         }
     }
     
+    /// Gets an response for a given `Target` from the cache, either from memory storage or disk storage.
+    ///
+    /// - Parameters:
+    ///   - target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
+    ///   - options: The `SYMoyaNetworkParsedOptionsInfo` options setting used for retrieving the response.
+    ///   - callbackQueue: The callback queue on which `completionHandler` is invoked. Default is `.mainCurrentOrAsync`.
+    ///   - completion: A closure which is invoked when the response getting operation finishes. If the
+    ///                 response retrieving operation finishes without problem, an `NetworkCacheResult` value
+    ///                 will be sent to this closure as result. Otherwise, a `SYMoyaNetworkError` result
+    ///                 with detail failing reason will be sent.
     func retrieve(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ result: SYMoyaNetworkResult) -> Void) {
         let key = self.generateCacheKey(target)
         var queue = CallbackQueue.mainAsync
@@ -92,6 +108,13 @@ extension SYMoyaProvider {
         }
     }
     
+    /// Gets an response for a given `Target` from the memory storage.
+    ///
+    /// - Parameters:
+    ///   - target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
+    ///   - options: The `SYMoyaNetworkParsedOptionsInfo` options setting used for retrieving the response.
+    /// - Returns: The response stored in memory cache, if exists and valid. Otherwise, if the response does not exist or
+    ///            has already expired, `nil` is returned.
     func retrieveResponseInMemoryCache(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo) -> SYMoyaNetworkResult {
         let key = self.generateCacheKey(target)
         if let response = self.cache.retrieveResponseInMemoryCache(forKey: key, options: options) {
@@ -101,6 +124,16 @@ extension SYMoyaProvider {
         return .failure(SYMoyaNetworkError.cacheError(reason: .responseNotExisting(key: key)))
     }
     
+    /// Gets an response for a given `Target` from the disk storage.
+    ///
+    /// - Parameters:
+    ///   - target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
+    ///   - options: The `SYMoyaNetworkOptionsInfo` options setting used for retrieving the response.
+    ///   - callbackQueue: The callback queue on which `completionHandler` is invoked. Default is `.mainCurrentOrAsync`.
+    ///   - completionHandler: A closure which is invoked when the response getting operation finishes. If the
+    ///                        response retrieving operation finishes without problem, an `NetworkCacheResult` value
+    ///                        will be sent to this closure as result. Otherwise, a `SYMoyaNetworkError` result
+    ///                        with detail failing reason will be sent.
     func retrieveResponseInDiskCache(_ target: Target, options: SYMoyaNetworkParsedOptionsInfo, callbackQueue: DispatchQueue? = .none, completionHandler: @escaping (SYMoyaNetworkResult) -> Void) {
         let key = self.generateCacheKey(target)
         var queue = CallbackQueue.mainAsync
@@ -110,6 +143,13 @@ extension SYMoyaProvider {
         self.cache.retrieveResponseInDiskCache(forKey: key, options: options, callbackQueue: queue, completionHandler: completionHandler)
     }
     
+    /// Whether the `Target` needs to be cached
+    ///
+    /// This method will determine whether the current response needs to be cached based on the `memoryStorageConfig` and `diskStorageConfig` of the `Target`'s `networkCacheType` field.
+    ///
+    /// - Parameters:
+    ///   - target: The protocol used to define the specifications necessary for a `SYMoyaProvider`.
+    ///   - response: Represents a response to a `MoyaProvider.request`.
     func cacheIfNeeded(_ target: Target, response: Moya.Response) {
         // Cache
         switch target.networkCacheType {

@@ -13,6 +13,7 @@ import SYMoyaNetwork
 
 public extension SYMoyaNetworkResult {
     /// Data parsed as `BaseMappable`
+    ///
     /// - Parameters:
     ///   - keyPath: A specific map path
     ///   - context: MapContext is available for developers who wish to pass information around during the mapping process.
@@ -40,6 +41,7 @@ public extension SYMoyaNetworkResult {
     }
     
     /// Data parsed as `BaseMappable` array
+    /// 
     /// - Parameters:
     ///   - keyPath: A specific map path
     ///   - context: MapContext is available for developers who wish to pass information around during the mapping process.

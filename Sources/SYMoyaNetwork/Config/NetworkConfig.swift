@@ -27,12 +27,14 @@ public struct NetworkConfig {
 // MARK: - Internal
 extension NetworkConfig {
     /// Default log configuration object
+    ///
     /// - Returns: Network request log print plugin object
    static func defaultLogConfiguration() -> LogConfiguration {
         return LogConfiguration()
     }
 
     /// Default cache object
+    ///
     /// - Returns: Represents a hybrid caching system which is composed by a `MemoryStorage.Backend` and a `DiskStorage.Backend`.
     static func defaultNetworkCache() -> NetworkCache {
         return NetworkCache(name: "Default")

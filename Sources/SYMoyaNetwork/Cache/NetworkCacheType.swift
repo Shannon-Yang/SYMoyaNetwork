@@ -41,6 +41,7 @@ public extension NetworkCacheType {
         /// Memory storage configuration.  The default configuration is the configuration information in NetworkConfig
         public var memoryStorageConfig: MemoryStorage.Config
         /// Create cache Option object
+        ///
         /// - Parameters:
         ///   - cacheKey: Cached key, for example: "com.shannonyang.SYMoyaNetwork.NetworkCache.Key"
         ///   - diskStorageConfig: Disk storage configuration.

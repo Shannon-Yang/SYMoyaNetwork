@@ -10,9 +10,8 @@
 
 ### SYMoya
 - ``SYMoyaProvider``
-- ``SYMoyaProviderSessionTypealias``
+- ``SYMoyaProviderSessionResponse``
 - ``SYMoyaProviderRequestable``
-- ``ResponseSerializer``
 - ``ResponseSerializer``
 - ``ResponseDataSourceType``
 - ``SYTargetType``
@@ -32,7 +31,21 @@
 - ``SYMoyaChainProviderSession``
 
 ### Response 
+- ``DecodableResponseSerializer``
+- ``SwiftyJSONResponseSerializer``
+- ``StringResponseSerializer``
+- ``JSONResponseSerializer``
+- ``ImageResponseSerializer``
+- ``SYDataResponse``
+- ``SYDataResponseActor``
 
+### Utility
+- ``SYMoyaPublisher``
+- ``AsyncOperation``
+- ``HTTPStatusCode``
+- ``CallbackQueue``
+- ``HTTPHeaders``
+- ``HTTPVersion``
 
 ### Plugin
 - ``SYMoyaNetworkLoggerPlugin``

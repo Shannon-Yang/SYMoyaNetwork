@@ -80,6 +80,7 @@ public enum MemoryStorage {
         }
 
         /// Stores a value to the storage under the specified key and expiration policy.
+        ///
         /// - Parameters:
         ///   - value: The value to be stored.
         ///   - key: The key to which the `value` will be stored.
@@ -129,6 +130,7 @@ public enum MemoryStorage {
         }
 
         /// Whether there is valid cached data under a given key.
+        /// 
         /// - Parameter key: The cache key of value.
         /// - Returns: If there is valid data under the key, `true`. Otherwise, `false`.
         public func isCached(forKey key: String) -> Bool {
