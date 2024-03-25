@@ -9,8 +9,9 @@
 import Foundation
 import Moya
 
-//MARK: - String Provider Concurrency
-public extension SYMoyaProvider {
+// MARK: - String Provider Concurrency
+
+extension SYMoyaProvider {
     /// Retrieve data from the cache and It will return an object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `String`
     ///
     /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
@@ -30,14 +31,14 @@ public extension SYMoyaProvider {
     ///   - serializer: A `ResponseSerializer` that decodes the response data as a `String`.
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     /// - Returns: An object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `String`
-    func responseStringFromCache(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<String> {
-        return await withCheckedContinuation { continuation in
-            self.responseStringFromCache(cacheFromType,target: target, serializer: serializer, callbackQueue: callbackQueue) { response in
+    public func responseStringFromCache(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<String> {
+        await withCheckedContinuation { continuation in
+            self.responseStringFromCache(cacheFromType, target: target, serializer: serializer, callbackQueue: callbackQueue) { response in
                 continuation.resume(returning: response)
             }
         }
     }
-    
+
     /// A data request method It will return an object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `Decodable`
     ///
     /// depending on the data request strategy. and parses the requested data into an object that is `String`.
@@ -53,12 +54,12 @@ public extension SYMoyaProvider {
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - progress: Closure to be executed when progress changes.
     /// - Returns: An object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `String`
-    func responseString(_ type: ResponseDataSourceType = .server, target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<String> {
+    public func responseString(_ type: ResponseDataSourceType = .server, target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<String> {
         let actor = SYDataResponseActor(provider: self)
         return await withTaskCancellationHandler {
             await withCheckedContinuation { continuation in
                 _Concurrency.Task {
-                    await actor.responseString(type,target: target,serializer: serializer,callbackQueue: callbackQueue,progress: progress, completion: { response in
+                    await actor.responseString(type, target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress, completion: { response in
                         continuation.resume(returning: response)
                     })
                 }

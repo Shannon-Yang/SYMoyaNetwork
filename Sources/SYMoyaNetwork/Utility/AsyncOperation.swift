@@ -4,26 +4,26 @@
 //
 //  Created by Shannon Yang on 2023/9/5.
 //  Copyright © 2023 Shannon Yang. All rights reserved.
-// 
+//
 
 import Foundation
 
 /// An asynchronous operation object that implements `Operation`
 public class AsyncOperation: Operation {
     private let lockQueue = DispatchQueue(label: "com.shannonyang.SYMoyaNetwork.BatchRequest.Asyncoperation", attributes: .concurrent)
-    
+
     /// Indicates whether the current Operation is asynchronous
-    public override var isAsynchronous: Bool {
-        return true
+    override public var isAsynchronous: Bool {
+        true
     }
-    
+
     private var _isExecuting: Bool = false
-    
+
     /// A Boolean value indicating whether the current `Operation` is executing
-    public override private(set) var isExecuting: Bool {
+    override public private(set) var isExecuting: Bool {
         get {
-            return lockQueue.sync { [weak self] () -> Bool in
-                return self?._isExecuting ?? false
+            lockQueue.sync { [weak self] () -> Bool in
+                self?._isExecuting ?? false
             }
         }
         set {
@@ -34,14 +34,14 @@ public class AsyncOperation: Operation {
             didChangeValue(forKey: "isExecuting")
         }
     }
-    
+
     private var _isFinished: Bool = false
-    
+
     /// A Boolean value indicating whether the current `Operation` is finished
-    public override private(set) var isFinished: Bool {
+    override public private(set) var isFinished: Bool {
         get {
-            return lockQueue.sync { [weak self] () -> Bool in
-                return self?._isFinished ?? false
+            lockQueue.sync { [weak self] () -> Bool in
+                self?._isFinished ?? false
             }
         }
         set {
@@ -52,29 +52,27 @@ public class AsyncOperation: Operation {
             didChangeValue(forKey: "isFinished")
         }
     }
-    
+
     /// Start executing an asynchronous task
-    public override func start() {
+    override public func start() {
         guard !isCancelled else {
             finish()
             return
         }
-        
+
         isFinished = false
         isExecuting = true
         main()
     }
-    
+
     /// Check whether the subclass implements the `main` method, and throws an error if it does not.
-    public override func main() {
+    override public func main() {
         fatalError("Subclasses must implement `main` without overriding super.")
     }
-    
+
     /// Complete execution of asynchronous tasks
     public func finish() {
         isExecuting = false
         isFinished = true
     }
 }
-
-

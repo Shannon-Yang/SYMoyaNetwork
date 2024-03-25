@@ -14,7 +14,7 @@ public class DecodableResponseSerializer<T: Decodable>: ResponseSerializer {
     private let keyPath: String?
     private let decoder: JSONDecoder
     private let failsOnEmptyData: Bool
-    
+
     /// Init DecodableResponseSerializer
     ///
     /// - Parameters:
@@ -26,22 +26,22 @@ public class DecodableResponseSerializer<T: Decodable>: ResponseSerializer {
         self.decoder = decoder
         self.failsOnEmptyData = failsOnEmptyData
     }
-    
+
     /// `SYMoyaNetworkResult` serialize `SYMoyaNetworkDataResponse<Decodable>`
     ///
     /// - Parameter result: A data request result object with `SYMoyaNetworkResultResponse` and `SYMoyaNetworkError`.
     /// - Returns: An object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `Decodable`
     public func serialize(result: SYMoyaNetworkResult) -> SYMoyaNetworkDataResponse<SerializedObject> {
-        return result.serializerCodableObjectDataResponse(atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
+        result.serializerCodableObjectDataResponse(atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
     }
-    
+
     /// Default serializer object
     public static var defaultDecodableSerializer: DecodableResponseSerializer<SerializedObject> {
         DecodableResponseSerializer<SerializedObject>()
     }
 }
 
-public extension ResponseSerializer {
+extension ResponseSerializer {
     /// Create a DecodableResponseSerializer
     ///
     /// - Parameters:
@@ -49,7 +49,7 @@ public extension ResponseSerializer {
     ///   - decoder: Default json parsing object
     ///   - failsOnEmptyData: Indicates whether the callback parsing fails when the data is empty, the default is true
     /// - Returns: A `ResponseSerializer` that decodes the response data as a `Decodable`.
-    static func decodable<T: Decodable>(atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) -> DecodableResponseSerializer<T> {
-        return DecodableResponseSerializer<T>(atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
+    public static func decodable<T: Decodable>(atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) -> DecodableResponseSerializer<T> {
+        DecodableResponseSerializer<T>(atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)
     }
 }

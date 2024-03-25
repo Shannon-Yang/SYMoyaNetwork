@@ -1,5 +1,5 @@
 //
-//  SYMoyaChainRequestProviderAgent.swift
+//  SYMoyaChainProviderSession.swift
 //  SYMoyaNetwork
 //
 //  Created by Shannon Yang on 2021/9/13.
@@ -11,7 +11,6 @@ import Moya
 
 /// Chain request abstract protocol
 public protocol SYChainMoyaProviderType {
-    
     /// When a chained network request is triggered, Make a network request
     ///
     /// - Parameter completion: A closure which is invoked when the request finish. If `callbackQueue` not specified, the main queue will be used.
@@ -20,8 +19,7 @@ public protocol SYChainMoyaProviderType {
 }
 
 /// The chained request provider is used to manage interdependent network requests, and it can actually eventually be used to manage multiple topologically sorted network requests.
-public struct SYMoyaChainProviderSession {
-    
+public enum SYMoyaChainProviderSession {
     /// Make chain request
     ///
     /// ``` swift

@@ -1,5 +1,5 @@
 //
-//  HTTPStatusCode.swift
+//  HTTPStatusCodes+Extensions.swift
 //  SYMoyaNetwork
 //
 //  Created by Shannon Yang on 2022/1/8.
@@ -8,56 +8,62 @@
 
 import Foundation
 
-public extension HTTPStatusCode {
+extension HTTPStatusCode {
     /// Informational - Request received, continuing process.
-    var isInformational: Bool {
-        return isIn(range: 100...199)
+    public var isInformational: Bool {
+        isIn(range: 100...199)
     }
+
     /// Success - The action was successfully received, understood, and accepted.
-    var isSuccess: Bool {
-        return isIn(range: 200...299)
+    public var isSuccess: Bool {
+        isIn(range: 200...299)
     }
+
     /// Redirection - Further action must be taken in order to complete the request.
-    var isRedirection: Bool {
-        return isIn(range: 300...399)
+    public var isRedirection: Bool {
+        isIn(range: 300...399)
     }
+
     /// Client Error - The request contains bad syntax or cannot be fulfilled.
-    var isClientError: Bool {
-        return isIn(range: 400...499)
+    public var isClientError: Bool {
+        isIn(range: 400...499)
     }
+
     /// Server Error - The server failed to fulfill an apparently valid request.
-    var isServerError: Bool {
-        return isIn(range: 500...599)
+    public var isServerError: Bool {
+        isIn(range: 500...599)
     }
-    
+
     /// - returns: `true` if the status code is in the provided range, false otherwise.
     private func isIn(range: ClosedRange<HTTPStatusCode.RawValue>) -> Bool {
-        return range.contains(rawValue)
+        range.contains(rawValue)
     }
 }
 
-public extension HTTPStatusCode {
+extension HTTPStatusCode {
     /// - returns: a localized string suitable for displaying to users that describes the specified status code.
-    var localizedReasonPhrase: String {
-        return HTTPURLResponse.localizedString(forStatusCode: rawValue)
+    public var localizedReasonPhrase: String {
+        HTTPURLResponse.localizedString(forStatusCode: rawValue)
     }
 }
 
 // MARK: - Printing
+
 extension HTTPStatusCode: CustomDebugStringConvertible, CustomStringConvertible {
     public var description: String {
-        return "\(rawValue) - \(localizedReasonPhrase)"
+        "\(rawValue) - \(localizedReasonPhrase)"
     }
+
     public var debugDescription: String {
-        return "HTTPStatusCode:\(description)"
+        "HTTPStatusCode:\(description)"
     }
 }
 
 // MARK: - HTTP URL Response
-public extension HTTPStatusCode {
-    
+
+extension HTTPStatusCode {
     /// Obtains a possible status code from an optional HTTP URL response.
-    init?(HTTPResponse: HTTPURLResponse?) {
+    public init?(HTTPResponse: HTTPURLResponse?) {
         guard let statusCodeValue = HTTPResponse?.statusCode else {
             return nil
         }
@@ -73,36 +79,34 @@ public extension HTTPStatusCode {
     }
 }
 
-public extension HTTPURLResponse {
-    
+extension HTTPURLResponse {
     /**
      * Marked internal to expose (as `statusCodeValue`) for Objective-C interoperability only.
      *
      * - returns: the receiver’s HTTP status code.
      */
-    @objc(statusCodeValue) var statusCodeEnum: HTTPStatusCode {
-        return HTTPStatusCode(HTTPResponse: self)!
+    @objc(statusCodeValue) public var statusCodeEnum: HTTPStatusCode {
+        HTTPStatusCode(HTTPResponse: self)!
     }
-    
+
     /// - returns: the receiver’s HTTP status code.
-    var statusCodeValue: HTTPStatusCode? {
-        return HTTPStatusCode(HTTPResponse: self)
+    public var statusCodeValue: HTTPStatusCode? {
+        HTTPStatusCode(HTTPResponse: self)
     }
-    
+
     /**
      * Initializer for NSHTTPURLResponse objects.
      *
      * - parameter url: the URL from which the response was generated.
      * - parameter statusCode: an HTTP status code.
-     * - parameter HTTPVersion: the version of the HTTP response as represented by the server.  This is typically represented as "HTTP/1.1".
+     * - parameter HTTPVersion: the version of the HTTP response as represented by the server. This is typically represented as "HTTP/1.1".
      * - parameter headerFields: a dictionary representing the header keys and values of the server response.
      *
      * - returns: the instance of the object, or `nil` if an error occurred during initialization.
      */
     @available(iOS, introduced: 7.0)
     @objc(initWithURL:statusCodeValue:HTTPVersion:headerFields:)
-    convenience init?(url: URL, statusCode: HTTPStatusCode, httpVersion: String?, headerFields: [String : String]?) {
+    public convenience init?(url: URL, statusCode: HTTPStatusCode, httpVersion: String?, headerFields: [String: String]?) {
         self.init(url: url, statusCode: statusCode.rawValue, httpVersion: httpVersion, headerFields: headerFields)
     }
 }
-

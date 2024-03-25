@@ -444,7 +444,7 @@ class BasicTypesInStructTestsToJSON: XCTestCase {
         XCTAssertEqual(mappedObject?.arrayEnumIntImplicitlyUnwrapped.first, value)
     }
 
-    func testMappingEnumIntDictionaryToJSON(){
+    func testMappingEnumIntDictionaryToJSON() {
         let key = "key"
         let value = BasicTypesInStruct.EnumInt.Another
         var object = BasicTypesInStruct()

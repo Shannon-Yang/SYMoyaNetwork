@@ -7,10 +7,10 @@
 //
 
 import Foundation
-import SYMoyaNetwork
-import ReactiveSwift
 import Moya
 import ObjectMapper
+import ReactiveSwift
+import SYMoyaNetwork
 import SYMoyaObjectMapper
 
 extension Reactive where Base: SYMoyaProviderRequestable {
@@ -40,10 +40,10 @@ extension Reactive where Base: SYMoyaProviderRequestable {
                 observer.send(value: response)
                 observer.sendCompleted()
             })
-            lifetime.observeEnded { }
+            lifetime.observeEnded {}
         }
     }
-    
+
     /// A data request method, depending on the data request strategy. and parses the requested data into an object that implements `ObjectMapper`.
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
@@ -67,7 +67,7 @@ extension Reactive where Base: SYMoyaProviderRequestable {
             lifetime.observeEnded { cancellable?.cancel() }
         }
     }
-    
+
     /// Retrieve data from the cache and parses the retrieved data into an object that implements `ObjectMapper` array
     ///
     /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
@@ -94,10 +94,10 @@ extension Reactive where Base: SYMoyaProviderRequestable {
                 observer.send(value: response)
                 observer.sendCompleted()
             })
-            lifetime.observeEnded { }
+            lifetime.observeEnded {}
         }
     }
-    
+
     /// A data request method, depending on the data request strategy. and parses the requested data into an object that implements `ObjectMapper` array
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.

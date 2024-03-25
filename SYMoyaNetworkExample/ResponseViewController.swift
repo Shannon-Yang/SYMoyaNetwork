@@ -19,7 +19,6 @@ import SYMoyaRxHandyJSON
 import ReactiveSYMoyaNetwork
 
 import SYMoyaRxObjectMapper
-import SYMoyaRxHandyJSON
 import SYMoyaReactiveHandyJSON
 import SYMoyaReactiveObjectMapper
 
@@ -34,22 +33,22 @@ enum ResponseCallbackType: Int {
 class ResponseViewController: UIViewController {
     let responseType: ResponseType
     
-    @IBOutlet weak var segmentedControl: UISegmentedControl! {
+    @IBOutlet weak private var segmentedControl: UISegmentedControl! {
         didSet {
             segmentedControl.setTitle("Normal", forSegmentAt: 0)
             segmentedControl.setTitle("Combine", forSegmentAt: 1)
         }
     }
 
-    @IBOutlet weak var responseImageView: UIImageView! {
+    @IBOutlet weak private var responseImageView: UIImageView! {
         didSet {
             responseImageView.isHidden = !(responseType == .image)
-            contentLabel.isHidden  = !(responseImageView.isHidden)
+            contentLabel.isHidden = !(responseImageView.isHidden)
         }
     }
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var contentLabel: UILabel!
-    @IBOutlet weak var indicator: UIActivityIndicatorView!
+    @IBOutlet weak private var scrollView: UIScrollView!
+    @IBOutlet weak private var contentLabel: UILabel!
+    @IBOutlet weak private var indicator: UIActivityIndicatorView!
     private var callbackType: ResponseCallbackType = .normal {
         didSet {
             request()
@@ -68,7 +67,7 @@ class ResponseViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @IBAction func segmentAction(_ sender: UISegmentedControl) {
+    @IBAction private func segmentAction(_ sender: UISegmentedControl) {
         let index = sender.selectedSegmentIndex
         if let type = ResponseCallbackType(rawValue: index) {
             self.callbackType = type
@@ -173,10 +172,13 @@ private extension ResponseViewController {
                 }
             }
             func toJSONString(response: SYMoyaNetworkDataResponse<Any>) -> String? {
-                guard let value = response.value else { return nil }
-                guard let data = try? JSONSerialization.data(withJSONObject: value) else { return nil }
-                let string = String(data: data, encoding: .utf8)
-                return string
+                guard let value = response.value else {
+                    return nil
+                }
+                guard let data = try? JSONSerialization.data(withJSONObject: value) else {
+                    return nil
+                }
+                return String(data: data, encoding: .utf8)
             }
         case .image:
             let provider = SYMoyaProvider<HTTPBinImages>()

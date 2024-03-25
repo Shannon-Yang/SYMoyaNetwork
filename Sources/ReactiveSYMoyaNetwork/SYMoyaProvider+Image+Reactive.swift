@@ -7,11 +7,11 @@
 //
 
 import Foundation
-import ReactiveSwift
 import Moya
+import ReactiveSwift
 import SYMoyaNetwork
 
-public extension Reactive where Base: SYMoyaProviderRequestable {
+extension Reactive where Base: SYMoyaProviderRequestable {
     /// Retrieve data from the cache and parses the retrieved data into an object that is `Image`.
     ///
     /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
@@ -31,17 +31,17 @@ public extension Reactive where Base: SYMoyaProviderRequestable {
     ///   - serializer: A `ResponseSerializer` that decodes the response data as a `Image`.
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     /// - Returns: A SignalProducer creates Signals that can produce values of type `SYMoyaNetworkDataResponse<Image>`
-    func responseImageFromCache(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Base.Target, serializer: ImageResponseSerializer = .defaultImageSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<Image>, Never> {
+    public func responseImageFromCache(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Base.Target, serializer: ImageResponseSerializer = .defaultImageSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<Image>, Never> {
         SignalProducer { [weak base] observer, lifetime in
-            base?.requestFromCache(cacheFromType,target: target, callbackQueue: callbackQueue, completion: { result in
+            base?.requestFromCache(cacheFromType, target: target, callbackQueue: callbackQueue, completion: { result in
                 let response = serializer.serialize(result: result)
                 observer.send(value: response)
                 observer.sendCompleted()
             })
-            lifetime.observeEnded { }
+            lifetime.observeEnded {}
         }
     }
-    
+
     /// A data request method, depending on the data request strategy. and parses the requested data into an object that implements `Image`
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
@@ -55,7 +55,7 @@ public extension Reactive where Base: SYMoyaProviderRequestable {
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - progress: Closure to be executed when progress changes.
     /// - Returns: A SignalProducer creates Signals that can produce values of type `SYMoyaNetworkDataResponse<Image>`
-    func responseImage(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: ImageResponseSerializer = .defaultImageSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<Image>, Never> {
+    public func responseImage(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: ImageResponseSerializer = .defaultImageSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<Image>, Never> {
         SignalProducer { [weak base] observer, lifetime in
             let cancellable = base?.request(type, target: target, callbackQueue: callbackQueue, progress: progress, completion: { result in
                 let response = serializer.serialize(result: result)

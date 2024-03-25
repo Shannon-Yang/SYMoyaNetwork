@@ -1,5 +1,5 @@
 //
-//  SYMoyaProvider+Codable.swift
+//  SYMoyaProvider+Decodable.swift
 //  SYMoyaNetwork
 //
 //  Created by Shannon Yang on 2021/8/19.
@@ -9,8 +9,9 @@
 import Foundation
 import Moya
 
-//MARK: - SYMoyaProviderCodableType
-public extension SYMoyaProvider {
+// MARK: - SYMoyaProviderCodableType
+
+extension SYMoyaProvider {
     /// Retrieve data from the cache and parses the retrieved data into an object that implements `Decodable`.
     ///
     /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
@@ -30,13 +31,13 @@ public extension SYMoyaProvider {
     ///   - serializer: A `ResponseSerializer` that decodes the response data as a `Decodable`.
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - completion: A closure which is invoked when the cache operation finishes. If not specified, the main queue will be used.
-    func responseDecodableObjectFromCache<T: Decodable>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: DecodableResponseSerializer<T> = .defaultDecodableSerializer, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<T>) -> Void) {
-        self.requestFromCache(cacheFromType, target: target, callbackQueue: callbackQueue) { result in
+    public func responseDecodableObjectFromCache<T: Decodable>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: DecodableResponseSerializer<T> = .defaultDecodableSerializer, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<T>) -> Void) {
+        requestFromCache(cacheFromType, target: target, callbackQueue: callbackQueue) { result in
             let decodable = serializer.serialize(result: result)
             completion(decodable)
         }
     }
-    
+
     /// A data request method, depending on the data request strategy. and parses the requested data into an object that implements `Decodable`
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
@@ -52,11 +53,10 @@ public extension SYMoyaProvider {
     ///   - completion: A closure which is invoked when the request operation finishes. If not specified, the main queue will be used.
     /// - Returns: Protocol to define the opaque type returned from a request.
     @discardableResult
-    func responseDecodableObject<T: Decodable>(_ type: ResponseDataSourceType = .server, target: Target, serializer: DecodableResponseSerializer<T> = .defaultDecodableSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<T>) -> Void) -> Moya.Cancellable? {
-        let cancellable = self.request(type, target: target, callbackQueue: callbackQueue, progress: progress) { result in
+    public func responseDecodableObject<T: Decodable>(_ type: ResponseDataSourceType = .server, target: Target, serializer: DecodableResponseSerializer<T> = .defaultDecodableSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<T>) -> Void) -> Moya.Cancellable? {
+        return request(type, target: target, callbackQueue: callbackQueue, progress: progress) { result in
             let string = serializer.serialize(result: result)
             completion(string)
         }
-        return cancellable
     }
 }

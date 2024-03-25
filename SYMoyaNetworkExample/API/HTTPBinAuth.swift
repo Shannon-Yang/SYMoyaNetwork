@@ -4,7 +4,7 @@
 //
 //  Created by Shannon Yang on 2023/7/23.
 //  Copyright © 2023 Shannon Yang. All rights reserved.
-// 
+//
 
 import Foundation
 import Moya
@@ -33,7 +33,7 @@ enum HTTPBinAuth: SYTargetType, AccessTokenAuthorizable {
 
     var task: Task {
         switch self {
-        case .basicAuth,.bearer:
+        case .basicAuth, .bearer:
             return .requestPlain
         }
     }
@@ -64,7 +64,7 @@ enum HTTPBinAuth: SYTargetType, AccessTokenAuthorizable {
     var authorizationType: AuthorizationType? {
         switch self {
         case .bearer:
-            return  .bearer
+            return .bearer
         default:
             return nil
         }

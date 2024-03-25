@@ -11,7 +11,8 @@ import Moya
 import ObjectMapper
 import SYMoyaNetwork
 
-//MARK: - SYMoyaProviderObjectType
+// MARK: - SYMoyaProviderObjectType
+
 extension SYMoyaProvider {
     /// Retrieve data from the cache and parses the retrieved data into an object that implements `BaseMappable`.
     ///
@@ -32,13 +33,13 @@ extension SYMoyaProvider {
     ///   - serializer: A `ResponseSerializer` that decodes the response data as a `BaseMappable`.
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - completion: A closure which is invoked when the cache operation finishes. If not specified, the main queue will be used.
-    public func responseObjectFromCache<T: BaseMappable>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: ObjectMapperObjectResponseSerializer<T> = .defaultMapperObjectSerializer, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<T>) -> Void){
-        self.requestFromCache(cacheFromType,target: target, callbackQueue: callbackQueue) { result in
+    public func responseObjectFromCache<T: BaseMappable>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: ObjectMapperObjectResponseSerializer<T> = .defaultMapperObjectSerializer, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<T>) -> Void) {
+        requestFromCache(cacheFromType, target: target, callbackQueue: callbackQueue) { result in
             let response = serializer.serialize(result: result)
             completion(response)
         }
     }
-    
+
     /// A data request method, depending on the data request strategy. and parses the requested data into an object that implements `BaseMappable`
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
@@ -55,13 +56,12 @@ extension SYMoyaProvider {
     /// - Returns: Protocol to define the opaque type returned from a request.
     @discardableResult
     public func responseObject<T: BaseMappable>(_ type: ResponseDataSourceType = .server, target: Target, serializer: ObjectMapperObjectResponseSerializer<T> = .defaultMapperObjectSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable? {
-        let cancellable = self.request(type, target: target, callbackQueue: callbackQueue, progress: progress) { result in
+        return request(type, target: target, callbackQueue: callbackQueue, progress: progress) { result in
             let response = serializer.serialize(result: result)
             completion(response)
         }
-        return cancellable
     }
-    
+
     /// Retrieve data from the cache and parses the retrieved data into an object that implements `BaseMappable` array
     ///
     /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
@@ -81,13 +81,13 @@ extension SYMoyaProvider {
     ///   - serializer: A `ResponseSerializer` that decodes the response data as a `BaseMappable` array.
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - completion: A closure which is invoked when the cache operation finishes. If not specified, the main queue will be used.
-    public func responseObjectsFromCache<T: BaseMappable>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: ObjectMapperObjectsResponseSerializer<T> = .defaultMapperObjectsSerializer, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<[T]>) -> Void){
-        self.requestFromCache(cacheFromType,target: target, callbackQueue: callbackQueue) { result in
+    public func responseObjectsFromCache<T: BaseMappable>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: ObjectMapperObjectsResponseSerializer<T> = .defaultMapperObjectsSerializer, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<[T]>) -> Void) {
+        requestFromCache(cacheFromType, target: target, callbackQueue: callbackQueue) { result in
             let response = serializer.serialize(result: result)
             completion(response)
         }
     }
-    
+
     /// A data request method, depending on the data request strategy. and parses the requested data into an object that implements `BaseMappable` arry
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
@@ -104,10 +104,9 @@ extension SYMoyaProvider {
     /// - Returns: Protocol to define the opaque type returned from a request.
     @discardableResult
     public func responseObjects<T: BaseMappable>(_ type: ResponseDataSourceType = .server, target: Target, serializer: ObjectMapperObjectsResponseSerializer<T> = .defaultMapperObjectsSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<[T]>) -> Void) -> Cancellable? {
-        let cancellable = self.request(type, target: target, callbackQueue: callbackQueue, progress: progress) { result in
+        return request(type, target: target, callbackQueue: callbackQueue, progress: progress) { result in
             let response = serializer.serialize(result: result)
             completion(response)
         }
-        return cancellable
     }
 }

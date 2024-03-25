@@ -9,39 +9,38 @@
 import Foundation
 import Moya
 
-public extension MoyaError {
+extension MoyaError {
     /// Convert to SYMoyaNetworkError
     /// - Returns: Represents all the errors which can happen in SYMoyaNetwork framework.
-    func transformToSYMoyaNetworkError() -> SYMoyaNetworkError {
+    public func transformToSYMoyaNetworkError() -> SYMoyaNetworkError {
         switch self {
-        /// Indicates a response failed to map to an image.
-        case .imageMapping(let response):
+        case let .imageMapping(response):
+            // Indicates a response failed to map to an image.
             return .serializeError(reason: .imageMapping(response: response))
-        /// Indicates a response failed to map to a JSON structure.
-        case .jsonMapping(let response):
+        case let .jsonMapping(response):
+            // Indicates a response failed to map to a JSON structure.
             return .serializeError(reason: .jsonMapping(response: response))
-        /// Indicates a response failed to map to a String.
-        case .stringMapping(let response):
+        case let .stringMapping(response):
+            // Indicates a response failed to map to a String.
             return .serializeError(reason: .stringMapping(response: response))
-        /// Indicates a response failed to map to a Decodable object.
-        case .objectMapping(let error, let response):
+        case let .objectMapping(error, response):
+            // Indicates a response failed to map to a Decodable object.
             return .serializeError(reason: .objectMapping(error: error, response: response))
-        /// Indicates that Encodable couldn't be encoded into Data
-        case .encodableMapping(let error):
+        case let .encodableMapping(error):
+            // Indicates that Encodable couldn't be encoded into Data
             return .serializeError(reason: .encodableMapping(error: error))
-        /// Indicates a response failed with an invalid HTTP status code.
-        case .statusCode(let response):
+        case let .statusCode(response):
+            // Indicates a response failed with an invalid HTTP status code.
             return .validationErrorReason(reason: .statusCode(response: response))
-        /// Indicates a response failed due to an underlying `Error`.
-        case .underlying(let error, let response):
+        case let .underlying(error, response):
+            // Indicates a response failed due to an underlying `Error`.
             return .requestErrorReason(reason: .underlying(error: error, response: response))
-        /// Indicates that an `Endpoint` failed to map to a `URLRequest`.
-        case .requestMapping(let string):
+        case let .requestMapping(string):
+            // Indicates that an `Endpoint` failed to map to a `URLRequest`.
             return .endpointErrorReason(reason: .urlRequestCreateFail(string: string))
-        /// Indicates that an `Endpoint` failed to encode the parameters for the `URLRequest`.
-        case .parameterEncoding(let error):
+        case let .parameterEncoding(error):
+            // Indicates that an `Endpoint` failed to encode the parameters for the `URLRequest`.
             return .endpointErrorReason(reason: .parameterEncodingError(error: error))
         }
     }
 }
-

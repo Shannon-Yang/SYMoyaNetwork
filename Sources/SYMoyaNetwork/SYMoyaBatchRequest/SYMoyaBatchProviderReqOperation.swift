@@ -15,25 +15,27 @@ public class SYMoyaBatchProviderReqOperation<TargetType: SYTargetType>: AsyncOpe
     let targetType: TargetType
     var providerResponse: SYMoyaProviderSessionResponse?
     let provider: SYMoyaProvider<TargetType>
-    
+
     /// Init SYMoyaBatchProviderReqOperation by a protocol used to define the specifications required by `SYMoyaProvider`.
     /// - Parameter  targetType: The protocol used to define the specifications required by `SYMoyaProvider`.
     public init(targetType: TargetType) {
         self.targetType = targetType
-        self.provider = SYMoyaProvider<TargetType>()
+        provider = SYMoyaProvider<TargetType>()
     }
-    
+
     /// Re-parent class method to implement batch request tasks
-    public override func main() {
-        self.cancellable = provider.req(targetType) { [weak self] result in
-            guard let self else { return }
+    override public func main() {
+        cancellable = provider.req(targetType) { [weak self] result in
+            guard let self else {
+                return
+            }
             self.providerResponse = SYMoyaProviderSessionResponse(self.targetType, result)
             self.finish()
         }
     }
-    
+
     /// Cancel tasks for batch requests
-    public override func cancel() {
+    override public func cancel() {
         finish()
         cancellable?.cancel()
     }

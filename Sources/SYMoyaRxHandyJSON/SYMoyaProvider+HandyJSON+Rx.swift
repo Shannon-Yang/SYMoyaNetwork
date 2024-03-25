@@ -7,13 +7,13 @@
 //
 
 import Foundation
-import SYMoyaNetwork
-import RxSwift
-import Moya
 import HandyJSON
+import Moya
+import RxSwift
 import SYMoyaHandyJSON
+import SYMoyaNetwork
 
-public extension Reactive where Base: SYMoyaProviderRequestable {
+extension Reactive where Base: SYMoyaProviderRequestable {
     /// Retrieve data from the cache and parses the retrieved data into an object that implements `HandyJSON`.
     ///
     /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
@@ -33,9 +33,9 @@ public extension Reactive where Base: SYMoyaProviderRequestable {
     ///   - serializer: A `ResponseSerializer` that decodes the response data as a `HandyJSON`.
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     /// - Returns: A type-erased `ObservableType` that can produce values of type `SYMoyaNetworkDataResponse<HandyJSON>`
-    func responseObjectFromCache<T: HandyJSON>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Base.Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none) -> Observable<SYMoyaNetworkDataResponse<T>> {
-        return Observable.create { [weak base] observer in
-            base?.requestFromCache(cacheFromType,target: target, callbackQueue: callbackQueue, completion: { result in
+    public func responseObjectFromCache<T: HandyJSON>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Base.Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none) -> Observable<SYMoyaNetworkDataResponse<T>> {
+        Observable.create { [weak base] observer in
+            base?.requestFromCache(cacheFromType, target: target, callbackQueue: callbackQueue, completion: { result in
                 let response = serializer.serialize(result: result)
                 observer.on(.next(response))
                 observer.on(.completed)
@@ -43,7 +43,7 @@ public extension Reactive where Base: SYMoyaProviderRequestable {
             return Disposables.create()
         }
     }
-    
+
     /// A data request method, depending on the data request strategy. and parses the requested data into an object that implements `HandyJSON`
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
@@ -57,8 +57,8 @@ public extension Reactive where Base: SYMoyaProviderRequestable {
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - progress: Closure to be executed when progress changes.
     /// - Returns: A type-erased `ObservableType` that can produce values of type `SYMoyaNetworkDataResponse<HandyJSON>`
-    func responseObject<T: HandyJSON>(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> Observable<SYMoyaNetworkDataResponse<T>> {
-        return Observable.create { [weak base] observer in
+    public func responseObject<T: HandyJSON>(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> Observable<SYMoyaNetworkDataResponse<T>> {
+        Observable.create { [weak base] observer in
             let cancellable = base?.request(type, target: target, callbackQueue: callbackQueue, progress: progress, completion: { result in
                 let response = serializer.serialize(result: result)
                 observer.on(.next(response))
@@ -67,7 +67,7 @@ public extension Reactive where Base: SYMoyaProviderRequestable {
             return Disposables.create { cancellable?.cancel() }
         }
     }
-    
+
     /// Retrieve data from the cache and parses the retrieved data into an object that implements `HandyJSON` array
     ///
     /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
@@ -87,9 +87,9 @@ public extension Reactive where Base: SYMoyaProviderRequestable {
     ///   - serializer: A `ResponseSerializer` that decodes the response data as a `HandyJSON` array.
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     /// - Returns: A type-erased `ObservableType` that can produce values of type `SYMoyaNetworkDataResponse<[HandyJSON?]>`
-    func responseObjectsFromCache<T: HandyJSON>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Base.Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none) -> Observable<SYMoyaNetworkDataResponse<[T?]>> {
-        return Observable.create { [weak base] observer  in
-            base?.requestFromCache(cacheFromType,target: target, callbackQueue: callbackQueue, completion: { result in
+    public func responseObjectsFromCache<T: HandyJSON>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Base.Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none) -> Observable<SYMoyaNetworkDataResponse<[T?]>> {
+        Observable.create { [weak base] observer in
+            base?.requestFromCache(cacheFromType, target: target, callbackQueue: callbackQueue, completion: { result in
                 let response = serializer.serialize(result: result)
                 observer.on(.next(response))
                 observer.on(.completed)
@@ -97,7 +97,7 @@ public extension Reactive where Base: SYMoyaProviderRequestable {
             return Disposables.create()
         }
     }
-    
+
     /// A data request method, depending on the data request strategy. and parses the requested data into an object that implements `HandyJSON` array
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
@@ -111,8 +111,8 @@ public extension Reactive where Base: SYMoyaProviderRequestable {
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - progress: Closure to be executed when progress changes.
     /// - Returns: A type-erased `ObservableType` that can produce values of type `SYMoyaNetworkDataResponse<[HandyJSON?]>`
-    func responseObjects<T: HandyJSON>(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> Observable<SYMoyaNetworkDataResponse<[T?]>> {
-        return Observable.create { [weak base] observer in
+    public func responseObjects<T: HandyJSON>(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> Observable<SYMoyaNetworkDataResponse<[T?]>> {
+        Observable.create { [weak base] observer in
             let cancellable = base?.request(type, target: target, callbackQueue: callbackQueue, progress: progress, completion: { result in
                 let response = serializer.serialize(result: result)
                 observer.on(.next(response))

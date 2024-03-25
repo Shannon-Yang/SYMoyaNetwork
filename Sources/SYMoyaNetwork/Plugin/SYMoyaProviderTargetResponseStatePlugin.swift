@@ -1,5 +1,5 @@
 //
-//  SYTestPlugin.swift
+//  SYMoyaProviderTargetResponseStatePlugin.swift
 //  SYMoyaNetwork
 //
 //  Created by Shannon Yang on 2022/8/10.
@@ -29,23 +29,23 @@ public enum SYMoyaProviderResponseState {
 
 /// A request state object holding TargetType
 public class SYMoyaProviderTargetResponseStateItem<Target: TargetType> {
-    
     /// provider request state
     public var state: SYMoyaProviderResponseState
-    
+
     /// The protocol used to define the specifications necessary for a `MoyaProvider`.
     public let target: Target
-    
+
     /// Class for reifying a target of the `Target` enum unto a concrete `Endpoint`.
     public let endPoint: Endpoint
-    
+
     // MARK: - Initallization
+
     init(target: Target, state: SYMoyaProviderResponseState) {
         self.state = state
         self.target = target
-        self.endPoint = MoyaProvider.defaultEndpointMapping(for: target)
+        endPoint = MoyaProvider.defaultEndpointMapping(for: target)
     }
-    
+
     /// Determine whether it is equal to the current item by Target. Note: Initialize endPoint by target for comparison
     ///
     /// - Parameter target: The protocol used to define the specifications necessary for a `MoyaProvider`.
@@ -56,51 +56,66 @@ public class SYMoyaProviderTargetResponseStateItem<Target: TargetType> {
     }
 }
 
-//MARK: - Equatable
+// MARK: - Equatable
+
 extension SYMoyaProviderTargetResponseStateItem: Equatable {
     public static func == (lhs: SYMoyaProviderTargetResponseStateItem<Target>, rhs: SYMoyaProviderTargetResponseStateItem<Target>) -> Bool {
-        return lhs.endPoint == rhs.endPoint
+        lhs.endPoint == rhs.endPoint
     }
 }
 
 /// SYMoyaProvider request state plugin
 public final class SYMoyaProviderTargetResponseStatePlugin<Target: TargetType> {
-    
     /// The provider request response status, the status change from the initiation to the end of the network request, default is init .prepare
     public var providerResponseStateItems: [SYMoyaProviderTargetResponseStateItem<Target>]
-    
+
     // MARK: - Initallization
+
     public init() {
-        self.providerResponseStateItems = []
+        providerResponseStateItems = []
     }
 }
 
 // MARK: - Private
+
 private extension SYMoyaProviderTargetResponseStatePlugin {
-    func addProviderTargetResponseStateItem(_ item: SYMoyaProviderTargetResponseStateItem<Target>) {
-        if let index = self.providerResponseStateItems.firstIndex(of: item) {
-            self.providerResponseStateItems[index] = item
+     func addProviderTargetResponseStateItem(_ item: SYMoyaProviderTargetResponseStateItem<Target>) {
+        if let index = providerResponseStateItems.firstIndex(of: item) {
+            providerResponseStateItems[index] = item
         } else {
-            self.providerResponseStateItems.append(item)
+            providerResponseStateItems.append(item)
+        }
+    }
+    
+    func getProviderResponseStateItemsFirst(_ target: TargetType) -> SYMoyaProviderTargetResponseStateItem<Target>? {
+         providerResponseStateItems.first {
+            guard let target = target as? Target else {
+                fatalError("Type as error")
+            }
+            return $0.targetEqual(target)
         }
     }
 }
 
-//MARK: - PluginType
+// MARK: - PluginType
+
 extension SYMoyaProviderTargetResponseStatePlugin: PluginType {
     public func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
-        let item = SYMoyaProviderTargetResponseStateItem(target: target as! Target, state: .prepare)
-        self.addProviderTargetResponseStateItem(item)
+        guard let target = target as? Target else {
+            fatalError("Type as error")
+        }
+        let item = SYMoyaProviderTargetResponseStateItem(target: target, state: .prepare)
+        addProviderTargetResponseStateItem(item)
         return request
     }
-    
+
     public func willSend(_ request: RequestType, target: TargetType) {
-        let item = self.providerResponseStateItems.filter({ $0.targetEqual(target as! Target) }).first
+        let item = getProviderResponseStateItemsFirst(target)
         item?.state = .willSend
     }
-    
+
     public func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
-        let item = self.providerResponseStateItems.filter({ $0.targetEqual(target as! Target) }).first
+        let item = getProviderResponseStateItemsFirst(target)
         item?.state = .complete
         switch result {
         case .success:
@@ -109,9 +124,9 @@ extension SYMoyaProviderTargetResponseStatePlugin: PluginType {
             item?.state = .failed
         }
     }
-    
+
     public func process(_ result: Result<Moya.Response, MoyaError>, target: TargetType) -> Result<Moya.Response, MoyaError> {
-        let item = self.providerResponseStateItems.filter({ $0.targetEqual(target as! Target) }).first
+        let item = getProviderResponseStateItemsFirst(target)
         item?.state = .process
         return result
     }

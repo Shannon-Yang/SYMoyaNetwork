@@ -10,7 +10,8 @@ import Foundation
 import Moya
 import SwiftyJSON
 
-//MARK: - SYMoyaProviderSwiftyJSONType
+// MARK: - SYMoyaProviderSwiftyJSONType
+
 extension SYMoyaProvider {
     /// Retrieve data from the cache and parses the retrieved data into an object that is `SwiftyJSON.JSON`.
     ///
@@ -32,12 +33,12 @@ extension SYMoyaProvider {
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - completion: A closure which is invoked when the cache operation finishes. If not specified, the main queue will be used.
     public func responseSwiftyJSONFromCache(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<SwiftyJSON.JSON>) -> Void) {
-        self.requestFromCache(cacheFromType, target: target, callbackQueue: callbackQueue) { result in
+        requestFromCache(cacheFromType, target: target, callbackQueue: callbackQueue) { result in
             let json = serializer.serialize(result: result)
             completion(json)
         }
     }
-    
+
     /// A data request method, depending on the data request strategy. and parses the requested data into an object that is `SwiftyJSON.JSON`.
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
@@ -54,10 +55,9 @@ extension SYMoyaProvider {
     /// - Returns: Protocol to define the opaque type returned from a request.
     @discardableResult
     public func responseSwiftyJSON(_ type: ResponseDataSourceType = .server, target: Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<SwiftyJSON.JSON>) -> Void) -> Cancellable? {
-        let cancellable = self.request(type, target: target, callbackQueue: callbackQueue, progress: progress) { result in
+        return request(type, target: target, callbackQueue: callbackQueue, progress: progress) { result in
             let json = serializer.serialize(result: result)
             completion(json)
         }
-        return cancellable
     }
 }

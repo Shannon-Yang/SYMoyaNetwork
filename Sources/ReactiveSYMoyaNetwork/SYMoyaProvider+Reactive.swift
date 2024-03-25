@@ -10,5 +10,6 @@ import Foundation
 import ReactiveSwift
 import SYMoyaNetwork
 
-//MARK: - SYMoyaProvider ReactiveExtensionsProvider
+// MARK: - SYMoyaProvider ReactiveExtensionsProvider
+
 extension SYMoyaProvider: ReactiveExtensionsProvider {}

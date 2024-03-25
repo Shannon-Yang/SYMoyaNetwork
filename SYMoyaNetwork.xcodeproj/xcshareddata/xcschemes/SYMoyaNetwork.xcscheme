@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FB8072F626F32C070042B30D"
+               BlueprintIdentifier = "FBFA2B3C2A66DBF4002D740A"
                BuildableName = "SYMoyaNetworkTests.xctest"
                BlueprintName = "SYMoyaNetworkTests"
                ReferencedContainer = "container:SYMoyaNetwork.xcodeproj">

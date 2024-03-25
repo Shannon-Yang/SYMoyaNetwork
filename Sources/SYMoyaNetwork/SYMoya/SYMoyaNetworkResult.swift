@@ -21,9 +21,9 @@ extension SYMoyaNetworkResult {
     func serializerDataResponse() -> SYMoyaNetworkDataResponse<Data> {
         var dataRes: SYMoyaNetworkDataResponse<Data>
         switch self {
-        case .success(let resultResponse):
+        case let .success(resultResponse):
             dataRes = SYMoyaNetworkDataResponse<Data>(resultResponse: resultResponse, result: .success(resultResponse.response.data))
-        case .failure(let error):
+        case let .failure(error):
             dataRes = SYMoyaNetworkDataResponse<Data>(result: .failure(error))
         }
         return dataRes

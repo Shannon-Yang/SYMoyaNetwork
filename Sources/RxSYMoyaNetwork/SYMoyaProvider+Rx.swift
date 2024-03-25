@@ -10,5 +10,6 @@ import Foundation
 import RxSwift
 import SYMoyaNetwork
 
-//MARK: - SYMoyaProvider ReactiveCompatible
+// MARK: - SYMoyaProvider ReactiveCompatible
+
 extension SYMoyaProvider: ReactiveCompatible {}

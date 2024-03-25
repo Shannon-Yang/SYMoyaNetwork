@@ -7,9 +7,9 @@
 //
 
 #if os(macOS)
-import AppKit
+    import AppKit
 #else
-import UIKit
+    import UIKit
 #endif
 import Moya
 
@@ -32,7 +32,7 @@ public enum CacheType {
     case memory
     /// The Response is cached in disk.
     case disk
-    
+
     /// Whether the cache type represents the Response is already cached or not.
     public var cached: Bool {
         switch self {
@@ -44,27 +44,25 @@ public enum CacheType {
 
 /// Represents the caching operation result.
 public struct CacheStoreResult {
-    
     /// The cache result for memory cache. Caching an Response to memory will never fail.
-    public let memoryCacheResult: Result<(), Never>
-    
+    public let memoryCacheResult: Result<Void, Never>
+
     /// The cache result for disk cache. If an error happens during caching operation,
     /// you can get it from `.failure` case of this `diskCacheResult`.
-    public let diskCacheResult: Result<(), SYMoyaNetworkError>
+    public let diskCacheResult: Result<Void, SYMoyaNetworkError>
 }
 
 extension Data: DataTransformable {
     public func toData() throws -> Data {
-        return self
+        self
     }
 
     public static func fromData(_ data: Data) throws -> Data {
-        return data
+        data
     }
 
     public static let empty = Data()
 }
-
 
 /// Represents the getting Response operation from the cache.
 ///
@@ -72,26 +70,25 @@ extension Data: DataTransformable {
 /// - memory: The Response can be retrieved memory cache.
 /// - none: The Response does not exist in the cache.
 public enum NetworkCacheResult {
-    
     /// The Moya.Response can be retrieved from disk cache.
     case disk(Moya.Response)
-    
+
     /// The Moya.Response can be retrieved memory cache.
     case memory(Moya.Response)
-    
+
     /// The Moya.Response does not exist in the cache.
     case none
-    
+
     /// Extracts the Moya.Response from cache result. It returns the associated `Response` value for
     /// `.disk` and `.memory` case. For `.none` case, `nil` is returned.
     public var response: Moya.Response? {
         switch self {
-        case .disk(let response): return response
-        case .memory(let response): return response
+        case let .disk(response): return response
+        case let .memory(response): return response
         case .none: return nil
         }
     }
-    
+
     /// Returns the corresponding `CacheType` value based on the result type of `self`.
     public var cacheType: CacheType {
         switch self {
@@ -110,32 +107,25 @@ public enum NetworkCacheResult {
 /// your own cache object and configure its storages as your need. This class also provide an interface for you to set
 /// the memory and disk storage config.
 open class NetworkCache {
-    
-    // MARK: Singleton
-    /// The default `NetworkCache` object. SYMoyaNetwork will use this cache for its related methods if there is no
-    /// other cache specified. The `name` of this default cache is "default", and you should not use this name
-    /// for any of your customize cache.
-    /// public static let `default` = NetworkCache(name: "default")
-    
-    
     // MARK: Public Properties
+
     /// The `MemoryStorage.Backend` object used in this cache. This storage holds loaded Moya.Response in memory with a
     /// reasonable expire duration and a maximum memory usage. To modify the configuration of a storage, just set
     /// the storage `config` and its properties.
     public let memoryStorage: MemoryStorage.Backend<Moya.Response>
-    
+
     /// The `DiskStorage.Backend` object used in this cache. This storage stores loaded Moya.Response in disk with a
     /// reasonable expire duration and a maximum disk usage. To modify the configuration of a storage, just set
     /// the storage `config` and its properties.
     public let diskStorage: DiskStorage.Backend<Data>
-    
+
     private let ioQueue: DispatchQueue
-    
+
     /// Closure that defines the disk cache path from a given path and cacheName.
     public typealias DiskCachePathClosure = (URL, String) -> URL
-    
+
     // MARK: Initializers
-    
+
     /// Creates an `NetworkCache` from a customized `MemoryStorage` and `DiskStorage`.
     ///
     /// - Parameters:
@@ -143,32 +133,32 @@ open class NetworkCache {
     ///   - diskStorage: The `DiskStorage.Backend` object to use in the Moya.Response cache.
     public init(
         memoryStorage: MemoryStorage.Backend<Moya.Response>,
-        diskStorage: DiskStorage.Backend<Data>)
-    {
+        diskStorage: DiskStorage.Backend<Data>
+    ) {
         self.memoryStorage = memoryStorage
         self.diskStorage = diskStorage
         let ioQueueName = "com.shannonyang.SYMoyaNetwork.NetworkCache.ioQueue.\(UUID().uuidString)"
         ioQueue = DispatchQueue(label: ioQueueName)
-        
+
         let notifications: [(Notification.Name, Selector)]
-#if !os(macOS) && !os(watchOS)
-        notifications = [
-            (UIApplication.didReceiveMemoryWarningNotification, #selector(clearMemoryCache)),
-            (UIApplication.willTerminateNotification, #selector(cleanExpiredDiskCache)),
-            (UIApplication.didEnterBackgroundNotification, #selector(backgroundCleanExpiredDiskCache))
-        ]
-#elseif os(macOS)
-        notifications = [
-            (NSApplication.willResignActiveNotification, #selector(cleanExpiredDiskCache)),
-        ]
-#else
-        notifications = []
-#endif
-        notifications.forEach {
-            NotificationCenter.default.addObserver(self, selector: $0.1, name: $0.0, object: nil)
+        #if !os(macOS) && !os(watchOS)
+            notifications = [
+                (UIApplication.didReceiveMemoryWarningNotification, #selector(clearMemoryCache)),
+                (UIApplication.willTerminateNotification, #selector(cleanExpiredDiskCache)),
+                (UIApplication.didEnterBackgroundNotification, #selector(backgroundCleanExpiredDiskCache))
+            ]
+        #elseif os(macOS)
+            notifications = [
+                (NSApplication.willResignActiveNotification, #selector(cleanExpiredDiskCache))
+            ]
+        #else
+            notifications = []
+        #endif
+        for notification in notifications {
+            NotificationCenter.default.addObserver(self, selector: notification.1, name: notification.0, object: nil)
         }
     }
-    
+
     /// Creates an `NetworkCache` with a given `name`. Both `MemoryStorage` and `DiskStorage` will be created
     /// with a default config based on the `name`.
     ///
@@ -178,7 +168,7 @@ open class NetworkCache {
     public convenience init(name: String) {
         self.init(noThrowName: name, cacheDirectoryURL: nil, diskCachePathClosure: nil)
     }
-    
+
     /// Creates an `NetworkCache` with a given `name`, cache directory `path`
     /// and a closure to modify the cache directory.
     ///
@@ -196,51 +186,54 @@ open class NetworkCache {
     public convenience init(
         name: String,
         cacheDirectoryURL: URL?,
-        diskCachePathClosure: DiskCachePathClosure? = nil) throws {
-            if name.isEmpty {
-                fatalError("[SYMoyaNetwork] You should specify a name for the cache. A cache with empty name is not permitted.")
-            }
-            
-            let memoryStorage = NetworkCache.createMemoryStorage()
-            
-            let config = NetworkCache.createConfig(
-                name: name, cacheDirectoryURL: cacheDirectoryURL, diskCachePathClosure: diskCachePathClosure
-            )
-            let diskStorage = try DiskStorage.Backend<Data>(config: config)
-            self.init(memoryStorage: memoryStorage, diskStorage: diskStorage)
+        diskCachePathClosure: DiskCachePathClosure? = nil
+    ) throws {
+        if name.isEmpty {
+            fatalError("[SYMoyaNetwork] You should specify a name for the cache. A cache with empty name is not permitted.")
         }
-    
+
+        let memoryStorage = Self.createMemoryStorage()
+
+        let config = Self.createConfig(
+            name: name,
+            cacheDirectoryURL: cacheDirectoryURL,
+            diskCachePathClosure: diskCachePathClosure
+        )
+        let diskStorage = try DiskStorage.Backend<Data>(config: config)
+        self.init(memoryStorage: memoryStorage, diskStorage: diskStorage)
+    }
+
     convenience init(
         noThrowName name: String,
         cacheDirectoryURL: URL?,
-        diskCachePathClosure: DiskCachePathClosure?){
-            if name.isEmpty {
-                fatalError("[SYMoyaNetwork] You should specify a name for the cache. A cache with empty name is not permitted.")
-            }
-            
-            let memoryStorage = NetworkCache.createMemoryStorage()
-            
-            let config = NetworkCache.createConfig(
-                name: name, cacheDirectoryURL: cacheDirectoryURL, diskCachePathClosure: diskCachePathClosure
-            )
-            let diskStorage = DiskStorage.Backend<Data>(noThrowConfig: config, creatingDirectory: true)
-            self.init(memoryStorage: memoryStorage, diskStorage: diskStorage)
+        diskCachePathClosure: DiskCachePathClosure?
+    ) {
+        if name.isEmpty {
+            fatalError("[SYMoyaNetwork] You should specify a name for the cache. A cache with empty name is not permitted.")
         }
-    
+
+        let memoryStorage = Self.createMemoryStorage()
+
+        let config = Self.createConfig(
+            name: name, cacheDirectoryURL: cacheDirectoryURL,
+            diskCachePathClosure: diskCachePathClosure
+        )
+        let diskStorage = DiskStorage.Backend<Data>(noThrowConfig: config, creatingDirectory: true)
+        self.init(memoryStorage: memoryStorage, diskStorage: diskStorage)
+    }
+
     private static func createMemoryStorage() -> MemoryStorage.Backend<Moya.Response> {
         let totalMemory = ProcessInfo.processInfo.physicalMemory
         let costLimit = totalMemory / 4
-        let memoryStorage = MemoryStorage.Backend<Moya.Response>(config:
+        return MemoryStorage.Backend<Moya.Response>(config:
                 .init(totalCostLimit: (costLimit > Int.max) ? Int.max : Int(costLimit)))
-        return memoryStorage
     }
-    
+
     private static func createConfig(
         name: String,
         cacheDirectoryURL: URL?,
         diskCachePathClosure: DiskCachePathClosure? = nil
-    ) -> DiskStorage.Config
-    {
+    ) -> DiskStorage.Config {
         var diskConfig = DiskStorage.Config(
             name: name,
             sizeLimit: 0,
@@ -251,43 +244,45 @@ open class NetworkCache {
         }
         return diskConfig
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
+
     // MARK: Storing Response
-    
+
     open func store(_ response: Moya.Response,
                     forKey key: String,
                     options: SYMoyaNetworkParsedOptionsInfo,
                     toDisk: Bool = true,
-                    completionHandler: ((CacheStoreResult) -> Void)? = nil)
-    {
+                    completionHandler: ((CacheStoreResult) -> Void)? = nil) {
         let callbackQueue = options.callbackQueue
-        
+
         // Memory storage should not throw.
         memoryStorage.storeNoThrow(value: response, forKey: key, expiration: options.memoryCacheExpiration)
-        
+
         guard toDisk else {
-            if let completionHandler = completionHandler {
+            if let completionHandler {
                 let result = CacheStoreResult(memoryCacheResult: .success(()), diskCacheResult: .success(()))
                 callbackQueue.execute { completionHandler(result) }
             }
             return
         }
-        
+
         ioQueue.async {
             let serializer = options.cacheSerializer
             let data = serializer.data(with: response)
             if data.isEmpty {
-                guard let completionHandler = completionHandler else { return }
-                
+                guard let completionHandler else {
+                    return
+                }
+
                 let diskError = SYMoyaNetworkError.cacheError(
                     reason: .cannotSerializeResponse(response: response, serializer: serializer))
                 let result = CacheStoreResult(
                     memoryCacheResult: .success(()),
-                    diskCacheResult: .failure(diskError))
+                    diskCacheResult: .failure(diskError)
+                )
                 callbackQueue.execute { completionHandler(result) }
             } else {
                 self.syncStoreToDisk(
@@ -295,11 +290,12 @@ open class NetworkCache {
                     forKey: key,
                     callbackQueue: callbackQueue,
                     expiration: options.diskCacheExpiration,
-                    completionHandler: completionHandler)
+                    completionHandler: completionHandler
+                )
             }
         }
     }
-    
+
     /// Stores an response to the cache.
     ///
     /// - Parameters:
@@ -321,8 +317,7 @@ open class NetworkCache {
                     cacheSerializer serializer: CacheSerializer = DefaultCacheSerializer.default,
                     toDisk: Bool = true,
                     callbackQueue: CallbackQueue = .untouch,
-                    completionHandler: ((CacheStoreResult) -> Void)? = nil)
-    {
+                    completionHandler: ((CacheStoreResult) -> Void)? = nil) {
         let options = SYMoyaNetworkParsedOptionsInfo([
             .cacheSerializer(serializer),
             .callbackQueue(callbackQueue)
@@ -330,35 +325,36 @@ open class NetworkCache {
         store(response, forKey: key, options: options,
               toDisk: toDisk, completionHandler: completionHandler)
     }
-    
+
     open func storeToDisk(
         _ data: Data,
         forKey key: String,
         processorIdentifier identifier: String = "",
         expiration: StorageExpiration? = nil,
         callbackQueue: CallbackQueue = .untouch,
-        completionHandler: ((CacheStoreResult) -> Void)? = nil)
-    {
+        completionHandler: ((CacheStoreResult) -> Void)? = nil
+    ) {
         ioQueue.async {
             self.syncStoreToDisk(
                 data,
                 forKey: key,
                 callbackQueue: callbackQueue,
                 expiration: expiration,
-                completionHandler: completionHandler)
+                completionHandler: completionHandler
+            )
         }
     }
-    
+
     private func syncStoreToDisk(
         _ data: Data,
         forKey key: String,
         callbackQueue: CallbackQueue = .untouch,
         expiration: StorageExpiration? = nil,
-        completionHandler: ((CacheStoreResult) -> Void)? = nil)
-    {
+        completionHandler: ((CacheStoreResult) -> Void)? = nil
+    ) {
         let result: CacheStoreResult
         do {
-            try self.diskStorage.store(value: data, forKey: key, expiration: expiration)
+            try diskStorage.store(value: data, forKey: key, expiration: expiration)
             result = CacheStoreResult(memoryCacheResult: .success(()), diskCacheResult: .success(()))
         } catch {
             let diskError: SYMoyaNetworkError
@@ -367,19 +363,19 @@ open class NetworkCache {
             } else {
                 diskError = .cacheError(reason: .cannotConvertToData(object: data, error: error))
             }
-            
+
             result = CacheStoreResult(
                 memoryCacheResult: .success(()),
                 diskCacheResult: .failure(diskError)
             )
         }
-        if let completionHandler = completionHandler {
+        if let completionHandler {
             callbackQueue.execute { completionHandler(result) }
         }
     }
-    
+
     // MARK: Removing Responses
-    
+
     /// Removes the response for the given key from the cache.
     ///
     /// - Parameters:
@@ -396,28 +392,27 @@ open class NetworkCache {
                              fromMemory: Bool = true,
                              fromDisk: Bool = true,
                              callbackQueue: CallbackQueue = .untouch,
-                             completionHandler: (() -> Void)? = nil)
-    {
+                             completionHandler: (() -> Void)? = nil) {
         if fromMemory {
             memoryStorage.remove(forKey: key)
         }
-        
+
         if fromDisk {
-            ioQueue.async{
+            ioQueue.async {
                 try? self.diskStorage.remove(forKey: key)
-                if let completionHandler = completionHandler {
+                if let completionHandler {
                     callbackQueue.execute { completionHandler() }
                 }
             }
         } else {
-            if let completionHandler = completionHandler {
+            if let completionHandler {
                 callbackQueue.execute { completionHandler() }
             }
         }
     }
-    
+
     // MARK: Getting Responses
-    
+
     /// Gets an response for a given key from the cache, either from memory storage or disk storage.
     ///
     /// - Parameters:
@@ -432,11 +427,13 @@ open class NetworkCache {
         forKey key: String,
         options: SYMoyaNetworkParsedOptionsInfo,
         callbackQueue: CallbackQueue = .mainCurrentOrAsync,
-        completionHandler: ((Result<NetworkCacheResult, SYMoyaNetworkError>) -> Void)?)
-    {
+        completionHandler: ((Result<NetworkCacheResult, SYMoyaNetworkError>) -> Void)?
+    ) {
         // No completion handler. No need to start working and early return.
-        guard let completionHandler = completionHandler else { return }
-        
+        guard let completionHandler else {
+            return
+        }
+
         // Try to check the response from memory cache first.
         if let response = retrieveResponseInMemoryCache(forKey: key, options: options) {
             callbackQueue.execute { completionHandler(.success(.memory(response))) }
@@ -444,11 +441,10 @@ open class NetworkCache {
             callbackQueue.execute { completionHandler(.success(.none)) }
         } else {
             // Begin to disk search.
-            self.retrieveResponseInDiskCache(forKey: key, options: options, callbackQueue: callbackQueue) {
-                result in
+            retrieveResponseInDiskCache(forKey: key, options: options, callbackQueue: callbackQueue) { result in
                 switch result {
-                case .success(let resultResponse):
-                    
+                case let .success(resultResponse):
+
                     // Cache the disk response to memory.
                     // We are passing `false` to `toDisk`, the memory cache does not change
                     // callback queue, we can call `completionHandler` without another dispatch.
@@ -458,20 +454,19 @@ open class NetworkCache {
                         resultResponse.response,
                         forKey: key,
                         options: cacheOptions,
-                        toDisk: false)
-                    {
-                        _ in
+                        toDisk: false
+                    ) { _ in
                         callbackQueue.execute {
                             completionHandler(.success(.disk(resultResponse.response)))
                         }
                     }
-                case .failure(let error):
+                case let .failure(error):
                     callbackQueue.execute { completionHandler(.failure(error)) }
                 }
             }
         }
     }
-    
+
     /// Gets an response for a given key from the cache, either from memory storage or disk storage.
     ///
     /// - Parameters:
@@ -488,15 +483,15 @@ open class NetworkCache {
     open func retrieveResponse(forKey key: String,
                                options: SYMoyaNetworkOptionsInfo? = nil,
                                callbackQueue: CallbackQueue = .mainCurrentOrAsync,
-                               completionHandler: ((Result<NetworkCacheResult, SYMoyaNetworkError>) -> Void)?)
-    {
+                               completionHandler: ((Result<NetworkCacheResult, SYMoyaNetworkError>) -> Void)?) {
         retrieveResponse(
             forKey: key,
             options: SYMoyaNetworkParsedOptionsInfo(options),
             callbackQueue: callbackQueue,
-            completionHandler: completionHandler)
+            completionHandler: completionHandler
+        )
     }
-    
+
     /// Gets an response for a given key from the memory storage.
     ///
     /// - Parameters:
@@ -506,11 +501,11 @@ open class NetworkCache {
     ///            has already expired, `nil` is returned.
     open func retrieveResponseInMemoryCache(
         forKey key: String,
-        options: SYMoyaNetworkParsedOptionsInfo) -> Moya.Response?
-    {
-        return memoryStorage.value(forKey: key, extendingExpiration: options.memoryCacheAccessExtendingExpiration)
+        options: SYMoyaNetworkParsedOptionsInfo
+    ) -> Moya.Response? {
+        memoryStorage.value(forKey: key, extendingExpiration: options.memoryCacheAccessExtendingExpiration)
     }
-    
+
     /// Gets an response for a given key from the memory storage.
     ///
     /// - Parameters:
@@ -523,12 +518,11 @@ open class NetworkCache {
     ///       the version receives `SYMoyaNetworkParsedOptionsInfo` instead.
     open func retrieveResponseInMemoryCache(
         forKey key: String,
-        options: SYMoyaNetworkOptionsInfo? = nil) -> Moya.Response?
-    {
-        return retrieveResponseInMemoryCache(forKey: key, options: SYMoyaNetworkParsedOptionsInfo(options))
+        options: SYMoyaNetworkOptionsInfo? = nil
+    ) -> Moya.Response? {
+        retrieveResponseInMemoryCache(forKey: key, options: SYMoyaNetworkParsedOptionsInfo(options))
     }
-    
-    
+
     /// Gets an response for a given key from the disk storage.
     ///
     /// - Parameters:
@@ -543,15 +537,15 @@ open class NetworkCache {
         forKey key: String,
         options: SYMoyaNetworkParsedOptionsInfo,
         callbackQueue: CallbackQueue = .untouch,
-        completionHandler: @escaping (SYMoyaNetworkResult) -> Void)
-    {
+        completionHandler: @escaping (SYMoyaNetworkResult) -> Void
+    ) {
         let loadingQueue: CallbackQueue = options.loadDiskFileSynchronously ? .untouch : .dispatch(ioQueue)
         loadingQueue.execute {
             do {
                 if let data = try self.diskStorage.value(forKey: key, extendingExpiration: options.diskCacheAccessExtendingExpiration) {
                     let response = options.cacheSerializer.response(with: 0, data: data, request: nil, response: nil, options: options)
-                    callbackQueue.execute { 
-                        let resultResponse = (response,true)
+                    callbackQueue.execute {
+                        let resultResponse = (response, true)
                         completionHandler(.success(resultResponse))
                     }
                 } else {
@@ -567,7 +561,7 @@ open class NetworkCache {
             }
         }
     }
-    
+
     /// Gets an response for a given key from the disk storage.
     ///
     /// - Parameters:
@@ -579,16 +573,18 @@ open class NetworkCache {
         forKey key: String,
         options: SYMoyaNetworkOptionsInfo? = nil,
         callbackQueue: CallbackQueue = .untouch,
-        completionHandler: @escaping (SYMoyaNetworkResult) -> Void)
-    {
+        completionHandler: @escaping (SYMoyaNetworkResult) -> Void
+    ) {
         retrieveResponseInDiskCache(
             forKey: key,
             options: SYMoyaNetworkParsedOptionsInfo(options),
             callbackQueue: callbackQueue,
-            completionHandler: completionHandler)
+            completionHandler: completionHandler
+        )
     }
-    
+
     // MARK: Cleaning
+
     /// Clears the memory & disk storage of this cache. This is an async operation.
     ///
     /// - Parameter handler: A closure which is invoked when the cache clearing operation finishes.
@@ -597,12 +593,12 @@ open class NetworkCache {
         clearMemoryCache()
         clearDiskCache(completion: handler)
     }
-    
+
     /// Clears the memory storage of this cache.
     @objc public func clearMemoryCache() {
         memoryStorage.removeAll()
     }
-    
+
     /// Clears the disk storage of this cache. This is an async operation.
     ///
     /// - Parameter handler: A closure which is invoked when the cache clearing operation finishes.
@@ -611,29 +607,29 @@ open class NetworkCache {
         ioQueue.async {
             do {
                 try self.diskStorage.removeAll()
-            } catch _ { }
-            if let handler = handler {
+            } catch _ {}
+            if let handler {
                 DispatchQueue.main.async { handler() }
             }
         }
     }
-    
+
     /// Clears the expired response from memory & disk storage. This is an async operation.
     open func cleanExpiredCache(completion handler: (() -> Void)? = nil) {
         cleanExpiredMemoryCache()
         cleanExpiredDiskCache(completion: handler)
     }
-    
+
     /// Clears the expired response from disk storage.
     open func cleanExpiredMemoryCache() {
         memoryStorage.removeExpired()
     }
-    
+
     /// Clears the expired response from disk storage. This is an async operation.
     @objc func cleanExpiredDiskCache() {
         cleanExpiredDiskCache(completion: nil)
     }
-    
+
     /// Clears the expired response from disk storage. This is an async operation.
     ///
     /// - Parameter handler: A closure which is invoked when the cache clearing operation finishes.
@@ -644,51 +640,52 @@ open class NetworkCache {
                 var removed: [URL] = []
                 let removedExpired = try self.diskStorage.removeExpiredValues()
                 removed.append(contentsOf: removedExpired)
-                
+
                 let removedSizeExceeded = try self.diskStorage.removeSizeExceededValues()
                 removed.append(contentsOf: removedSizeExceeded)
-                
+
                 if !removed.isEmpty {
                     DispatchQueue.main.async {
-                        let cleanedHashes = removed.map { $0.lastPathComponent }
+                        let cleanedHashes = removed.map(\.lastPathComponent)
                         NotificationCenter.default.post(
                             name: .SYMoyaNetworkDidCleanDiskCache,
                             object: self,
-                            userInfo: [SYMoyaNetworkDiskCacheCleanedHashKey: cleanedHashes])
+                            userInfo: [SYMoyaNetworkDiskCacheCleanedHashKey: cleanedHashes]
+                        )
                     }
                 }
-                
-                if let handler = handler {
+
+                if let handler {
                     DispatchQueue.main.async { handler() }
                 }
             } catch {}
         }
     }
-    
-#if !os(macOS) && !os(watchOS)
-    /// Clears the expired response from disk storage when app is in background. This is an async operation.
-    /// In most cases, you should not call this method explicitly.
-    /// It will be called automatically when `UIApplicationDidEnterBackgroundNotification` received.
-    @objc public func backgroundCleanExpiredDiskCache() {
-        let sharedApplication = UIApplication.shared
-        func endBackgroundTask(_ task: inout UIBackgroundTaskIdentifier) {
-            sharedApplication.endBackgroundTask(task)
-            task = UIBackgroundTaskIdentifier.invalid
+
+    #if !os(macOS) && !os(watchOS)
+        /// Clears the expired response from disk storage when app is in background. This is an async operation.
+        /// In most cases, you should not call this method explicitly.
+        /// It will be called automatically when `UIApplicationDidEnterBackgroundNotification` received.
+        @objc public func backgroundCleanExpiredDiskCache() {
+            let sharedApplication = UIApplication.shared
+            func endBackgroundTask(_ task: inout UIBackgroundTaskIdentifier) {
+                sharedApplication.endBackgroundTask(task)
+                task = UIBackgroundTaskIdentifier.invalid
+            }
+
+            var backgroundTask: UIBackgroundTaskIdentifier!
+            backgroundTask = sharedApplication.beginBackgroundTask {
+                endBackgroundTask(&backgroundTask!)
+            }
+
+            cleanExpiredDiskCache {
+                endBackgroundTask(&backgroundTask!)
+            }
         }
-        
-        var backgroundTask: UIBackgroundTaskIdentifier!
-        backgroundTask = sharedApplication.beginBackgroundTask {
-            endBackgroundTask(&backgroundTask!)
-        }
-        
-        cleanExpiredDiskCache {
-            endBackgroundTask(&backgroundTask!)
-        }
-    }
-#endif
-    
+    #endif
+
     // MARK: Response Cache State
-    
+
     /// Returns the cache type for a given `key` and `identifier` combination.
     /// This method is used for checking whether an response is cached in current cache.
     /// It also provides information on which kind of cache can it be found in the return value.
@@ -698,13 +695,16 @@ open class NetworkCache {
     /// - Returns: A `CacheType` instance which indicates the cache status.
     ///            `.none` means the response is not in cache or it is already expired.
     open func responseCachedType(
-        forKey key: String) -> CacheType
-    {
-        if memoryStorage.isCached(forKey: key) { return .memory }
-        if diskStorage.isCached(forKey: key) { return .disk }
+        forKey key: String) -> CacheType {
+        if memoryStorage.isCached(forKey: key) {
+            return .memory
+        }
+        if diskStorage.isCached(forKey: key) {
+            return .disk
+        }
         return .none
     }
-    
+
     /// Returns whether the file exists in cache for a given `key` combination.
     ///
     /// - Parameters:
@@ -716,11 +716,10 @@ open class NetworkCache {
     /// To get the information about cache type according `CacheType`,
     /// use `responseCachedType(forKey:processorIdentifier:)` instead.
     public func isCached(
-        forKey key: String) -> Bool
-    {
-        return responseCachedType(forKey: key).cached
+        forKey key: String) -> Bool {
+        responseCachedType(forKey: key).cached
     }
-    
+
     /// Gets the hash used as cache file name for the key.
     ///
     /// - Parameters:
@@ -732,11 +731,10 @@ open class NetworkCache {
     /// returned by this method as the cache file name. You can use this value to check and match cache file
     /// if you need.
     open func hash(
-        forKey key: String) -> String
-    {
-        return diskStorage.cacheFileName(forKey: key)
+        forKey key: String) -> String {
+        diskStorage.cacheFileName(forKey: key)
     }
-    
+
     /// Calculates the size taken by the disk storage.
     /// It is the total file size of all cached files in the `diskStorage` on disk in bytes.
     ///
@@ -752,26 +750,25 @@ open class NetworkCache {
                 } else {
                     assertionFailure("The internal thrown error should be a `SYMoyaNetworkError`.")
                 }
-                
             }
         }
     }
-    
-#if swift(>=5.5)
-#if canImport(_Concurrency)
-    @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-    open var diskStorageSize: UInt {
-        get async throws {
-            try await withCheckedThrowingContinuation { continuation in
-                calculateDiskStorageSize { result in
-                    continuation.resume(with: result)
+
+    #if swift(>=5.5)
+        #if canImport(_Concurrency)
+            @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+            open var diskStorageSize: UInt {
+                get async throws {
+                    try await withCheckedThrowingContinuation { continuation in
+                        calculateDiskStorageSize { result in
+                            continuation.resume(with: result)
+                        }
+                    }
                 }
             }
-        }
-    }
-#endif
-#endif
-    
+        #endif
+    #endif
+
     /// Gets the cache path for the key.
     ///
     /// - Parameters:
@@ -784,8 +781,7 @@ open class NetworkCache {
     ///
     /// You could use `isCached(forKey:)` method to check whether the response is cached under that key in disk.
     open func cachePath(
-        forKey key: String) -> String
-    {
-        return diskStorage.cacheFileURL(forKey: key).path
+        forKey key: String) -> String {
+        diskStorage.cacheFileURL(forKey: key).path
     }
 }

@@ -39,25 +39,24 @@ public protocol CacheSerializer {
 /// It could serialize and deserialize response For
 /// response other than these formats, a normalized `pngRepresentation` will be used.
 public struct DefaultCacheSerializer: CacheSerializer {
-    
     /// The default general cache serializer used across SYMoyaNetwork's cache.
-    public static let `default` = DefaultCacheSerializer()
+    public static let `default` = Self()
 
     /// Creates a cache serializer that serialize and deserialize response
     ///
     /// - Note:
     /// Use `DefaultCacheSerializer.default` unless you need to specify your own properties.
     ///
-    public init() { }
+    public init() {}
 
     /// Gets data from `Moya.Response`.
     ///
     /// - Parameter response: Represents a response to a `MoyaProvider.request`.
     /// - Returns: Response data
     public func data(with response: Moya.Response) -> Data {
-        return response.data
+        response.data
     }
-    
+
     /// Gets an response deserialized from provided data.
     ///
     /// - Parameters:
@@ -66,7 +65,6 @@ public struct DefaultCacheSerializer: CacheSerializer {
     /// - Returns: An response deserialized or `nil` when no valid response
     ///            could be deserialized.
     public func response(with statusCode: Int, data: Data, request: URLRequest?, response: HTTPURLResponse?, options: SYMoyaNetworkParsedOptionsInfo) -> Moya.Response {
-        let response = Moya.Response(statusCode: statusCode, data: data, request: request, response: response)
-        return response
+        return Moya.Response(statusCode: statusCode, data: data, request: request, response: response)
     }
 }

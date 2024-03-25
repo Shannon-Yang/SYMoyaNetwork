@@ -6,12 +6,13 @@
 //  Copyright © 2023 Shannon Yang. All rights reserved.
 //
 
+import Combine
 import Foundation
 import Moya
-import Combine
 
-//MARK: - SwiftyJSON Provider Combine
-public extension SYMoyaProvider {
+// MARK: - SwiftyJSON Provider Combine
+
+extension SYMoyaProvider {
     /// Retrieve data from the cache and It will return an object that implements `Publisher` and outputs the value `SYMoyaNetworkDataResponse<String>.
     ///
     /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
@@ -31,16 +32,16 @@ public extension SYMoyaProvider {
     ///   - serializer: A `ResponseSerializer` that decodes the response data as a `String`.
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     /// - Returns: An object that implements `Publisher`, its output value is `SYMoyaNetworkDataResponse<String>`.
-    func responseStringFromCachePublisher(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<String>> {
-        return SYMoyaPublisher { subscriber in
-            self.responseStringFromCache(cacheFromType,target: target, serializer: serializer, callbackQueue: callbackQueue) { response in
+    public func responseStringFromCachePublisher(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<String>> {
+        SYMoyaPublisher { subscriber in
+            self.responseStringFromCache(cacheFromType, target: target, serializer: serializer, callbackQueue: callbackQueue) { response in
                 _ = subscriber.receive(response)
                 subscriber.receive(completion: .finished)
             }
             return nil
         }
     }
-    
+
     /// A data request method,It will return an object that implements `Publisher` and outputs the value `SYMoyaNetworkDataResponse<String>.
     ///
     /// depending on the data request strategy. and parses the requested data into an object that is `String`.
@@ -56,9 +57,9 @@ public extension SYMoyaProvider {
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - progress: Closure to be executed when progress changes.
     /// - Returns: An object that implements `Publisher`, its output value is `SYMoyaNetworkDataResponse<String>`.
-    func responseStringPublisher(_ type: ResponseDataSourceType = .server, target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher <SYMoyaNetworkDataResponse<String>> {
-        return SYMoyaPublisher { [weak self] subscriber in
-            return self?.responseString(type, target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress) { response in
+    public func responseStringPublisher(_ type: ResponseDataSourceType = .server, target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<String>> {
+        SYMoyaPublisher { [weak self] subscriber in
+            self?.responseString(type, target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress) { response in
                 _ = subscriber.receive(response)
                 subscriber.receive(completion: .finished)
             }

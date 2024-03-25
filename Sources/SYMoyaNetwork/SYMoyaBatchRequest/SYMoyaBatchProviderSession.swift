@@ -6,9 +6,9 @@
 //  Copyright © 2023 Shannon Yang. All rights reserved.
 //
 
+import Alamofire
 import Foundation
 import Moya
-import Alamofire
 
 /// Closure to be executed when progress changes.
 public typealias SYBatchProgressBlock = (_ progress: SYBatchProgress) -> Void
@@ -20,12 +20,12 @@ public struct SYBatchProgress {
 
     /// Array object count that implements `SYBatchMoyaProviderType`
     private let count: Int
-    
+
     /// Initializes a `ProgressResponse`.
     /// - Parameter count: Array object count that implements `SYBatchMoyaProviderType`
     public init(count: Int) {
         self.count = count
-        self.progressObject = Progress(totalUnitCount: Int64(count))
+        progressObject = Progress(totalUnitCount: Int64(count))
     }
 
     /// The fraction of the overall work completed by the progress object.
@@ -33,22 +33,22 @@ public struct SYBatchProgress {
         if progressObject.isFinished {
             return Int64(count)
         }
-        
+
         if progressObject.totalUnitCount > 0 {
             // if the Content-Length is specified we can rely on `fractionCompleted`
             return progressObject.completedUnitCount
         }
         return 0
     }
-    
+
     /// Percentage completed
     public var fractionCompleted: Double {
-        return progressObject.fractionCompleted
+        progressObject.fractionCompleted
     }
 
     /// A Boolean value stating whether the request is completed.
     public var completed: Bool { progressObject.isFinished }
-    
+
     // Increment completed count
     func increaseCompletedUnitCount() {
         progressObject.completedUnitCount += 1
@@ -68,15 +68,16 @@ public struct SYBatchProgress {
 /// When a batch request is initiated, the concurrent queue will be initialized based on the `providers` array.
 public class SYMoyaBatchProviderSession {
     private let providers: [SYBatchMoyaProviderType]
-    
+
     /// Init`SYMoyaBatchProviderSession` with `SYBatchMoyaProviderType` array
     ///
     /// - Parameter providers: Array object that implements `SYBatchMoyaProviderType`
     public init(providers: [SYBatchMoyaProviderType]) {
         self.providers = providers
     }
+
     private let queueName = "com.shannonyang.SYMoyaNetwork.BatchRequest.queue.\(UUID().uuidString)"
-    
+
     /// Make a batch request
     ///
     /// This method will build some concurrent queue to request data, and will initialize a `DispatchGroup` object to listen for the completion of the task. Completion will be called back after completion.

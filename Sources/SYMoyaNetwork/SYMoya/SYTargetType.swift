@@ -1,5 +1,5 @@
 //
-//  SYMoyaTargetType.swift
+//  SYTargetType.swift
 //  SYMoyaNetwork
 //
 //  Created by Shannon Yang on 2021/7/14.
@@ -14,13 +14,13 @@ import Moya
 public protocol SYTargetType: Moya.TargetType {
     /// CDN request url
     var cdnURL: URL? { get }
-    
+
     ///  Should use CDN when sending request.
     var useCDN: Bool { get }
-    
+
     /// The cache policy of the receiver.
     var cachePolicy: URLRequest.CachePolicy { get }
-    
+
     /// Returns the timeout interval of the receiver.
     /// - discussion: The timeout interval specifies the limit on the idle
     /// interval allotted to a request in the process of loading. The "idle
@@ -33,129 +33,126 @@ public protocol SYTargetType: Moya.TargetType {
     /// is considered to have timed out. This timeout interval is measured
     /// in seconds.
     var timeoutInterval: TimeInterval { get }
-    
+
     /// The main document URL associated with this load.
     /// - discussion: This URL is used for the cookie "same domain as main
     /// document" policy.
     var mainDocumentURL: URL? { get }
-    
+
     /// The URLRequest.NetworkServiceType associated with this request.
     /// - discussion: This will return URLRequest.NetworkServiceType.default for requests that have
     /// not explicitly set a networkServiceType
-    @available(macOS 10.7, iOS 4.0, *)
     var networkServiceType: URLRequest.NetworkServiceType { get }
-    
+
     /// `true` if the receiver is allowed to use the built in cellular radios to
     /// satisfy the request, `false` otherwise.
-    @available(macOS 10.8, iOS 6.0, *)
     var allowsCellularAccess: Bool { get }
-    
+
     /// `true` if the receiver is allowed to use an interface marked as expensive to
     /// satify the request, `false` otherwise.
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     var allowsExpensiveNetworkAccess: Bool { get }
-    
+
     /// `true` if the receiver is allowed to use an interface marked as constrained to
     /// satify the request, `false` otherwise.
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     var allowsConstrainedNetworkAccess: Bool { get }
-    
+
     /// `true` if server endpoint is known to support HTTP/3. Enables QUIC racing
     /// without HTTP/3 service discovery. Defaults to `false`.
     /// The default may be `true` in a future OS update.
     @available(macOS 11.3, iOS 14.5, watchOS 7.4, tvOS 14.5, *)
     var assumesHTTP3Capable: Bool { get }
-    
+
     /// `true` if cookies will be sent with and set for this request; otherwise `false`.
     var httpShouldHandleCookies: Bool { get }
-    
+
     /// `true` if the receiver should transmit before the previous response
-    /// is received.  `false` if the receiver should wait for the previous response
+    /// is received. `false` if the receiver should wait for the previous response
     /// before transmitting.
-    @available(iOS 4.0, *)
     var httpShouldUsePipelining: Bool { get }
-    
+
     /// Network Cache type of a cached Request.
     var networkCacheType: NetworkCacheType { get }
 }
 
-//MARK: - Default Value
-public extension SYTargetType {
-    var method: Moya.Method {
-        return .post
-    }
-    
-    var cdnURL: URL? {
-        return nil
-    }
-    
-    var useCDN: Bool {
-        return false
-    }
-    
-    var cachePolicy: URLRequest.CachePolicy {
-        return .reloadIgnoringCacheData
+// MARK: - Default Value
+
+extension SYTargetType {
+    public var method: Moya.Method {
+        .post
     }
 
-    var timeoutInterval: TimeInterval {
-        return 60
+    public var cdnURL: URL? {
+        nil
     }
 
-    var mainDocumentURL: URL? {
-       return nil
+    public var useCDN: Bool {
+        false
     }
 
-    @available(macOS 10.7, iOS 4.0, *)
-    var networkServiceType: URLRequest.NetworkServiceType {
-        return .default
+    public var cachePolicy: URLRequest.CachePolicy {
+        .reloadIgnoringCacheData
     }
 
-    @available(macOS 10.8, iOS 6.0, *)
-    var allowsCellularAccess: Bool {
-        return true
+    public var timeoutInterval: TimeInterval {
+        60
     }
 
-    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    var allowsExpensiveNetworkAccess: Bool {
-        return true
+    public var mainDocumentURL: URL? {
+        nil
+    }
+
+    public var networkServiceType: URLRequest.NetworkServiceType {
+        .default
+    }
+
+    public var allowsCellularAccess: Bool {
+        true
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    var allowsConstrainedNetworkAccess: Bool {
-        return true
+    public var allowsExpensiveNetworkAccess: Bool {
+        true
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public var allowsConstrainedNetworkAccess: Bool {
+        true
     }
 
     @available(macOS 11.3, iOS 14.5, watchOS 7.4, tvOS 14.5, *)
-    var assumesHTTP3Capable: Bool {
-        return true
+    public var assumesHTTP3Capable: Bool {
+        true
     }
-    
-    var httpShouldHandleCookies: Bool {
-        return true
+
+    public var httpShouldHandleCookies: Bool {
+        true
     }
-    
-    var httpShouldUsePipelining: Bool {
-        return true
+
+    public var httpShouldUsePipelining: Bool {
+        true
     }
-    
-    var networkCacheType: NetworkCacheType {
-        return .none
+
+    public var networkCacheType: NetworkCacheType {
+        .none
     }
-    
-    var validationType: ValidationType {
-        return .successCodes
+
+    public var validationType: ValidationType {
+        .successCodes
     }
 }
 
-//MARK: - Internal
-internal extension SYTargetType {
+// MARK: - Internal
+
+extension SYTargetType {
     func requestBaseURL() -> URL {
-        if self.useCDN {
-            if let cdnURL = self.cdnURL {
+        if useCDN {
+            if let cdnURL {
                 return cdnURL
             }
-            return self.baseURL
+            return baseURL
         }
-        return self.baseURL
+        return baseURL
     }
 }

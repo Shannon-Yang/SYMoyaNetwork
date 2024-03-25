@@ -7,10 +7,11 @@
 //
 
 import Foundation
-import Moya
 import HandyJSON
+import Moya
 
-//MARK: - HandyJSON
+// MARK: - HandyJSON
+
 extension Response {
     /// Convert response to HandyJSON format data
     ///
@@ -18,14 +19,14 @@ extension Response {
     ///   - type: A generic object implementing HandyJSON
     /// - Returns: The converted HandyJSON data
     func mapObject<T: HandyJSON>(_ type: T.Type) -> T? {
-        guard let dataString = String.init(data: self.data, encoding: .utf8),
+        guard let dataString = String(data: data, encoding: .utf8),
               let object = JSONDeserializer<T>.deserializeFrom(json: dataString)
         else {
             return nil
         }
         return object
     }
-    
+
     /// Convert response to HandyJSON format data
     ///
     /// - Parameters:
@@ -33,41 +34,40 @@ extension Response {
     ///   - designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
     /// - Returns: The converted HandyJSON data
     func mapObject<T: HandyJSON>(_ type: T.Type, designatedPath: String) -> T? {
-        guard let dataString = String(data: self.data, encoding: .utf8),
+        guard let dataString = String(data: data, encoding: .utf8),
               let object = JSONDeserializer<T>.deserializeFrom(json: dataString, designatedPath: designatedPath)
         else {
             return nil
         }
         return object
     }
-    
+
     /// Convert response to HandyJSON array format data
     ///
     /// - Parameters:
     ///   - type: A generic object implementing HandyJSON
     /// - Returns: The converted HandyJSON data array
-    func mapArray<T: HandyJSON>(_ type: T.Type)  -> [T?]? {
-        guard let dataString = String(data: self.data, encoding: .utf8),
+    func mapArray<T: HandyJSON>(_ type: T.Type) -> [T?]? {
+        guard let dataString = String(data: data, encoding: .utf8),
               let object = JSONDeserializer<T>.deserializeModelArrayFrom(json: dataString)
         else {
             return nil
         }
         return object
     }
-    
+
     /// Convert response to HandyJSON format data array
     ///
     /// - Parameters:
     ///   - type: A generic object implementing HandyJSON
     ///   - designatedPath: is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
     /// - Returns: The converted HandyJSON data array
-    func mapArray<T: HandyJSON>(_ type: T.Type, designatedPath: String)  -> [T?]? {
-        guard let dataString = String(data: self.data, encoding: .utf8),
-              let object = JSONDeserializer<T>.deserializeModelArrayFrom(json: dataString , designatedPath: designatedPath)
+    func mapArray<T: HandyJSON>(_ type: T.Type, designatedPath: String) -> [T?]? {
+        guard let dataString = String(data: data, encoding: .utf8),
+              let object = JSONDeserializer<T>.deserializeModelArrayFrom(json: dataString, designatedPath: designatedPath)
         else {
             return nil
         }
         return object
     }
-    
 }

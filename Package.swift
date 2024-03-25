@@ -6,16 +6,16 @@ import PackageDescription
 let package = Package(
     name: "SYMoyaNetwork",
     platforms: [
-        .macOS(.v10_13),
-        .iOS(.v11),
+        .macOS(.v10_15),
+        .iOS(.v13),
         .tvOS(.v11),
-        .watchOS(.v4)
+        .watchOS(.v6)
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "SYMoyaNetwork",
-            targets: ["SYMoyaNetwork"]),
+            targets: ["SYMoyaNetwork"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -33,9 +33,9 @@ let package = Package(
             dependencies: [.product(name: "Moya", package: "Moya"),
                            .product(name: "ObjectMapper", package: "ObjectMapper"),
                            .product(name: "SwiftyJSON", package: "SwiftyJSON"),
-                           .product(name: "HandyJSON", package: "HandyJSON")],path: "Sources"),
+                           .product(name: "HandyJSON", package: "HandyJSON")], path: "Sources")
         .testTarget(
             name: "SYMoyaNetworkTests",
-            dependencies: ["SYMoyaNetwork"]),
+            dependencies: ["SYMoyaNetwork"])
     ]
 )

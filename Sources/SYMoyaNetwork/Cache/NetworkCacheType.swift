@@ -26,19 +26,20 @@ public enum NetworkCacheType {
         }
     }
 }
- 
-//MARK: - NetworkCacheOptionsInfo
-public extension NetworkCacheType {
+
+// MARK: - NetworkCacheOptionsInfo
+
+extension NetworkCacheType {
     /// The default cache key
-    static let defaultCacheKey: String = "com.shannonyang.SYMoyaNetwork.NetworkCache.Key"
-    
+    public static let defaultCacheKey: String = "com.shannonyang.SYMoyaNetwork.NetworkCache.Key"
+
     /// When the network type is changed to syMoyaNetworkCache, the cache information configuration category mainly includes diskStorageConfig configuration, memoryStorageConfig configuration, etc. Other cacheKeys have a default value, which can be modified by setting cacheKey
-    struct NetworkCacheOptionsInfo {
+    public struct NetworkCacheOptionsInfo {
         /// The default cache key
         public var cacheKey: String = defaultCacheKey
         /// Disk storage configuration. The default configuration is the configuration information in NetworkConfig
         public var diskStorageConfig: DiskStorage.Config
-        /// Memory storage configuration.  The default configuration is the configuration information in NetworkConfig
+        /// Memory storage configuration. The default configuration is the configuration information in NetworkConfig
         public var memoryStorageConfig: MemoryStorage.Config
         /// Create cache Option object
         ///
@@ -53,6 +54,3 @@ public extension NetworkCacheType {
         }
     }
 }
-
-
-

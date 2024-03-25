@@ -9,7 +9,8 @@
 import Foundation
 import Moya
 
-//MARK: - SYMoyaProviderImageType
+// MARK: - SYMoyaProviderImageType
+
 extension SYMoyaProvider {
     /// Retrieve data from the cache and parses the retrieved data into an object that is `Image`.
     ///
@@ -31,12 +32,12 @@ extension SYMoyaProvider {
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - completion: A closure which is invoked when the cache operation finishes. If not specified, the main queue will be used.
     public func responseImageFromCache(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: ImageResponseSerializer = .defaultImageSerializer, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<Image>) -> Void) {
-        self.requestFromCache(cacheFromType,target: target, callbackQueue: callbackQueue) { result in
+        requestFromCache(cacheFromType, target: target, callbackQueue: callbackQueue) { result in
             let image = serializer.serialize(result: result)
             completion(image)
         }
     }
-    
+
     /// A data request method, depending on the data request strategy. and parses the requested data into an object that is `Image`.
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
@@ -53,10 +54,9 @@ extension SYMoyaProvider {
     /// - Returns: Protocol to define the opaque type returned from a request.
     @discardableResult
     public func responseImage(_ type: ResponseDataSourceType = .server, target: Target, serializer: ImageResponseSerializer = .defaultImageSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<Image>) -> Void) -> Cancellable? {
-        let cancellable = self.request(type, target: target, callbackQueue: callbackQueue, progress: progress) { result in
+        return request(type, target: target, callbackQueue: callbackQueue, progress: progress) { result in
             let image = serializer.serialize(result: result)
             completion(image)
         }
-        return cancellable
     }
 }

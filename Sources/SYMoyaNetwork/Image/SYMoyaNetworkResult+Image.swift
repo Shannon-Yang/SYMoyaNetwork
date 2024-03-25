@@ -9,22 +9,25 @@
 import Foundation
 import Moya
 
-public extension SYMoyaNetworkResult {
+extension SYMoyaNetworkResult {
     /// Data parsed as `Image`
     ///
     /// - Returns: an object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `Image`
-    func serializerImageDataResponse() -> SYMoyaNetworkDataResponse<Image> {
+    public func serializerImageDataResponse() -> SYMoyaNetworkDataResponse<Image> {
         var dataRes: SYMoyaNetworkDataResponse<Image>
         switch self {
-        case .success(let resultResponse):
+        case let .success(resultResponse):
             do {
                 let image = try resultResponse.response.mapImage()
                 dataRes = SYMoyaNetworkDataResponse(resultResponse: resultResponse, result: .success(image))
-            } catch let error {
-                let e = (error as! MoyaError).transformToSYMoyaNetworkError()
+            } catch {
+                guard let moyaError = error as? MoyaError else {
+                    fatalError("Type as error, Must be of type MoyaError")
+                }
+                let e = moyaError.transformToSYMoyaNetworkError()
                 dataRes = SYMoyaNetworkDataResponse(resultResponse: resultResponse, result: .failure(e))
             }
-        case .failure(let error):
+        case let .failure(error):
             dataRes = SYMoyaNetworkDataResponse<Image>(result: .failure(error))
         }
         return dataRes

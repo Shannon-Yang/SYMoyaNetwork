@@ -1,17 +1,18 @@
 //
-//  SYMoyaProvider+Codable+Combine.swift
+//  SYMoyaProvider+Decodable+Combine.swift
 //  SYMoyaNetwork
 //
 //  Created by Shannon Yang on 2023/6/1.
 //  Copyright © 2023 Shannon Yang. All rights reserved.
 //
 
+import Combine
 import Foundation
 import Moya
-import Combine
 
-//MARK: - SwiftyJSON Provider Combine
-public extension SYMoyaProvider {
+// MARK: - SwiftyJSON Provider Combine
+
+extension SYMoyaProvider {
     /// Retrieve data from the cache and It will return an object that implements `Publisher` and outputs the value `SYMoyaNetworkDataResponse<Decodable>`.
     ///
     /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
@@ -31,8 +32,8 @@ public extension SYMoyaProvider {
     ///   - serializer: A `ResponseSerializer` that decodes the response data as a `Decodable`.
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     /// - Returns: An object that implements `Publisher`, its output value is `SYMoyaNetworkDataResponse<Decodable>`.
-    func responseDecodableObjectFromCachePublisher<T: Decodable>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: DecodableResponseSerializer<T> = .defaultDecodableSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
-        return SYMoyaPublisher { subscriber in
+    public func responseDecodableObjectFromCachePublisher<T: Decodable>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: DecodableResponseSerializer<T> = .defaultDecodableSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
+        SYMoyaPublisher { subscriber in
             self.responseDecodableObjectFromCache(cacheFromType, target: target, serializer: serializer, callbackQueue: callbackQueue, completion: { dataResponse in
                 _ = subscriber.receive(dataResponse)
                 subscriber.receive(completion: .finished)
@@ -40,7 +41,7 @@ public extension SYMoyaProvider {
             return nil
         }
     }
-    
+
     /// A data request method,It will return an object that implements `Publisher` and outputs the value `SYMoyaNetworkDataResponse<Decodable>`.
     ///
     /// depending on the data request strategy. and parses the requested data into an object that implements `Decodable`
@@ -56,9 +57,9 @@ public extension SYMoyaProvider {
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - progress: Closure to be executed when progress changes.
     /// - Returns: An object that implements `Publisher`, its output value is `SYMoyaNetworkDataResponse<Decodable>`.
-    func responseDecodableObjectPublisher<T: Decodable>(_ type: ResponseDataSourceType = .server, target: Target, serializer: DecodableResponseSerializer<T> = .defaultDecodableSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
-        return SYMoyaPublisher { subscriber in
-            return self.responseDecodableObject(type,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress) { dataResponse in
+    public func responseDecodableObjectPublisher<T: Decodable>(_ type: ResponseDataSourceType = .server, target: Target, serializer: DecodableResponseSerializer<T> = .defaultDecodableSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
+        SYMoyaPublisher { subscriber in
+            self.responseDecodableObject(type, target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress) { dataResponse in
                 _ = subscriber.receive(dataResponse)
                 subscriber.receive(completion: .finished)
             }

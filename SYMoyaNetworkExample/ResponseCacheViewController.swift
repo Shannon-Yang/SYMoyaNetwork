@@ -4,10 +4,10 @@
 //
 //  Created by Shannon Yang on 2023/11/1.
 //  Copyright © 2023 Shannon Yang. All rights reserved.
-// 
+//
 
-import UIKit
 import SYMoyaNetwork
+import UIKit
 
 enum ResponseCacheType: Int {
     case server = 0
@@ -17,8 +17,7 @@ enum ResponseCacheType: Int {
 }
 
 class ResponseCacheViewController: UIViewController {
-    
-    @IBOutlet weak var segmentedControl: UISegmentedControl! {
+    @IBOutlet private var segmentedControl: UISegmentedControl! {
         didSet {
             segmentedControl.setTitle("Server", forSegmentAt: 0)
             segmentedControl.setTitle("Cache", forSegmentAt: 1)
@@ -27,43 +26,42 @@ class ResponseCacheViewController: UIViewController {
         }
     }
 
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var contentLabel: UILabel!
-    @IBOutlet weak var indicator: UIActivityIndicatorView!
-    
+    @IBOutlet private var scrollView: UIScrollView!
+    @IBOutlet private var contentLabel: UILabel!
+    @IBOutlet private var indicator: UIActivityIndicatorView!
+
     private var responseCacheType: ResponseCacheType = .server {
         didSet {
             request()
         }
     }
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         request()
     }
-    
-    @IBAction func segmentAction(_ sender: UISegmentedControl) {
+
+    @IBAction private func segmentAction(_ sender: UISegmentedControl) {
         let index = sender.selectedSegmentIndex
         if let type = ResponseCacheType(rawValue: index) {
-            self.responseCacheType = type
+            responseCacheType = type
         }
     }
 
-    @IBAction func clearMemoryCacheAction(_ sender: UIButton) {
+    @IBAction private func clearMemoryCacheAction(_ sender: UIButton) {
         let provider = SYMoyaProvider<HTTPBinDynamicData>()
         provider.clearMemoryCache()
-        self.againFetchIfNeeded(responseCacheType: .memoryCache, provider: provider)
+        againFetchIfNeeded(responseCacheType: .memoryCache, provider: provider)
     }
-    
-    @IBAction func clearDiskCacheAction(_ sender: UIButton) {
+
+    @IBAction private func clearDiskCacheAction(_ sender: UIButton) {
         let provider = SYMoyaProvider<HTTPBinDynamicData>()
         provider.clearDiskCache {
             self.againFetchIfNeeded(responseCacheType: .diskCache, provider: provider)
         }
     }
-    
-    @IBAction func clearAllCacheAction(_ sender: UIButton) {
+
+    @IBAction private func clearAllCacheAction(_ sender: UIButton) {
         let provider = SYMoyaProvider<HTTPBinDynamicData>()
         provider.clearCache {
             self.againFetchIfNeeded(responseCacheType: .cache, provider: provider)
@@ -72,6 +70,7 @@ class ResponseCacheViewController: UIViewController {
 }
 
 // MARK: - Private
+
 private extension ResponseCacheViewController {
     func againFetchIfNeeded(responseCacheType: ResponseCacheType, provider: SYMoyaProvider<HTTPBinDynamicData>) {
         switch responseCacheType {
@@ -95,28 +94,28 @@ private extension ResponseCacheViewController {
             }
         }
     }
-    
+
     func loadingState() {
         scrollView.isHidden = true
         indicator.startAnimating()
         contentLabel.text = nil
     }
-    
+
     func resetState() {
         scrollView.isHidden = false
         indicator.stopAnimating()
     }
-    
+
     func request() {
         loadingState()
         let provider = SYMoyaProvider<HTTPBinDynamicData>()
-        switch self.responseCacheType {
+        switch responseCacheType {
         case .server:
             provider.responseString(.server, target: .getDelay(delay: 1)) { response in
                 switch response.result {
-                case .success(let success):
+                case let .success(success):
                     self.contentLabel.text = success
-                case .failure(let failure):
+                case let .failure(failure):
                     self.contentLabel.text = failure.localizedDescription
                 }
                 self.resetState()
@@ -124,32 +123,32 @@ private extension ResponseCacheViewController {
         case .cache:
             fetchCache(provider: provider)
         case .diskCache:
-           fetchDiskCache(provider: provider)
+            fetchDiskCache(provider: provider)
         case .memoryCache:
             fetchMemoryCache(provider: provider)
         }
     }
-    
+
     func fetchDiskCache(provider: SYMoyaProvider<HTTPBinDynamicData>) {
         fetch(cacheFromType: .disk, provider: provider)
     }
-    
+
     func fetchMemoryCache(provider: SYMoyaProvider<HTTPBinDynamicData>) {
         fetch(cacheFromType: .memory, provider: provider)
     }
-    
+
     func fetchCache(provider: SYMoyaProvider<HTTPBinDynamicData>) {
         fetch(cacheFromType: .memoryOrDisk, provider: provider)
     }
-    
+
     func fetch(cacheFromType: NetworkCacheFromType, provider: SYMoyaProvider<HTTPBinDynamicData>) {
         // Simulate loading
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-            provider.responseStringFromCache(cacheFromType,target: .getDelay(delay: 1)) { response in
+            provider.responseStringFromCache(cacheFromType, target: .getDelay(delay: 1)) { response in
                 switch response.result {
-                case .success(let success):
+                case let .success(success):
                     self.contentLabel.text = success
-                case .failure(let failure):
+                case let .failure(failure):
                     self.contentLabel.text = failure.localizedDescription
                 }
                 self.resetState()

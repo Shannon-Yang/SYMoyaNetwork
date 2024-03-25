@@ -1,5 +1,5 @@
 //
-//  Data+CacheCostCalculable.swift
+//  Response+CacheCostCalculable.swift
 //  SYMoyaNetwork
 //
 //  Created by Shannon Yang on 2021/8/26.
@@ -9,10 +9,11 @@
 import Foundation
 import Moya
 
-//MARK: - CacheCostCalculable
+// MARK: - CacheCostCalculable
+
 extension Moya.Response: CacheCostCalculable {
     /// Cost of an Response
     public var cacheCost: Int {
-        return self.data.count
+        data.count
     }
 }

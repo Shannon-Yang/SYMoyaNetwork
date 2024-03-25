@@ -13,7 +13,7 @@ import Moya
 public protocol SYBatchMoyaProviderType {
     /// The number of protocols used to define the specifications required by `SYMoyaProvider`.
     var targetTypeCount: Int { get }
-    
+
     /// Make a batch request
     ///
     /// - Parameters:
@@ -26,25 +26,25 @@ public protocol SYBatchMoyaProviderType {
 public class SYMoyaBatchProvider<TargetType: SYTargetType>: SYBatchMoyaProviderType {
     /// The number of protocols used to define the specifications required by `SYMoyaProvider`.
     public var targetTypeCount: Int {
-        return targetTypes.count
+        targetTypes.count
     }
-    
+
     private lazy var operationQueue: OperationQueue = {
         let operationQueue = OperationQueue()
         operationQueue.name = "com.shannonyang.SYMoyaNetwork.BatchRequest.operationQueue"
         return operationQueue
     }()
-    
+
     private let targetTypes: [TargetType]
-    
+
     // MARK: - Initallization
-    
+
     /// Init SYMoyaBatchProvider
     /// - Parameter targetTypes: The array of protocols used to define the specifications required by `SYMoyaProvider`.
     public init(targetTypes: [TargetType]) {
         self.targetTypes = targetTypes
     }
-    
+
     /// Make a batch request
     ///
     /// - Parameters:
@@ -54,14 +54,14 @@ public class SYMoyaBatchProvider<TargetType: SYTargetType>: SYBatchMoyaProviderT
         let reqOperations: [SYMoyaBatchProviderReqOperation<TargetType>] = targetTypes.map {
             SYMoyaBatchProviderReqOperation(targetType: $0)
         }
-        reqOperations.forEach({
-            $0.completionBlock = {
+        for reqOperation in reqOperations {
+            reqOperation.completionBlock = {
                 reqOperationCompletion()
             }
-        })
+        }
         operationQueue.addOperations(reqOperations, waitUntilFinished: true)
         operationQueue.addBarrierBlock {
-            let providerResponses = reqOperations.map { $0.providerResponse }
+            let providerResponses = reqOperations.map(\.providerResponse)
             completion(providerResponses)
         }
     }

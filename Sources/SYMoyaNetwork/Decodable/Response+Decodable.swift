@@ -1,5 +1,5 @@
 //
-//  Response+Codable.swift
+//  Response+Decodable.swift
 //  SYMoyaNetwork
 //
 //  Created by Shannon Yang on 2021/8/19.
@@ -9,7 +9,8 @@
 import Foundation
 import Moya
 
-//MARK: - Codable
+// MARK: - Codable
+
 extension Response {
     /// Convert response to Codable format data
     ///

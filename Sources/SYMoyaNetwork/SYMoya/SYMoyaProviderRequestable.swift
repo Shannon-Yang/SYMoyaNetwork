@@ -4,12 +4,12 @@
 //
 //  Created by Shannon Yang on 2023/10/19.
 //  Copyright © 2023 Shannon Yang. All rights reserved.
-// 
+//
 
 import Foundation
 import Moya
 
-//MARK: - SYMoyaProviderRequestable
+// MARK: - SYMoyaProviderRequestable
 
 /// An abstraction layer that defines the common request method of Provider.
 ///
@@ -20,7 +20,7 @@ import Moya
 /// `SYMoyaProvider` has implemented `SYMoyaProviderRequestable` by default
 public protocol SYMoyaProviderRequestable: AnyObject {
     associatedtype Target: SYTargetType
-    
+
     /// Retrieve data from the disk cache or memory cache
     ///
     /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
@@ -41,7 +41,7 @@ public protocol SYMoyaProviderRequestable: AnyObject {
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - completion: A closure which is invoked when the cache operation finishes. If not specified, the main queue will be used.
     func requestFromCache(_ cacheFromType: NetworkCacheFromType, target: Target, callbackQueue: DispatchQueue?, completion: @escaping (SYMoyaNetworkResult) -> Void)
-    
+
     /// A data request method, depending on the data request strategy.
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
@@ -59,34 +59,35 @@ public protocol SYMoyaProviderRequestable: AnyObject {
     func request(_ type: ResponseDataSourceType, target: Target, callbackQueue: DispatchQueue?, progress: ProgressBlock?, completion: @escaping (SYMoyaNetworkResult) -> Void) -> Cancellable?
 }
 
-//MARK: - SYMoyaProviderRequestable Imp
+// MARK: - SYMoyaProviderRequestable Imp
+
 extension SYMoyaProvider: SYMoyaProviderRequestable {
     public func requestFromCache(_ cacheFromType: NetworkCacheFromType, target: Target, callbackQueue: DispatchQueue?, completion: @escaping (SYMoyaNetworkResult) -> Void) {
         switch cacheFromType {
         case .memoryOrDisk:
-            let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-            self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
+            let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(cache)])
+            retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                 completion(result)
             }
         case .disk:
-            let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-            self.retrieveResponseInDiskCache(target, options: options, callbackQueue: callbackQueue) { result in
+            let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(cache)])
+            retrieveResponseInDiskCache(target, options: options, callbackQueue: callbackQueue) { result in
                 completion(result)
             }
         case .memory:
-            let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-            let result = self.retrieveResponseInMemoryCache(target, options: options)
+            let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(cache)])
+            let result = retrieveResponseInMemoryCache(target, options: options)
             let queue = callbackQueue ?? DispatchQueue.main
             queue.async {
                 completion(result)
             }
         }
     }
-    
+
     public func request(_ type: ResponseDataSourceType, target: Target, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping (SYMoyaNetworkResult) -> Void) -> Moya.Cancellable? {
         @discardableResult
-        func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none,shouldCacheIfNeeded: Bool = true, completion: @escaping (SYMoyaNetworkResult) -> Void) -> Cancellable {
-            return self.req(target, callbackQueue: callbackQueue, progress: progress, shouldCacheIfNeeded: shouldCacheIfNeeded) { result in
+        func req(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, shouldCacheIfNeeded: Bool = true, completion: @escaping (SYMoyaNetworkResult) -> Void) -> Cancellable {
+            self.req(target, callbackQueue: callbackQueue, progress: progress, shouldCacheIfNeeded: shouldCacheIfNeeded) { result in
                 completion(result)
             }
         }
@@ -98,13 +99,13 @@ extension SYMoyaProvider: SYMoyaProviderRequestable {
             case .server:
                 return req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
             case .cache:
-                let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-                self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
+                let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(cache)])
+                retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     completion(result)
                 }
             case .cacheIfPossible:
-                let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-                self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
+                let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(cache)])
+                retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
                     case .success:
                         completion(result)
@@ -113,8 +114,8 @@ extension SYMoyaProvider: SYMoyaProviderRequestable {
                     }
                 }
             case .cacheAndServer:
-                let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-                self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
+                let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(cache)])
+                retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
                     case .success:
                         completion(result)
@@ -124,9 +125,9 @@ extension SYMoyaProvider: SYMoyaProviderRequestable {
                         req(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
                     }
                 }
-            case .custom(let customizable):
-                let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(self.cache)])
-                self.retrieve(target, options: options, callbackQueue: callbackQueue) { result in
+            case let .custom(customizable):
+                let options = SYMoyaNetworkParsedOptionsInfo([.targetCache(cache)])
+                retrieve(target, options: options, callbackQueue: callbackQueue) { result in
                     switch result {
                     case .success:
                         let isSendRequest = customizable.shouldSendRequest(target, result: result)
@@ -135,7 +136,7 @@ extension SYMoyaProvider: SYMoyaProviderRequestable {
                             let shouldUpdateCache = customizable.shouldUpdateCache(target, result: result)
                             req(target, shouldCacheIfNeeded: shouldUpdateCache, completion: completion)
                         }
-                    case .failure(let error):
+                    case let .failure(error):
                         let shouldRequest = customizable.shouldRequestIfCacheFeatchFailure()
                         if shouldRequest {
                             req(target, completion: completion)

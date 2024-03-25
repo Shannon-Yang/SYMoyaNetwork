@@ -9,26 +9,28 @@
 import Foundation
 import Moya
 
-public extension SYMoyaNetworkResult {
+extension SYMoyaNetworkResult {
     /// Data parsed as `JSON`
-    /// 
+    ///
     /// - Parameter failsOnEmptyData: A Boolean value determining
     /// - Returns: an object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `JSON`
-    func serializerJSONDataResponse(failsOnEmptyData: Bool) -> SYMoyaNetworkDataResponse<Any> {
+    public func serializerJSONDataResponse(failsOnEmptyData: Bool) -> SYMoyaNetworkDataResponse<Any> {
         var dataRes: SYMoyaNetworkDataResponse<Any>
         switch self {
-        case .success(let resultResponse):
+        case let .success(resultResponse):
             do {
                 let json = try resultResponse.response.mapJSON(failsOnEmptyData: failsOnEmptyData)
                 dataRes = SYMoyaNetworkDataResponse(resultResponse: resultResponse, result: .success(json))
-            } catch let error {
-                let e = (error as! MoyaError).transformToSYMoyaNetworkError()
+            } catch {
+                guard let moyaError = error as? MoyaError else {
+                    fatalError("Type as error, Must be of type MoyaError")
+                }
+                let e = moyaError.transformToSYMoyaNetworkError()
                 dataRes = SYMoyaNetworkDataResponse(resultResponse: resultResponse, result: .failure(e))
             }
-        case .failure(let error):
+        case let .failure(error):
             dataRes = SYMoyaNetworkDataResponse<Any>(result: .failure(error))
         }
         return dataRes
     }
-    
 }

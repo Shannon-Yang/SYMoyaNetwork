@@ -22,7 +22,7 @@ enum ResponseType: String, CaseIterable {
 #if os(iOS)
 import UIKit
 class ViewController: UIViewController {
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak private var tableView: UITableView!
     
     fileprivate var data = ResponseType.allCases
 
@@ -34,13 +34,15 @@ class ViewController: UIViewController {
 }
 
 // MARK: - Private
+
 private extension ViewController {
     func registerCell() {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: String(describing: UITableViewCell.self))
     }
 }
 
-//MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource
+
 extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -55,7 +57,7 @@ extension ViewController: UITableViewDataSource {
     }
 }
 
-//MARK: - UITableViewDelegate
+// MARK: - UITableViewDelegate
 
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

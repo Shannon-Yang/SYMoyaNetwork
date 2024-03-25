@@ -6,14 +6,15 @@
 //  Copyright © 2023 Shannon Yang. All rights reserved.
 //
 
-import Foundation
-import Moya
 import Combine
+import Foundation
 import HandyJSON
+import Moya
 import SYMoyaNetwork
 
-//MARK: - HandyJSON Provider Combine
-public extension SYMoyaProvider {
+// MARK: - HandyJSON Provider Combine
+
+extension SYMoyaProvider {
     /// Retrieve data from the cache and It will return an object that implements `Publisher` and outputs the value `SYMoyaNetworkDataResponse<HandyJSON>.
     ///
     /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
@@ -33,16 +34,16 @@ public extension SYMoyaProvider {
     ///   - serializer: A `ResponseSerializer` that decodes the response data as a `HandyJSON`.
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     /// - Returns: An object that implements `Publisher`, its output value is `SYMoyaNetworkDataResponse<HandyJSON>`.
-    func responseObjectFromCachePublisher<T: HandyJSON>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
-        return SYMoyaPublisher { subscriber in
-            self.responseObjectFromCache(cacheFromType,target: target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
+    public func responseObjectFromCachePublisher<T: HandyJSON>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
+        SYMoyaPublisher { subscriber in
+            self.responseObjectFromCache(cacheFromType, target: target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
                 _ = subscriber.receive(dataResponse)
                 subscriber.receive(completion: .finished)
             }
             return nil
         }
     }
-    
+
     /// A data request method,It will return an object that implements `Publisher` and outputs the value `SYMoyaNetworkDataResponse<HandyJSON>.
     ///
     /// depending on the data request strategy. and parses the requested data into an object that implements `HandyJSON`
@@ -58,15 +59,15 @@ public extension SYMoyaProvider {
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - progress: Closure to be executed when progress changes.
     /// - Returns: An object that implements `Publisher`, its output value is `SYMoyaNetworkDataResponse<HandyJSON>`.
-    func responseObjectPublisher<T: HandyJSON>(_ type: ResponseDataSourceType = .server, target: Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
-        return SYMoyaPublisher { subscriber in
-            return self.responseObject(type,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress) { dataResponse in
+    public func responseObjectPublisher<T: HandyJSON>(_ type: ResponseDataSourceType = .server, target: Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<T>> {
+        SYMoyaPublisher { subscriber in
+            self.responseObject(type, target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress) { dataResponse in
                 _ = subscriber.receive(dataResponse)
                 subscriber.receive(completion: .finished)
             }
         }
     }
-    
+
     /// Retrieve data from the cache and It will return an object that implements `Publisher` and outputs the value `SYMoyaNetworkDataResponse<HandyJSON>` array
     ///
     /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
@@ -86,16 +87,16 @@ public extension SYMoyaProvider {
     ///   - serializer: A `ResponseSerializer` that decodes the response data as a `HandyJSON` array
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     /// - Returns: An object that implements `Publisher`, its output value is `SYMoyaNetworkDataResponse<[HandyJSON?]>`.
-    func responseObjectsFromCachePublisher<T: HandyJSON>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<[T?]>> {
-        return SYMoyaPublisher { subscriber in
-            self.responseObjectsFromCache(cacheFromType,target: target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
+    public func responseObjectsFromCachePublisher<T: HandyJSON>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<[T?]>> {
+        SYMoyaPublisher { subscriber in
+            self.responseObjectsFromCache(cacheFromType, target: target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
                 _ = subscriber.receive(dataResponse)
                 subscriber.receive(completion: .finished)
             }
             return nil
         }
     }
-    
+
     /// A data request method,It will return an object that implements `Publisher` and outputs the value `SYMoyaNetworkDataResponse<HandyJSON>.
     ///
     /// depending on the data request strategy. and parses the requested data into an object that implements `HandyJSON`.
@@ -111,9 +112,9 @@ public extension SYMoyaProvider {
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - progress: Closure to be executed when progress changes.
     /// - Returns: An object that implements `Publisher`, its output value is `SYMoyaNetworkDataResponse<[HandyJSON?]>`.
-    func responseObjectsPublisher<T: HandyJSON>(_ type: ResponseDataSourceType = .server, target: Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<[T?]>> {
-        return SYMoyaPublisher { subscriber in
-            return self.responseObjects(type,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress) { dataResponse in
+    public func responseObjectsPublisher<T: HandyJSON>(_ type: ResponseDataSourceType = .server, target: Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<[T?]>> {
+        SYMoyaPublisher { subscriber in
+            self.responseObjects(type, target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress) { dataResponse in
                 _ = subscriber.receive(dataResponse)
                 subscriber.receive(completion: .finished)
             }

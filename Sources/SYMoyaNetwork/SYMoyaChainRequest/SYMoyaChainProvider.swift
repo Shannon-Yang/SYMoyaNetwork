@@ -11,15 +11,14 @@ import Moya
 
 /// Chain Request provider class. Chain Requests should be made through this class only.
 public struct SYMoyaChainProvider<TargetType: SYTargetType>: SYChainMoyaProviderType {
-    
     /// The protocol used to define the specifications necessary for a `SYMoyaProvider`.
     public let targetType: TargetType
     private let provider: SYMoyaProvider<TargetType>
     private let callbackQueue: DispatchQueue?
     private let progress: ProgressBlock?
-    
+
     // MARK: - Initallization
-    
+
     /// Init `SYMoyaChainProvider`
     ///
     /// - Parameters:
@@ -30,7 +29,7 @@ public struct SYMoyaChainProvider<TargetType: SYTargetType>: SYChainMoyaProvider
         self.targetType = targetType
         self.callbackQueue = callbackQueue
         self.progress = progress
-        self.provider = SYMoyaProvider<TargetType>()
+        provider = SYMoyaProvider<TargetType>()
     }
 
     /// When a chained network request is triggered, Make a network request
@@ -39,8 +38,8 @@ public struct SYMoyaChainProvider<TargetType: SYTargetType>: SYChainMoyaProvider
     /// - Returns: Protocol to define the opaque type returned from a request.
     @discardableResult
     public func req(completion: @escaping (_ response: SYMoyaProviderSessionResponse) -> Void) -> Cancellable {
-        return self.provider.req(targetType, callbackQueue: callbackQueue, progress: progress) { result in
-            let response = SYMoyaProviderSessionResponse(self.targetType, result)
+        provider.req(targetType, callbackQueue: callbackQueue, progress: progress) { result in
+            let response = SYMoyaProviderSessionResponse(targetType, result)
             completion(response)
         }
     }

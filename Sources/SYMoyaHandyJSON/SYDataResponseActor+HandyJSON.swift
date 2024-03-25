@@ -1,5 +1,5 @@
 //
-//  SYDataResponseActor+.swift
+//  SYDataResponseActor+HandyJSON.swift
 //  SYMoyaHandyJSON
 //
 //  Created by Shannon Yang on 2023/6/24.
@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import Foundation
-import Moya
 import HandyJSON
+import Moya
 import SYMoyaNetwork
 
 extension SYDataResponseActor {
@@ -27,9 +26,9 @@ extension SYDataResponseActor {
     ///   - progress: Closure to be executed when progress changes.
     ///   - completion: A closure which is invoked when the request operation finishes. If not specified, the main queue will be used.
     func responseObject<T: HandyJSON>(_ type: ResponseDataSourceType = .server, target: Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<T>) -> Void) {
-        cancellable = provider.responseObject(type,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress, completion: completion)
+        cancellable = provider.responseObject(type, target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
-    
+
     /// A data request method, depending on the data request strategy. and parses the requested data into an object that implements `HandyJSON` arry
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
@@ -44,6 +43,6 @@ extension SYDataResponseActor {
     ///   - progress: Closure to be executed when progress changes.
     ///   - completion: A closure which is invoked when the request operation finishes. If not specified, the main queue will be used.
     func responseObjects<T: HandyJSON>(_ type: ResponseDataSourceType = .server, target: Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ dataResponse: SYMoyaNetworkDataResponse<[T?]>) -> Void) {
-        cancellable = provider.responseObjects(type,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress, completion: completion)
+        cancellable = provider.responseObjects(type, target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
 }

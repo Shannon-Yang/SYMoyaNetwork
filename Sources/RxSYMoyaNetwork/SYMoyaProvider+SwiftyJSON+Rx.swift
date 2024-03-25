@@ -1,18 +1,18 @@
 //
-//  SYMoyaProvider+Rx.swift
+//  SYMoyaProvider+SwiftyJSON+Rx.swift
 //  RxSYMoyaNetwork
 //
 //  Created by Shannon Yang on 2023/6/29.
 //  Copyright © 2023 Shannon Yang. All rights reserved.
-// 
+//
 
 import Foundation
-import RxSwift
 import Moya
-import SYMoyaNetwork
+import RxSwift
 import SwiftyJSON
+import SYMoyaNetwork
 
-public extension Reactive where Base: SYMoyaProviderRequestable {
+extension Reactive where Base: SYMoyaProviderRequestable {
     /// Retrieve data from the cache and parses the retrieved data into an object that is `SwiftyJSON.JSON`.
     ///
     /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
@@ -32,9 +32,9 @@ public extension Reactive where Base: SYMoyaProviderRequestable {
     ///   - serializer: A `ResponseSerializer` that decodes the response data as a `SwiftyJSON.JSON`.
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     /// - Returns: A type-erased `ObservableType` that can produce values of type `SYMoyaNetworkDataResponse<SwiftyJSON.JSON>`
-    func responseSwiftyJSONFromCache(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Base.Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none) -> Observable<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>> {
-        return Observable.create { [weak base] observer in
-            base?.requestFromCache(cacheFromType,target: target, callbackQueue: callbackQueue, completion: { result in
+    public func responseSwiftyJSONFromCache(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Base.Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none) -> Observable<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>> {
+        Observable.create { [weak base] observer in
+            base?.requestFromCache(cacheFromType, target: target, callbackQueue: callbackQueue, completion: { result in
                 let response = serializer.serialize(result: result)
                 observer.on(.next(response))
                 observer.on(.completed)
@@ -42,7 +42,7 @@ public extension Reactive where Base: SYMoyaProviderRequestable {
             return Disposables.create()
         }
     }
-    
+
     /// A data request method, depending on the data request strategy. and parses the requested data into an object that implements `SwiftyJSON.JSON`
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
@@ -56,8 +56,8 @@ public extension Reactive where Base: SYMoyaProviderRequestable {
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - progress: Closure to be executed when progress changes.
     /// - Returns: A type-erased `ObservableType` that can produce values of type `SYMoyaNetworkDataResponse<SwiftyJSON.JSON>`
-    func responseSwiftyJSON(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> Observable<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>> {
-        return Observable.create { [weak base] observer in
+    public func responseSwiftyJSON(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> Observable<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>> {
+        Observable.create { [weak base] observer in
             let cancellable = base?.request(type, target: target, callbackQueue: callbackQueue, progress: progress, completion: { result in
                 let response = serializer.serialize(result: result)
                 observer.on(.next(response))

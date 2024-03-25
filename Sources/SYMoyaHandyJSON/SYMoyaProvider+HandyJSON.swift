@@ -7,11 +7,12 @@
 //
 
 import Foundation
-import Moya
 import HandyJSON
+import Moya
 import SYMoyaNetwork
 
-//MARK: - SYMoyaProviderHandyJSONType
+// MARK: - SYMoyaProviderHandyJSONType
+
 extension SYMoyaProvider {
     /// Retrieve data from the cache and parses the retrieved data into an object that implements `HandyJSON`.
     ///
@@ -33,12 +34,12 @@ extension SYMoyaProvider {
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - completion: A closure which is invoked when the cache operation finishes. If not specified, the main queue will be used.
     public func responseObjectFromCache<T: HandyJSON>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<T>) -> Void) {
-        self.requestFromCache(cacheFromType,target: target, callbackQueue: callbackQueue) { result in
+        requestFromCache(cacheFromType, target: target, callbackQueue: callbackQueue) { result in
             let response = serializer.serialize(result: result)
             completion(response)
         }
     }
-    
+
     /// A data request method, depending on the data request strategy. and parses the requested data into an object that implements `HandyJSON`
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
@@ -55,13 +56,12 @@ extension SYMoyaProvider {
     /// - Returns: Protocol to define the opaque type returned from a request.
     @discardableResult
     public func responseObject<T: HandyJSON>(_ type: ResponseDataSourceType = .server, target: Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<T>) -> Void) -> Cancellable? {
-        let cancellable = self.request(type, target: target, callbackQueue: callbackQueue, progress: progress) { result in
+        return request(type, target: target, callbackQueue: callbackQueue, progress: progress) { result in
             let response = serializer.serialize(result: result)
             completion(response)
         }
-        return cancellable
     }
-    
+
     /// Retrieve data from the cache and parses the retrieved data into an object that implements `HandyJSON` array
     ///
     /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
@@ -82,12 +82,12 @@ extension SYMoyaProvider {
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - completion: A closure which is invoked when the cache operation finishes. If not specified, the main queue will be used.
     public func responseObjectsFromCache<T: HandyJSON>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<[T?]>) -> Void) {
-        self.requestFromCache(cacheFromType,target: target, callbackQueue: callbackQueue) { result in
+        requestFromCache(cacheFromType, target: target, callbackQueue: callbackQueue) { result in
             let response = serializer.serialize(result: result)
             completion(response)
         }
     }
-    
+
     /// A data request method, depending on the data request strategy. and parses the requested data into an object that implements `HandyJSON` arry
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
@@ -104,10 +104,9 @@ extension SYMoyaProvider {
     /// - Returns: Protocol to define the opaque type returned from a request.
     @discardableResult
     public func responseObjects<T: HandyJSON>(_ type: ResponseDataSourceType = .server, target: Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<[T?]>) -> Void) -> Cancellable? {
-        let cancellable = self.request(type, target: target, callbackQueue: callbackQueue, progress: progress) { result in
+        return request(type, target: target, callbackQueue: callbackQueue, progress: progress) { result in
             let response = serializer.serialize(result: result)
             completion(response)
         }
-        return cancellable
     }
 }

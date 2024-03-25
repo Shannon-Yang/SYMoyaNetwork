@@ -10,8 +10,8 @@ import UIKit
 import SYMoyaNetwork
 
 class ChainResponseViewController: UIViewController {
-    @IBOutlet weak var contentLabel: UILabel!
-    @IBOutlet weak var indicator: UIActivityIndicatorView!
+    @IBOutlet weak private var contentLabel: UILabel!
+    @IBOutlet weak private var indicator: UIActivityIndicatorView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,8 +29,7 @@ class ChainResponseViewController: UIViewController {
                 let json = result.serializerSwiftyJSON().value
                 let authenticated = json?["authenticated"].boolValue ?? false
                 if authenticated {
-                    let nextProvider = SYMoyaChainProvider(targetType: HTTPBinDynamicData.getDelay(delay: 1))
-                    return nextProvider
+                    return SYMoyaChainProvider(targetType: HTTPBinDynamicData.getDelay(delay: 1))
                 }
             case HTTPBinDynamicData.getDelay:
                 let responseString = result.serializerStringDataResponse(atKeyPath: nil)

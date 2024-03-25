@@ -12,7 +12,6 @@ import Foundation
 /// This is a namespace for the memory storage types. A `Backend` with a certain `Config` will be used to describe the
 /// storage. See these composed types for more information.
 public enum MemoryStorage {
-
     /// Represents a storage which stores a certain type of value in memory. It provides fast access,
     /// but limited storing size. The stored value type needs to conform to `CacheCostCalculable`,
     /// and its `cacheCost` will be used to determine the cost of size for the cache item.
@@ -33,7 +32,7 @@ public enum MemoryStorage {
         // Breaking the strict tracking could save additional locking behaviors.
         var keys = Set<String>()
 
-        private var cleanTimer: Timer? = nil
+        private var cleanTimer: Timer?
         private let lock = NSLock()
 
         /// The config used in this storage. It is a value you can set and
@@ -55,7 +54,9 @@ public enum MemoryStorage {
             storage.countLimit = config.countLimit
 
             cleanTimer = .scheduledTimer(withTimeInterval: config.cleanInterval, repeats: true) { [weak self] _ in
-                guard let self = self else { return }
+                guard let self else {
+                    return
+                }
                 self.removeExpired()
             }
         }
@@ -89,8 +90,8 @@ public enum MemoryStorage {
         public func store(
             value: T,
             forKey key: String,
-            expiration: StorageExpiration? = nil)
-        {
+            expiration: StorageExpiration? = nil
+        ) {
             storeNoThrow(value: value, forKey: key, expiration: expiration)
         }
 
@@ -99,19 +100,21 @@ public enum MemoryStorage {
         func storeNoThrow(
             value: T,
             forKey key: String,
-            expiration: StorageExpiration? = nil)
-        {
+            expiration: StorageExpiration? = nil
+        ) {
             lock.lock()
             defer { lock.unlock() }
             let expiration = expiration ?? config.expiration
             // The expiration indicates that already expired, no need to store.
-            guard !expiration.isExpired else { return }
-            
+            guard !expiration.isExpired else {
+                return
+            }
+
             let object = StorageObject(value, expiration: expiration)
             storage.setObject(object, forKey: key as NSString, cost: value.cacheCost)
             keys.insert(key)
         }
-        
+
         /// Gets a value from the storage.
         ///
         /// - Parameters:
@@ -130,7 +133,7 @@ public enum MemoryStorage {
         }
 
         /// Whether there is valid cached data under a given key.
-        /// 
+        ///
         /// - Parameter key: The cache key of value.
         /// - Returns: If there is valid data under the key, `true`. Otherwise, `false`.
         public func isCached(forKey key: String) -> Bool {
@@ -162,7 +165,6 @@ public enum MemoryStorage {
 extension MemoryStorage {
     /// Represents the config used in a `MemoryStorage`.
     public struct Config {
-
         /// Total cost limit of the storage in bytes.
         public var totalCostLimit: Int
 
@@ -196,14 +198,14 @@ extension MemoryStorage {
     class StorageObject<T> {
         let value: T
         let expiration: StorageExpiration
-        
+
         private(set) var estimatedExpiration: Date
-        
+
         init(_ value: T, expiration: StorageExpiration) {
             self.value = value
             self.expiration = expiration
-            
-            self.estimatedExpiration = expiration.estimatedExpirationSinceNow
+
+            estimatedExpiration = expiration.estimatedExpirationSinceNow
         }
 
         func extendExpiration(_ extendingExpiration: ExpirationExtending = .cacheTime) {
@@ -211,14 +213,14 @@ extension MemoryStorage {
             case .none:
                 return
             case .cacheTime:
-                self.estimatedExpiration = expiration.estimatedExpirationSinceNow
-            case .expirationTime(let expirationTime):
-                self.estimatedExpiration = expirationTime.estimatedExpirationSinceNow
+                estimatedExpiration = expiration.estimatedExpirationSinceNow
+            case let .expirationTime(expirationTime):
+                estimatedExpiration = expirationTime.estimatedExpirationSinceNow
             }
         }
-        
+
         var expired: Bool {
-            return estimatedExpiration.isPast
+            estimatedExpiration.isPast
         }
     }
 }

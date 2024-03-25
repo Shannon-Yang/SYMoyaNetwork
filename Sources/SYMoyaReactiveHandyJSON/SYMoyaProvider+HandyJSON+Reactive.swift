@@ -7,11 +7,11 @@
 //
 
 import Foundation
-import SYMoyaNetwork
-import ReactiveSwift
-import Moya
 import HandyJSON
+import Moya
+import ReactiveSwift
 import SYMoyaHandyJSON
+import SYMoyaNetwork
 
 extension Reactive where Base: SYMoyaProviderRequestable {
     /// Retrieve data from the cache and parses the retrieved data into an object that implements `HandyJSON`.
@@ -35,15 +35,15 @@ extension Reactive where Base: SYMoyaProviderRequestable {
     /// - Returns: A SignalProducer creates Signals that can produce values of type `SYMoyaNetworkDataResponse<HandyJSON>`
     public func responseObjectFromCache<T: HandyJSON>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Base.Target, serializer: HandyJSONObjectResponseSerializer<T> = .defaultHandyJSONObjectSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
         SignalProducer { [weak base] observer, lifetime in
-            base?.requestFromCache(cacheFromType,target: target, callbackQueue: callbackQueue, completion: { result in
+            base?.requestFromCache(cacheFromType, target: target, callbackQueue: callbackQueue, completion: { result in
                 let response = serializer.serialize(result: result)
                 observer.send(value: response)
                 observer.sendCompleted()
             })
-            lifetime.observeEnded { }
+            lifetime.observeEnded {}
         }
     }
-    
+
     /// A data request method, depending on the data request strategy. and parses the requested data into an object that implements `HandyJSON`.
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
@@ -67,7 +67,7 @@ extension Reactive where Base: SYMoyaProviderRequestable {
             lifetime.observeEnded { cancellable?.cancel() }
         }
     }
-    
+
     /// Retrieve data from the cache and parses the retrieved data into an object that implements `HandyJSON` array
     ///
     /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
@@ -89,15 +89,15 @@ extension Reactive where Base: SYMoyaProviderRequestable {
     /// - Returns: A SignalProducer creates Signals that can produce values of type `SYMoyaNetworkDataResponse<[HandyJSON?]>`
     public func responseObjectsFromCache<T: HandyJSON>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Base.Target, serializer: HandyJSONObjectsResponseSerializer<T> = .defaultHandyJSONObjectsSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<[T?]>, Never> {
         SignalProducer { [weak base] observer, lifetime in
-            base?.requestFromCache(cacheFromType,target: target, callbackQueue: callbackQueue, completion: { result in
+            base?.requestFromCache(cacheFromType, target: target, callbackQueue: callbackQueue, completion: { result in
                 let response = serializer.serialize(result: result)
                 observer.send(value: response)
                 observer.sendCompleted()
             })
-            lifetime.observeEnded { }
+            lifetime.observeEnded {}
         }
     }
-    
+
     /// A data request method, depending on the data request strategy. and parses the requested data into an object that implements `HandyJSON` array
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.

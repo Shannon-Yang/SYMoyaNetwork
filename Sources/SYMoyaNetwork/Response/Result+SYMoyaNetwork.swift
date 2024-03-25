@@ -9,43 +9,50 @@
 import Foundation
 
 // MARK: - Internal APIs
+
 extension Result {
     /// Returns whether the instance is `.success`.
     var isSuccess: Bool {
-        guard case .success = self else { return false }
+        guard case .success = self else {
+            return false
+        }
         return true
     }
-    
+
     /// Returns whether the instance is `.failure`.
     var isFailure: Bool {
         !isSuccess
     }
-    
+
     /// Returns the associated value if the result is a success, `nil` otherwise.
     var success: Success? {
-        guard case let .success(value) = self else { return nil }
+        guard case let .success(value) = self else {
+            return nil
+        }
         return value
     }
-    
+
     /// Returns the associated error value if the result is a failure, `nil` otherwise.
     var failure: Failure? {
-        guard case let .failure(error) = self else { return nil }
+        guard case let .failure(error) = self else {
+            return nil
+        }
         return error
     }
-    
+
     /// Initializes a `Result` from value or error. Returns `.failure` if the error is non-nil, `.success` otherwise.
     ///
     /// - Parameters:
     ///   - value: A value.
     ///   - error: An `Error`.
     init(value: Success, error: Failure?) {
-        if let error = error {
+        if let error {
             self = .failure(error)
         } else {
             self = .success(value)
         }
     }
-    
+
     /// Evaluates the specified closure when the `Result` is a success, passing the unwrapped value as a parameter.
     ///
     /// Use the `tryMap` method with a closure that may throw an error. For example:
@@ -71,7 +78,7 @@ extension Result {
             return .failure(error)
         }
     }
-    
+
     /// Evaluates the specified closure when the `Result` is a failure, passing the unwrapped error as a parameter.
     ///
     /// Use the `tryMapError` function with a closure that may throw an error. For example:

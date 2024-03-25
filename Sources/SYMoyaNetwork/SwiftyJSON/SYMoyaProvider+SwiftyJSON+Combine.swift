@@ -4,15 +4,16 @@
 //
 //  Created by Shannon Yang on 2023/5/25.
 //  Copyright © 2023 Shannon Yang. All rights reserved.
-// 
+//
 
+import Combine
 import Foundation
 import Moya
 import SwiftyJSON
-import Combine
 
-//MARK: - SwiftyJSON Provider Combine
-public extension SYMoyaProvider {
+// MARK: - SwiftyJSON Provider Combine
+
+extension SYMoyaProvider {
     /// Retrieve data from the cache and It will return an object that implements `Publisher` and outputs the value `SYMoyaNetworkDataResponse<SwiftyJSON.JSON>.
     ///
     /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
@@ -32,16 +33,16 @@ public extension SYMoyaProvider {
     ///   - serializer: A `ResponseSerializer` that decodes the response data as a `SwiftyJSON.JSON`.
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     /// - Returns: An object that implements `Publisher`, its output value is `SYMoyaNetworkDataResponse<SwiftyJSON.JSON>`.
-    func responseSwiftyJSONFromCachePublisher(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>> {
-        return SYMoyaPublisher { subscriber in
-            self.responseSwiftyJSONFromCache(cacheFromType,target: target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
+    public func responseSwiftyJSONFromCachePublisher(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>> {
+        SYMoyaPublisher { subscriber in
+            self.responseSwiftyJSONFromCache(cacheFromType, target: target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
                 _ = subscriber.receive(dataResponse)
                 subscriber.receive(completion: .finished)
             }
             return nil
         }
     }
-    
+
     /// A data request method,It will return an object that implements `Publisher` and outputs the value `SYMoyaNetworkDataResponse<SwiftyJSON.JSON>.
     ///
     /// depending on the data request strategy. and parses the requested data into an object that is `SwiftyJSON.JSON`.
@@ -57,9 +58,9 @@ public extension SYMoyaProvider {
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - progress: Closure to be executed when progress changes.
     /// - Returns: An object that implements `Publisher`, its output value is `SYMoyaNetworkDataResponse<SwiftyJSON.JSON>`.
-    func responseSwiftyJSONPublisher(_ type: ResponseDataSourceType = .server, target: Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher <SYMoyaNetworkDataResponse<SwiftyJSON.JSON>> {
-        return SYMoyaPublisher { subscriber in
-            return self.responseSwiftyJSON(type,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress) { dataResponse in
+    public func responseSwiftyJSONPublisher(_ type: ResponseDataSourceType = .server, target: Target, serializer: SwiftyJSONResponseSerializer = .defaultSwiftyJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SYMoyaPublisher<SYMoyaNetworkDataResponse<SwiftyJSON.JSON>> {
+        SYMoyaPublisher { subscriber in
+            self.responseSwiftyJSON(type, target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress) { dataResponse in
                 _ = subscriber.receive(dataResponse)
                 subscriber.receive(completion: .finished)
             }

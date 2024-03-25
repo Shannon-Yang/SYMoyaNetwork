@@ -9,8 +9,9 @@
 import Foundation
 import Moya
 
-//MARK: - JSON Provider Concurrency
-public extension SYMoyaProvider {
+// MARK: - JSON Provider Concurrency
+
+extension SYMoyaProvider {
     /// Retrieve data from the cache and It will return an object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `JSON`
     ///
     /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
@@ -30,14 +31,14 @@ public extension SYMoyaProvider {
     ///   - serializer: A `ResponseSerializer` that decodes the response data as a `JSON`.
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     /// - Returns: An object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `JSON`
-    func responseJSONFromCache(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target,serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<Any> {
-        return await withCheckedContinuation { continuation in
-            self.responseJSONFromCache(cacheFromType,target:target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
+    public func responseJSONFromCache(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none) async -> SYMoyaNetworkDataResponse<Any> {
+        await withCheckedContinuation { continuation in
+            self.responseJSONFromCache(cacheFromType, target: target, serializer: serializer, callbackQueue: callbackQueue) { dataResponse in
                 continuation.resume(returning: dataResponse)
             }
         }
     }
-    
+
     /// A data request method It will return an object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `JSON`
     ///
     /// depending on the data request strategy. and parses the requested data into an object that is `JSON`.
@@ -53,15 +54,15 @@ public extension SYMoyaProvider {
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - progress: Closure to be executed when progress changes.
     /// - Returns: An object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `JSON`
-    func responseJSON(_ type: ResponseDataSourceType = .server, target: Target, serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<Any> {
+    public func responseJSON(_ type: ResponseDataSourceType = .server, target: Target, serializer: JSONResponseSerializer = .defaultJSONSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) async -> SYMoyaNetworkDataResponse<Any> {
         let actor = SYDataResponseActor(provider: self)
         return await withTaskCancellationHandler {
-             await withCheckedContinuation { continuation in
+            await withCheckedContinuation { continuation in
                 _Concurrency.Task {
-                     await actor.responseJSON(type,target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
-                         continuation.resume(returning: dataResponse)
-                     })
-                 }
+                    await actor.responseJSON(type, target: target, serializer: serializer, callbackQueue: callbackQueue, progress: progress, completion: { dataResponse in
+                        continuation.resume(returning: dataResponse)
+                    })
+                }
             }
         } onCancel: {
             _Concurrency.Task { await actor.cancel() }

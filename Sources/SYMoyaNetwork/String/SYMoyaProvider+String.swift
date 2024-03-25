@@ -9,8 +9,9 @@
 import Foundation
 import Moya
 
-//MARK: - SYMoyaProviderStringType
-public extension SYMoyaProvider {
+// MARK: - SYMoyaProviderStringType
+
+extension SYMoyaProvider {
     /// Retrieve data from the cache and parses the retrieved data into an object that is `String`.
     ///
     /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
@@ -30,8 +31,8 @@ public extension SYMoyaProvider {
     ///   - serializer: A `ResponseSerializer` that decodes the response data as a `String`.
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - completion: A closure which is invoked when the cache operation finishes. If not specified, the main queue will be used.
-    func responseStringFromCache(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<String>) -> Void) {
-        self.requestFromCache(cacheFromType,target:target, callbackQueue: callbackQueue) { result in
+    public func responseStringFromCache(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<String>) -> Void) {
+        requestFromCache(cacheFromType, target: target, callbackQueue: callbackQueue) { result in
             let string = serializer.serialize(result: result)
             completion(string)
         }
@@ -52,11 +53,10 @@ public extension SYMoyaProvider {
     ///   - completion: A closure which is invoked when the request operation finishes. If not specified, the main queue will be used.
     /// - Returns: Protocol to define the opaque type returned from a request.
     @discardableResult
-    func responseString(_ type: ResponseDataSourceType = .server, target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<String>) -> Void) -> Cancellable? {
-        let cancellable = self.request(type, target: target, callbackQueue: callbackQueue, progress: progress) { result in
+    public func responseString(_ type: ResponseDataSourceType = .server, target: Target, serializer: StringResponseSerializer = .defaultStringSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none, completion: @escaping (_ response: SYMoyaNetworkDataResponse<String>) -> Void) -> Cancellable? {
+        return request(type, target: target, callbackQueue: callbackQueue, progress: progress) { result in
             let string = serializer.serialize(result: result)
             completion(string)
         }
-        return cancellable
     }
 }

@@ -12,32 +12,32 @@ import Foundation
 public class JSONResponseSerializer: ResponseSerializer {
     public typealias SerializedObject = Any
     private let failsOnEmptyData: Bool
-    
+
     /// Init JSONResponseSerializer
     /// - Parameter failsOnEmptyData: A Boolean value determining
     public init(failsOnEmptyData: Bool = true) {
         self.failsOnEmptyData = failsOnEmptyData
     }
-    
+
     /// `SYMoyaNetworkResult` serialize `SYMoyaNetworkDataResponse<JSON>`
     /// - Parameter result: A data request result object with `SYMoyaNetworkResultResponse` and `SYMoyaNetworkError`.
     /// - Returns: An object specifically referring to `SYDataResponse` whose failure value is `SYMoyaNetworkError` and success value is `JSON`
     public func serialize(result: SYMoyaNetworkResult) -> SYMoyaNetworkDataResponse<SerializedObject> {
-        return result.serializerJSONDataResponse(failsOnEmptyData: failsOnEmptyData)
+        result.serializerJSONDataResponse(failsOnEmptyData: failsOnEmptyData)
     }
 }
 
-public extension ResponseSerializer where Self == JSONResponseSerializer {
+extension ResponseSerializer where Self == JSONResponseSerializer {
     /// Default serializer object
-    static var defaultJSONSerializer: JSONResponseSerializer {
+    public static var defaultJSONSerializer: JSONResponseSerializer {
         JSONResponseSerializer()
     }
-    
+
     /// Create a JSONResponseSerializer
     ///
     /// - Parameter failsOnEmptyData: A Boolean value determining
     /// - Returns: A `ResponseSerializer` that decodes the response data as a `JSON`.
-    static func json(failsOnEmptyData: Bool) -> JSONResponseSerializer {
-        return JSONResponseSerializer(failsOnEmptyData: failsOnEmptyData)
+    public static func json(failsOnEmptyData: Bool) -> JSONResponseSerializer {
+        JSONResponseSerializer(failsOnEmptyData: failsOnEmptyData)
     }
 }
