@@ -50,12 +50,10 @@ public protocol SYTargetType: Moya.TargetType {
 
     /// `true` if the receiver is allowed to use an interface marked as expensive to
     /// satify the request, `false` otherwise.
-    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     var allowsExpensiveNetworkAccess: Bool { get }
 
     /// `true` if the receiver is allowed to use an interface marked as constrained to
     /// satify the request, `false` otherwise.
-    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     var allowsConstrainedNetworkAccess: Bool { get }
 
     /// `true` if server endpoint is known to support HTTP/3. Enables QUIC racing
@@ -111,16 +109,14 @@ extension SYTargetType {
         true
     }
 
-    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public var allowsExpensiveNetworkAccess: Bool {
         true
     }
 
-    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public var allowsConstrainedNetworkAccess: Bool {
         true
     }
-
+    
     @available(macOS 11.3, iOS 14.5, watchOS 7.4, tvOS 14.5, *)
     public var assumesHTTP3Capable: Bool {
         true
