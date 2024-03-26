@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'SYMoyaNetwork'
   s.version          = '2.0.0'
-  s.summary          = "Network abstraction layer based on Moya extension"
+  s.summary          = "Based on the network abstraction of Moya's secondary encapsulation, it maintains the same usage method of Moya, extends Moya's TargetType, and implements commonly used data parsing. It supports: HandyJSON, ObjectMapper, Codable, SwiftyJSON. Developers no longer need to write boilerplate code for data parsing, just You need to care about what kind of data you want and choose the data type. SYMoya Network has done all this. SYMoya Network also implements network caching and configures common caching strategies. It only implements the desired caching strategy and Response will perform cache synchronization according to the strategy. , developers no longer need to spend a lot of time doing such work. SYMoya Network makes data requests simple, reducing developers from writing boilerplate code and giving them more time to focus on business."
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-  Network abstraction layer based on Moya extension. You only need to care about what kind of data you want to get, and implement network data caching with different strategies. You don't need to spend a lot of time doing such work, and obtaining network data will become so simple.
+    Based on the network abstraction of Moya's secondary encapsulation, it maintains the same usage method of Moya, extends Moya's TargetType, and implements commonly used data parsing. It supports: HandyJSON, ObjectMapper, Codable, SwiftyJSON. Developers no longer need to write boilerplate code for data parsing, just You need to care about what kind of data you want and choose the data type. SYMoya Network has done all this. SYMoya Network also implements network caching and configures common caching strategies. It only implements the desired caching strategy and Response will perform cache synchronization according to the strategy. , developers no longer need to spend a lot of time doing such work. SYMoya Network makes data requests simple, reducing developers from writing boilerplate code and giving them more time to focus on business.
                        DESC
 
   s.homepage         = 'https://github.com/Shannon-Yang/SYMoyaNetwork'
@@ -28,15 +28,15 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/Shannon-Yang/SYMoyaNetwork.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '10.0'
-  s.osx.deployment_target = '10.12'
-  s.tvos.deployment_target = '10.0'
-  s.watchos.deployment_target = '3.0'
+  s.ios.deployment_target = '13.0'
+  s.osx.deployment_target = '10.15'
+  s.tvos.deployment_target = '13.0'
+  s.watchos.deployment_target = '6.0'
 
   # s.source_files = ["Sources/**/*.swift"]
 
-  s.default_subspec = "Core"
-  s.swift_version = '5.3'
+  s.default_subspec = "SYMoyaNetwork"
+  s.swift_version = ['5']
   s.cocoapods_version = '>= 1.4.0'
 
   
@@ -49,8 +49,8 @@ Pod::Spec.new do |s|
   s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
 
-  s.subspec "Core" do |ss|
-    ss.source_files  = "Sources/Core/Utility/", "Sources/Core/SYMoyaURLCache/", "Sources/Core/SYMoyaChainRequestProvider/", "Sources/Core/SYMoyaBatchRequestProvider/", "Sources/Core/SYMoya/", "Sources/Core/String/", "Sources/Core/Response/", "Sources/Core/Log/", "Sources/Core/JSON/", "Sources/Core/Image/", "Sources/Core/Error/", "Sources/Core/Config/", "Sources/Core/Cache/", "Sources/Core/SwiftyJSON/", "Sources/Core/Codable/"
+  s.subspec "SYMoyaNetwork" do |ss|
+    ss.source_files  = 'Source/SYMoyaNetwork/**/*.swift'
 
     # https://github.com/Moya/Moya
     ss.dependency 'Moya', '~> 15.0'
@@ -61,37 +61,115 @@ Pod::Spec.new do |s|
     ss.framework  = "Foundation"
   end
   
-  s.subspec "SYObjectMapper" do |ss|
-    ss.source_files  = "Sources/ObjectMapper/"
-    ss.dependency "SYMoyaNetwork/Core"
-    # https://github.com/tristanhimmelman/ObjectMapper
-    ss.dependency 'ObjectMapper', '~> 4.0'
-    ss.ios.deployment_target = '10.0'
-    ss.osx.deployment_target = '10.12'
-    ss.tvos.deployment_target = '10.0'
-    ss.watchos.deployment_target = '3.0'
-  end
-  
-  s.subspec "SYHandyJSON" do |ss|
-    ss.source_files  = "Sources/HandyJSON/"
-    ss.dependency "SYMoyaNetwork/Core"
+  s.subspec "SYMoyaReactiveHandyJSON" do |ss|
+    ss.source_files  = 'Source/SYMoyaReactiveHandyJSON/**/*.swift'
+    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
+    
     # https://github.com/alibaba/HandyJSON
     ss.dependency 'HandyJSON', '~> 5.0.2'
-    ss.ios.deployment_target = '10.0'
-    ss.osx.deployment_target = '10.12'
-    ss.tvos.deployment_target = '10.0'
-    ss.watchos.deployment_target = '3.0'
+    # https://github.com/ReactiveCocoa/ReactiveSwift
+    ss.dependency 'ReactiveSwift', '~> 7.1.1'
+    
+    ss.ios.deployment_target = '13.0'
+    ss.osx.deployment_target = '10.15'
+    ss.tvos.deployment_target = '13.0'
+    ss.watchos.deployment_target = '6.0'
+  end
+  
+  s.subspec "SYMoyaReactiveObjectMapper" do |ss|
+    ss.source_files  = 'Source/SYMoyaReactiveObjectMapper/**/*.swift'
+    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
+
+    # https://github.com/tristanhimmelman/ObjectMapper
+    ss.dependency 'ObjectMapper', '~> 4.3'
+    # https://github.com/ReactiveCocoa/ReactiveSwift
+    ss.dependency 'ReactiveSwift', '~> 7.1.1'
+    
+    ss.ios.deployment_target = '13.0'
+    ss.osx.deployment_target = '10.15'
+    ss.tvos.deployment_target = '13.0'
+    ss.watchos.deployment_target = '6.0'
   end
 
-  s.subspec "SYMJExtension" do |ss|
-    ss.source_files  = "Sources/MJExtension/"
-    ss.dependency "SYMoyaNetwork/Core"
-    # https://github.com/CoderMJLee/MJExtension
-    ss.dependency 'MJExtension'
-    ss.ios.deployment_target = '10.0'
-    ss.osx.deployment_target = '10.12'
-    ss.tvos.deployment_target = '10.0'
-    ss.watchos.deployment_target = '3.0'
+  s.subspec "SYMoyaHandyJSON" do |ss|
+    ss.source_files  = 'Source/SYMoyaHandyJSON/**/*.swift'
+    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
+    
+    # https://github.com/alibaba/HandyJSON
+    ss.dependency 'HandyJSON', '~> 5.0.2'
+    
+    ss.ios.deployment_target = '13.0'
+    ss.osx.deployment_target = '10.15'
+    ss.tvos.deployment_target = '13.0'
+    ss.watchos.deployment_target = '6.0'
   end
 
+  s.subspec "SYMoyaRxHandyJSON" do |ss|
+    ss.source_files  = 'Source/SYMoyaRxHandyJSON/**/*.swift'
+    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
+    
+    # https://github.com/alibaba/HandyJSON
+    ss.dependency 'HandyJSON', '~> 5.0.2'
+    # https://github.com/ReactiveX/RxSwift
+    ss.dependency 'RxSwift', '6.6.0'
+    
+    ss.ios.deployment_target = '13.0'
+    ss.osx.deployment_target = '10.15'
+    ss.tvos.deployment_target = '13.0'
+    ss.watchos.deployment_target = '6.0'
+  end
+  
+  s.subspec "SYMoyaRxObjectMapper" do |ss|
+    ss.source_files  = 'Source/SYMoyaRxObjectMapper/**/*.swift'
+    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
+    
+    # https://github.com/ReactiveX/RxSwift
+    ss.dependency 'RxSwift', '6.6.0'
+    # https://github.com/tristanhimmelman/ObjectMapper
+    ss.dependency 'ObjectMapper', '~> 4.3'
+    
+    ss.ios.deployment_target = '13.0'
+    ss.osx.deployment_target = '10.15'
+    ss.tvos.deployment_target = '13.0'
+    ss.watchos.deployment_target = '6.0'
+  end
+  
+  s.subspec "SYMoyaObjectMapper" do |ss|
+    ss.source_files  = 'Source/SYMoyaObjectMapper/**/*.swift'
+    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
+    
+    # https://github.com/tristanhimmelman/ObjectMapper
+    ss.dependency 'ObjectMapper', '~> 4.3'
+    
+    ss.ios.deployment_target = '13.0'
+    ss.osx.deployment_target = '10.15'
+    ss.tvos.deployment_target = '13.0'
+    ss.watchos.deployment_target = '6.0'
+  end
+  
+  s.subspec "ReactiveSYMoyaNetwork" do |ss|
+    ss.source_files  = 'Source/ReactiveSYMoyaNetwork/**/*.swift'
+    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
+    
+    # https://github.com/ReactiveCocoa/ReactiveSwift
+    ss.dependency 'ReactiveSwift', '~> 7.1.1'
+    
+    ss.ios.deployment_target = '13.0'
+    ss.osx.deployment_target = '10.15'
+    ss.tvos.deployment_target = '13.0'
+    ss.watchos.deployment_target = '6.0'
+  end
+  
+  s.subspec "RxSYMoyaNetwork" do |ss|
+    ss.source_files  = 'Source/RxSYMoyaNetwork/**/*.swift'
+    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
+    
+    # https://github.com/ReactiveX/RxSwift
+    ss.dependency 'RxSwift', '6.6.0'
+    
+    ss.ios.deployment_target = '13.0'
+    ss.osx.deployment_target = '10.15'
+    ss.tvos.deployment_target = '13.0'
+    ss.watchos.deployment_target = '6.0'
+  end
 end
