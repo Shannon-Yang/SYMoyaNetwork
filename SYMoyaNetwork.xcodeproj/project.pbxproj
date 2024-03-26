@@ -543,6 +543,17 @@
 		20A498F12BAAF46100D7FB10 /* SwiftyJSONResponseSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyJSONResponseSerializer.swift; sourceTree = "<group>"; };
 		20A498F32BAAF48A00D7FB10 /* DecodableResponseSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableResponseSerializer.swift; sourceTree = "<group>"; };
 		20A498F52BAAF4B000D7FB10 /* ImageResponseSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResponseSerializer.swift; sourceTree = "<group>"; };
+		20C6D84F2BB2B06500B96A3F /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		20C6D8502BB2B06500B96A3F /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		20C6D8512BB2B06500B96A3F /* Package.resolved */ = {isa = PBXFileReference; lastKnownFileType = text; path = Package.resolved; sourceTree = "<group>"; };
+		20C6D8522BB2B06500B96A3F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		20C6D8532BB2B09100B96A3F /* Cartfile.resolved */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
+		20C6D8542BB2B09100B96A3F /* Cartfile.project */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.project; sourceTree = "<group>"; };
+		20C6D8552BB2B09100B96A3F /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		20C6D8562BB2B09A00B96A3F /* carthage.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = carthage.sh; sourceTree = "<group>"; };
+		20C6D8572BB2B0AD00B96A3F /* SYMoyaNetwork.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = SYMoyaNetwork.podspec; sourceTree = "<group>"; };
+		20C6D8592BB2B0BC00B96A3F /* SYMoyaNetwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SYMoyaNetwork.png; sourceTree = "<group>"; };
+		20C6D85A2BB2B0BC00B96A3F /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		20CF11ED2B3ED25A00857882 /* HTTPHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeaders.swift; sourceTree = "<group>"; };
 		20CF11EF2B3ED35E00857882 /* HTTPVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPVersion.swift; sourceTree = "<group>"; };
 		20F6F25E29A623D0004D5C4B /* ObjectMapper.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ObjectMapper.xcframework; path = Carthage/Build/ObjectMapper.xcframework; sourceTree = "<group>"; };
@@ -836,6 +847,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		20C6D84D2BB2AFA400B96A3F /* Deployment */ = {
+			isa = PBXGroup;
+			children = (
+				20C6D8582BB2B0BC00B96A3F /* Images */,
+				20C6D8572BB2B0AD00B96A3F /* SYMoyaNetwork.podspec */,
+				20C6D8562BB2B09A00B96A3F /* carthage.sh */,
+				20C6D8552BB2B09100B96A3F /* Cartfile */,
+				20C6D8542BB2B09100B96A3F /* Cartfile.project */,
+				20C6D8532BB2B09100B96A3F /* Cartfile.resolved */,
+				20C6D8502BB2B06500B96A3F /* LICENSE */,
+				20C6D8512BB2B06500B96A3F /* Package.resolved */,
+				20C6D84F2BB2B06500B96A3F /* Package.swift */,
+				20C6D8522BB2B06500B96A3F /* README.md */,
+			);
+			name = Deployment;
+			sourceTree = "<group>";
+		};
+		20C6D8582BB2B0BC00B96A3F /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				20C6D8592BB2B0BC00B96A3F /* SYMoyaNetwork.png */,
+				20C6D85A2BB2B0BC00B96A3F /* logo.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		FB45ACB7288BEAC300626EA7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -1080,6 +1117,7 @@
 		FB8072E426F32C070042B30D = {
 			isa = PBXGroup;
 			children = (
+				20C6D84D2BB2AFA400B96A3F /* Deployment */,
 				FB8072F026F32C070042B30D /* Sources */,
 				FBFA2B0D2A5C55A5002D740A /* Tests */,
 				FB9E2CC128A204B4001F73FC /* SYMoyaNetworkExample */,

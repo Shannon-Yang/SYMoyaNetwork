@@ -53,7 +53,6 @@ provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<BaseMappabl
 
 ***SYMoyaNetwork***也支持链式请求以及批量请求，在大多数的业务情况下，我们可能会有一批请求发送，或者有关联的链式请求，***SYMoyaNetwork***也提供这些功能，可以轻松快捷的实现，参考：[链式请求](###链式请求)和[批量请求](###批量请求)。
 
-
 ## 功能
 * 支持：[HandyJSON](https://github.com/alibaba/HandyJSON)、[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)、[Codable](https://developer.apple.com/documentation/swift/codable)、[SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)数据解析，开发者只需要关心你想要得到的数据。
 * 扩展[Moya](https://github.com/Moya/Moya)的`TargetType`，新增`timeoutInterval`、`cdnURL`、`allowsCellularAccess`、`cachePolicy`等属性.
@@ -64,6 +63,10 @@ provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<BaseMappabl
 * 支持`Concurrency`异步调用
 * 支持请求日志输出，请求数据信息一目了然
 
+## Tip
+***SYMoyaNetwork***为了支持不同类型的数据解析，将不同类型的数据解析拆分为不同的Framework包，所有的解析数据包都依赖于核心`Core`包，开发者可以选择使用的解析类型进行安装，例如：使用[RxSwift](https://github.com/ReactiveX/RxSwift)可以直接安装`SYMoyaObjectMapper`包，如果还需要使用[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)作为数据解析，那么可以安装`SYMoyaRxObjectMapper`。
+
+![SYMoyaNetwork](/Images/SYMoyaNetwork.png)
 
 ## 安装
 
