@@ -3,12 +3,12 @@
 </p>
 
 # SYMoyaNetwork
-基于[Moya](https://github.com/Moya/Moya)二次封装的网络抽象，保持[Moya](https://github.com/Moya/Moya)一样的使用方法，扩展[Moya](https://github.com/Moya/Moya)的`TargetType`，实现常用的数据解析，支持：[HandyJSON](https://github.com/alibaba/HandyJSON)、[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)、[Codable](https://developer.apple.com/documentation/swift/codable)、[SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)，开发者无需再写数据解析的样板代码，仅仅只需要关心想要什么样的数据，选择数据类型，***SYMoyaNetwork***已做好了这一切，***SYMoyaNetwork***同时实现了网络缓存，并配置常用的缓存策略，仅仅实现想要的缓存策略，`Response`将根据策略进行缓存同步，开发者无需再花大量时间再去做这样的工作，***SYMoyaNetwork***让数据请求变得简单，减少开发者编写样板代码，更多时间去关注业务。
+Based on the network abstraction of [Moya](https://github.com/Moya/Moya)'s secondary encapsulation, it maintains the same usage method of [Moya](https://github.com/Moya/Moya), extends [Moya](https://github.com/Moya/Moya)'s `TargetType`, and implements commonly used data parsing. It supports: [HandyJSON](https://github.com/alibaba/HandyJSON), [ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper), [Codable](https://developer.apple.com/documentation/swift/codable), [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON). Developers no longer need to write boilerplate code for data parsing, just You need to care about what kind of data you want and choose the data type. ***SYMoyaNetwork*** has done all this. ***SYMoyaNetwork*** also implements network caching and configures common caching strategies. It only implements the desired caching strategy and `Response` will perform cache synchronization according to the strategy., developers no longer need to spend a lot of time doing such work. ***SYMoyaNetwork*** makes data requests simple, reducing developers from writing boilerplate code and giving them more time to focus on business.
 
 ## What
-也许你会像大多数iOS开发者一样，使用[Moya](https://github.com/Moya/Moya)来作为网络请求的抽象，[Moya](https://github.com/Moya/Moya)是一个很棒的框架，它规范了你的数据请求，它可以让你足够简单的完成数据请求，***SYMoyaNetwork***是基于[Moya](https://github.com/Moya/Moya)二次封装，它并没有改变Moya的使用方式，仅仅是对Moya的进一步扩展与更友好的封装。
+Maybe you will use [Moya](https://github.com/Moya/Moya) as an abstraction for network requests, like most iOS developers, [Moya](https://github.com/Moya/Moya ) is a great framework that standardizes your data requests and allows you to complete data requests simply enough. ***SYMoyaNetwork*** is based on [Moya](https://github.com/Moya/Moya) secondary encapsulation, it does not change the way of using Moya, it is just a further expansion and more friendly encapsulation of Moya.
 
-也许你会用Moya这样写请求：
+Maybe you would use Moya to write the request like this:
 
 ```swift
 provider = MoyaProvider<GitHub>()
@@ -26,7 +26,7 @@ provider.request(.zen) { result in
     }
 }
 ```
-当数据请求完成后，我们需要手动的将`moyaResponse`转换成我们想要的数据对象，例如使用[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)做为数据模型时，需要每次在返回响应时都需要将`moyaResponse`转换为`BaseMappable`对象，也许你会封装一个统一的方法去做这件事情，但还是需要手动调用这样的一些转换方法，这将让使用者做这些繁琐而又无味的工作，因此***SYMoyaNetwork***已做好了这样的工作，你只需要关心你想要得到的数据，***SYMoyaNetwork***将会给你想要返回的数据，例如使用[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)做为数据模型时，我们可以这样来获取数据对象
+When the data request is completed, we need to manually convert `moyaResponse` into the data object we want. For example, when using [ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper) as the data model, we need to do it every time When returning a response, you need to convert `moyaResponse` into a `BaseMappable` object. Maybe you can encapsulate a unified method to do this, but you still need to manually call some of these conversion methods, which will make the user do this tediously. And tasteless work, so ***SYMoyaNetwork*** has done such a job, you only need to care about the data you want to get, ***SYMoyaNetwork*** will give you the data you want to return, For example, when using [ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper) as the data model, we can obtain the data object like this
 
 ```swift
 provider = SYMoyaProvider<GitHub>()
@@ -43,42 +43,42 @@ provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<BaseMappabl
     }
 }
 ```
-现在使用***SYMoyaNetwork***，你不用再关心如何将response转换成你想要的数据，你只需要关心你想要的数据，***SYMoyaNetwork***已经做好了这一切。
+Now using ***SYMoyaNetwork***, you no longer need to worry about how to convert the response into the data you want, you only need to care about the data you want, ***SYMoyaNetwork*** has already done all this.
 
-***SYMoyaNetwork***提供多种数据类常用的数据类型解析，例如：`JSON`、`String`、`Image`、`HandyJSON`、`ObjectMapper`、`Codable`、`SwiftyJSON`，使用时仅仅只需要关心你想要得到的数据，其他的你都不用关心，***SYMoyaNetwork***已经对[Moya](https://github.com/Moya/Moya)的`Response`做好了解析，你只管关心你的业务实现。
+***SYMoyaNetwork*** provides common data type parsing for a variety of data types, such as: `JSON`, `String`, `Image`, `HandyJSON`, `ObjectMapper`, `Codable`, `SwiftyJSON`, when used You only need to care about the data you want to get, and you don’t need to care about the rest. ***SYMoyaNetwork*** has already prepared the `Response` of [Moya](https://github.com/Moya/Moya) Analysis, you only care about your business implementation.
 
-***SYMoyaNetwork***不仅仅只是做了[Moya](https://github.com/Moya/Moya)的`Response`的转换，更重要的一点是，在[Moya](https://github.com/Moya/Moya)的基础上***SYMoyaNetwork***已经帮你做好网络缓存，在大多数应用使用情况下，网络缓存是非常重要，它可以让你的App更快的展示数据，更能为用户节省数据流量，可以说在网络这一层是一个很重要的决策，因此***SYMoyaNetwork***提供常用的网络缓存策略的实现，参考[数据缓存](###数据缓存)。
+***SYMoyaNetwork*** not only converts the `Response` of [Moya](https://github.com/Moya/Moya), but more importantly, in [Moya](https://github.com/Moya/Moya) ***SYMoyaNetwork*** has helped you with network caching. In most applications, network caching is very important. It can make your App display faster. Data can save data traffic for users. It can be said that it is a very important decision at the network layer. Therefore ***SYMoyaNetwork*** provides the implementation of commonly used network caching strategies. Please refer to [Data Caching](### data cache).
 
-***SYMoyaNetwork***支持[Combine](https://developer.apple.com/documentation/combine)，同时也支持[RxSwift](https://github.com/ReactiveX/RxSwift)、[ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift)等常用的响应式框架。
+***SYMoyaNetwork*** supports [Combine](https://developer.apple.com/documentation/combine), and also supports [RxSwift](https://github.com/ReactiveX/RxSwift), [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift) and other commonly used responsive frameworks.
 
-***SYMoyaNetwork***也支持链式请求以及批量请求，在大多数的业务情况下，我们可能会有一批请求发送，或者有关联的链式请求，***SYMoyaNetwork***也提供这些功能，可以轻松快捷的实现，参考：[链式请求](###链式请求)和[批量请求](###批量请求)。
+***SYMoyaNetwork*** also supports chain requests and batch requests. In most business situations, we may have a batch of requests to send, or related chain requests. also provides these Function can be implemented easily and quickly, refer to: [Chain Request] (###Chain Request) and [Batch Request] (### Batch Request).
 
-## 功能
-* 支持：[HandyJSON](https://github.com/alibaba/HandyJSON)、[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)、[Codable](https://developer.apple.com/documentation/swift/codable)、[SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)数据解析，开发者只需要关心你想要得到的数据。
-* 扩展[Moya](https://github.com/Moya/Moya)的`TargetType`，新增`timeoutInterval`、`cdnURL`、`allowsCellularAccess`、`cachePolicy`等属性.
-* 支持数据缓存（磁盘和内存），并实现数据缓存策略
-* 支持链式请求
-* 支持批量请求
-* 支持[Combine](https://developer.apple.com/documentation/combine)，同时也支持[RxSwift](https://github.com/ReactiveX/RxSwift)、[ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift)等常用的响应式框架。
-* 支持`Concurrency`异步调用
-* 支持请求日志输出，请求数据信息一目了然
+## Feature
+* Support: [HandyJSON](https://github.com/alibaba/HandyJSON),[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper), [Codable](https://developer.apple.com/documentation/swift/codable), [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) data parsing, developers only need to care about the data you want to get.
+* Extend the `TargetType` of [Moya](https://github.com/Moya/Moya) and add `timeoutInterval`, `cdnURL`, `allowsCellularAccess`, `cachePolicy` and other attributes.
+* Support data caching (disk and memory) and implement data caching strategies.
+* Support China Request.
+* Support Batch Request.
+* Supports [Combine](https://developer.apple.com/documentation/combine), and also supports [RxSwift](https://github.com/ReactiveX/RxSwift), [ReactiveSwift](https://github. com/ReactiveCocoa/ReactiveSwift) and other commonly used responsive frameworks.
+* Supports `Concurrency` asynchronous calls.
+* Supports request log output, and request data information is clear at a glance.
 
 ## Tip
-***SYMoyaNetwork***为了支持不同类型的数据解析，将不同类型的数据解析拆分为不同的Framework包，所有的解析数据包都依赖于核心`Core`包，开发者可以选择使用的解析类型进行安装，例如：使用[RxSwift](https://github.com/ReactiveX/RxSwift)可以直接安装`SYMoyaObjectMapper`包，如果还需要使用[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)作为数据解析，那么可以安装`SYMoyaRxObjectMapper`。
+***SYMoyaNetwork*** In order to support different types of data parsing, different types of data parsing are split into different Framework packages. All parsing data packages depend on the core `Core` package. Developers can choose the parsing to use. Type to install, for example: use [RxSwift](https://github.com/ReactiveX/RxSwift) to directly install the `SYMoyaObjectMapper` package, if you also need to use [ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper ) as data parsing, then you can install `SYMoyaRxObjectMapper`.
 
 ![SYMoyaNetwork](/Images/SYMoyaNetwork.png)
 
-## 安装
+## Install
 
 ### Swift Package Manager
 
-要使用苹果的 Swift Package Manager 集成，将以下内容作为依赖添加到你的 `Package.swift`：
+To use Apple's Swift Package Manager integration, add the following as a dependency to your `Package.swift`:
 
 ```swift
 .package(url: "https://github.com/Shannon-Yang/SYMoyaNetwork", .upToNextMajor(from: "2.0.0"))
 ```
 
-然后为你的Taeget指定***SYMoyaNetwork***依赖。这里是一个 `PackageDescription` 实例：
+Then specify ***SYMoyaNetwork*** dependency for your `Taeget`. Here is a `PackageDescription` instance:
 
 ```swift
 // swift-tools-version:5.3
@@ -99,92 +99,94 @@ let package = Package(
 
 ### CocoaPods
 
-在你的 Podfile 文件中添加 SYMoyaNetwork：
+Add ***SYMoyaNetwork*** to your Podfile:
 
 ```rb
-pod 'SYMoyaNetwork'
+
+pod 'SYMoyaNetwork', '~> 2.0'
 
 # or 
-
-pod 'SYMoyaNetwork/SYObjectMapper'
-
+pod 'SYMoyaNetwork/SYMoyaReactiveHandyJSON', '~> 2.0'
 # or
-
-pod 'SYMoyaNetwork/SYHandyJSON'
-
+pod 'SYMoyaNetwork/SYMoyaReactiveObjectMapper', '~> 2.0'
 #or
-
-pod 'SYMoyaNetwork/SYMJExtension'
+pod 'SYMoyaNetwork/SYMoyaHandyJSON', '~> 2.0'
+#or
+pod 'SYMoyaNetwork/SYMoyaRxHandyJSON', '~> 2.0'
+#or
+pod 'SYMoyaNetwork/SYMoyaRxObjectMapper', '~> 2.0'
+#or
+pod 'SYMoyaNetwork/SYMoyaObjectMapper', '~> 2.0'
+#or
+pod 'SYMoyaNetwork/ReactiveSYMoyaNetwork', '~> 2.0'
+#or
+pod 'SYMoyaNetwork/RxSYMoyaNetwork', '~> 2.0'
 ```
+then run `pod install`。
 
-然后运行 `pod install`。
-
-在任何你想使用 SYMoyaNetwork 的文件中，使用 `import SYMoyaNetwork` 导入框架。
+In any file where you want to use ***SYMoyaNetwork***, use `import SYMoyaNetwork` to import the framework.
 
 ### Carthage
 
-Carthage 用户可以指向这个仓库并使用他们喜欢的生成框架，`SYMoyaNetwork`
+Carthage users can point to this repository and use their preferred build framework, `SYMoyaNetwork`
 
-在你的 Cartfile 中添加下面的代码：
+Add the following code to your Cartfile:
 
 ```
 github "SYMoyaNetwork/SYMoyaNetwork"
 ```
+Then run `carthage update --use-xcframeworks`.
 
-然后运行 `carthage update --use-xcframeworks`。
-
-如果这是你首次在项目中使用 Carthage，你将需要进行一些额外的步骤，它们在 [Carthage](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application) 中有解释。
+If this is your first time using Carthage in a project, you will need to take some additional steps, which are described in [Carthage](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application) explain.
 
 > NOTE: At this time, Carthage does not provide a way to build only specific repository submodules. All submodules and their dependencies will be built with the above command. However, you don't need to copy frameworks you aren't using into your project. For instance, if you aren't using `ObjectMapper`, feel free to delete that framework along with `ObjectMapper` from the Carthage Build directory after `carthage update` completes. Or if you are using `HandyJSON` but not `MJExtension` or `ObjectMapper`, then `ObjectMapper`, `MJExtension` etc. can safely be deleted.
 
-### 手动
+### Manual
 
-- 打开终端，`cd` 到你项目的顶层目录，如果你的项目没有初始化为 git 仓库，运行下面的命令：
+- Open a terminal and `cd` to the top directory of your project. If your project is not initialized as a git repository, run the following command:
 
 ```bash
 $ git init
 ```
 
-- 通过运行以下命令来添加 Alamofire & Moya & SYMoyaNetwork & The data model library you want to use, such as HandyJSON, ObjectMapper, Codable, SwiftyJSON 作为 git [submodule](http://git-scm.com/docs/git-submodule)：
+- Add `Alamofire` & `Moya` & `SYMoyaNetwork` & The data model library you want to use, such as [HandyJSON](https://github.com/alibaba/HandyJSON) or [ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper) as git [submodule](http://git-scm.com/docs/git-submodule):
 
 ```bash
 $ git submodule add https://github.com/Alamofire/Alamofire.git
 $ git submodule add https://github.com/Moya/Moya.git
 $ git submodule add https://github.com/Shannon-Yang/SYMoyaNetwork
-$ git submodule add 'The data model library you want to use, such as HandyJSON, ObjectMapper, Codable, SwiftyJSON'
+$ git submodule add 'The data model library you want to use, such as HandyJSON, ObjectMapper, SwiftyJSON'
 ```
 
-- 打开新建的 `Alamofire` 文件夹，把 `Alamofire.xcodeproj` 拖拽到你 Xcode 的项目导航中。对 Moya 文件夹下的 `Moya.xcodeproj` 做同样的操作，对SYMoyaNetwork文件夹下面的`SYMoyaNetwork.xcodeproj`也做同样的操作，以及其他的数据模型库也做以上相同的操作。
+- Open the newly created `Alamofire` folder and drag `Alamofire.xcodeproj` into your Xcode project navigation. Do the same operation for `Moya.xcodeproj` under the Moya folder, do the same operation for `SYMoyaNetwork.xcodeproj` under the SYMoyaNetwork folder, and do the same for other data model libraries.
 
-> 它们应该嵌套在应用程序的蓝色项目图标下面，在其它 Xcode group 的上面或者下面都没关系。
+> They should be nested beneath the blue project icon of your application, above or below other Xcode groups, it doesn’t matter. 
 
-- 验证 `xcodeproj` 的部署 target 与你项目导航中的应用程序 target 一致。
-- 接下来，在项目导航（蓝色的项目图标）中选择你的应用项目然后导航到 target 配置窗口，并且在侧栏中的 Targets 标题下选择应用程序 target。
-- 在窗口顶部的标签栏中，打开 "General" 面板。
-- 点击 "Embedded Binaries" 区域下面的 `+` 按钮。
-- 你将会看到两个不同的 `Alamofire.xcodeproj` 文件夹。每个文件夹都有两个不同版本的 `Alamofire.framework` 嵌套在 `Products` 文件夹里。
+- Verify that the deployment `target` of `xcodeproj` is consistent with the application `target` in your project navigation.
+- Next, select your application project in the project navigation (blue project icon) and then navigate to the `target` configuration window and select the application `target` under the `Targets` heading in the sidebar.
+- In the tab bar at the top of the window, open the "General" panel.
+- Click the `+` button below the `Embedded Binaries` field.
+- You will see two different `Alamofire.xcodeproj` folders. Each folder has two different versions of `Alamofire.framework` nested within the `Products` folder.
 
-> 选择哪个 `Products` 文件夹并不重要，重要的是你选择的是上边的还是下边的 `Alamofire.framework`。
+> It doesn’t matter which `Products` folder you choose, what matters is whether you choose the `Alamofire.framework` above or below.
 
-- 为 iOS 选择上边的 `Alamofire.framework`，下边的用于 macOS。
+- Select `Alamofire.framework` above for iOS and below for macOS.
 
-> 你可以通过检查项目的构建日志来验证你选择的是哪一个。`Alamofire` 的 build target 将被列为 `Alamofire iOS`, `Alamofire macOS`, `Alamofire tvOS` 或 `Alamofire watchOS`。
+> You can verify which one you selected by checking the project's build log. The build target for `Alamofire` will be listed as `Alamofire iOS`, `Alamofire macOS`, `Alamofire tvOS` or `Alamofire watchOS`.
 
-- 再次点击 `+` 按钮为 `Moya` 添加正确的 build target，对`SYMoyaNetwork`也做以上相同的事
+- Click the `+` button again to add the correct build target for `Moya` and do the same for `SYMoyaNetwork`
 
-- 这就完事了！
+- That's it!
 
-> 这些框架会作为 target dependency，linked framework 和 embedded framework 被自动添加到一个 copy files build phase，这就是在模拟器和设备进行构建所需要的全部内容了。
+> These frameworks are automatically added to a copy files build phase as target dependencies, linked frameworks and embedded frameworks, and that's all you need to build on emulators and devices. 
 
-## 用法
+## Usage
 
-### 数据请求
+### Data Request
 
-像和使用`Moya`一样，`SYMoyaNetwork`的用法和`Moya`完全一样，你不用担心它的使用方式会很复杂，像
+Just like using `Moya`, the usage of `SYMoyaNetwork` is exactly the same as `Moya`. You don’t have to worry about its complicated usage.
 
-
-
-`SYMoyaNetwork`提供了JSON、String、Image、HandyJSON、ObjectMapper、Codable、SwiftyJSON等多种数据类型的支持，你可以使用SYMoyaProvider调用对应的Response方法。
+***SYMoyaNetwork*** provides support for multiple data types such as `JSON`, `String`, `Image`, `HandyJSON`, `ObjectMapper`, `Codable`, `SwiftyJSON` etc. You can use ``SYMoyaProvider`` to call the corresponding `Response` method.
 
 #### JSON
 
@@ -288,23 +290,6 @@ provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<T: Decodabl
 }
 ```
 
-#### MJExtension
-
-```swift
-provider = SYMoyaProvider<GitHub>()
-provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<T: NSObject>) in
-    switch response.result {
-    case let .success(object):
-        // do something with the response MJExtension data. You can use the MJExtension object directly without conversion
-    case let .failure(error):
-        // this means there was a network failure - either the request
-        // wasn't sent (connectivity), or no response was received (server
-        // timed out).  If the server responds with a 4xx or 5xx error, that
-        // will be sent as a ".success"-ful response.
-    }
-}
-```
-
 #### SwiftyJSON
 
 ```swift
@@ -322,111 +307,87 @@ provider.responseSwiftyJSON(.zen) { (response: SYMoyaNetworkDataResponse<SwiftyJ
 }
 ```
 
-### 数据缓存
+### Data Cache
 
-#### URL缓存
-如果你想要实现URL缓存，那么你可以在SYTarget中设置`networkCacheType`为`urlRequestCache`类型，如：
-
-```swift
-var networkCacheType: NetworkCacheType {
-      return .URLCacheInfo(maxAge: 10)
-   }
-```
-
-在设置`urlRequestCache`需要传入URL缓存相关的基本信息，例如`ignoreServer`、`maxAge`、`autoClearCache`等关于URL缓存的相关信息，这些信息将在缓存时做重要的决策，设置了 maxAge > 0 将在请求时根据缓存信息进行数据缓存，这些工作都已经自动帮你完成了🍯
-
-如果需要忽略服务器端缓存配置，默认情况下，如果服务器配置了缓存头，则使用服务器端配置，但您可以使用自定义缓存年龄并通过设置ignoreServer参数忽略此配置，只需要设置如下即可：
+In most business situations, we need to cache the `Response` returned by the server locally, for example: those resources that have not been updated for a long time or the content that needs to be displayed when the user does not have a network, ***SYMoyaNetwork*** has already done this With all this🍯, you only need to set the properties of `networkCacheType` in `SYTarget` and configure `NetworkCacheOptionsInfo`. ***SYMoyaNetwork*** has done two kinds of storage, one is memory storage (MemoryStorage) and the other is Disk storage (DiskStorage) needs to pass in storage-related information, such as: `diskStorageConfig`, `memoryStorageConfig` etc. For details, please refer to `NetworkCacheType.NetworkCacheOptionsInfo`. The specific example code is as follows:
 
 ```swift
 var networkCacheType: NetworkCacheType {
-      return .URLCacheInfo(ignoreServer: true, maxAge: 10, isPrivate: false)
-   }
-```
-
-有时您需要手动清理缓存而不是刷新缓存数据，但是对于网络请求错误、序列化错误等我们推荐使用autoClearCache参数自动忽略错误的缓存数据，可以如下设置：
-
-```swift
-var networkCacheType: NetworkCacheType {
-        return .URLCacheInfo(maxAge: 10, autoClearCache: true)
+        return .cache(networkCacheOptionsInfo: .init())
     }
 ```
+The `networkCacheOptionsInfo` used by default is the default configuration in `NetworkConfig`. You can also customize the configuration. You only need to initialize the customized `networkCacheOptionsInfo` object. When the `networkCacheType` return type is `cache`, when the request is completed, it will Use this parameter to verify whether the cache conditions are met. If the cache conditions are met, whether it is a Get, Post or other request, the data will be cached automatically based on the cache information.
 
-#### 数据缓存
-URL缓存仅仅只能对Get请求的数据进行缓存，若需要对Post或者其他类型的请求进行缓存，那么我们需要对Response进行数据存储，`SYMoyaNetwork`已经做好了这一切🍯，仅仅只需要在SYTarget中设置`networkCacheType`为`syMoyaNetworkCache`类型，`syMoyaNetworkCache`做了两种存储，一种为内存存储（MemoryStorage），一种为磁盘存储（DiskStorage），和URL缓存类似，也需要传入存储相关的信息，例如：`diskStorageConfig`、`memoryStorageConfig`等，具体参考`NetworkCacheType.NetworkCacheOptionsInfo`相关，具体实例代码如下：
+`SYMoyaProvider` provides `responseCodableObject`, `responseObject<T: HandyJSON>`, `responseObject<T: BaseMappable>`, `responseSwiftyJSON` and other methods. In each method, there is a parameter such as `responseDataSourceType`. This parameter Mainly the response type of data return. Currently, `responseDataSourceType` is divided into 5 data return types: `server`, `cache`, `cacheIfPossible`, `cacheAndServer`, and `custom`.
 
-```swift
-var networkCacheType: NetworkCacheType {
-        return .syMoyaNetworkCache(networkCacheOptionsInfo: .init())
-    }
-```
-默认使用的`networkCacheOptionsInfo`为`NetworkConfig`中的默认配置，也可自定义配置，仅只需初始化自定义的`networkCacheOptionsInfo`对象，`networkCacheType`返回类型为`syMoyaNetworkCache`时，在请求完成时，不管是Get还是Post或者其他方式的请求，都将自动根据缓存信息进行数据缓存
+* `server`：Get data directly from the server, cached data will not be retrieved
+* `cache`：If there is a cache, get the data directly from the cache and make a callback. The `success` result will be called back. If there is no cache, the `failure` result will be called back and the corresponding `error` information will be returned. No network request will be initiated, only Will be retrieved from cache.
+* `cacheIfPossible`：If there is a cache, the data will be obtained directly from the cache. If the cache acquisition is successful, a `success` callback will be performed. If the cache acquisition fails, a network request will be initiated. After the network request is successful, a `success` callback will be performed. After the request fails, a `success` callback will be performed. Make a `failure` callback.
+* `cacheAndServer`：If the current interface has a cache, it will first obtain the cache data and then make a callback, then initiate a network request, and then call back again.
+* `custom`：The callback of the custom mode needs to implement the `ResponseDataSourceCustomizable` protocol, which will first obtain the cache data from the cache. After obtaining the cache data, the current cache number will be called back through the `shouldSendRequest` method, which can be judged by the callback cache data. , you need to call back whether the cache needs to be updated through the `shouldUpdateCache` method. This data callback mode is more commonly used for requests to obtain relatively large amounts of data.
 
-`SYMoyaProvider`提供了`responseCodableObject`、`responseObject<T: HandyJSON>`、`responseObject<T: BaseMappable>`、`responseSwiftyJSON`等方法，在每一个方法中都有`responseDataSourceType`这样的一个参数，这个参数主要是数据返回的响应类型，目前`responseDataSourceType`分为`server`、`cache`、`cacheIfPossible`、`cacheAndServer`、`custom`一共5种数据返回类型。
+> The scenario of `custom` is as follows. For example: we have a book with a lot of book details. When we obtain the book details for the first time, a more clever approach is to put the current book details into The book details of this book are cached locally. The next time you open the app, the cached data of this book will be displayed first, and then the latest data of the book details will be requested and the local cache will be updated. This will indeed achieve the desired effect, but It is not the optimal solution. Under normal circumstances, if a complete request for book details overwrites the local cache, since the book details data may be relatively large, the network request response time will be very long, and the user's data traffic will also be wasted, so A better solution is to only request some basic information of the current book, use some key fields of the basic information to determine whether the current locally cached book data is the latest, and then determine whether the local cache needs to be updated. If the detailed data of the book is The latest, then there will be no need to request data, such as `version` and other fields in the basic information. You can pass `version` and other fields to the server to verify whether the current cache is the latest. If the current cache is not the latest Then initiate a network request to request the latest book details data. This can not only display the data to the user first, but also save user traffic and reduce requests for this huge data when there is no need to update the data.  
 
-* `server`：直接从服务器获取数据，不会回调缓存数据
-* `cache`：如果有缓存，直接从缓存中获取数据并进行回调，将回调`success`结果，若不存在缓存则回调失败`failure`结果，并会返回对应的`error`信息
-* `cacheIfPossible`：如果有缓存，将直接从缓存中获取数据，如果缓存获取成功，那么将进行`success`回调，若缓存获取失败，将发起网络请求，网络请求成功后将进行`success`回调，请求失败后将进行`failure`回调
-* `cacheAndServer`：如果当前接口有缓存，那么将先获取缓存数据后进行一次回调，然后发起网络请求，然后再次回调。
-* `custom`：自定义模式的回调，需要实现`ResponseDataSourceCustomizable`协议，这将先从缓存获取缓存数据，得到缓存数据后，将会通过`shouldSendRequest`方法将当前的缓存数进行回调，可以通过回调的缓存数据进行判断，需要通过`shouldUpdateCache`方法回调是否需要更新缓存，这种数据回调模式比较常用的是用作获取数据量比较大的请求。
+### Batch Request
 
-> `custom`的场景适用如下，例如：我们有一本书，这本书的书籍详情数据是很多的，当我们第一次获取了这本书的书籍详情时，一个比较机智的做法是把当前这本书的书籍详情缓存到本地，下一次打开app的时候先展示这本书的缓存数据，然后在去请求书籍的详情最新的数据，更新本地的缓存，这样确实能达到想要的效果，可是并非是最优方案，一般情况下，如果将书籍详情完全请求覆盖本地缓存，由于书籍详情的数据可能比较大，因此在网络请求相应时间上会很长，而且用户的数据流量也会浪费，所以比较好的方案是仅仅只请求当前书籍的一些基本信息，通过基本信息的一些关键字段判断当前本地缓存的书籍数据是否是最新，然后在判断当前是否需要更新本地缓存，如果书籍的详情数据为最新的，那将不需要再去请求数据，比如基本信息中的`version`等字段，可以通过传`version`等字段给服务端来验证当前的缓存是否为最新，如果当前的缓存不是最新的再发起网络请求，将最新的书籍详情数据请求下来，这样既能先展示数据给用户，又能节省用户流量，在不必要更新数据的时候减少这种庞大数据的请求。
+In some cases, we may need to send a batch of network requests. `SYMoyaNetwork` provides batch initiating network request operations. `SYMoyaBatchProviderSession` is mainly used to initiate batch network request operations. Before initiating network requests, it is necessary to initialize and implement `SYBatchMoyaProviderType` Array object, by default `SYMoyaBatchProvider` has implemented `SYBatchMoyaProviderType`. During batch requests, `SYMoyaBatchProviderSession` maintains a `SYMoyaBatchProvider` request array. After all requests are completed, an array of `SYMoyaProviderSessionResponse` will be returned.
 
-### 批量请求
+> Note: During the batch request process, as long as one of the requests fails, the entire Provider will call back the `failure` method. Only after all requests are successful will the `success` be called back. 
 
-在一些情况下，我们可能需要发送一批网络请求，`SYMoyaNetwork`提供了批量发起网络请求操作，`SYMoyaBatchRequestProvider`主要用于批量发起网络请求操作，在发起网络请求前，需要初始化`BatchMoyaProvider`的数组传入，在批量请求时，`SYMoyaBatchRequestProvider`维护了一个`BatchMoyaProvider`的请求数组，在所有请求全部请求完成后，将会返回`BatchResult`对象。
-
-> 注意：在批量请求过程中，只要其中有一个请求失败了，那么整个Provider都会回调`failure`方法，只有全部请求都成功后才会回调`success`
-
-如下：
+eg：
 
 ```swift
-let batchProvider = BatchMoyaProvider(targetType:.zen, provider: SYMoyaProvider<GitHub>())
-let batchProvider2 = BatchMoyaProvider(targetType:.zen, provider: SYMoyaProvider<GitHub>())
-    
-let batchRequestProvider = SYMoyaBatchRequestProvider(providers: [batchProvider, batchProvider2])
-batchRequestProvider.request { batchResponse in
-   switch batchResponse.result {
-     case .success(let batchData):
+var session: SYMoyaBatchProviderSession?
+
+let provider = SYMoyaBatchProvider<HTTPBinDynamicData>(targetTypes: [.getDelay(delay: 1), .stream(n: 1)])
+let provider2 = SYMoyaBatchProvider<HTTPBinResponseFormats>(targetTypes: [.brotli, .json, .gzipped])
+session = SYMoyaBatchProviderSession(providers: [provider, provider2])
+session?.request { [weak self] progress in
         // do something with the response batch data. You can use the batchData directly without conversion
-     case .failure(let error):
+} completion: { [weak self] result in
         // this means there was a network failure - either the request
         // wasn't sent (connectivity), or no response was received (server
         // timed out).  If the server responds with a 4xx or 5xx error, that
         // will be sent as a ".success"-ful response.
-        }
-    }
+}
 ```
 
-### 链式请求
+### Chain Request
 
-用于管理有相互依赖的网络请求，它实际上最终可以用来管理多个拓扑排序后的网络请求。
+Used to manage interdependent network requests, it can actually eventually be used to manage multiple topologically sorted network requests.
 
-例如，我们有一个需求，需要用户在注册时，先发送注册的 Api，然后 :
+For example, we have a business that requires users to first send the registered API when registering: 
+* If the registration is successful, send the API to read the user information. Moreover, the API that reads user information needs to use the user id returned by successful registration.
+* If registration fails, the API for reading user information will not be sent.。
 
-* 如果注册成功，再发送读取用户信息的 Api。并且，读取用户信息的 Api 需要使用注册成功返回的用户 id 号。
-* 如果注册失败，则不发送读取用户信息的 Api 了。
-
-如下：
+eg：
 ```swift
-    let chainRequestProvider = SYMoyaChainRequestProvider()
-    // Initial chain request
-    let chainProvider = ChainProvider(targetType:.zen, provider: SYMoyaProvider<GitHub>(), chainCompletion: { dataResponses in
-        switch dataResponses.result {
-          case .success(let chainData):
-            // After the request is completed, proceed to the next request based on the requested data
-            let chainProvider2 = ChainProvider(targetType:.zen, provider: SYMoyaProvider<GitHub>(), chainCompletion: nil)
-             chainRequestProvider.addChainProvider(provider: chainProvider2)
-                
-          case .failure(let error):
-            // this means there was a network failure - either the request
-            // wasn't sent (connectivity), or no response was received (server
-            // timed out).  If the server responds with a 4xx or 5xx error, that
-            // will be sent as a ".success"-ful response.
-           }
-        })
-    chainRequestProvider.delegate =  self
-    chainRequestProvider.addChainProvider(provider: chainProvider)
-    chainRequestProvider.request()
+ let chainProvider = SYMoyaChainProvider(targetType: HTTPBinAuth.bearer) { progress in
+    debugPrint("🏃🏻‍♀️🏃🏻‍♀️🏃🏻‍♀️🏃🏻‍♀️----> \(progress) <---- < Class: \(type(of: self)) Function:\(#function) Line: \(#line) >🏃🏻‍♀️🏃🏻‍♀️🏃🏻‍♀️🏃🏻‍♀️")
+ }
+ SYMoyaChainProviderSession.request(chainMoyaProviderType: chainProvider) { response in
+    let targetType = response.targetType
+    let result = response.result
+    switch targetType {
+      case HTTPBinAuth.bearer:
+        let json = result.serializerSwiftyJSON().value
+        let authenticated = json?["authenticated"].boolValue ?? false
+        if authenticated {
+            return SYMoyaChainProvider(targetType: HTTPBinDynamicData.getDelay(delay: 1))
+        }
+      case HTTPBinDynamicData.getDelay:
+        let responseString = result.serializerStringDataResponse(atKeyPath: nil)
+        self.contentLabel.text = responseString.value
+        self.contentLabel.isHidden = false
+        self.indicator.stopAnimating()
+      default:
+            break
+     }
+    return nil
+  } completion: {
+     self.indicator.stopAnimating()
+     debugPrint("🔥🔥🔥🔥🔥---->  <---- < Class: \(type(of: self)) Function:\(#function) Line: \(#line) >🔥🔥🔥🔥🔥")
+  }
 ```
 ## License
 
