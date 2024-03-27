@@ -3,10 +3,10 @@
 </p>
 
 # SYMoyaNetwork
-Based on the network abstraction of [Moya](https://github.com/Moya/Moya)'s secondary encapsulation, it maintains the same usage method of [Moya](https://github.com/Moya/Moya), extends [Moya](https://github.com/Moya/Moya)'s `TargetType`, and implements commonly used data parsing. It supports: [HandyJSON](https://github.com/alibaba/HandyJSON), [ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper), [Codable](https://developer.apple.com/documentation/swift/codable), [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON). Developers no longer need to write boilerplate code for data parsing, just You need to care about what kind of data you want and choose the data type. ***SYMoyaNetwork*** has done all this. ***SYMoyaNetwork*** also implements network caching and configures common caching strategies. It only implements the desired caching strategy and `Response` will perform cache synchronization according to the strategy., developers no longer need to spend a lot of time doing such work. ***SYMoyaNetwork*** makes data requests simple, reducing developers from writing boilerplate code and giving them more time to focus on business.
+Based on the network abstraction of secondary encapsulation of [Moya](https://github.com/Moya/Moya). Maintain the same usage method of [Moya](https://github.com/Moya/Moya) and extend [Moya](https://github.com/Moya/Moya)’s `TargetType` implements commonly used data parsing, supporting: [HandyJSON](https://github.com/alibaba/HandyJSON),[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper), [Codable](https://developer.apple.com/documentation/swift/codable), [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON), Developer there is no need to write boilerplate code for data parsing. You only need to care about what kind of data you want and select the data type. `SYMoyaNetwork` has done all this. `SYMoyaNetwork` also implements network caching, and configure common caching strategies to only implement the desired caching strategy. `Response` will perform cache synchronization according to the policy. Developers no longer need to spend a lot of time doing such work. `SYMoyaNetwork` allows data requests Become simple, less developers write boilerplate code, more time to focus on business.
 
 ## What
-Maybe you will use [Moya](https://github.com/Moya/Moya) as an abstraction for network requests, like most iOS developers, [Moya](https://github.com/Moya/Moya ) is a great framework that standardizes your data requests and allows you to complete data requests simply enough. ***SYMoyaNetwork*** is based on [Moya](https://github.com/Moya/Moya) secondary encapsulation, it does not change the way of using Moya, it is just a further expansion and more friendly encapsulation of Moya.
+Maybe you will use [Moya](https://github.com/Moya/Moya) as an abstraction for network requests, like most iOS developers, [Moya](https://github.com/Moya/Moya ) is a great framework that standardizes your data requests and allows you to complete data requests simply enough. `SYMoyaNetwork` is based on [Moya](https://github.com/Moya/Moya) secondary encapsulation, it does not change the way of using Moya, it is just a further expansion and more friendly encapsulation of [Moya](https://github.com/Moya/Moya).
 
 Maybe you would use Moya to write the request like this:
 
@@ -26,7 +26,7 @@ provider.request(.zen) { result in
     }
 }
 ```
-When the data request is completed, we need to manually convert `moyaResponse` into the data object we want. For example, when using [ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper) as the data model, we need to do it every time When returning a response, you need to convert `moyaResponse` into a `BaseMappable` object. Maybe you can encapsulate a unified method to do this, but you still need to manually call some of these conversion methods, which will make the user do this tediously. And tasteless work, so ***SYMoyaNetwork*** has done such a job, you only need to care about the data you want to get, ***SYMoyaNetwork*** will give you the data you want to return, For example, when using [ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper) as the data model, we can obtain the data object like this
+When the data request is completed, we need to manually convert `moyaResponse` into the data object we want. For example, when using [ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper) as the data model, we need to do it every time When returning a response, you need to convert `moyaResponse` into a `BaseMappable` object. Maybe you can encapsulate a unified method to do this, but you still need to manually call some of these conversion methods, which will make the user do this tediously. And tasteless work, so `SYMoyaNetwork` has done such a job, you only need to care about the data you want to get, `SYMoyaNetwork` will give you the data you want to return, For example, when using [ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper) as the data model, we can obtain the data object like this
 
 ```swift
 provider = SYMoyaProvider<GitHub>()
@@ -43,15 +43,15 @@ provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<BaseMappabl
     }
 }
 ```
-Now using ***SYMoyaNetwork***, you no longer need to worry about how to convert the response into the data you want, you only need to care about the data you want, ***SYMoyaNetwork*** has already done all this.
+Now using `SYMoyaNetwork`, you no longer need to worry about how to convert the response into the data you want, you only need to care about the data you want, `SYMoyaNetwork` has already done all this.
 
-***SYMoyaNetwork*** provides common data type parsing for a variety of data types, such as: `JSON`, `String`, `Image`, `HandyJSON`, `ObjectMapper`, `Codable`, `SwiftyJSON`, when used You only need to care about the data you want to get, and you don’t need to care about the rest. ***SYMoyaNetwork*** has already prepared the `Response` of [Moya](https://github.com/Moya/Moya) Analysis, you only care about your business implementation.
+`SYMoyaNetwork` provides common data type parsing for a variety of data types, such as: `JSON`, `String`, `Image`, `HandyJSON`, `ObjectMapper`, `Codable`, `SwiftyJSON`, when used You only need to care about the data you want to get, and you don’t need to care about the rest. `SYMoyaNetwork` has already prepared the `Response` of [Moya](https://github.com/Moya/Moya) Analysis, you only care about your business implementation.
 
-***SYMoyaNetwork*** not only converts the `Response` of [Moya](https://github.com/Moya/Moya), but more importantly, in [Moya](https://github.com/Moya/Moya) ***SYMoyaNetwork*** has helped you with network caching. In most applications, network caching is very important. It can make your App display faster. Data can save data traffic for users. It can be said that it is a very important decision at the network layer. Therefore ***SYMoyaNetwork*** provides the implementation of commonly used network caching strategies. Please refer to [Data Caching](### data cache).
+`SYMoyaNetwork` not only converts the `Response` of [Moya](https://github.com/Moya/Moya), but more importantly, in [Moya](https://github.com/Moya/Moya) `SYMoyaNetwork` has helped you with network caching. In most applications, network caching is very important. It can make your App display faster. Data can save data traffic for users. It can be said that it is a very important decision at the network layer. Therefore `SYMoyaNetwork` provides the implementation of commonly used network caching strategies. Please refer to [Data Caching](### data cache).
 
-***SYMoyaNetwork*** supports [Combine](https://developer.apple.com/documentation/combine), and also supports [RxSwift](https://github.com/ReactiveX/RxSwift), [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift) and other commonly used responsive frameworks.
+`SYMoyaNetwork` supports [Combine](https://developer.apple.com/documentation/combine), and also supports [RxSwift](https://github.com/ReactiveX/RxSwift), [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift) and other commonly used responsive frameworks.
 
-***SYMoyaNetwork*** also supports chain requests and batch requests. In most business situations, we may have a batch of requests to send, or related chain requests. also provides these Function can be implemented easily and quickly, refer to: [Chain Request] (###Chain Request) and [Batch Request] (### Batch Request).
+`SYMoyaNetwork` also supports chain requests and batch requests. In most business situations, we may have a batch of requests to send, or related chain requests. also provides these Function can be implemented easily and quickly, refer to: [Chain Request] (###Chain Request) and [Batch Request] (### Batch Request).
 
 ## Feature
 * Support: [HandyJSON](https://github.com/alibaba/HandyJSON),[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper), [Codable](https://developer.apple.com/documentation/swift/codable), [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) data parsing, developers only need to care about the data you want to get.
@@ -59,12 +59,12 @@ Now using ***SYMoyaNetwork***, you no longer need to worry about how to convert 
 * Support data caching (disk and memory) and implement data caching strategies.
 * Support China Request.
 * Support Batch Request.
-* Supports [Combine](https://developer.apple.com/documentation/combine), and also supports [RxSwift](https://github.com/ReactiveX/RxSwift), [ReactiveSwift](https://github. com/ReactiveCocoa/ReactiveSwift) and other commonly used responsive frameworks.
+* Supports [Combine](https://developer.apple.com/documentation/combine), and also supports [RxSwift](https://github.com/ReactiveX/RxSwift), [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift) and other commonly used responsive frameworks.
 * Supports `Concurrency` asynchronous calls.
 * Supports request log output, and request data information is clear at a glance.
 
 ## Tip
-***SYMoyaNetwork*** In order to support different types of data parsing, different types of data parsing are split into different Framework packages. All parsing data packages depend on the core `Core` package. Developers can choose the parsing to use. Type to install, for example: use [RxSwift](https://github.com/ReactiveX/RxSwift) to directly install the `SYMoyaObjectMapper` package, if you also need to use [ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper ) as data parsing, then you can install `SYMoyaRxObjectMapper`.
+`SYMoyaNetwork` In order to support different types of data parsing, different types of data parsing are split into different Framework packages. All parsing data packages depend on the core `Core` package. Developers can choose the parsing to use. Type to install, for example: use [RxSwift](https://github.com/ReactiveX/RxSwift) to directly install the `SYMoyaObjectMapper` package, if you also need to use [ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper ) as data parsing, then you can install `SYMoyaRxObjectMapper`.
 
 ![SYMoyaNetwork](/Images/SYMoyaNetwork.png)
 
@@ -78,7 +78,7 @@ To use Apple's Swift Package Manager integration, add the following as a depende
 .package(url: "https://github.com/Shannon-Yang/SYMoyaNetwork", .upToNextMajor(from: "2.0.0"))
 ```
 
-Then specify ***SYMoyaNetwork*** dependency for your `Taeget`. Here is a `PackageDescription` instance:
+Then specify `SYMoyaNetwork` dependency for your `Taeget`. Here is a `PackageDescription` instance:
 
 ```swift
 // swift-tools-version:5.3
@@ -99,7 +99,7 @@ let package = Package(
 
 ### CocoaPods
 
-Add ***SYMoyaNetwork*** to your Podfile:
+Add `SYMoyaNetwork` to your Podfile:
 
 ```rb
 
@@ -124,7 +124,7 @@ pod 'SYMoyaNetwork/RxSYMoyaNetwork', '~> 2.0'
 ```
 then run `pod install`。
 
-In any file where you want to use ***SYMoyaNetwork***, use `import SYMoyaNetwork` to import the framework.
+In any file where you want to use `SYMoyaNetwork`, use `import SYMoyaNetwork` to import the framework.
 
 ### Carthage
 
@@ -186,7 +186,7 @@ $ git submodule add 'The data model library you want to use, such as HandyJSON, 
 
 Just like using `Moya`, the usage of `SYMoyaNetwork` is exactly the same as `Moya`. You don’t have to worry about its complicated usage.
 
-***SYMoyaNetwork*** provides support for multiple data types such as `JSON`, `String`, `Image`, `HandyJSON`, `ObjectMapper`, `Codable`, `SwiftyJSON` etc. You can use ``SYMoyaProvider`` to call the corresponding `Response` method.
+`SYMoyaNetwork` provides support for multiple data types such as `JSON`, `String`, `Image`, `HandyJSON`, `ObjectMapper`, `Codable`, `SwiftyJSON` etc. You can use ``SYMoyaProvider`` to call the corresponding `Response` method.
 
 #### JSON
 
@@ -309,7 +309,7 @@ provider.responseSwiftyJSON(.zen) { (response: SYMoyaNetworkDataResponse<SwiftyJ
 
 ### Data Cache
 
-In most business situations, we need to cache the `Response` returned by the server locally, for example: those resources that have not been updated for a long time or the content that needs to be displayed when the user does not have a network, ***SYMoyaNetwork*** has already done this With all this🍯, you only need to set the properties of `networkCacheType` in `SYTarget` and configure `NetworkCacheOptionsInfo`. ***SYMoyaNetwork*** has done two kinds of storage, one is memory storage (MemoryStorage) and the other is Disk storage (DiskStorage) needs to pass in storage-related information, such as: `diskStorageConfig`, `memoryStorageConfig` etc. For details, please refer to `NetworkCacheType.NetworkCacheOptionsInfo`. The specific example code is as follows:
+In most business situations, we need to cache the `Response` returned by the server locally, for example: those resources that have not been updated for a long time or the content that needs to be displayed when the user does not have a network, `SYMoyaNetwork` has already done this With all this🍯, you only need to set the properties of `networkCacheType` in `SYTarget` and configure `NetworkCacheOptionsInfo`. `SYMoyaNetwork` has done two kinds of storage, one is memory storage (MemoryStorage) and the other is Disk storage (DiskStorage) needs to pass in storage-related information, such as: `diskStorageConfig`, `memoryStorageConfig` etc. For details, please refer to `NetworkCacheType.NetworkCacheOptionsInfo`. The specific example code is as follows:
 
 ```swift
 var networkCacheType: NetworkCacheType {
