@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -61,63 +61,38 @@ let package = Package(
                      ]),
         .target(
             name: "SYMoyaReactiveHandyJSON",
-            dependencies: [.product(name: "SYMoyaHandyJSON", package: "SYMoyaHandyJSON"),
-                           .product(name: "ReactiveSwift", package: "ReactiveSwift")],
-            exclude: [
-                       "Supporting Files/Info.plist"
-                     ]),
+            dependencies: ["SYMoyaHandyJSON",
+                           .product(name: "ReactiveSwift", package: "ReactiveSwift")]),
         .target(
             name: "SYMoyaReactiveObjectMapper",
-            dependencies: [.product(name: "SYMoyaObjectMapper", package: "SYMoyaObjectMapper"),
-                           .product(name: "ReactiveSwift", package: "ReactiveSwift")],
-            exclude: [
-                        "Supporting Files/Info.plist"
-                    ]),
+            dependencies: ["SYMoyaObjectMapper",
+                           .product(name: "ReactiveSwift", package: "ReactiveSwift")]),
         .target(
             name: "SYMoyaHandyJSON",
-            dependencies: [.product(name: "SYMoyaNetwork", package: "SYMoyaNetwork"),
-                           .product(name: "HandyJSON", package: "HandyJSON")],
-            exclude: [
-                         "Supporting Files/Info.plist"
-                     ]),
+            dependencies: ["SYMoyaNetwork",
+                           .product(name: "HandyJSON", package: "HandyJSON")]),
         .target(
             name: "SYMoyaRxHandyJSON",
-            dependencies: [.product(name: "SYMoyaHandyJSON", package: "SYMoyaHandyJSON"),
-                           .product(name: "RxSwift", package: "RxSwift")],
-            exclude: [
-                          "Supporting Files/Info.plist"
-                     ]),
+            dependencies: ["SYMoyaHandyJSON",
+                           .product(name: "RxSwift", package: "RxSwift")]),
         .target(
             name: "SYMoyaRxObjectMapper",
-            dependencies: [.product(name: "SYMoyaObjectMapper", package: "SYMoyaObjectMapper"),
-                           .product(name: "RxSwift", package: "RxSwift")],
-            exclude: [
-                           "Supporting Files/Info.plist"
-                     ]),
+            dependencies: ["SYMoyaObjectMapper",
+                           .product(name: "RxSwift", package: "RxSwift")]),
         .target(
             name: "SYMoyaObjectMapper",
-            dependencies: [.product(name: "SYMoyaNetwork", package: "SYMoyaNetwork"),
-                           .product(name: "ObjectMapper", package: "ObjectMapper")],
-            exclude: [
-                           "Supporting Files/Info.plist"
-                     ]),
+            dependencies: ["SYMoyaNetwork",
+                           .product(name: "ObjectMapper", package: "ObjectMapper")]),
         .target(
             name: "ReactiveSYMoyaNetwork",
-            dependencies: [.product(name: "SYMoyaNetwork", package: "SYMoyaNetwork"),
-                           .product(name: "ReactiveSwift", package: "ReactiveSwift")],
-            exclude: [
-                           "Supporting Files/Info.plist"
-                     ]),
+            dependencies: ["SYMoyaNetwork",
+                           .product(name: "ReactiveSwift", package: "ReactiveSwift")]),
         .target(
             name: "RxSYMoyaNetwork",
-            dependencies: [.product(name: "SYMoyaNetwork", package: "SYMoyaNetwork"),
-                           .product(name: "RxSwift", package: "RxSwift")],
-            exclude: [
-                           "Supporting Files/Info.plist"
-                     ]),
-        .testTarget(
-            name: "SYMoyaNetworkTests",
-            dependencies: ["SYMoyaNetwork"])
+            dependencies: ["SYMoyaNetwork",
+                           .product(name: "RxSwift", package: "RxSwift")]),
+        
+        .testTarget(name: "SYMoyaNetworkTests",
+                    dependencies: ["SYMoyaNetwork"])
     ],
     swiftLanguageVersions: [.v5])
-)

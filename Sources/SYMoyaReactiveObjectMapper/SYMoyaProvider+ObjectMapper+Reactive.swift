@@ -33,7 +33,7 @@ extension Reactive where Base: SYMoyaProviderRequestable {
     ///   - serializer: A `ResponseSerializer` that decodes the response data as a `ObjectMapper`.
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     /// - Returns: A SignalProducer creates Signals that can produce values of type `SYMoyaNetworkDataResponse<BaseMappable>`
-    func responseObjectFromCache<T: BaseMappable>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Base.Target, serializer: ObjectMapperObjectResponseSerializer<T> = .defaultMapperObjectSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
+    public func responseObjectFromCache<T: BaseMappable>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Base.Target, serializer: ObjectMapperObjectResponseSerializer<T> = .defaultMapperObjectSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
         SignalProducer { [weak base] observer, lifetime in
             base?.requestFromCache(cacheFromType, target: target, callbackQueue: callbackQueue, completion: { result in
                 let response = serializer.serialize(result: result)
@@ -57,7 +57,7 @@ extension Reactive where Base: SYMoyaProviderRequestable {
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - progress: Closure to be executed when progress changes.
     /// - Returns: A SignalProducer creates Signals that can produce values of type `SYMoyaNetworkDataResponse<BaseMappable>`
-    func responseObject<T: BaseMappable>(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: ObjectMapperObjectResponseSerializer<T> = .defaultMapperObjectSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
+    public func responseObject<T: BaseMappable>(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: ObjectMapperObjectResponseSerializer<T> = .defaultMapperObjectSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<T>, Never> {
         SignalProducer { [weak base] observer, lifetime in
             let cancellable = base?.request(type, target: target, callbackQueue: callbackQueue, progress: progress, completion: { result in
                 let response = serializer.serialize(result: result)
@@ -87,7 +87,7 @@ extension Reactive where Base: SYMoyaProviderRequestable {
     ///   - serializer: A `ResponseSerializer` that decodes the response data as a `ObjectMapper` array
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     /// - Returns: A SignalProducer creates Signals that can produce values of type `SYMoyaNetworkDataResponse<[BaseMappable]>`
-    func responseObjectsFromCache<T: BaseMappable>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Base.Target, serializer: ObjectMapperObjectsResponseSerializer<T> = .defaultMapperObjectsSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<[T]>, Never> {
+    public func responseObjectsFromCache<T: BaseMappable>(_ cacheFromType: NetworkCacheFromType = .memoryOrDisk, target: Base.Target, serializer: ObjectMapperObjectsResponseSerializer<T> = .defaultMapperObjectsSerializer, callbackQueue: DispatchQueue? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<[T]>, Never> {
         SignalProducer { [weak base] observer, lifetime in
             base?.requestFromCache(cacheFromType, target: target, callbackQueue: callbackQueue, completion: { result in
                 let response = serializer.serialize(result: result)
@@ -111,7 +111,7 @@ extension Reactive where Base: SYMoyaProviderRequestable {
     ///   - callbackQueue: The callback queue on which `completion` is invoked. Default is nil.
     ///   - progress: Closure to be executed when progress changes.
     /// - Returns: A SignalProducer creates Signals that can produce values of type `SYMoyaNetworkDataResponse<[BaseMappable]>`
-    func responseObjects<T: BaseMappable>(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: ObjectMapperObjectsResponseSerializer<T> = .defaultMapperObjectsSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<[T]>, Never> {
+    public func responseObjects<T: BaseMappable>(_ type: ResponseDataSourceType = .server, target: Base.Target, serializer: ObjectMapperObjectsResponseSerializer<T> = .defaultMapperObjectsSerializer, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> SignalProducer<SYMoyaNetworkDataResponse<[T]>, Never> {
         SignalProducer { [weak base] observer, lifetime in
             let cancellable = base?.request(type, target: target, callbackQueue: callbackQueue, progress: progress, completion: { result in
                 let response = serializer.serialize(result: result)
