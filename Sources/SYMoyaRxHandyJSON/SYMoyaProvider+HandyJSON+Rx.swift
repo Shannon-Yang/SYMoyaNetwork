@@ -18,7 +18,7 @@ extension Reactive where Base: SYMoyaProviderRequestable {
     ///
     /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
     ///
-    ///  If there is no data in the memory cache, the disk will continue to be retrieved, and the `completion` will be called back after the retrieval is completed. refer to ``NetworkCache/retrieveResponse(forKey:options:callbackQueue:completionHandler:)-3l55p``
+    ///  If there is no data in the memory cache, the disk will continue to be retrieved, and the `completion` will be called back after the retrieval is completed.
     ///
     ///  If the type of `cacheFromType` is `.memory`, this method will retrieve data from the memory cache.
     ///
@@ -48,7 +48,7 @@ extension Reactive where Base: SYMoyaProviderRequestable {
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
     ///
-    ///  It may retrieve data from cache (memory cache or disk), or by requesting data from the server. refer to the description of ``ResponseDataSourceType``.
+    ///  It may retrieve data from cache (memory cache or disk), or by requesting data from the server.
     ///
     /// - Parameters:
     ///   - type: A data request strategy type. Default is `.server`
@@ -72,7 +72,7 @@ extension Reactive where Base: SYMoyaProviderRequestable {
     ///
     /// If the type of `cacheFromType` is `.memoryOrDisk`, This method will first retrieve data from the memory cache. If the data is retrieved, `completion` will be called back.
     ///
-    ///  If there is no data in the memory cache, the disk will continue to be retrieved, and the `completion` will be called back after the retrieval is completed. refer to ``NetworkCache/retrieveResponse(forKey:options:callbackQueue:completionHandler:)-3l55p``
+    ///  If there is no data in the memory cache, the disk will continue to be retrieved, and the `completion` will be called back after the retrieval is completed.
     ///
     ///  If the type of `cacheFromType` is `.memory`, this method will retrieve data from the memory cache.
     ///
@@ -102,7 +102,7 @@ extension Reactive where Base: SYMoyaProviderRequestable {
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
     ///
-    ///  It may retrieve data from cache (memory cache or disk), or by requesting data from the server. refer to the description of ``ResponseDataSourceType``.
+    ///  It may retrieve data from cache (memory cache or disk), or by requesting data from the server.
     ///
     /// - Parameters:
     ///   - type: A data request strategy type. Default is `.server`

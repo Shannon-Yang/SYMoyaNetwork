@@ -1,13 +1,7 @@
 # ``SYMoyaRxObjectMapper``
 
-<!--@START_MENU_TOKEN@-->Summary<!--@END_MENU_TOKEN@-->
+Supports `RxSwift` responsive framework and uses `ObjectMapper` to parse data.
 
 ## Overview
 
-<!--@START_MENU_TOKEN@-->Text<!--@END_MENU_TOKEN@-->
-
-## Topics
-
-### <!--@START_MENU_TOKEN@-->Group<!--@END_MENU_TOKEN@-->
-
-- <!--@START_MENU_TOKEN@-->``Symbol``<!--@END_MENU_TOKEN@-->
+If your project is using `RxSwift`, and the data model parsing framework you use is `ObjectMapper`, which is a commonly used responsive framework and data parsing framework in iOS development, then it is very suitable to use the `SYMoyaRxObjectMapper` Framework.

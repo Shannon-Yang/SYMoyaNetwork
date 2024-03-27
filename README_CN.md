@@ -3,10 +3,13 @@
 </p>
 
 # SYMoyaNetwork
-基于[Moya](https://github.com/Moya/Moya)二次封装的网络抽象，保持[Moya](https://github.com/Moya/Moya)一样的使用方法，扩展[Moya](https://github.com/Moya/Moya)的`TargetType`，实现常用的数据解析，支持：[HandyJSON](https://github.com/alibaba/HandyJSON)、[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)、[Codable](https://developer.apple.com/documentation/swift/codable)、[SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)，开发者无需再写数据解析的样板代码，仅仅只需要关心想要什么样的数据，选择数据类型，***SYMoyaNetwork***已做好了这一切，***SYMoyaNetwork***同时实现了网络缓存，并配置常用的缓存策略，仅仅实现想要的缓存策略，`Response`将根据策略进行缓存同步，开发者无需再花大量时间再去做这样的工作，***SYMoyaNetwork***让数据请求变得简单，减少开发者编写样板代码，更多时间去关注业务。
+基于[Moya](https://github.com/Moya/Moya)二次封装的网络抽象，保持[Moya](https://github.com/Moya/Moya)一样的使用方法，扩展[Moya](https://github.com/Moya/Moya)的`TargetType`，实现常用的数据解析，支持：[HandyJSON](https://github.com/alibaba/HandyJSON)、[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)、[Codable](https://developer.apple.com/documentation/swift/codable)、[SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)，开发者无需再写数据解析的样板代码，仅仅只需要关心想要什么样的数据，选择数据类型，`SYMoyaNetwork`已做好了这一切，`SYMoyaNetwork`同时实现了网络缓存，并配置常用的缓存策略，仅仅实现想要的缓存策略，`Response`将根据策略进行缓存同步，开发者无需再花大量时间再去做这样的工作，`SYMoyaNetwork`让数据请求变得简单，减少开发者编写样板代码，更多时间去关注业务。
+
+文档：
+[English Document](/README.md)
 
 ## What
-也许你会像大多数iOS开发者一样，使用[Moya](https://github.com/Moya/Moya)来作为网络请求的抽象，[Moya](https://github.com/Moya/Moya)是一个很棒的框架，它规范了你的数据请求，它可以让你足够简单的完成数据请求，***SYMoyaNetwork***是基于[Moya](https://github.com/Moya/Moya)二次封装，它并没有改变Moya的使用方式，仅仅是对Moya的进一步扩展与更友好的封装。
+也许你会像大多数iOS开发者一样，使用[Moya](https://github.com/Moya/Moya)来作为网络请求的抽象，[Moya](https://github.com/Moya/Moya)是一个很棒的框架，它规范了你的数据请求，它可以让你足够简单的完成数据请求，`SYMoyaNetwork`是基于[Moya](https://github.com/Moya/Moya)二次封装，它并没有改变Moya的使用方式，仅仅是对Moya的进一步扩展与更友好的封装。
 
 也许你会用Moya这样写请求：
 
@@ -26,7 +29,7 @@ provider.request(.zen) { result in
     }
 }
 ```
-当数据请求完成后，我们需要手动的将`moyaResponse`转换成我们想要的数据对象，例如使用[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)做为数据模型时，需要每次在返回响应时都需要将`moyaResponse`转换为`BaseMappable`对象，也许你会封装一个统一的方法去做这件事情，但还是需要手动调用这样的一些转换方法，这将让使用者做这些繁琐而又无味的工作，因此***SYMoyaNetwork***已做好了这样的工作，你只需要关心你想要得到的数据，***SYMoyaNetwork***将会给你想要返回的数据，例如使用[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)做为数据模型时，我们可以这样来获取数据对象
+当数据请求完成后，我们需要手动的将`moyaResponse`转换成我们想要的数据对象，例如使用[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)做为数据模型时，需要每次在返回响应时都需要将`moyaResponse`转换为`BaseMappable`对象，也许你会封装一个统一的方法去做这件事情，但还是需要手动调用这样的一些转换方法，这将让使用者做这些繁琐而又无味的工作，因此`SYMoyaNetwork`已做好了这样的工作，你只需要关心你想要得到的数据，`SYMoyaNetwork`将会给你想要返回的数据，例如使用[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)做为数据模型时，我们可以这样来获取数据对象
 
 ```swift
 provider = SYMoyaProvider<GitHub>()
@@ -43,15 +46,15 @@ provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<BaseMappabl
     }
 }
 ```
-现在使用***SYMoyaNetwork***，你不用再关心如何将response转换成你想要的数据，你只需要关心你想要的数据，***SYMoyaNetwork***已经做好了这一切。
+现在使用`SYMoyaNetwork`，你不用再关心如何将response转换成你想要的数据，你只需要关心你想要的数据，`SYMoyaNetwork`已经做好了这一切。
 
-***SYMoyaNetwork***提供多种数据类常用的数据类型解析，例如：`JSON`、`String`、`Image`、`HandyJSON`、`ObjectMapper`、`Codable`、`SwiftyJSON`，使用时仅仅只需要关心你想要得到的数据，其他的你都不用关心，***SYMoyaNetwork***已经对[Moya](https://github.com/Moya/Moya)的`Response`做好了解析，你只管关心你的业务实现。
+`SYMoyaNetwork`提供多种数据类常用的数据类型解析，例如：`JSON`、`String`、`Image`、`HandyJSON`、`ObjectMapper`、`Codable`、`SwiftyJSON`，使用时仅仅只需要关心你想要得到的数据，其他的你都不用关心，`SYMoyaNetwork`已经对[Moya](https://github.com/Moya/Moya)的`Response`做好了解析，你只管关心你的业务实现。
 
-***SYMoyaNetwork***不仅仅只是做了[Moya](https://github.com/Moya/Moya)的`Response`的转换，更重要的一点是，在[Moya](https://github.com/Moya/Moya)的基础上***SYMoyaNetwork***已经帮你做好网络缓存，在大多数应用使用情况下，网络缓存是非常重要，它可以让你的App更快的展示数据，更能为用户节省数据流量，可以说在网络这一层是一个很重要的决策，因此***SYMoyaNetwork***提供常用的网络缓存策略的实现，参考[数据缓存](###数据缓存)。
+`SYMoyaNetwork`不仅仅只是做了[Moya](https://github.com/Moya/Moya)的`Response`的转换，更重要的一点是，在[Moya](https://github.com/Moya/Moya)的基础上`SYMoyaNetwork`已经帮你做好网络缓存，在大多数应用使用情况下，网络缓存是非常重要，它可以让你的App更快的展示数据，更能为用户节省数据流量，可以说在网络这一层是一个很重要的决策，因此`SYMoyaNetwork`提供常用的网络缓存策略的实现，参考[数据缓存](###数据缓存)。
 
-***SYMoyaNetwork***支持[Combine](https://developer.apple.com/documentation/combine)，同时也支持[RxSwift](https://github.com/ReactiveX/RxSwift)、[ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift)等常用的响应式框架。
+`SYMoyaNetwork`支持[Combine](https://developer.apple.com/documentation/combine)，同时也支持[RxSwift](https://github.com/ReactiveX/RxSwift)、[ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift)等常用的响应式框架。
 
-***SYMoyaNetwork***也支持链式请求以及批量请求，在大多数的业务情况下，我们可能会有一批请求发送，或者有关联的链式请求，***SYMoyaNetwork***也提供这些功能，可以轻松快捷的实现，参考：[链式请求](###链式请求)和[批量请求](###批量请求)。
+`SYMoyaNetwork`也支持链式请求以及批量请求，在大多数的业务情况下，我们可能会有一批请求发送，或者有关联的链式请求，`SYMoyaNetwork`也提供这些功能，可以轻松快捷的实现，参考：[链式请求](###链式请求)和[批量请求](###批量请求)。
 
 ## 功能
 * 支持：[HandyJSON](https://github.com/alibaba/HandyJSON)、[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)、[Codable](https://developer.apple.com/documentation/swift/codable)、[SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)数据解析，开发者只需要关心你想要得到的数据。
@@ -64,7 +67,7 @@ provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<BaseMappabl
 * 支持请求日志输出，请求数据信息一目了然
 
 ## Tip
-***SYMoyaNetwork***为了支持不同类型的数据解析，将不同类型的数据解析拆分为不同的Framework包，所有的解析数据包都依赖于核心`Core`包，开发者可以选择使用的解析类型进行安装，例如：使用[RxSwift](https://github.com/ReactiveX/RxSwift)可以直接安装`SYMoyaObjectMapper`包，如果还需要使用[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)作为数据解析，那么可以安装`SYMoyaRxObjectMapper`。
+`SYMoyaNetwork`为了支持不同类型的数据解析，将不同类型的数据解析拆分为不同的Framework包，所有的解析数据包都依赖于核心`Core`包，开发者可以选择使用的解析类型进行安装，例如：使用[RxSwift](https://github.com/ReactiveX/RxSwift)可以直接安装`SYMoyaObjectMapper`包，如果还需要使用[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)作为数据解析，那么可以安装`SYMoyaRxObjectMapper`。
 
 ![SYMoyaNetwork](/Images/SYMoyaNetwork.png)
 
@@ -78,7 +81,7 @@ provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<BaseMappabl
 .package(url: "https://github.com/Shannon-Yang/SYMoyaNetwork", .upToNextMajor(from: "2.0.0"))
 ```
 
-然后为你的Taeget指定***SYMoyaNetwork***依赖。这里是一个 `PackageDescription` 实例：
+然后为你的Taeget指定`SYMoyaNetwork`依赖。这里是一个 `PackageDescription` 实例：
 
 ```swift
 // swift-tools-version:5.3
@@ -125,7 +128,7 @@ pod 'SYMoyaNetwork/RxSYMoyaNetwork', '~> 2.0'
 
 然后运行 `pod install`。
 
-在任何你想使用 ***SYMoyaNetwork*** 的文件中，使用 `import SYMoyaNetwork` 导入框架。
+在任何你想使用 `SYMoyaNetwork` 的文件中，使用 `import SYMoyaNetwork` 导入框架。
 
 ### Carthage
 
@@ -188,7 +191,7 @@ $ git submodule add 'The data model library you want to use, such as HandyJSON, 
 
 像和使用`Moya`一样，`SYMoyaNetwork`的用法和`Moya`完全一样，你不用担心它的使用方式会很复杂
 
-***SYMoyaNetwork***提供了JSON、String、Image、HandyJSON、ObjectMapper、Codable、SwiftyJSON等多种数据类型的支持，你可以使用``SYMoyaProvider``调用对应的`Response`方法。
+`SYMoyaNetwork`提供了JSON、String、Image、HandyJSON、ObjectMapper、Codable、SwiftyJSON等多种数据类型的支持，你可以使用``SYMoyaProvider``调用对应的`Response`方法。
 
 #### JSON
 
@@ -311,7 +314,7 @@ provider.responseSwiftyJSON(.zen) { (response: SYMoyaNetworkDataResponse<SwiftyJ
 
 ### 数据缓存
 
-在多数业务情况下，我们需要将服务器返回的`Response`缓存到本地，例如：那些长时间不更新的资源或者需要在用户没有网络的时候展示出来内容，***SYMoyaNetwork***已经做好了这一切🍯，仅仅只需要在`SYTarget`中设置`networkCacheType`的属性并配置`NetworkCacheOptionsInfo`，***SYMoyaNetwork***做了两种存储，一种为内存存储（MemoryStorage），一种为磁盘存储（DiskStorage），需要传入存储相关的信息，例如：`diskStorageConfig`、`memoryStorageConfig`等，具体参考`NetworkCacheType.NetworkCacheOptionsInfo`相关，具体实例代码如下：
+在多数业务情况下，我们需要将服务器返回的`Response`缓存到本地，例如：那些长时间不更新的资源或者需要在用户没有网络的时候展示出来内容，`SYMoyaNetwork`已经做好了这一切🍯，仅仅只需要在`SYTarget`中设置`networkCacheType`的属性并配置`NetworkCacheOptionsInfo`，`SYMoyaNetwork`做了两种存储，一种为内存存储（MemoryStorage），一种为磁盘存储（DiskStorage），需要传入存储相关的信息，例如：`diskStorageConfig`、`memoryStorageConfig`等，具体参考`NetworkCacheType.NetworkCacheOptionsInfo`相关，具体实例代码如下：
 
 ```swift
 var networkCacheType: NetworkCacheType {

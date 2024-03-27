@@ -16,7 +16,7 @@ extension SYDataResponseActor {
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
     ///
-    ///  It may retrieve data from cache (memory cache or disk), or by requesting data from the server. refer to the description of ``ResponseDataSourceType``.
+    ///  It may retrieve data from cache (memory cache or disk), or by requesting data from the server.
     ///
     /// - Parameters:
     ///   - type: A data request strategy type. Default is `.server`
@@ -33,7 +33,7 @@ extension SYDataResponseActor {
     ///
     /// Data request strategy `ResponseDataSourceType` supports 5 types of data request strategys. This method performs data retrieval based on the strategy of `ResponseDataSourceType`.
     ///
-    ///  It may retrieve data from cache (memory cache or disk), or by requesting data from the server. refer to the description of ``ResponseDataSourceType``.
+    ///  It may retrieve data from cache (memory cache or disk), or by requesting data from the server.
     ///
     /// - Parameters:
     ///   - type: A data request strategy type. Default is `.server`

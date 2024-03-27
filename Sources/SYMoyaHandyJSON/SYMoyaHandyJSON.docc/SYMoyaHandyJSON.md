@@ -1,13 +1,7 @@
 # ``SYMoyaHandyJSON``
 
-<!--@START_MENU_TOKEN@-->Summary<!--@END_MENU_TOKEN@-->
+Supports uses `HandyJSON` to parse data.
 
 ## Overview
 
-<!--@START_MENU_TOKEN@-->Text<!--@END_MENU_TOKEN@-->
-
-## Topics
-
-### <!--@START_MENU_TOKEN@-->Group<!--@END_MENU_TOKEN@-->
-
-- <!--@START_MENU_TOKEN@-->``Symbol``<!--@END_MENU_TOKEN@-->
+If your project is using the `HandyJSON` parsing data model, which is a commonly used data parsing framework in iOS development, then it is very suitable to use the `SYMoyaHandyJSON` Framework.

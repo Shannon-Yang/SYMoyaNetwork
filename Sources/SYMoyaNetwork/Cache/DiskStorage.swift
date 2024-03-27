@@ -449,8 +449,7 @@ extension DiskStorage {
         let fileManager: FileManager
         let directory: URL?
 
-        var cachePathBlock: ((_ directory: URL, _ cacheName: String) -> URL)! = {
-            directory, cacheName in
+        var cachePathBlock: ((_ directory: URL, _ cacheName: String) -> URL)! = { directory, cacheName in
             directory.appendingPathComponent(cacheName, isDirectory: true)
         }
 

@@ -61,16 +61,14 @@ let package = Package(
                      ]),
         .target(
             name: "SYMoyaReactiveHandyJSON",
-            dependencies: [.product(name: "SYMoyaNetwork", package: "SYMoyaNetwork"),
-                           .product(name: "HandyJSON", package: "HandyJSON"),
+            dependencies: [.product(name: "SYMoyaHandyJSON", package: "SYMoyaHandyJSON"),
                            .product(name: "ReactiveSwift", package: "ReactiveSwift")],
             exclude: [
                        "Supporting Files/Info.plist"
                      ]),
         .target(
             name: "SYMoyaReactiveObjectMapper",
-            dependencies: [.product(name: "SYMoyaNetwork", package: "SYMoyaNetwork"),
-                           .product(name: "ObjectMapper", package: "ObjectMapper"),
+            dependencies: [.product(name: "SYMoyaObjectMapper", package: "SYMoyaObjectMapper"),
                            .product(name: "ReactiveSwift", package: "ReactiveSwift")],
             exclude: [
                         "Supporting Files/Info.plist"
@@ -84,16 +82,14 @@ let package = Package(
                      ]),
         .target(
             name: "SYMoyaRxHandyJSON",
-            dependencies: [.product(name: "SYMoyaNetwork", package: "SYMoyaNetwork"),
-                           .product(name: "HandyJSON", package: "HandyJSON"),
+            dependencies: [.product(name: "SYMoyaHandyJSON", package: "SYMoyaHandyJSON"),
                            .product(name: "RxSwift", package: "RxSwift")],
             exclude: [
                           "Supporting Files/Info.plist"
                      ]),
         .target(
             name: "SYMoyaRxObjectMapper",
-            dependencies: [.product(name: "SYMoyaNetwork", package: "SYMoyaNetwork"),
-                           .product(name: "ObjectMapper", package: "ObjectMapper"),
+            dependencies: [.product(name: "SYMoyaObjectMapper", package: "SYMoyaObjectMapper"),
                            .product(name: "RxSwift", package: "RxSwift")],
             exclude: [
                            "Supporting Files/Info.plist"

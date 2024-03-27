@@ -63,10 +63,8 @@ Pod::Spec.new do |s|
   
   s.subspec "SYMoyaReactiveHandyJSON" do |ss|
     ss.source_files  = 'Source/SYMoyaReactiveHandyJSON/**/*.swift'
-    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
+    ss.dependency "Source/SYMoyaHandyJSON"
     
-    # https://github.com/alibaba/HandyJSON
-    ss.dependency 'HandyJSON', '~> 5.0.2'
     # https://github.com/ReactiveCocoa/ReactiveSwift
     ss.dependency 'ReactiveSwift', '~> 7.1.1'
     
@@ -78,10 +76,8 @@ Pod::Spec.new do |s|
   
   s.subspec "SYMoyaReactiveObjectMapper" do |ss|
     ss.source_files  = 'Source/SYMoyaReactiveObjectMapper/**/*.swift'
-    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
+    ss.dependency "Source/SYMoyaObjectMapper"
 
-    # https://github.com/tristanhimmelman/ObjectMapper
-    ss.dependency 'ObjectMapper', '~> 4.3'
     # https://github.com/ReactiveCocoa/ReactiveSwift
     ss.dependency 'ReactiveSwift', '~> 7.1.1'
     
@@ -93,7 +89,7 @@ Pod::Spec.new do |s|
 
   s.subspec "SYMoyaHandyJSON" do |ss|
     ss.source_files  = 'Source/SYMoyaHandyJSON/**/*.swift'
-    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
+    ss.dependency "Source/SYMoyaNetwork"
     
     # https://github.com/alibaba/HandyJSON
     ss.dependency 'HandyJSON', '~> 5.0.2'
@@ -106,10 +102,8 @@ Pod::Spec.new do |s|
 
   s.subspec "SYMoyaRxHandyJSON" do |ss|
     ss.source_files  = 'Source/SYMoyaRxHandyJSON/**/*.swift'
-    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
+    ss.dependency "Source/SYMoyaHandyJSON"
     
-    # https://github.com/alibaba/HandyJSON
-    ss.dependency 'HandyJSON', '~> 5.0.2'
     # https://github.com/ReactiveX/RxSwift
     ss.dependency 'RxSwift', '6.6.0'
     
@@ -121,12 +115,10 @@ Pod::Spec.new do |s|
   
   s.subspec "SYMoyaRxObjectMapper" do |ss|
     ss.source_files  = 'Source/SYMoyaRxObjectMapper/**/*.swift'
-    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
+    ss.dependency "Source/SYMoyaObjectMapper"
     
     # https://github.com/ReactiveX/RxSwift
     ss.dependency 'RxSwift', '6.6.0'
-    # https://github.com/tristanhimmelman/ObjectMapper
-    ss.dependency 'ObjectMapper', '~> 4.3'
     
     ss.ios.deployment_target = '13.0'
     ss.osx.deployment_target = '10.15'
@@ -136,7 +128,7 @@ Pod::Spec.new do |s|
   
   s.subspec "SYMoyaObjectMapper" do |ss|
     ss.source_files  = 'Source/SYMoyaObjectMapper/**/*.swift'
-    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
+    ss.dependency "Source/SYMoyaNetwork"
     
     # https://github.com/tristanhimmelman/ObjectMapper
     ss.dependency 'ObjectMapper', '~> 4.3'
@@ -149,7 +141,7 @@ Pod::Spec.new do |s|
   
   s.subspec "ReactiveSYMoyaNetwork" do |ss|
     ss.source_files  = 'Source/ReactiveSYMoyaNetwork/**/*.swift'
-    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
+    ss.dependency "Source/SYMoyaNetwork"
     
     # https://github.com/ReactiveCocoa/ReactiveSwift
     ss.dependency 'ReactiveSwift', '~> 7.1.1'
@@ -162,7 +154,7 @@ Pod::Spec.new do |s|
   
   s.subspec "RxSYMoyaNetwork" do |ss|
     ss.source_files  = 'Source/RxSYMoyaNetwork/**/*.swift'
-    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
+    ss.dependency "Source/SYMoyaNetwork"
     
     # https://github.com/ReactiveX/RxSwift
     ss.dependency 'RxSwift', '6.6.0'

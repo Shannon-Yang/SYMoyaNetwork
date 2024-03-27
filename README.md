@@ -5,6 +5,9 @@
 # SYMoyaNetwork
 Based on the network abstraction of secondary encapsulation of [Moya](https://github.com/Moya/Moya). Maintain the same usage method of [Moya](https://github.com/Moya/Moya) and extend [Moya](https://github.com/Moya/Moya)’s `TargetType` implements commonly used data parsing, supporting: [HandyJSON](https://github.com/alibaba/HandyJSON),[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper), [Codable](https://developer.apple.com/documentation/swift/codable), [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON), Developer there is no need to write boilerplate code for data parsing. You only need to care about what kind of data you want and select the data type. `SYMoyaNetwork` has done all this. `SYMoyaNetwork` also implements network caching, and configure common caching strategies to only implement the desired caching strategy. `Response` will perform cache synchronization according to the policy. Developers no longer need to spend a lot of time doing such work. `SYMoyaNetwork` allows data requests Become simple, less developers write boilerplate code, more time to focus on business.
 
+Doc:
+[中文文档](/README.md)
+
 ## What
 Maybe you will use [Moya](https://github.com/Moya/Moya) as an abstraction for network requests, like most iOS developers, [Moya](https://github.com/Moya/Moya ) is a great framework that standardizes your data requests and allows you to complete data requests simply enough. `SYMoyaNetwork` is based on [Moya](https://github.com/Moya/Moya) secondary encapsulation, it does not change the way of using Moya, it is just a further expansion and more friendly encapsulation of [Moya](https://github.com/Moya/Moya).
 
