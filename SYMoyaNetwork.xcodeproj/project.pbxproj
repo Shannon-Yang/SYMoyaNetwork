@@ -528,6 +528,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		201F371E2BB51FB9009CE04E /* Package@swift-5.2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Package@swift-5.2.swift"; sourceTree = "<group>"; };
+		201F371F2BB51FB9009CE04E /* Package@swift-5.3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Package@swift-5.3.swift"; sourceTree = "<group>"; };
+		201F37202BB51FB9009CE04E /* Package@swift-5.1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Package@swift-5.1.swift"; sourceTree = "<group>"; };
+		201F37212BB51FB9009CE04E /* Package@swift-4.0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Package@swift-4.0.swift"; sourceTree = "<group>"; };
+		201F37222BB51FB9009CE04E /* Package@swift-5.0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Package@swift-5.0.swift"; sourceTree = "<group>"; };
 		20A498E52BA9434200D7FB10 /* NetworkCacheFromType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCacheFromType.swift; sourceTree = "<group>"; };
 		20A498EB2BAAEFD500D7FB10 /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		20A498ED2BAAF40100D7FB10 /* StringResponseSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringResponseSerializer.swift; sourceTree = "<group>"; };
@@ -536,6 +541,7 @@
 		20A498F32BAAF48A00D7FB10 /* DecodableResponseSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableResponseSerializer.swift; sourceTree = "<group>"; };
 		20A498F52BAAF4B000D7FB10 /* ImageResponseSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResponseSerializer.swift; sourceTree = "<group>"; };
 		20B76F032BB41A1D003E18B2 /* SYMoyaReactiveObjectMapper.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = SYMoyaReactiveObjectMapper.docc; sourceTree = "<group>"; };
+		20B76F052BB50B39003E18B2 /* Package@swift-4.2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Package@swift-4.2.swift"; sourceTree = "<group>"; };
 		20C6D84F2BB2B06500B96A3F /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		20C6D8502BB2B06500B96A3F /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		20C6D8512BB2B06500B96A3F /* Package.resolved */ = {isa = PBXFileReference; lastKnownFileType = text; path = Package.resolved; sourceTree = "<group>"; };
@@ -835,6 +841,13 @@
 		20C6D84D2BB2AFA400B96A3F /* Deployment */ = {
 			isa = PBXGroup;
 			children = (
+				201F37212BB51FB9009CE04E /* Package@swift-4.0.swift */,
+				20B76F052BB50B39003E18B2 /* Package@swift-4.2.swift */,
+				201F37222BB51FB9009CE04E /* Package@swift-5.0.swift */,
+				201F37202BB51FB9009CE04E /* Package@swift-5.1.swift */,
+				201F371E2BB51FB9009CE04E /* Package@swift-5.2.swift */,
+				201F371F2BB51FB9009CE04E /* Package@swift-5.3.swift */,
+				20C6D84F2BB2B06500B96A3F /* Package.swift */,
 				20C6D8582BB2B0BC00B96A3F /* Images */,
 				20C6D8572BB2B0AD00B96A3F /* SYMoyaNetwork.podspec */,
 				20C6D8562BB2B09A00B96A3F /* carthage.sh */,
@@ -843,7 +856,6 @@
 				20C6D8532BB2B09100B96A3F /* Cartfile.resolved */,
 				20C6D8502BB2B06500B96A3F /* LICENSE */,
 				20C6D8512BB2B06500B96A3F /* Package.resolved */,
-				20C6D84F2BB2B06500B96A3F /* Package.swift */,
 				20C6D8522BB2B06500B96A3F /* README.md */,
 				20C6D85C2BB2BC8500B96A3F /* README_CN.md */,
 			);

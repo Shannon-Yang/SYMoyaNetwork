@@ -1,4 +1,5 @@
-// swift-tools-version:5.9
+
+// swift-tools-version:5.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -43,7 +44,7 @@ let package = Package(
     ],
     dependencies: [
        .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "15.0.0")),
-       .package(url: "https://github.com/tristanhimmelman/ObjectMapper.git", branch: "4.2.0"),
+       .package(url: "https://github.com/tristanhimmelman/ObjectMapper.git", .upToNextMajor(from: "4.1.0")),
        .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", .upToNextMajor(from: "5.0.0")),
        .package(url: "https://github.com/alibaba/HandyJSON.git", .upToNextMajor(from: "5.0.1")),
        .package(url: "https://github.com/ReactiveCocoa/ReactiveSwift.git", from: "6.0.0"),
@@ -95,4 +96,4 @@ let package = Package(
         .testTarget(name: "SYMoyaNetworkTests",
                     dependencies: ["SYMoyaNetwork"])
     ],
-    swiftLanguageVersions: [.v5])
+    swiftLanguageVersions: [.v5)
