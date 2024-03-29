@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="1280" height="640" src="https://raw.githubusercontent.com/Shannon-Yang/SYMoyaNetwork/master/Images/logo.png" />
+  <img src="https://raw.githubusercontent.com/Shannon-Yang/SYMoyaNetwork/master/Images/logo.png" />
 </p>
 
 # SYMoyaNetwork
