@@ -9,8 +9,6 @@ For more information, please see the Doc:
 
 [中文文档](/README.md)
 
-[DocC](https://shannonyang0805.github.io/SYMoyaNetwork/Docs/)
-
 ## What
 Maybe you will use [Moya](https://github.com/Moya/Moya) as an abstraction for network requests, like most iOS developers, [Moya](https://github.com/Moya/Moya ) is a great framework that standardizes your data requests and allows you to complete data requests simply enough. `SYMoyaNetwork` is based on [Moya](https://github.com/Moya/Moya) secondary encapsulation, it does not change the way of using Moya, it is just a further expansion and more friendly encapsulation of [Moya](https://github.com/Moya/Moya).
 
