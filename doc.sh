@@ -10,7 +10,7 @@ fi
       generate-documentation --target $arg \
        --disable-indexing \
        --transform-for-static-hosting \
-       --hosting-base-path SYMoyaNetwork \
+       --hosting-base-path SYMoyaNetwork/$arg \
        --output-path ./docs/$arg 
 done
 
