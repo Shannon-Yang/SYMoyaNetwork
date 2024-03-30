@@ -36,8 +36,8 @@ Pod::Spec.new do |s|
   # s.source_files = ["Sources/**/*.swift"]
 
   s.default_subspec = "SYMoyaNetwork"
-  s.swift_version = ['5']
-  s.cocoapods_version = '>= 1.4.0'
+  s.swift_version = ['5.0']
+  s.cocoapods_version = '>= 1.12.0'
 
   
   # s.resource_bundles = {
@@ -46,8 +46,8 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
 
-  s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
-  s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  # s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  # s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
 
   s.subspec "SYMoyaNetwork" do |ss|
     ss.source_files  = 'Sources/SYMoyaNetwork/**/*.swift'

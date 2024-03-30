@@ -10,8 +10,8 @@ import Foundation
 import HandyJSON
 import Moya
 import ReactiveSwift
-import SYMoyaHandyJSON
 import SYMoyaNetwork
+import SYMoyaHandyJSON
 
 extension Reactive where Base: SYMoyaProviderRequestable {
     /// Retrieve data from the cache and parses the retrieved data into an object that implements `HandyJSON`.
