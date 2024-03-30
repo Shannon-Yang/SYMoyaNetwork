@@ -92,7 +92,7 @@ extension Result {
     ///
     /// - Returns: A `Result` instance containing the result of the transform. If this instance is a success, returns
     ///            the same success.
-    func tryMapError<NewFailure: Error>(_ transform: (Failure) throws -> NewFailure) -> Result<Success, Error> {
+    func tryMapError(_ transform: (Failure) throws -> Error) -> Result<Success, Error> {
         switch self {
         case let .failure(error):
             do {

@@ -92,8 +92,8 @@ extension SYDataResponse {
     /// - Parameter transform: A closure that takes the error of the instance.
     ///
     /// - Returns: A `SYDataResponse` instance containing the result of the transform.
-    public func mapError<NewFailure: Error>(_ transform: (Failure) -> NewFailure) -> SYDataResponse<Success, NewFailure> {
-        SYDataResponse<Success, NewFailure>(resultResponse: resultResponse, result: result.mapError(transform))
+    public func mapError(_ transform: (Failure) -> Error) -> SYDataResponse<Success, Error> {
+        SYDataResponse<Success, Error>(resultResponse: resultResponse, result: result.mapError(transform))
     }
 
     /// Evaluates the specified closure when the `SYDataResponse` is a failure, passing the unwrapped error as a parameter.
@@ -108,7 +108,7 @@ extension SYDataResponse {
     /// - Parameter transform: A throwing closure that takes the error of the instance.
     ///
     /// - Returns: A `SYDataResponse` instance containing the result of the transform.
-    public func tryMapError<NewFailure: Error>(_ transform: (Failure) throws -> NewFailure) -> SYDataResponse<Success, Error> {
+    public func tryMapError(_ transform: (Failure) throws -> Error) -> SYDataResponse<Success, Error> {
         SYDataResponse<Success, Error>(resultResponse: resultResponse, result: result.tryMapError(transform))
     }
 }

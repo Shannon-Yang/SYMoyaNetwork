@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		207A55282BB7ED1F0035F051 /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F26029A623D0004D5C4B /* Alamofire.xcframework */; };
+		207A55292BB7ED1F0035F051 /* Alamofire.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F26029A623D0004D5C4B /* Alamofire.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		209CFE342BA4493C002B7C34 /* SYMoyaObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE356D2A1E460F001AFD6C /* SYMoyaObjectMapper.framework */; };
 		209CFE352BA4493D002B7C34 /* SYMoyaObjectMapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE356D2A1E460F001AFD6C /* SYMoyaObjectMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		209CFE3A2BA44A3E002B7C34 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
 		209CFE3B2BA44A3E002B7C34 /* SYMoyaNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		209CFE3F2BA44B7D002B7C34 /* SYMoyaNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		209CFE422BA44B9E002B7C34 /* SYMoyaObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE356D2A1E460F001AFD6C /* SYMoyaObjectMapper.framework */; };
 		209CFE432BA44B9E002B7C34 /* SYMoyaObjectMapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE356D2A1E460F001AFD6C /* SYMoyaObjectMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		20A498E62BA9434200D7FB10 /* NetworkCacheFromType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A498E52BA9434200D7FB10 /* NetworkCacheFromType.swift */; };
@@ -23,7 +24,6 @@
 		20A498F62BAAF4B000D7FB10 /* ImageResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A498F52BAAF4B000D7FB10 /* ImageResponseSerializer.swift */; };
 		20B76F002BB40896003E18B2 /* SYMoyaProvider+ObjectMapper+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB71AF102A55C48800952F2C /* SYMoyaProvider+ObjectMapper+Reactive.swift */; };
 		20B76F042BB41A1D003E18B2 /* SYMoyaReactiveObjectMapper.docc in Sources */ = {isa = PBXBuildFile; fileRef = 20B76F032BB41A1D003E18B2 /* SYMoyaReactiveObjectMapper.docc */; };
-		20C6D8442BB16CA400B96A3F /* Alamofire.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F26029A623D0004D5C4B /* Alamofire.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		20C6D8462BB16CA800B96A3F /* Moya.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F26129A623D0004D5C4B /* Moya.xcframework */; };
 		20C6D8472BB16CA800B96A3F /* Moya.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F26129A623D0004D5C4B /* Moya.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		20C6D8482BB16CB400B96A3F /* SwiftyJSON.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F26829A62409004D5C4B /* SwiftyJSON.xcframework */; };
@@ -148,7 +148,6 @@
 		FB71AF442A55C65000952F2C /* SYMoyaProvider+String+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB71AF432A55C65000952F2C /* SYMoyaProvider+String+Reactive.swift */; };
 		FB71AF462A55C66000952F2C /* SYMoyaProvider+Decodable+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB71AF452A55C66000952F2C /* SYMoyaProvider+Decodable+Reactive.swift */; };
 		FB71AF482A55C66C00952F2C /* SYMoyaProvider+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB71AF472A55C66C00952F2C /* SYMoyaProvider+Reactive.swift */; };
-		FB71AF4A2A5716BE00952F2C /* ObjectMapper.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F25E29A623D0004D5C4B /* ObjectMapper.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FB71AF4C2A57193B00952F2C /* SYMoyaProvider+HandyJSON+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB71AF4B2A57193B00952F2C /* SYMoyaProvider+HandyJSON+Reactive.swift */; };
 		FB8072FF26F32C070042B30D /* SYMoyaNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = FB8072F126F32C070042B30D /* SYMoyaNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB89B2B72A6D761800E8CFE9 /* HTTPBinAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB89B2B62A6D761800E8CFE9 /* HTTPBinAuth.swift */; };
@@ -184,8 +183,6 @@
 		FBA24FA82A48A103008D35A6 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
 		FBA24FA92A48A103008D35A6 /* SYMoyaNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FBA24FAF2A4DD6A1008D35A6 /* SYMoyaProvider+SwiftyJSON+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA24FAE2A4DD6A1008D35A6 /* SYMoyaProvider+SwiftyJSON+Rx.swift */; };
-		FBAB5F032B6801A400016CC9 /* HandyJSON.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBAF77602AD58109002689E7 /* HandyJSON.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FBAB5F052B6801B400016CC9 /* SYMoyaNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FBAB5F0C2B68044000016CC9 /* SYMoyaHandyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35C12A1E4691001AFD6C /* SYMoyaHandyJSON.framework */; };
 		FBAB5F0D2B68044000016CC9 /* SYMoyaHandyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35C12A1E4691001AFD6C /* SYMoyaHandyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FBAB5F102B68046900016CC9 /* SYMoyaHandyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35C12A1E4691001AFD6C /* SYMoyaHandyJSON.framework */; };
@@ -243,13 +240,6 @@
 			remoteInfo = SYMoyaObjectMapper;
 		};
 		209CFE3C2BA44A3E002B7C34 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FB8072E526F32C070042B30D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FB8072ED26F32C070042B30D;
-			remoteInfo = SYMoyaNetwork;
-		};
-		209CFE402BA44B7D002B7C34 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FB8072E526F32C070042B30D /* Project object */;
 			proxyType = 1;
@@ -340,13 +330,6 @@
 			remoteGlobalIDString = FB8072ED26F32C070042B30D;
 			remoteInfo = SYMoyaNetwork;
 		};
-		FBAB5F062B6801B400016CC9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FB8072E526F32C070042B30D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FB8072ED26F32C070042B30D;
-			remoteInfo = SYMoyaNetwork;
-		};
 		FBAB5F0E2B68044000016CC9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FB8072E526F32C070042B30D /* Project object */;
@@ -384,8 +367,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				207A55292BB7ED1F0035F051 /* Alamofire.xcframework in Embed Frameworks */,
 				20C6D8492BB16CB400B96A3F /* SwiftyJSON.xcframework in Embed Frameworks */,
-				20C6D8442BB16CA400B96A3F /* Alamofire.xcframework in Embed Frameworks */,
 				20C6D8472BB16CA800B96A3F /* Moya.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -412,9 +395,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				FB71AF0B2A55C42D00952F2C /* ReactiveSwift.xcframework in Embed Frameworks */,
-				FB71AF4A2A5716BE00952F2C /* ObjectMapper.xcframework in Embed Frameworks */,
 				209CFE432BA44B9E002B7C34 /* SYMoyaObjectMapper.framework in Embed Frameworks */,
-				209CFE3F2BA44B7D002B7C34 /* SYMoyaNetwork.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -425,10 +406,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FBAB5F032B6801A400016CC9 /* HandyJSON.xcframework in Embed Frameworks */,
 				FBAB5F112B68046900016CC9 /* SYMoyaHandyJSON.framework in Embed Frameworks */,
 				FB71AF0E2A55C43900952F2C /* ReactiveSwift.xcframework in Embed Frameworks */,
-				FBAB5F052B6801B400016CC9 /* SYMoyaNetwork.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -737,6 +716,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				207A55282BB7ED1F0035F051 /* Alamofire.xcframework in Frameworks */,
 				20C6D8482BB16CB400B96A3F /* SwiftyJSON.xcframework in Frameworks */,
 				20C6D8462BB16CA800B96A3F /* Moya.xcframework in Frameworks */,
 			);
@@ -1583,7 +1563,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				209CFE412BA44B7D002B7C34 /* PBXTargetDependency */,
 				209CFE452BA44B9E002B7C34 /* PBXTargetDependency */,
 			);
 			name = SYMoyaReactiveObjectMapper;
@@ -1604,7 +1583,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				FBAB5F072B6801B400016CC9 /* PBXTargetDependency */,
 				FBAB5F132B68046900016CC9 /* PBXTargetDependency */,
 			);
 			name = SYMoyaReactiveHandyJSON;
@@ -2040,11 +2018,6 @@
 			target = FB8072ED26F32C070042B30D /* SYMoyaNetwork */;
 			targetProxy = 209CFE3C2BA44A3E002B7C34 /* PBXContainerItemProxy */;
 		};
-		209CFE412BA44B7D002B7C34 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FB8072ED26F32C070042B30D /* SYMoyaNetwork */;
-			targetProxy = 209CFE402BA44B7D002B7C34 /* PBXContainerItemProxy */;
-		};
 		209CFE452BA44B9E002B7C34 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FBEE356C2A1E460F001AFD6C /* SYMoyaObjectMapper */;
@@ -2104,11 +2077,6 @@
 			isa = PBXTargetDependency;
 			target = FB8072ED26F32C070042B30D /* SYMoyaNetwork */;
 			targetProxy = FBA24FAA2A48A103008D35A6 /* PBXContainerItemProxy */;
-		};
-		FBAB5F072B6801B400016CC9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FB8072ED26F32C070042B30D /* SYMoyaNetwork */;
-			targetProxy = FBAB5F062B6801B400016CC9 /* PBXContainerItemProxy */;
 		};
 		FBAB5F0F2B68044000016CC9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
