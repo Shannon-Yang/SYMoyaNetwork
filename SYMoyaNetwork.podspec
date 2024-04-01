@@ -35,7 +35,7 @@ Pod::Spec.new do |s|
 
   # s.source_files = ["Sources/**/*.swift"]
 
-  s.default_subspec = "SYMoyaNetwork"
+  s.default_subspec = "Core"
   s.swift_version = ['5.0']
   s.cocoapods_version = '>= 1.12.0'
 
