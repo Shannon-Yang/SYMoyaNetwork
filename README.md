@@ -137,7 +137,7 @@ Carthage users can point to this repository and use their preferred build framew
 Add the following code to your Cartfile:
 
 ```
-github "SYMoyaNetwork/SYMoyaNetwork"
+github "Shannon-Yang/SYMoyaNetwork"
 ```
 Then run `carthage update --use-xcframeworks`.
 

@@ -137,7 +137,7 @@ Carthage 用户可以指向这个仓库并使用他们喜欢的生成框架，`S
 在你的 Cartfile 中添加下面的代码：
 
 ```
-github "SYMoyaNetwork/SYMoyaNetwork"
+github "Shannon-Yang/SYMoyaNetwork"
 ```
 
 然后运行 `carthage update --use-xcframeworks`。
