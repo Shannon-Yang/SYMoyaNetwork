@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/tristanhimmelman/ObjectMapper.git",
       "state" : {
-        "branch" : "4.2.0",
-        "revision" : "0b96a734de3ea1c87374ae677064f86adb0716ec"
+        "revision" : "0b96a734de3ea1c87374ae677064f86adb0716ec",
+        "version" : "4.2.0"
       }
     },
     {
