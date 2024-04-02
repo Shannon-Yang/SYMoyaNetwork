@@ -35,7 +35,7 @@ Pod::Spec.new do |s|
 
   # s.source_files = ["Sources/**/*.swift"]
 
-  s.default_subspec = "Core"
+  s.default_subspec = "SYMoyaNetwork"
   s.swift_version = ['5.0']
   s.cocoapods_version = '>= 1.12.0'
 
@@ -46,10 +46,10 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
 
-  # s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
-  # s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
 
-  s.subspec "Core" do |ss|
+  s.subspec "SYMoyaNetwork" do |ss|
     ss.source_files  = 'Sources/SYMoyaNetwork/**/*.swift'
 
     # https://github.com/Moya/Moya
@@ -63,7 +63,7 @@ Pod::Spec.new do |s|
 
   s.subspec "SYMoyaHandyJSON" do |ss|
     ss.source_files  = 'Sources/SYMoyaHandyJSON/**/*.swift'
-    ss.dependency "SYMoyaNetwork/Core"
+    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
     
     # https://github.com/alibaba/HandyJSON
     ss.dependency 'HandyJSON', '~> 5.0.2'
@@ -76,7 +76,7 @@ Pod::Spec.new do |s|
 
   s.subspec "SYMoyaObjectMapper" do |ss|
     ss.source_files  = 'Sources/SYMoyaObjectMapper/**/*.swift'
-    ss.dependency "SYMoyaNetwork/Core"
+    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
     
     # https://github.com/tristanhimmelman/ObjectMapper
     ss.dependency 'ObjectMapper', '~> 4.2'
@@ -141,7 +141,7 @@ Pod::Spec.new do |s|
   
   s.subspec "ReactiveSYMoyaNetwork" do |ss|
     ss.source_files  = 'Sources/ReactiveSYMoyaNetwork/**/*.swift'
-    ss.dependency "SYMoyaNetwork/Core"
+    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
     
     # https://github.com/ReactiveCocoa/ReactiveSwift
     ss.dependency 'ReactiveSwift', '~> 7.1.1'
@@ -154,7 +154,7 @@ Pod::Spec.new do |s|
   
   s.subspec "RxSYMoyaNetwork" do |ss|
     ss.source_files  = 'Sources/RxSYMoyaNetwork/**/*.swift'
-    ss.dependency "SYMoyaNetwork/Core"
+    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
     
     # https://github.com/ReactiveX/RxSwift
     ss.dependency 'RxSwift', '6.6.0'
