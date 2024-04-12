@@ -44,7 +44,6 @@
 		FB4709402A28F24B00A4C721 /* SYMoyaProvider+Image+Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47093F2A28F24B00A4C721 /* SYMoyaProvider+Image+Concurrency.swift */; };
 		FB4CA42E2ADD801C00F43D40 /* SYMoyaChainProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4CA42D2ADD801C00F43D40 /* SYMoyaChainProvider.swift */; };
 		FB4CA4342AE180DD00F43D40 /* SYMoyaProviderRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4CA4332AE180DD00F43D40 /* SYMoyaProviderRequestable.swift */; };
-		FB4CA4372AEABEC000F43D40 /* HandyJSONResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4CA4352AE95F1100F43D40 /* HandyJSONResponseSerializer.swift */; };
 		FB4CA43C2AEACBA200F43D40 /* ObjectMapperResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4CA43A2AEACB9800F43D40 /* ObjectMapperResponseSerializer.swift */; };
 		FB4CA4452AEFF74000F43D40 /* HTTPBinDynamicData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4CA4432AEFF57100F43D40 /* HTTPBinDynamicData.swift */; };
 		FB4CA4472AEFFBF000F43D40 /* HTTPBinRequestInspection .swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4CA4462AEFFBF000F43D40 /* HTTPBinRequestInspection .swift */; };
@@ -106,13 +105,8 @@
 		FB665E5C2B027A6C00ECE6B6 /* ObjectMapper.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F25E29A623D0004D5C4B /* ObjectMapper.xcframework */; };
 		FB665E5D2B027A6D00ECE6B6 /* ObjectMapper.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F25E29A623D0004D5C4B /* ObjectMapper.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FB665E5F2B027ABF00ECE6B6 /* HttpbinPostCodableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB665E5E2B027ABF00ECE6B6 /* HttpbinPostCodableModel.swift */; };
-		FB665E612B03D1C300ECE6B6 /* HttpbinPostHandyJSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB665E602B03D1C300ECE6B6 /* HttpbinPostHandyJSONModel.swift */; };
-		FB665E622B051A3C00ECE6B6 /* SYMoyaRxHandyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35A52A1E4676001AFD6C /* SYMoyaRxHandyJSON.framework */; };
-		FB665E632B051A3C00ECE6B6 /* SYMoyaRxHandyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35A52A1E4676001AFD6C /* SYMoyaRxHandyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FB665E662B051A4400ECE6B6 /* SYMoyaRxObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35892A1E4656001AFD6C /* SYMoyaRxObjectMapper.framework */; };
 		FB665E672B051A4400ECE6B6 /* SYMoyaRxObjectMapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35892A1E4656001AFD6C /* SYMoyaRxObjectMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FB665E6A2B051AD200ECE6B6 /* SYMoyaReactiveHandyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35F92A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON.framework */; };
-		FB665E6B2B051AD200ECE6B6 /* SYMoyaReactiveHandyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35F92A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FB665E6E2B051AD300ECE6B6 /* SYMoyaReactiveObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35DD2A1E46AC001AFD6C /* SYMoyaReactiveObjectMapper.framework */; };
 		FB665E6F2B051AD300ECE6B6 /* SYMoyaReactiveObjectMapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35DD2A1E46AC001AFD6C /* SYMoyaReactiveObjectMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FB668FC028D3596F00AE74F4 /* SYMoyaPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB668FBF28D3596F00AE74F4 /* SYMoyaPublisher.swift */; };
@@ -124,15 +118,8 @@
 		FB71AEFB2A54609400952F2C /* SYMoyaProvider+Decodable+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB71AEFA2A54609400952F2C /* SYMoyaProvider+Decodable+Rx.swift */; };
 		FB71AEFD2A55B6CF00952F2C /* SYMoyaObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE356D2A1E460F001AFD6C /* SYMoyaObjectMapper.framework */; };
 		FB71AEFE2A55B6CF00952F2C /* SYMoyaObjectMapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE356D2A1E460F001AFD6C /* SYMoyaObjectMapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FB71AF022A55B8B000952F2C /* SYMoyaProvider+HandyJSON+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB71AF012A55B8B000952F2C /* SYMoyaProvider+HandyJSON+Rx.swift */; };
-		FB71AF032A55B8DB00952F2C /* SYMoyaHandyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35C12A1E4691001AFD6C /* SYMoyaHandyJSON.framework */; };
-		FB71AF042A55B8DB00952F2C /* SYMoyaHandyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35C12A1E4691001AFD6C /* SYMoyaHandyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FB71AF072A55BBE500952F2C /* RxSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBA24F762A4745D0008D35A6 /* RxSwift.xcframework */; };
-		FB71AF082A55BBE500952F2C /* RxSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBA24F762A4745D0008D35A6 /* RxSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FB71AF0A2A55C42D00952F2C /* ReactiveSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB71AF092A55C42D00952F2C /* ReactiveSwift.xcframework */; };
 		FB71AF0B2A55C42D00952F2C /* ReactiveSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB71AF092A55C42D00952F2C /* ReactiveSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FB71AF0D2A55C43900952F2C /* ReactiveSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB71AF092A55C42D00952F2C /* ReactiveSwift.xcframework */; };
-		FB71AF0E2A55C43900952F2C /* ReactiveSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB71AF092A55C42D00952F2C /* ReactiveSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FB71AF132A55C4EC00952F2C /* SYMoyaProvider+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB71AF122A55C4EC00952F2C /* SYMoyaProvider+Rx.swift */; };
 		FB71AF1D2A55C55900952F2C /* ReactiveSYMoyaNetwork.docc in Sources */ = {isa = PBXBuildFile; fileRef = FB71AF1C2A55C55900952F2C /* ReactiveSYMoyaNetwork.docc */; };
 		FB71AF2B2A55C55A00952F2C /* ReactiveSYMoyaNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = FB71AF1B2A55C55900952F2C /* ReactiveSYMoyaNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -148,7 +135,6 @@
 		FB71AF442A55C65000952F2C /* SYMoyaProvider+String+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB71AF432A55C65000952F2C /* SYMoyaProvider+String+Reactive.swift */; };
 		FB71AF462A55C66000952F2C /* SYMoyaProvider+Decodable+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB71AF452A55C66000952F2C /* SYMoyaProvider+Decodable+Reactive.swift */; };
 		FB71AF482A55C66C00952F2C /* SYMoyaProvider+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB71AF472A55C66C00952F2C /* SYMoyaProvider+Reactive.swift */; };
-		FB71AF4C2A57193B00952F2C /* SYMoyaProvider+HandyJSON+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB71AF4B2A57193B00952F2C /* SYMoyaProvider+HandyJSON+Reactive.swift */; };
 		FB8072FF26F32C070042B30D /* SYMoyaNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = FB8072F126F32C070042B30D /* SYMoyaNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB89B2B72A6D761800E8CFE9 /* HTTPBinAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB89B2B62A6D761800E8CFE9 /* HTTPBinAuth.swift */; };
 		FB9E2CC328A204B4001F73FC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9E2CC228A204B4001F73FC /* AppDelegate.swift */; };
@@ -163,14 +149,11 @@
 		FB9E2D1B28A21BF4001F73FC /* BatchResponseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB9E2D1928A21BF4001F73FC /* BatchResponseViewController.xib */; };
 		FBA24F642A45FA12008D35A6 /* SYMoyaProvider+ObjectMapper+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4709452A28F32E00A4C721 /* SYMoyaProvider+ObjectMapper+Combine.swift */; };
 		FBA24F652A45FA12008D35A6 /* SYMoyaProvider+ObjectMapper+Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4709472A28F34000A4C721 /* SYMoyaProvider+ObjectMapper+Concurrency.swift */; };
-		FBA24F662A45FA25008D35A6 /* SYMoyaProvider+HandyJSON+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4709412A28F2F500A4C721 /* SYMoyaProvider+HandyJSON+Combine.swift */; };
-		FBA24F672A45FA25008D35A6 /* SYMoyaProvider+HandyJSON+Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4709432A28F30E00A4C721 /* SYMoyaProvider+HandyJSON+Concurrency.swift */; };
 		FBA24F682A45FAF2008D35A6 /* ObjectMapper.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F25E29A623D0004D5C4B /* ObjectMapper.xcframework */; };
 		FBA24F692A45FAF2008D35A6 /* ObjectMapper.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 20F6F25E29A623D0004D5C4B /* ObjectMapper.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FBA24F6E2A45FB5D008D35A6 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
 		FBA24F6F2A45FB5D008D35A6 /* SYMoyaNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FBA24F732A473AE2008D35A6 /* SYDataResponseActor+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA24F722A473AE2008D35A6 /* SYDataResponseActor+ObjectMapper.swift */; };
-		FBA24F752A473E97008D35A6 /* SYDataResponseActor+HandyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA24F742A473E97008D35A6 /* SYDataResponseActor+HandyJSON.swift */; };
 		FBA24F772A4745D0008D35A6 /* RxSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBA24F762A4745D0008D35A6 /* RxSwift.xcframework */; };
 		FBA24F782A4745D0008D35A6 /* RxSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBA24F762A4745D0008D35A6 /* RxSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FBA24F7E2A474705008D35A6 /* SYMoyaProvider+ObjectMapper+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA24F7D2A474705008D35A6 /* SYMoyaProvider+ObjectMapper+Rx.swift */; };
@@ -183,36 +166,20 @@
 		FBA24FA82A48A103008D35A6 /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
 		FBA24FA92A48A103008D35A6 /* SYMoyaNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FBA24FAF2A4DD6A1008D35A6 /* SYMoyaProvider+SwiftyJSON+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA24FAE2A4DD6A1008D35A6 /* SYMoyaProvider+SwiftyJSON+Rx.swift */; };
-		FBAB5F0C2B68044000016CC9 /* SYMoyaHandyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35C12A1E4691001AFD6C /* SYMoyaHandyJSON.framework */; };
-		FBAB5F0D2B68044000016CC9 /* SYMoyaHandyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35C12A1E4691001AFD6C /* SYMoyaHandyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FBAB5F102B68046900016CC9 /* SYMoyaHandyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35C12A1E4691001AFD6C /* SYMoyaHandyJSON.framework */; };
-		FBAB5F112B68046900016CC9 /* SYMoyaHandyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE35C12A1E4691001AFD6C /* SYMoyaHandyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FBAF77562AD4546E002689E7 /* SYMoyaNetworkResult+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAF77552AD4546E002689E7 /* SYMoyaNetworkResult+Decodable.swift */; };
 		FBAF77582AD45A23002689E7 /* SYMoyaNetworkResult+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAF77572AD45A23002689E7 /* SYMoyaNetworkResult+String.swift */; };
 		FBAF775A2AD45C06002689E7 /* SYMoyaNetworkResult+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAF77592AD45C06002689E7 /* SYMoyaNetworkResult+JSON.swift */; };
 		FBAF775C2AD45D78002689E7 /* SYMoyaNetworkResult+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAF775B2AD45D78002689E7 /* SYMoyaNetworkResult+Image.swift */; };
-		FBAF77622AD5810E002689E7 /* HandyJSON.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBAF77602AD58109002689E7 /* HandyJSON.xcframework */; };
 		FBAF776A2AD590F3002689E7 /* SYMoyaNetworkResult+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAF77642AD58742002689E7 /* SYMoyaNetworkResult+ObjectMapper.swift */; };
-		FBAF776B2AD594A0002689E7 /* SYMoyaNetworkResult+HandyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAF775D2AD45F2E002689E7 /* SYMoyaNetworkResult+HandyJSON.swift */; };
 		FBAF77702AD59FC8002689E7 /* ResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAF776F2AD59FC8002689E7 /* ResponseSerializer.swift */; };
 		FBAF77742AD6FB99002689E7 /* SYMoyaNetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAF77732AD6FB99002689E7 /* SYMoyaNetworkResult.swift */; };
 		FBEE35712A1E460F001AFD6C /* SYMoyaObjectMapper.docc in Sources */ = {isa = PBXBuildFile; fileRef = FBEE35702A1E460F001AFD6C /* SYMoyaObjectMapper.docc */; };
 		FBEE357D2A1E460F001AFD6C /* SYMoyaObjectMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = FBEE356F2A1E460F001AFD6C /* SYMoyaObjectMapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FBEE358D2A1E4656001AFD6C /* SYMoyaRxObjectMapper.docc in Sources */ = {isa = PBXBuildFile; fileRef = FBEE358C2A1E4656001AFD6C /* SYMoyaRxObjectMapper.docc */; };
 		FBEE35992A1E4656001AFD6C /* SYMoyaRxObjectMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = FBEE358B2A1E4656001AFD6C /* SYMoyaRxObjectMapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FBEE35A92A1E4676001AFD6C /* SYMoyaRxHandyJSON.docc in Sources */ = {isa = PBXBuildFile; fileRef = FBEE35A82A1E4676001AFD6C /* SYMoyaRxHandyJSON.docc */; };
-		FBEE35B52A1E4677001AFD6C /* SYMoyaRxHandyJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = FBEE35A72A1E4676001AFD6C /* SYMoyaRxHandyJSON.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FBEE35C52A1E4691001AFD6C /* SYMoyaHandyJSON.docc in Sources */ = {isa = PBXBuildFile; fileRef = FBEE35C42A1E4691001AFD6C /* SYMoyaHandyJSON.docc */; };
-		FBEE35D12A1E4692001AFD6C /* SYMoyaHandyJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = FBEE35C32A1E4691001AFD6C /* SYMoyaHandyJSON.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FBEE35ED2A1E46AD001AFD6C /* SYMoyaReactiveObjectMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = FBEE35DF2A1E46AC001AFD6C /* SYMoyaReactiveObjectMapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FBEE35FD2A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON.docc in Sources */ = {isa = PBXBuildFile; fileRef = FBEE35FC2A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON.docc */; };
-		FBEE36092A1E46C0001AFD6C /* SYMoyaReactiveHandyJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = FBEE35FB2A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FBEE36102A1E46E7001AFD6C /* Response+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354682705A61E003F1D7C /* Response+ObjectMapper.swift */; };
 		FBEE36122A1E46F0001AFD6C /* SYMoyaProvider+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354692705A61E003F1D7C /* SYMoyaProvider+ObjectMapper.swift */; };
-		FBEE36142A1E4849001AFD6C /* SYMoyaProvider+HandyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354782705A61E003F1D7C /* SYMoyaProvider+HandyJSON.swift */; };
-		FBEE36162A1E4853001AFD6C /* Response+HandyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6354792705A61E003F1D7C /* Response+HandyJSON.swift */; };
-		FBEE36182A1E4872001AFD6C /* SYMoyaNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; };
-		FBEE36192A1E4872001AFD6C /* SYMoyaNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FBEE362D2A1F9F38001AFD6C /* SYMoyaProvider+SwiftyJSON+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEE362C2A1F9F38001AFD6C /* SYMoyaProvider+SwiftyJSON+Combine.swift */; };
 		FBEE362F2A1FA191001AFD6C /* SYMoyaProvider+SwiftyJSON+Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEE362E2A1FA191001AFD6C /* SYMoyaProvider+SwiftyJSON+Concurrency.swift */; };
 		FBEE36312A1FBFE3001AFD6C /* SYDataResponseActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEE36302A1FBFE3001AFD6C /* SYDataResponseActor.swift */; };
@@ -253,26 +220,12 @@
 			remoteGlobalIDString = FBEE356C2A1E460F001AFD6C;
 			remoteInfo = SYMoyaObjectMapper;
 		};
-		FB665E642B051A3C00ECE6B6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FB8072E526F32C070042B30D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FBEE35A42A1E4676001AFD6C;
-			remoteInfo = SYMoyaRxHandyJSON;
-		};
 		FB665E682B051A4400ECE6B6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FB8072E526F32C070042B30D /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = FBEE35882A1E4656001AFD6C;
 			remoteInfo = SYMoyaRxObjectMapper;
-		};
-		FB665E6C2B051AD300ECE6B6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FB8072E526F32C070042B30D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FBEE35F82A1E46BF001AFD6C;
-			remoteInfo = SYMoyaReactiveHandyJSON;
 		};
 		FB665E702B051AD300ECE6B6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -287,13 +240,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = FBEE356C2A1E460F001AFD6C;
 			remoteInfo = SYMoyaObjectMapper;
-		};
-		FB71AF052A55B8DB00952F2C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FB8072E526F32C070042B30D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FBEE35C02A1E4691001AFD6C;
-			remoteInfo = SYMoyaHandyJSON;
 		};
 		FB71AF2C2A55C55A00952F2C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -324,27 +270,6 @@
 			remoteInfo = RxSYMoyaNetwork;
 		};
 		FBA24FAA2A48A103008D35A6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FB8072E526F32C070042B30D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FB8072ED26F32C070042B30D;
-			remoteInfo = SYMoyaNetwork;
-		};
-		FBAB5F0E2B68044000016CC9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FB8072E526F32C070042B30D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FBEE35C02A1E4691001AFD6C;
-			remoteInfo = SYMoyaHandyJSON;
-		};
-		FBAB5F122B68046900016CC9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FB8072E526F32C070042B30D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FBEE35C02A1E4691001AFD6C;
-			remoteInfo = SYMoyaHandyJSON;
-		};
-		FBEE361A2A1E4872001AFD6C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FB8072E526F32C070042B30D /* Project object */;
 			proxyType = 1;
@@ -400,18 +325,6 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FB71AF0F2A55C43A00952F2C /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				FBAB5F112B68046900016CC9 /* SYMoyaHandyJSON.framework in Embed Frameworks */,
-				FB71AF0E2A55C43900952F2C /* ReactiveSwift.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FB71AF382A55C59F00952F2C /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -430,7 +343,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FB665E6B2B051AD200ECE6B6 /* SYMoyaReactiveHandyJSON.framework in Embed Frameworks */,
 				FB665E672B051A4400ECE6B6 /* SYMoyaRxObjectMapper.framework in Embed Frameworks */,
 				209CFE3B2BA44A3E002B7C34 /* SYMoyaNetwork.framework in Embed Frameworks */,
 				FB71AF2F2A55C55A00952F2C /* ReactiveSYMoyaNetwork.framework in Embed Frameworks */,
@@ -438,9 +350,7 @@
 				209CFE352BA4493D002B7C34 /* SYMoyaObjectMapper.framework in Embed Frameworks */,
 				FB665E5D2B027A6D00ECE6B6 /* ObjectMapper.xcframework in Embed Frameworks */,
 				FBA24F9C2A48A096008D35A6 /* RxSYMoyaNetwork.framework in Embed Frameworks */,
-				FBAB5F0D2B68044000016CC9 /* SYMoyaHandyJSON.framework in Embed Frameworks */,
 				FB665E6F2B051AD300ECE6B6 /* SYMoyaReactiveObjectMapper.framework in Embed Frameworks */,
-				FB665E632B051A3C00ECE6B6 /* SYMoyaRxHandyJSON.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -453,18 +363,6 @@
 			files = (
 				FBA24F692A45FAF2008D35A6 /* ObjectMapper.xcframework in Embed Frameworks */,
 				FBA24F6F2A45FB5D008D35A6 /* SYMoyaNetwork.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FBA24F6D2A45FB02008D35A6 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				FB71AF082A55BBE500952F2C /* RxSwift.xcframework in Embed Frameworks */,
-				FB71AF042A55B8DB00952F2C /* SYMoyaHandyJSON.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -489,17 +387,6 @@
 			files = (
 				FBA24FA62A48A0EE008D35A6 /* RxSwift.xcframework in Embed Frameworks */,
 				FBA24FA92A48A103008D35A6 /* SYMoyaNetwork.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FBEE361C2A1E4872001AFD6C /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				FBEE36192A1E4872001AFD6C /* SYMoyaNetwork.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -551,13 +438,10 @@
 		FB47093B2A28F1FE00A4C721 /* SYMoyaProvider+Decodable+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+Decodable+Combine.swift"; sourceTree = "<group>"; };
 		FB47093D2A28F21700A4C721 /* SYMoyaProvider+Decodable+Concurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+Decodable+Concurrency.swift"; sourceTree = "<group>"; };
 		FB47093F2A28F24B00A4C721 /* SYMoyaProvider+Image+Concurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+Image+Concurrency.swift"; sourceTree = "<group>"; };
-		FB4709412A28F2F500A4C721 /* SYMoyaProvider+HandyJSON+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+HandyJSON+Combine.swift"; sourceTree = "<group>"; };
-		FB4709432A28F30E00A4C721 /* SYMoyaProvider+HandyJSON+Concurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+HandyJSON+Concurrency.swift"; sourceTree = "<group>"; };
 		FB4709452A28F32E00A4C721 /* SYMoyaProvider+ObjectMapper+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+ObjectMapper+Combine.swift"; sourceTree = "<group>"; };
 		FB4709472A28F34000A4C721 /* SYMoyaProvider+ObjectMapper+Concurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+ObjectMapper+Concurrency.swift"; sourceTree = "<group>"; };
 		FB4CA42D2ADD801C00F43D40 /* SYMoyaChainProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYMoyaChainProvider.swift; sourceTree = "<group>"; };
 		FB4CA4332AE180DD00F43D40 /* SYMoyaProviderRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYMoyaProviderRequestable.swift; sourceTree = "<group>"; };
-		FB4CA4352AE95F1100F43D40 /* HandyJSONResponseSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandyJSONResponseSerializer.swift; sourceTree = "<group>"; };
 		FB4CA43A2AEACB9800F43D40 /* ObjectMapperResponseSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectMapperResponseSerializer.swift; sourceTree = "<group>"; };
 		FB4CA4412AEFF2B700F43D40 /* HttpbinPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpbinPostModel.swift; sourceTree = "<group>"; };
 		FB4CA4432AEFF57100F43D40 /* HTTPBinDynamicData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPBinDynamicData.swift; sourceTree = "<group>"; };
@@ -599,8 +483,6 @@
 		FB6354732705A61E003F1D7C /* SYTargetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYTargetType.swift; sourceTree = "<group>"; };
 		FB6354742705A61E003F1D7C /* SYMoyaProvider+Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+Cache.swift"; sourceTree = "<group>"; };
 		FB6354762705A61E003F1D7C /* NetworkConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkConfig.swift; sourceTree = "<group>"; };
-		FB6354782705A61E003F1D7C /* SYMoyaProvider+HandyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+HandyJSON.swift"; sourceTree = "<group>"; };
-		FB6354792705A61E003F1D7C /* Response+HandyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+HandyJSON.swift"; sourceTree = "<group>"; };
 		FB63547B2705A61E003F1D7C /* Response+CacheCostCalculable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+CacheCostCalculable.swift"; sourceTree = "<group>"; };
 		FB63547C2705A61E003F1D7C /* CallbackQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallbackQueue.swift; sourceTree = "<group>"; };
 		FB63547D2705A61E003F1D7C /* String+MD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+MD5.swift"; sourceTree = "<group>"; };
@@ -610,7 +492,6 @@
 		FB665E572B02785500ECE6B6 /* HTTPBinImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPBinImages.swift; sourceTree = "<group>"; };
 		FB665E5A2B027A3900ECE6B6 /* HttpbinPostObjectMapperModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpbinPostObjectMapperModel.swift; sourceTree = "<group>"; };
 		FB665E5E2B027ABF00ECE6B6 /* HttpbinPostCodableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpbinPostCodableModel.swift; sourceTree = "<group>"; };
-		FB665E602B03D1C300ECE6B6 /* HttpbinPostHandyJSONModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpbinPostHandyJSONModel.swift; sourceTree = "<group>"; };
 		FB668FBF28D3596F00AE74F4 /* SYMoyaPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYMoyaPublisher.swift; sourceTree = "<group>"; };
 		FB6A3A28287BB48900454481 /* HTTPStatusCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPStatusCode.swift; sourceTree = "<group>"; };
 		FB6A3A2A287BB49200454481 /* HTTPStatusCodes+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HTTPStatusCodes+Extensions.swift"; sourceTree = "<group>"; };
@@ -618,7 +499,6 @@
 		FB71AEF62A54607300952F2C /* SYMoyaProvider+Image+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+Image+Rx.swift"; sourceTree = "<group>"; };
 		FB71AEF82A54608100952F2C /* SYMoyaProvider+String+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+String+Rx.swift"; sourceTree = "<group>"; };
 		FB71AEFA2A54609400952F2C /* SYMoyaProvider+Decodable+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+Decodable+Rx.swift"; sourceTree = "<group>"; };
-		FB71AF012A55B8B000952F2C /* SYMoyaProvider+HandyJSON+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+HandyJSON+Rx.swift"; sourceTree = "<group>"; };
 		FB71AF092A55C42D00952F2C /* ReactiveSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ReactiveSwift.xcframework; path = Carthage/Build/ReactiveSwift.xcframework; sourceTree = "<group>"; };
 		FB71AF102A55C48800952F2C /* SYMoyaProvider+ObjectMapper+Reactive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+ObjectMapper+Reactive.swift"; sourceTree = "<group>"; };
 		FB71AF122A55C4EC00952F2C /* SYMoyaProvider+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+Rx.swift"; sourceTree = "<group>"; };
@@ -631,7 +511,6 @@
 		FB71AF432A55C65000952F2C /* SYMoyaProvider+String+Reactive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+String+Reactive.swift"; sourceTree = "<group>"; };
 		FB71AF452A55C66000952F2C /* SYMoyaProvider+Decodable+Reactive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+Decodable+Reactive.swift"; sourceTree = "<group>"; };
 		FB71AF472A55C66C00952F2C /* SYMoyaProvider+Reactive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+Reactive.swift"; sourceTree = "<group>"; };
-		FB71AF4B2A57193B00952F2C /* SYMoyaProvider+HandyJSON+Reactive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+HandyJSON+Reactive.swift"; sourceTree = "<group>"; };
 		FB8072EE26F32C070042B30D /* SYMoyaNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYMoyaNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB8072F126F32C070042B30D /* SYMoyaNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYMoyaNetwork.h; sourceTree = "<group>"; };
 		FB8072F226F32C070042B30D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -650,7 +529,6 @@
 		FB9E2D1928A21BF4001F73FC /* BatchResponseViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BatchResponseViewController.xib; sourceTree = "<group>"; };
 		FB9E2D1E28A40D2A001F73FC /* SYMoyaProviderTargetResponseStatePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYMoyaProviderTargetResponseStatePlugin.swift; sourceTree = "<group>"; };
 		FBA24F722A473AE2008D35A6 /* SYDataResponseActor+ObjectMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYDataResponseActor+ObjectMapper.swift"; sourceTree = "<group>"; };
-		FBA24F742A473E97008D35A6 /* SYDataResponseActor+HandyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYDataResponseActor+HandyJSON.swift"; sourceTree = "<group>"; };
 		FBA24F762A4745D0008D35A6 /* RxSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxSwift.xcframework; path = Carthage/Build/RxSwift.xcframework; sourceTree = "<group>"; };
 		FBA24F7A2A4745E5008D35A6 /* RxMoya.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxMoya.xcframework; path = Carthage/Build/RxMoya.xcframework; sourceTree = "<group>"; };
 		FBA24F7D2A474705008D35A6 /* SYMoyaProvider+ObjectMapper+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+ObjectMapper+Rx.swift"; sourceTree = "<group>"; };
@@ -662,7 +540,6 @@
 		FBAF77572AD45A23002689E7 /* SYMoyaNetworkResult+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaNetworkResult+String.swift"; sourceTree = "<group>"; };
 		FBAF77592AD45C06002689E7 /* SYMoyaNetworkResult+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaNetworkResult+JSON.swift"; sourceTree = "<group>"; };
 		FBAF775B2AD45D78002689E7 /* SYMoyaNetworkResult+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaNetworkResult+Image.swift"; sourceTree = "<group>"; };
-		FBAF775D2AD45F2E002689E7 /* SYMoyaNetworkResult+HandyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaNetworkResult+HandyJSON.swift"; sourceTree = "<group>"; };
 		FBAF77602AD58109002689E7 /* HandyJSON.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = HandyJSON.xcframework; path = Carthage/Build/HandyJSON.xcframework; sourceTree = "<group>"; };
 		FBAF77642AD58742002689E7 /* SYMoyaNetworkResult+ObjectMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaNetworkResult+ObjectMapper.swift"; sourceTree = "<group>"; };
 		FBAF776F2AD59FC8002689E7 /* ResponseSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseSerializer.swift; sourceTree = "<group>"; };
@@ -673,17 +550,8 @@
 		FBEE35892A1E4656001AFD6C /* SYMoyaRxObjectMapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYMoyaRxObjectMapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBEE358B2A1E4656001AFD6C /* SYMoyaRxObjectMapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYMoyaRxObjectMapper.h; sourceTree = "<group>"; };
 		FBEE358C2A1E4656001AFD6C /* SYMoyaRxObjectMapper.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = SYMoyaRxObjectMapper.docc; sourceTree = "<group>"; };
-		FBEE35A52A1E4676001AFD6C /* SYMoyaRxHandyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYMoyaRxHandyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FBEE35A72A1E4676001AFD6C /* SYMoyaRxHandyJSON.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYMoyaRxHandyJSON.h; sourceTree = "<group>"; };
-		FBEE35A82A1E4676001AFD6C /* SYMoyaRxHandyJSON.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = SYMoyaRxHandyJSON.docc; sourceTree = "<group>"; };
-		FBEE35C12A1E4691001AFD6C /* SYMoyaHandyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYMoyaHandyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FBEE35C32A1E4691001AFD6C /* SYMoyaHandyJSON.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYMoyaHandyJSON.h; sourceTree = "<group>"; };
-		FBEE35C42A1E4691001AFD6C /* SYMoyaHandyJSON.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = SYMoyaHandyJSON.docc; sourceTree = "<group>"; };
 		FBEE35DD2A1E46AC001AFD6C /* SYMoyaReactiveObjectMapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYMoyaReactiveObjectMapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBEE35DF2A1E46AC001AFD6C /* SYMoyaReactiveObjectMapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYMoyaReactiveObjectMapper.h; sourceTree = "<group>"; };
-		FBEE35F92A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SYMoyaReactiveHandyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FBEE35FB2A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYMoyaReactiveHandyJSON.h; sourceTree = "<group>"; };
-		FBEE35FC2A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = SYMoyaReactiveHandyJSON.docc; sourceTree = "<group>"; };
 		FBEE362C2A1F9F38001AFD6C /* SYMoyaProvider+SwiftyJSON+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+SwiftyJSON+Combine.swift"; sourceTree = "<group>"; };
 		FBEE362E2A1FA191001AFD6C /* SYMoyaProvider+SwiftyJSON+Concurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SYMoyaProvider+SwiftyJSON+Concurrency.swift"; sourceTree = "<group>"; };
 		FBEE36302A1FBFE3001AFD6C /* SYDataResponseActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYDataResponseActor.swift; sourceTree = "<group>"; };
@@ -726,7 +594,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB665E6A2B051AD200ECE6B6 /* SYMoyaReactiveHandyJSON.framework in Frameworks */,
 				FB665E662B051A4400ECE6B6 /* SYMoyaRxObjectMapper.framework in Frameworks */,
 				209CFE3A2BA44A3E002B7C34 /* SYMoyaNetwork.framework in Frameworks */,
 				FB71AF2E2A55C55A00952F2C /* ReactiveSYMoyaNetwork.framework in Frameworks */,
@@ -734,9 +601,7 @@
 				209CFE342BA4493C002B7C34 /* SYMoyaObjectMapper.framework in Frameworks */,
 				FB665E5C2B027A6C00ECE6B6 /* ObjectMapper.xcframework in Frameworks */,
 				FBA24F9B2A48A096008D35A6 /* RxSYMoyaNetwork.framework in Frameworks */,
-				FBAB5F0C2B68044000016CC9 /* SYMoyaHandyJSON.framework in Frameworks */,
 				FB665E6E2B051AD300ECE6B6 /* SYMoyaReactiveObjectMapper.framework in Frameworks */,
-				FB665E622B051A3C00ECE6B6 /* SYMoyaRxHandyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -767,39 +632,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FBEE35A22A1E4676001AFD6C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FB71AF072A55BBE500952F2C /* RxSwift.xcframework in Frameworks */,
-				FB71AF032A55B8DB00952F2C /* SYMoyaHandyJSON.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FBEE35BE2A1E4691001AFD6C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FBAF77622AD5810E002689E7 /* HandyJSON.xcframework in Frameworks */,
-				FBEE36182A1E4872001AFD6C /* SYMoyaNetwork.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FBEE35DA2A1E46AC001AFD6C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				FB71AF0A2A55C42D00952F2C /* ReactiveSwift.xcframework in Frameworks */,
 				209CFE422BA44B9E002B7C34 /* SYMoyaObjectMapper.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FBEE35F62A1E46BF001AFD6C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FBAB5F102B68046900016CC9 /* SYMoyaHandyJSON.framework in Frameworks */,
-				FB71AF0D2A55C43900952F2C /* ReactiveSwift.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1050,7 +888,6 @@
 			children = (
 				FB665E5A2B027A3900ECE6B6 /* HttpbinPostObjectMapperModel.swift */,
 				FB665E5E2B027ABF00ECE6B6 /* HttpbinPostCodableModel.swift */,
-				FB665E602B03D1C300ECE6B6 /* HttpbinPostHandyJSONModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1112,10 +949,7 @@
 				FB9E2CC028A204B4001F73FC /* SYMoyaNetworkExample.app */,
 				FBEE356D2A1E460F001AFD6C /* SYMoyaObjectMapper.framework */,
 				FBEE35892A1E4656001AFD6C /* SYMoyaRxObjectMapper.framework */,
-				FBEE35A52A1E4676001AFD6C /* SYMoyaRxHandyJSON.framework */,
-				FBEE35C12A1E4691001AFD6C /* SYMoyaHandyJSON.framework */,
 				FBEE35DD2A1E46AC001AFD6C /* SYMoyaReactiveObjectMapper.framework */,
-				FBEE35F92A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON.framework */,
 				FBA24F862A48A095008D35A6 /* RxSYMoyaNetwork.framework */,
 				FB71AF192A55C55800952F2C /* ReactiveSYMoyaNetwork.framework */,
 				FBFA2B3D2A66DBF4002D740A /* SYMoyaNetworkTests.xctest */,
@@ -1127,10 +961,7 @@
 			isa = PBXGroup;
 			children = (
 				FB6A3A2C287BBDD400454481 /* SYMoyaNetwork */,
-				FBEE35FA2A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON */,
 				FBEE35DE2A1E46AC001AFD6C /* SYMoyaReactiveObjectMapper */,
-				FBEE35C22A1E4691001AFD6C /* SYMoyaHandyJSON */,
-				FBEE35A62A1E4676001AFD6C /* SYMoyaRxHandyJSON */,
 				FBEE358A2A1E4656001AFD6C /* SYMoyaRxObjectMapper */,
 				FBEE356E2A1E460F001AFD6C /* SYMoyaObjectMapper */,
 				FB71AF1A2A55C55900952F2C /* ReactiveSYMoyaNetwork */,
@@ -1204,32 +1035,6 @@
 			path = SYMoyaRxObjectMapper;
 			sourceTree = "<group>";
 		};
-		FBEE35A62A1E4676001AFD6C /* SYMoyaRxHandyJSON */ = {
-			isa = PBXGroup;
-			children = (
-				FBEE35A72A1E4676001AFD6C /* SYMoyaRxHandyJSON.h */,
-				FBEE35A82A1E4676001AFD6C /* SYMoyaRxHandyJSON.docc */,
-				FB71AF012A55B8B000952F2C /* SYMoyaProvider+HandyJSON+Rx.swift */,
-			);
-			path = SYMoyaRxHandyJSON;
-			sourceTree = "<group>";
-		};
-		FBEE35C22A1E4691001AFD6C /* SYMoyaHandyJSON */ = {
-			isa = PBXGroup;
-			children = (
-				FB4CA4352AE95F1100F43D40 /* HandyJSONResponseSerializer.swift */,
-				FB6354782705A61E003F1D7C /* SYMoyaProvider+HandyJSON.swift */,
-				FB4709412A28F2F500A4C721 /* SYMoyaProvider+HandyJSON+Combine.swift */,
-				FB4709432A28F30E00A4C721 /* SYMoyaProvider+HandyJSON+Concurrency.swift */,
-				FB6354792705A61E003F1D7C /* Response+HandyJSON.swift */,
-				FBAF775D2AD45F2E002689E7 /* SYMoyaNetworkResult+HandyJSON.swift */,
-				FBA24F742A473E97008D35A6 /* SYDataResponseActor+HandyJSON.swift */,
-				FBEE35C32A1E4691001AFD6C /* SYMoyaHandyJSON.h */,
-				FBEE35C42A1E4691001AFD6C /* SYMoyaHandyJSON.docc */,
-			);
-			path = SYMoyaHandyJSON;
-			sourceTree = "<group>";
-		};
 		FBEE35DE2A1E46AC001AFD6C /* SYMoyaReactiveObjectMapper */ = {
 			isa = PBXGroup;
 			children = (
@@ -1238,16 +1043,6 @@
 				20B76F032BB41A1D003E18B2 /* SYMoyaReactiveObjectMapper.docc */,
 			);
 			path = SYMoyaReactiveObjectMapper;
-			sourceTree = "<group>";
-		};
-		FBEE35FA2A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON */ = {
-			isa = PBXGroup;
-			children = (
-				FBEE35FB2A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON.h */,
-				FBEE35FC2A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON.docc */,
-				FB71AF4B2A57193B00952F2C /* SYMoyaProvider+HandyJSON+Reactive.swift */,
-			);
-			path = SYMoyaReactiveHandyJSON;
 			sourceTree = "<group>";
 		};
 		FBEE3D9F27142A3700D927E5 /* Frameworks */ = {
@@ -1348,35 +1143,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FBEE35A02A1E4676001AFD6C /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FBEE35B52A1E4677001AFD6C /* SYMoyaRxHandyJSON.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FBEE35BC2A1E4691001AFD6C /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FBEE35D12A1E4692001AFD6C /* SYMoyaHandyJSON.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FBEE35D82A1E46AC001AFD6C /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				FBEE35ED2A1E46AD001AFD6C /* SYMoyaReactiveObjectMapper.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FBEE35F42A1E46BF001AFD6C /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FBEE36092A1E46C0001AFD6C /* SYMoyaReactiveHandyJSON.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1437,11 +1208,8 @@
 			dependencies = (
 				FBA24F9A2A48A096008D35A6 /* PBXTargetDependency */,
 				FB71AF2D2A55C55A00952F2C /* PBXTargetDependency */,
-				FB665E652B051A3C00ECE6B6 /* PBXTargetDependency */,
 				FB665E692B051A4400ECE6B6 /* PBXTargetDependency */,
-				FB665E6D2B051AD300ECE6B6 /* PBXTargetDependency */,
 				FB665E712B051AD300ECE6B6 /* PBXTargetDependency */,
-				FBAB5F0F2B68044000016CC9 /* PBXTargetDependency */,
 				209CFE372BA4493D002B7C34 /* PBXTargetDependency */,
 				209CFE3D2BA44A3E002B7C34 /* PBXTargetDependency */,
 			);
@@ -1510,46 +1278,6 @@
 			productReference = FBEE35892A1E4656001AFD6C /* SYMoyaRxObjectMapper.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		FBEE35A42A1E4676001AFD6C /* SYMoyaRxHandyJSON */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FBEE35B62A1E4677001AFD6C /* Build configuration list for PBXNativeTarget "SYMoyaRxHandyJSON" */;
-			buildPhases = (
-				FBEE35A02A1E4676001AFD6C /* Headers */,
-				FBEE35A12A1E4676001AFD6C /* Sources */,
-				FBEE35A22A1E4676001AFD6C /* Frameworks */,
-				FBEE35A32A1E4676001AFD6C /* Resources */,
-				FBA24F6D2A45FB02008D35A6 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				FB71AF062A55B8DB00952F2C /* PBXTargetDependency */,
-			);
-			name = SYMoyaRxHandyJSON;
-			productName = SYMoyaRxHandyJSON;
-			productReference = FBEE35A52A1E4676001AFD6C /* SYMoyaRxHandyJSON.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		FBEE35C02A1E4691001AFD6C /* SYMoyaHandyJSON */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FBEE35D22A1E4692001AFD6C /* Build configuration list for PBXNativeTarget "SYMoyaHandyJSON" */;
-			buildPhases = (
-				FBEE35BC2A1E4691001AFD6C /* Headers */,
-				FBEE35BD2A1E4691001AFD6C /* Sources */,
-				FBEE35BE2A1E4691001AFD6C /* Frameworks */,
-				FBEE35BF2A1E4691001AFD6C /* Resources */,
-				FBEE361C2A1E4872001AFD6C /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				FBEE361B2A1E4872001AFD6C /* PBXTargetDependency */,
-			);
-			name = SYMoyaHandyJSON;
-			productName = SYMoyaHandyJSON;
-			productReference = FBEE35C12A1E4691001AFD6C /* SYMoyaHandyJSON.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		FBEE35DC2A1E46AC001AFD6C /* SYMoyaReactiveObjectMapper */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FBEE35EE2A1E46AD001AFD6C /* Build configuration list for PBXNativeTarget "SYMoyaReactiveObjectMapper" */;
@@ -1568,26 +1296,6 @@
 			name = SYMoyaReactiveObjectMapper;
 			productName = SYMoyaReactiveObjectMapper;
 			productReference = FBEE35DD2A1E46AC001AFD6C /* SYMoyaReactiveObjectMapper.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		FBEE35F82A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FBEE360A2A1E46C0001AFD6C /* Build configuration list for PBXNativeTarget "SYMoyaReactiveHandyJSON" */;
-			buildPhases = (
-				FBEE35F42A1E46BF001AFD6C /* Headers */,
-				FBEE35F52A1E46BF001AFD6C /* Sources */,
-				FBEE35F62A1E46BF001AFD6C /* Frameworks */,
-				FBEE35F72A1E46BF001AFD6C /* Resources */,
-				FB71AF0F2A55C43A00952F2C /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				FBAB5F132B68046900016CC9 /* PBXTargetDependency */,
-			);
-			name = SYMoyaReactiveHandyJSON;
-			productName = SYMoyaReactiveHandyJSON;
-			productReference = FBEE35F92A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		FBFA2B3C2A66DBF4002D740A /* SYMoyaNetworkTests */ = {
@@ -1637,16 +1345,7 @@
 					FBEE35882A1E4656001AFD6C = {
 						CreatedOnToolsVersion = 14.2;
 					};
-					FBEE35A42A1E4676001AFD6C = {
-						CreatedOnToolsVersion = 14.2;
-					};
-					FBEE35C02A1E4691001AFD6C = {
-						CreatedOnToolsVersion = 14.2;
-					};
 					FBEE35DC2A1E46AC001AFD6C = {
-						CreatedOnToolsVersion = 14.2;
-					};
-					FBEE35F82A1E46BF001AFD6C = {
 						CreatedOnToolsVersion = 14.2;
 					};
 					FBFA2B3C2A66DBF4002D740A = {
@@ -1673,10 +1372,7 @@
 				FBA24F852A48A095008D35A6 /* RxSYMoyaNetwork */,
 				FBEE356C2A1E460F001AFD6C /* SYMoyaObjectMapper */,
 				FBEE35882A1E4656001AFD6C /* SYMoyaRxObjectMapper */,
-				FBEE35A42A1E4676001AFD6C /* SYMoyaRxHandyJSON */,
-				FBEE35C02A1E4691001AFD6C /* SYMoyaHandyJSON */,
 				FBEE35DC2A1E46AC001AFD6C /* SYMoyaReactiveObjectMapper */,
-				FBEE35F82A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON */,
 				FB71AF182A55C55800952F2C /* ReactiveSYMoyaNetwork */,
 			);
 		};
@@ -1732,28 +1428,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FBEE35A32A1E4676001AFD6C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FBEE35BF2A1E4691001AFD6C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FBEE35DB2A1E46AC001AFD6C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FBEE35F72A1E46BF001AFD6C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1886,7 +1561,6 @@
 				FB4CA45B2AF1468A00F43D40 /* HTTPBinRequestInspection .swift in Sources */,
 				FB4CA45F2AF2906000F43D40 /* ChainResponseViewController.swift in Sources */,
 				FB9E2CC728A204B4001F73FC /* ViewController.swift in Sources */,
-				FB665E612B03D1C300ECE6B6 /* HttpbinPostHandyJSONModel.swift in Sources */,
 				FB4CA4632AF29A1300F43D40 /* ResponseCacheViewController.swift in Sources */,
 				FB9E2CC328A204B4001F73FC /* AppDelegate.swift in Sources */,
 				FB665E5B2B027A3900ECE6B6 /* HttpbinPostObjectMapperModel.swift in Sources */,
@@ -1939,45 +1613,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FBEE35A12A1E4676001AFD6C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FBEE35A92A1E4676001AFD6C /* SYMoyaRxHandyJSON.docc in Sources */,
-				FB71AF022A55B8B000952F2C /* SYMoyaProvider+HandyJSON+Rx.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FBEE35BD2A1E4691001AFD6C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FBA24F752A473E97008D35A6 /* SYDataResponseActor+HandyJSON.swift in Sources */,
-				FB4CA4372AEABEC000F43D40 /* HandyJSONResponseSerializer.swift in Sources */,
-				FBEE36162A1E4853001AFD6C /* Response+HandyJSON.swift in Sources */,
-				FBA24F672A45FA25008D35A6 /* SYMoyaProvider+HandyJSON+Concurrency.swift in Sources */,
-				FBEE35C52A1E4691001AFD6C /* SYMoyaHandyJSON.docc in Sources */,
-				FBAF776B2AD594A0002689E7 /* SYMoyaNetworkResult+HandyJSON.swift in Sources */,
-				FBEE36142A1E4849001AFD6C /* SYMoyaProvider+HandyJSON.swift in Sources */,
-				FBA24F662A45FA25008D35A6 /* SYMoyaProvider+HandyJSON+Combine.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FBEE35D92A1E46AC001AFD6C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				20B76F002BB40896003E18B2 /* SYMoyaProvider+ObjectMapper+Reactive.swift in Sources */,
 				20B76F042BB41A1D003E18B2 /* SYMoyaReactiveObjectMapper.docc in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FBEE35F52A1E46BF001AFD6C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FB71AF4C2A57193B00952F2C /* SYMoyaProvider+HandyJSON+Reactive.swift in Sources */,
-				FBEE35FD2A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON.docc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2023,20 +1664,10 @@
 			target = FBEE356C2A1E460F001AFD6C /* SYMoyaObjectMapper */;
 			targetProxy = 209CFE442BA44B9E002B7C34 /* PBXContainerItemProxy */;
 		};
-		FB665E652B051A3C00ECE6B6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FBEE35A42A1E4676001AFD6C /* SYMoyaRxHandyJSON */;
-			targetProxy = FB665E642B051A3C00ECE6B6 /* PBXContainerItemProxy */;
-		};
 		FB665E692B051A4400ECE6B6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FBEE35882A1E4656001AFD6C /* SYMoyaRxObjectMapper */;
 			targetProxy = FB665E682B051A4400ECE6B6 /* PBXContainerItemProxy */;
-		};
-		FB665E6D2B051AD300ECE6B6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FBEE35F82A1E46BF001AFD6C /* SYMoyaReactiveHandyJSON */;
-			targetProxy = FB665E6C2B051AD300ECE6B6 /* PBXContainerItemProxy */;
 		};
 		FB665E712B051AD300ECE6B6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2047,11 +1678,6 @@
 			isa = PBXTargetDependency;
 			target = FBEE356C2A1E460F001AFD6C /* SYMoyaObjectMapper */;
 			targetProxy = FB71AEFF2A55B6CF00952F2C /* PBXContainerItemProxy */;
-		};
-		FB71AF062A55B8DB00952F2C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FBEE35C02A1E4691001AFD6C /* SYMoyaHandyJSON */;
-			targetProxy = FB71AF052A55B8DB00952F2C /* PBXContainerItemProxy */;
 		};
 		FB71AF2D2A55C55A00952F2C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2077,21 +1703,6 @@
 			isa = PBXTargetDependency;
 			target = FB8072ED26F32C070042B30D /* SYMoyaNetwork */;
 			targetProxy = FBA24FAA2A48A103008D35A6 /* PBXContainerItemProxy */;
-		};
-		FBAB5F0F2B68044000016CC9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FBEE35C02A1E4691001AFD6C /* SYMoyaHandyJSON */;
-			targetProxy = FBAB5F0E2B68044000016CC9 /* PBXContainerItemProxy */;
-		};
-		FBAB5F132B68046900016CC9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FBEE35C02A1E4691001AFD6C /* SYMoyaHandyJSON */;
-			targetProxy = FBAB5F122B68046900016CC9 /* PBXContainerItemProxy */;
-		};
-		FBEE361B2A1E4872001AFD6C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FB8072ED26F32C070042B30D /* SYMoyaNetwork */;
-			targetProxy = FBEE361A2A1E4872001AFD6C /* PBXContainerItemProxy */;
 		};
 		FBFA2B432A66DBF5002D740A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2821,178 +2432,6 @@
 			};
 			name = Release;
 		};
-		FBEE35B72A1E4677001AFD6C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 9H89J4Z7M2;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.0.0;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork.SYMoyaRxHandyJSON;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = auto;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4";
-			};
-			name = Debug;
-		};
-		FBEE35B82A1E4677001AFD6C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 9H89J4Z7M2;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.0.0;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork.SYMoyaRxHandyJSON;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = auto;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4";
-			};
-			name = Release;
-		};
-		FBEE35D32A1E4692001AFD6C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 9H89J4Z7M2;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.0.0;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork.SYMoyaHandyJSON;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = auto;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4";
-			};
-			name = Debug;
-		};
-		FBEE35D42A1E4692001AFD6C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 9H89J4Z7M2;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.0.0;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork.SYMoyaHandyJSON;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = auto;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4";
-			};
-			name = Release;
-		};
 		FBEE35EF2A1E46AD001AFD6C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3069,92 +2508,6 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork.SYMoyaReactiveObjectMapper;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = auto;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4";
-			};
-			name = Release;
-		};
-		FBEE360B2A1E46C0001AFD6C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 9H89J4Z7M2;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.0.0;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork.SYMoyaReactiveHandyJSON;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = auto;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx watchos watchsimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4";
-			};
-			name = Debug;
-		};
-		FBEE360C2A1E46C0001AFD6C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 9H89J4Z7M2;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.0.0;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = com.shannonyang.SYMoyaNetwork.SYMoyaReactiveHandyJSON;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
@@ -3281,38 +2634,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FBEE35B62A1E4677001AFD6C /* Build configuration list for PBXNativeTarget "SYMoyaRxHandyJSON" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FBEE35B72A1E4677001AFD6C /* Debug */,
-				FBEE35B82A1E4677001AFD6C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FBEE35D22A1E4692001AFD6C /* Build configuration list for PBXNativeTarget "SYMoyaHandyJSON" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FBEE35D32A1E4692001AFD6C /* Debug */,
-				FBEE35D42A1E4692001AFD6C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		FBEE35EE2A1E46AD001AFD6C /* Build configuration list for PBXNativeTarget "SYMoyaReactiveObjectMapper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FBEE35EF2A1E46AD001AFD6C /* Debug */,
 				FBEE35F02A1E46AD001AFD6C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FBEE360A2A1E46C0001AFD6C /* Build configuration list for PBXNativeTarget "SYMoyaReactiveHandyJSON" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FBEE360B2A1E46C0001AFD6C /* Debug */,
-				FBEE360C2A1E46C0001AFD6C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

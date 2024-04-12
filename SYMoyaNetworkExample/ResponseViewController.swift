@@ -19,7 +19,6 @@ import SYMoyaRxHandyJSON
 import ReactiveSYMoyaNetwork
 
 import SYMoyaRxObjectMapper
-import SYMoyaReactiveHandyJSON
 import SYMoyaReactiveObjectMapper
 
 enum ResponseCallbackType: Int {
@@ -283,41 +282,6 @@ private extension ResponseViewController {
                         self.contentLabel.text = value.description
                         self.resetState()
                     }
-                }
-            }
-        case .handyJSON:
-            let provider = SYMoyaProvider<HTTPBinDynamicData>()
-            switch self.callbackType {
-            case .normal:
-                provider.responseObject(target: .getDelay(delay: 1)) { (response: SYMoyaNetworkDataResponse<HttpbinPostHandyJSONModel>) in
-                    self.contentLabel.text = response.value?.description
-                    self.resetState()
-                }
-            case .combine:
-                let publisher: SYMoyaPublisher<SYMoyaNetworkDataResponse<HttpbinPostHandyJSONModel>> = provider.responseObjectPublisher(target: .getDelay(delay: 1))
-                publisher.sink { response in
-                    self.contentLabel.text = response.value?.description
-                    self.resetState()
-                }.store(in: &cancellables)
-            case .concurrency:
-                _Concurrency.Task {
-                    let response: SYMoyaNetworkDataResponse<HttpbinPostHandyJSONModel> = await provider.responseObject(target: .getDelay(delay: 1))
-                    self.contentLabel.text = response.value?.description
-                    self.resetState()
-                }
-            case .rx:
-                let observable: Observable<SYMoyaNetworkDataResponse<HttpbinPostHandyJSONModel>> = provider.rx.responseObject(target: .getDelay(delay: 1))
-                observable.subscribe { response in
-                    self.contentLabel.text = response.value.debugDescription
-                    self.resetState()
-                }.disposed(by: bag)
-            case .reactive:
-                let producer: SignalProducer<SYMoyaNetworkDataResponse<HttpbinPostHandyJSONModel>, Never> = provider.reactive.responseObject(target: .getDelay(delay: 1))
-                producer.start { event in
-                    if let value = event.value?.value?.description {
-                        self.contentLabel.text = value
-                    }
-                    self.resetState()
                 }
             }
         case .objectMapper:

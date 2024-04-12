@@ -46,9 +46,6 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
 
-  s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
-  s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
-
   s.subspec "SYMoyaNetwork" do |ss|
     ss.source_files  = 'Sources/SYMoyaNetwork/**/*.swift'
 
@@ -56,22 +53,9 @@ Pod::Spec.new do |s|
     ss.dependency 'Moya', '~> 15.0'
 
     # https://github.com/SwiftyJSON/SwiftyJSON
-    ss.dependency 'SwiftyJSON', '~> 5.0.1'
+    ss.dependency 'SwiftyJSON', '~> 5.0.2'
 
     ss.framework  = "Foundation"
-  end
-
-  s.subspec "SYMoyaHandyJSON" do |ss|
-    ss.source_files  = 'Sources/SYMoyaHandyJSON/**/*.swift'
-    ss.dependency "SYMoyaNetwork/SYMoyaNetwork"
-    
-    # https://github.com/alibaba/HandyJSON
-    ss.dependency 'HandyJSON', '~> 5.0.2'
-    
-    ss.ios.deployment_target = '13.0'
-    ss.osx.deployment_target = '10.15'
-    ss.tvos.deployment_target = '13.0'
-    ss.watchos.deployment_target = '6.0'
   end
 
   s.subspec "SYMoyaObjectMapper" do |ss|
@@ -87,38 +71,12 @@ Pod::Spec.new do |s|
     ss.watchos.deployment_target = '6.0'
   end
   
-  s.subspec "SYMoyaReactiveHandyJSON" do |ss|
-    ss.source_files  = 'Sources/SYMoyaReactiveHandyJSON/**/*.swift'
-    ss.dependency "SYMoyaNetwork/SYMoyaHandyJSON"
-    
-    # https://github.com/ReactiveCocoa/ReactiveSwift
-    ss.dependency 'ReactiveSwift', '~> 7.1.1'
-    
-    ss.ios.deployment_target = '13.0'
-    ss.osx.deployment_target = '10.15'
-    ss.tvos.deployment_target = '13.0'
-    ss.watchos.deployment_target = '6.0'
-  end
-  
   s.subspec "SYMoyaReactiveObjectMapper" do |ss|
     ss.source_files  = 'Sources/SYMoyaReactiveObjectMapper/**/*.swift'
     ss.dependency "SYMoyaNetwork/SYMoyaObjectMapper"
 
     # https://github.com/ReactiveCocoa/ReactiveSwift
     ss.dependency 'ReactiveSwift', '~> 7.1.1'
-    
-    ss.ios.deployment_target = '13.0'
-    ss.osx.deployment_target = '10.15'
-    ss.tvos.deployment_target = '13.0'
-    ss.watchos.deployment_target = '6.0'
-  end
-
-  s.subspec "SYMoyaRxHandyJSON" do |ss|
-    ss.source_files  = 'Sources/SYMoyaRxHandyJSON/**/*.swift'
-    ss.dependency "SYMoyaNetwork/SYMoyaHandyJSON"
-    
-    # https://github.com/ReactiveX/RxSwift
-    ss.dependency 'RxSwift', '6.6.0'
     
     ss.ios.deployment_target = '13.0'
     ss.osx.deployment_target = '10.15'

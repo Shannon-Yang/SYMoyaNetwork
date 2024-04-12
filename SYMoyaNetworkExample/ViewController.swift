@@ -12,7 +12,6 @@ enum ResponseType: String, CaseIterable {
     case image = "Image Response"
     case decodable = "Decodable Response"
     case swiftyJSON = "SwiftyJSON Response"
-    case handyJSON = "HandyJSON Response"
     case objectMapper = "ObjectMapper Response"
     case batch = "Batch Response"
     case chain = "Chain Response"

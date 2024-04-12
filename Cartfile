@@ -1,4 +1,3 @@
 github "Moya/Moya" ~> 15.0.0
 github "SwiftyJSON/SwiftyJSON" ~> 5.0.1
 github "tristanhimmelman/ObjectMapper" ~> 4.3
-github "alibaba/HandyJSON" ~> 5.0.2
