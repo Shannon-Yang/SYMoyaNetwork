@@ -3,7 +3,7 @@
 </p>
 
 # SYMoyaNetwork
-Based on the network abstraction of secondary encapsulation of [Moya](https://github.com/Moya/Moya). Maintain the same usage method of [Moya](https://github.com/Moya/Moya) and extend [Moya](https://github.com/Moya/Moya)’s `TargetType` implements commonly used data parsing, supporting: [HandyJSON](https://github.com/alibaba/HandyJSON),[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper), [Codable](https://developer.apple.com/documentation/swift/codable), [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON), Developer there is no need to write boilerplate code for data parsing. You only need to care about what kind of data you want and select the data type. `SYMoyaNetwork` has done all this. `SYMoyaNetwork` also implements network caching, and configure common caching strategies to only implement the desired caching strategy. `Response` will perform cache synchronization according to the policy. Developers no longer need to spend a lot of time doing such work. `SYMoyaNetwork` allows data requests Become simple, less developers write boilerplate code, more time to focus on business.
+Based on the network abstraction of secondary encapsulation of [Moya](https://github.com/Moya/Moya). Maintain the same usage method of [Moya](https://github.com/Moya/Moya) and extend [Moya](https://github.com/Moya/Moya)’s `TargetType` implements commonly used data parsing, supporting: [ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper), [Codable](https://developer.apple.com/documentation/swift/codable), [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON), Developer there is no need to write boilerplate code for data parsing. You only need to care about what kind of data you want and select the data type. `SYMoyaNetwork` has done all this. `SYMoyaNetwork` also implements network caching, and configure common caching strategies to only implement the desired caching strategy. `Response` will perform cache synchronization according to the policy. Developers no longer need to spend a lot of time doing such work. `SYMoyaNetwork` allows data requests Become simple, less developers write boilerplate code, more time to focus on business.
 
 For more information, please see the Doc:
 
@@ -49,7 +49,7 @@ provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<BaseMappabl
 ```
 Now using `SYMoyaNetwork`, you no longer need to worry about how to convert the response into the data you want, you only need to care about the data you want, `SYMoyaNetwork` has already done all this.
 
-`SYMoyaNetwork` provides common data type parsing for a variety of data types, such as: `JSON`, `String`, `Image`, `HandyJSON`, `ObjectMapper`, `Codable`, `SwiftyJSON`, when used You only need to care about the data you want to get, and you don’t need to care about the rest. `SYMoyaNetwork` has already prepared the `Response` of [Moya](https://github.com/Moya/Moya) Analysis, you only care about your business implementation.
+`SYMoyaNetwork` provides common data type parsing for a variety of data types, such as: `JSON`, `String`, `Image`, `ObjectMapper`, `Codable`, `SwiftyJSON`, when used You only need to care about the data you want to get, and you don’t need to care about the rest. `SYMoyaNetwork` has already prepared the `Response` of [Moya](https://github.com/Moya/Moya) Analysis, you only care about your business implementation.
 
 `SYMoyaNetwork` not only converts the `Response` of [Moya](https://github.com/Moya/Moya), but more importantly, in [Moya](https://github.com/Moya/Moya) `SYMoyaNetwork` has helped you with network caching. In most applications, network caching is very important. It can make your App display faster. Data can save data traffic for users. It can be said that it is a very important decision at the network layer. Therefore `SYMoyaNetwork` provides the implementation of commonly used network caching strategies. Please refer to [Data Caching](### data cache).
 
@@ -58,7 +58,7 @@ Now using `SYMoyaNetwork`, you no longer need to worry about how to convert the 
 `SYMoyaNetwork` also supports chain requests and batch requests. In most business situations, we may have a batch of requests to send, or related chain requests. also provides these Function can be implemented easily and quickly, refer to: [Chain Request] (###Chain Request) and [Batch Request] (### Batch Request).
 
 ## Feature
-* Support: [HandyJSON](https://github.com/alibaba/HandyJSON),[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper), [Codable](https://developer.apple.com/documentation/swift/codable), [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) data parsing, developers only need to care about the data you want to get.
+* Support: [Codable](https://developer.apple.com/documentation/swift/codable), [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) data parsing, developers only need to care about the data you want to get.
 * Extend the `TargetType` of [Moya](https://github.com/Moya/Moya) and add `timeoutInterval`, `cdnURL`, `allowsCellularAccess`, `cachePolicy` and other attributes.
 * Support data caching (disk and memory) and implement data caching strategies.
 * Support China Request.
@@ -109,14 +109,8 @@ Add `SYMoyaNetwork` to your Podfile:
 
 pod 'SYMoyaNetwork', '~> 2.0'
 
-# or 
-pod 'SYMoyaNetwork/SYMoyaReactiveHandyJSON', '~> 2.0'
 # or
 pod 'SYMoyaNetwork/SYMoyaReactiveObjectMapper', '~> 2.0'
-#or
-pod 'SYMoyaNetwork/SYMoyaHandyJSON', '~> 2.0'
-#or
-pod 'SYMoyaNetwork/SYMoyaRxHandyJSON', '~> 2.0'
 #or
 pod 'SYMoyaNetwork/SYMoyaRxObjectMapper', '~> 2.0'
 #or
@@ -126,7 +120,7 @@ pod 'SYMoyaNetwork/ReactiveSYMoyaNetwork', '~> 2.0'
 #or
 pod 'SYMoyaNetwork/RxSYMoyaNetwork', '~> 2.0'
 ```
-then run `pod install`。
+then run `pod install`.
 
 In any file where you want to use `SYMoyaNetwork`, use `import SYMoyaNetwork` to import the framework.
 
@@ -143,7 +137,7 @@ Then run `carthage update --use-xcframeworks`.
 
 If this is your first time using Carthage in a project, you will need to take some additional steps, which are described in [Carthage](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application) explain.
 
-> NOTE: At this time, Carthage does not provide a way to build only specific repository submodules. All submodules and their dependencies will be built with the above command. However, you don't need to copy frameworks you aren't using into your project. For instance, if you aren't using `ObjectMapper`, feel free to delete that framework along with `ObjectMapper` from the Carthage Build directory after `carthage update` completes. Or if you are using `HandyJSON` but not `MJExtension` or `ObjectMapper`, then `ObjectMapper`, `MJExtension` etc. can safely be deleted.
+> NOTE: At this time, Carthage does not provide a way to build only specific repository submodules. All submodules and their dependencies will be built with the above command. However, you don't need to copy frameworks you aren't using into your project. For instance, if you aren't using `ObjectMapper`, feel free to delete that framework along with `ObjectMapper` from the Carthage Build directory after `carthage update` completes.
 
 ### Manual
 
@@ -153,13 +147,13 @@ If this is your first time using Carthage in a project, you will need to take so
 $ git init
 ```
 
-- Add `Alamofire` & `Moya` & `SYMoyaNetwork` & The data model library you want to use, such as [HandyJSON](https://github.com/alibaba/HandyJSON) or [ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper) as git [submodule](http://git-scm.com/docs/git-submodule):
+- Add `Alamofire` & `Moya` & `SYMoyaNetwork` & The data model library you want to use, such as [ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper) as git [submodule](http://git-scm.com/docs/git-submodule):
 
 ```bash
 $ git submodule add https://github.com/Alamofire/Alamofire.git
 $ git submodule add https://github.com/Moya/Moya.git
 $ git submodule add https://github.com/Shannon-Yang/SYMoyaNetwork
-$ git submodule add 'The data model library you want to use, such as HandyJSON, ObjectMapper, SwiftyJSON'
+$ git submodule add 'The data model library you want to use, such as ObjectMapper, SwiftyJSON'
 ```
 
 - Open the newly created `Alamofire` folder and drag `Alamofire.xcodeproj` into your Xcode project navigation. Do the same operation for `Moya.xcodeproj` under the Moya folder, do the same operation for `SYMoyaNetwork.xcodeproj` under the SYMoyaNetwork folder, and do the same for other data model libraries.
@@ -190,7 +184,7 @@ $ git submodule add 'The data model library you want to use, such as HandyJSON, 
 
 Just like using `Moya`, the usage of `SYMoyaNetwork` is exactly the same as `Moya`. You don’t have to worry about its complicated usage.
 
-`SYMoyaNetwork` provides support for multiple data types such as `JSON`, `String`, `Image`, `HandyJSON`, `ObjectMapper`, `Codable`, `SwiftyJSON` etc. You can use ``SYMoyaProvider`` to call the corresponding `Response` method.
+`SYMoyaNetwork` provides support for multiple data types such as `JSON`, `String`, `Image`, `ObjectMapper`, `Codable`, `SwiftyJSON` etc. You can use ``SYMoyaProvider`` to call the corresponding `Response` method.
 
 #### JSON
 
@@ -234,23 +228,6 @@ provider.responseImage(.zen) { (response: SYMoyaNetworkDataResponse<Image>) in
     switch response.result {
     case let .success(image):
         // do something with the response image data. You can use the image object directly without conversion
-    case let .failure(error):
-        // this means there was a network failure - either the request
-        // wasn't sent (connectivity), or no response was received (server
-        // timed out).  If the server responds with a 4xx or 5xx error, that
-        // will be sent as a ".success"-ful response.
-    }
-}
-```
-
-#### HandyJSON
-
-```swift
-provider = SYMoyaProvider<GitHub>()
-provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<T: HandyJSON>) in
-    switch response.result {
-    case let .success(handyJSONObject):
-        // do something with the response handyJSONObject data. You can use the handyJSONObject object directly without conversion
     case let .failure(error):
         // this means there was a network failure - either the request
         // wasn't sent (connectivity), or no response was received (server
@@ -322,7 +299,7 @@ var networkCacheType: NetworkCacheType {
 ```
 The `networkCacheOptionsInfo` used by default is the default configuration in `NetworkConfig`. You can also customize the configuration. You only need to initialize the customized `networkCacheOptionsInfo` object. When the `networkCacheType` return type is `cache`, when the request is completed, it will Use this parameter to verify whether the cache conditions are met. If the cache conditions are met, whether it is a Get, Post or other request, the data will be cached automatically based on the cache information.
 
-`SYMoyaProvider` provides `responseCodableObject`, `responseObject<T: HandyJSON>`, `responseObject<T: BaseMappable>`, `responseSwiftyJSON` and other methods. In each method, there is a parameter such as `responseDataSourceType`. This parameter Mainly the response type of data return. Currently, `responseDataSourceType` is divided into 5 data return types: `server`, `cache`, `cacheIfPossible`, `cacheAndServer`, and `custom`.
+`SYMoyaProvider` provides `responseCodableObject`, `responseObject<T: BaseMappable>`, `responseSwiftyJSON` and other methods. In each method, there is a parameter such as `responseDataSourceType`. This parameter Mainly the response type of data return. Currently, `responseDataSourceType` is divided into 5 data return types: `server`, `cache`, `cacheIfPossible`, `cacheAndServer`, and `custom`.
 
 * `server`：Get data directly from the server, cached data will not be retrieved
 * `cache`：If there is a cache, get the data directly from the cache and make a callback. The `success` result will be called back. If there is no cache, the `failure` result will be called back and the corresponding `error` information will be returned. No network request will be initiated, only Will be retrieved from cache.

@@ -3,7 +3,7 @@
 </p>
 
 # SYMoyaNetwork
-基于[Moya](https://github.com/Moya/Moya)二次封装的网络抽象，保持[Moya](https://github.com/Moya/Moya)一样的使用方法，扩展[Moya](https://github.com/Moya/Moya)的`TargetType`，实现常用的数据解析，支持：[HandyJSON](https://github.com/alibaba/HandyJSON)、[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)、[Codable](https://developer.apple.com/documentation/swift/codable)、[SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)，开发者无需再写数据解析的样板代码，仅仅只需要关心想要什么样的数据，选择数据类型，`SYMoyaNetwork`已做好了这一切，`SYMoyaNetwork`同时实现了网络缓存，并配置常用的缓存策略，仅仅实现想要的缓存策略，`Response`将根据策略进行缓存同步，开发者无需再花大量时间再去做这样的工作，`SYMoyaNetwork`让数据请求变得简单，减少开发者编写样板代码，更多时间去关注业务。
+基于[Moya](https://github.com/Moya/Moya)二次封装的网络抽象，保持[Moya](https://github.com/Moya/Moya)一样的使用方法，扩展[Moya](https://github.com/Moya/Moya)的`TargetType`，实现常用的数据解析，支持：[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)、[Codable](https://developer.apple.com/documentation/swift/codable)、[SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)，开发者无需再写数据解析的样板代码，仅仅只需要关心想要什么样的数据，选择数据类型，`SYMoyaNetwork`已做好了这一切，`SYMoyaNetwork`同时实现了网络缓存，并配置常用的缓存策略，仅仅实现想要的缓存策略，`Response`将根据策略进行缓存同步，开发者无需再花大量时间再去做这样的工作，`SYMoyaNetwork`让数据请求变得简单，减少开发者编写样板代码，更多时间去关注业务。
 
 文档：
 [English Document](/README.md)
@@ -48,7 +48,7 @@ provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<BaseMappabl
 ```
 现在使用`SYMoyaNetwork`，你不用再关心如何将response转换成你想要的数据，你只需要关心你想要的数据，`SYMoyaNetwork`已经做好了这一切。
 
-`SYMoyaNetwork`提供多种数据类常用的数据类型解析，例如：`JSON`、`String`、`Image`、`HandyJSON`、`ObjectMapper`、`Codable`、`SwiftyJSON`，使用时仅仅只需要关心你想要得到的数据，其他的你都不用关心，`SYMoyaNetwork`已经对[Moya](https://github.com/Moya/Moya)的`Response`做好了解析，你只管关心你的业务实现。
+`SYMoyaNetwork`提供多种数据类常用的数据类型解析，例如：`JSON`、`String`、`Image`、`ObjectMapper`、`Codable`、`SwiftyJSON`，使用时仅仅只需要关心你想要得到的数据，其他的你都不用关心，`SYMoyaNetwork`已经对[Moya](https://github.com/Moya/Moya)的`Response`做好了解析，你只管关心你的业务实现。
 
 `SYMoyaNetwork`不仅仅只是做了[Moya](https://github.com/Moya/Moya)的`Response`的转换，更重要的一点是，在[Moya](https://github.com/Moya/Moya)的基础上`SYMoyaNetwork`已经帮你做好网络缓存，在大多数应用使用情况下，网络缓存是非常重要，它可以让你的App更快的展示数据，更能为用户节省数据流量，可以说在网络这一层是一个很重要的决策，因此`SYMoyaNetwork`提供常用的网络缓存策略的实现，参考[数据缓存](###数据缓存)。
 
@@ -57,7 +57,7 @@ provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<BaseMappabl
 `SYMoyaNetwork`也支持链式请求以及批量请求，在大多数的业务情况下，我们可能会有一批请求发送，或者有关联的链式请求，`SYMoyaNetwork`也提供这些功能，可以轻松快捷的实现，参考：[链式请求](###链式请求)和[批量请求](###批量请求)。
 
 ## 功能
-* 支持：[HandyJSON](https://github.com/alibaba/HandyJSON)、[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)、[Codable](https://developer.apple.com/documentation/swift/codable)、[SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)数据解析，开发者只需要关心你想要得到的数据。
+* 支持：[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)、[Codable](https://developer.apple.com/documentation/swift/codable)、[SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)数据解析，开发者只需要关心你想要得到的数据。
 * 扩展[Moya](https://github.com/Moya/Moya)的`TargetType`，新增`timeoutInterval`、`cdnURL`、`allowsCellularAccess`、`cachePolicy`等属性.
 * 支持数据缓存（磁盘和内存），并实现数据缓存策略
 * 支持链式请求
@@ -108,14 +108,8 @@ let package = Package(
 
 pod 'SYMoyaNetwork', '~> 2.0'
 
-# or 
-pod 'SYMoyaNetwork/SYMoyaReactiveHandyJSON', '~> 2.0'
 # or
 pod 'SYMoyaNetwork/SYMoyaReactiveObjectMapper', '~> 2.0'
-#or
-pod 'SYMoyaNetwork/SYMoyaHandyJSON', '~> 2.0'
-#or
-pod 'SYMoyaNetwork/SYMoyaRxHandyJSON', '~> 2.0'
 #or
 pod 'SYMoyaNetwork/SYMoyaRxObjectMapper', '~> 2.0'
 #or
@@ -144,7 +138,7 @@ github "Shannon-Yang/SYMoyaNetwork"
 
 如果这是你首次在项目中使用 Carthage，你将需要进行一些额外的步骤，它们在 [Carthage](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application) 中有解释。
 
-> NOTE: At this time, Carthage does not provide a way to build only specific repository submodules. All submodules and their dependencies will be built with the above command. However, you don't need to copy frameworks you aren't using into your project. For instance, if you aren't using `ObjectMapper`, feel free to delete that framework along with `ObjectMapper` from the Carthage Build directory after `carthage update` completes. Or if you are using `HandyJSON` but not `MJExtension` or `ObjectMapper`, then `ObjectMapper`, `MJExtension` etc. can safely be deleted.
+> NOTE: At this time, Carthage does not provide a way to build only specific repository submodules. All submodules and their dependencies will be built with the above command. However, you don't need to copy frameworks you aren't using into your project. For instance, if you aren't using `ObjectMapper`, feel free to delete that framework along with `ObjectMapper` from the Carthage Build directory after `carthage update` completes.
 
 ### 手动
 
@@ -154,13 +148,13 @@ github "Shannon-Yang/SYMoyaNetwork"
 $ git init
 ```
 
-- 通过运行以下命令来添加 Alamofire & Moya & SYMoyaNetwork & The data model library you want to use, such as [HandyJSON](https://github.com/alibaba/HandyJSON) 或者 [ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)作为 git [submodule](http://git-scm.com/docs/git-submodule)：
+- 通过运行以下命令来添加 Alamofire & Moya & SYMoyaNetwork & The data model library you want to use, 例如：[ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper) 作为 git [submodule](http://git-scm.com/docs/git-submodule)：
 
 ```bash
 $ git submodule add https://github.com/Alamofire/Alamofire.git
 $ git submodule add https://github.com/Moya/Moya.git
 $ git submodule add https://github.com/Shannon-Yang/SYMoyaNetwork
-$ git submodule add 'The data model library you want to use, such as HandyJSON, ObjectMapper, SwiftyJSON'
+$ git submodule add 'The data model library you want to use, such as ObjectMapper, SwiftyJSON'
 ```
 
 - 打开新建的 `Alamofire` 文件夹，把 `Alamofire.xcodeproj` 拖拽到你 Xcode 的项目导航中。对 Moya 文件夹下的 `Moya.xcodeproj` 做同样的操作，对SYMoyaNetwork文件夹下面的`SYMoyaNetwork.xcodeproj`也做同样的操作，以及其他的数据模型库也做以上相同的操作。
@@ -191,7 +185,7 @@ $ git submodule add 'The data model library you want to use, such as HandyJSON, 
 
 像和使用`Moya`一样，`SYMoyaNetwork`的用法和`Moya`完全一样，你不用担心它的使用方式会很复杂
 
-`SYMoyaNetwork`提供了JSON、String、Image、HandyJSON、ObjectMapper、Codable、SwiftyJSON等多种数据类型的支持，你可以使用``SYMoyaProvider``调用对应的`Response`方法。
+`SYMoyaNetwork`提供了JSON、String、Image、ObjectMapper、Codable、SwiftyJSON等多种数据类型的支持，你可以使用``SYMoyaProvider``调用对应的`Response`方法。
 
 #### JSON
 
@@ -235,23 +229,6 @@ provider.responseImage(.zen) { (response: SYMoyaNetworkDataResponse<Image>) in
     switch response.result {
     case let .success(image):
         // do something with the response image data. You can use the image object directly without conversion
-    case let .failure(error):
-        // this means there was a network failure - either the request
-        // wasn't sent (connectivity), or no response was received (server
-        // timed out).  If the server responds with a 4xx or 5xx error, that
-        // will be sent as a ".success"-ful response.
-    }
-}
-```
-
-#### HandyJSON
-
-```swift
-provider = SYMoyaProvider<GitHub>()
-provider.responseObject(.zen) { (response: SYMoyaNetworkDataResponse<T: HandyJSON>) in
-    switch response.result {
-    case let .success(handyJSONObject):
-        // do something with the response handyJSONObject data. You can use the handyJSONObject object directly without conversion
     case let .failure(error):
         // this means there was a network failure - either the request
         // wasn't sent (connectivity), or no response was received (server
@@ -323,7 +300,7 @@ var networkCacheType: NetworkCacheType {
 ```
 默认使用的`networkCacheOptionsInfo`为`NetworkConfig`中的默认配置，也可自定义配置，仅只需初始化自定义的`networkCacheOptionsInfo`对象，`networkCacheType`返回类型为`cache`时，在请求完成时，将会根据这个参数进行校验是否满足缓存条件，如果满足缓存条件，不管是Get还是Post或者其他方式的请求，都将自动根据缓存信息进行数据缓存
 
-`SYMoyaProvider`提供了`responseCodableObject`、`responseObject<T: HandyJSON>`、`responseObject<T: BaseMappable>`、`responseSwiftyJSON`等方法，在每一个方法中都有`responseDataSourceType`这样的一个参数，这个参数主要是数据返回的响应类型，目前`responseDataSourceType`分为`server`、`cache`、`cacheIfPossible`、`cacheAndServer`、`custom`一共5种数据返回类型。
+`SYMoyaProvider`提供了`responseCodableObject`、`responseObject<T: BaseMappable>`、`responseSwiftyJSON`等方法，在每一个方法中都有`responseDataSourceType`这样的一个参数，这个参数主要是数据返回的响应类型，目前`responseDataSourceType`分为`server`、`cache`、`cacheIfPossible`、`cacheAndServer`、`custom`一共5种数据返回类型。
 
 * `server`：直接从服务器获取数据，不会检索缓存数据
 * `cache`：如果有缓存，直接从缓存中获取数据并进行回调，将回调`success`结果，若不存在缓存则回调失败`failure`结果，并会返回对应的`error`信息，不会发起网络请求，只会从缓存中检索
