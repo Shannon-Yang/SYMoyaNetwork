@@ -17,17 +17,8 @@ let package = Package(
             name: "SYMoyaNetwork",
             targets: ["SYMoyaNetwork"]),
         .library(
-            name: "SYMoyaReactiveHandyJSON",
-            targets: ["SYMoyaReactiveHandyJSON"]),
-        .library(
             name: "SYMoyaReactiveObjectMapper",
             targets: ["SYMoyaReactiveObjectMapper"]),
-        .library(
-            name: "SYMoyaHandyJSON",
-            targets: ["SYMoyaHandyJSON"]),
-        .library(
-            name: "SYMoyaRxHandyJSON",
-            targets: ["SYMoyaRxHandyJSON"]),
         .library(
             name: "SYMoyaRxObjectMapper",
             targets: ["SYMoyaRxObjectMapper"]),
@@ -44,8 +35,7 @@ let package = Package(
     dependencies: [
        .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "15.0.0")),
        .package(url: "https://github.com/tristanhimmelman/ObjectMapper.git", .upToNextMajor(from: "4.2.0")),
-       .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", .upToNextMajor(from: "5.0.0")),
-       .package(url: "https://github.com/alibaba/HandyJSON.git", .upToNextMajor(from: "5.0.1")),
+       .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", .upToNextMajor(from: "5.0.2")),
        .package(url: "https://github.com/ReactiveCocoa/ReactiveSwift.git", from: "6.0.0"),
        .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "6.6.0")),
        .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.1.0")
@@ -61,21 +51,9 @@ let package = Package(
                        "Supporting Files/Info.plist"
                      ]),
         .target(
-            name: "SYMoyaReactiveHandyJSON",
-            dependencies: ["SYMoyaHandyJSON",
-                           .product(name: "ReactiveSwift", package: "ReactiveSwift")]),
-        .target(
             name: "SYMoyaReactiveObjectMapper",
             dependencies: ["SYMoyaObjectMapper",
                            .product(name: "ReactiveSwift", package: "ReactiveSwift")]),
-        .target(
-            name: "SYMoyaHandyJSON",
-            dependencies: ["SYMoyaNetwork",
-                           .product(name: "HandyJSON", package: "HandyJSON")]),
-        .target(
-            name: "SYMoyaRxHandyJSON",
-            dependencies: ["SYMoyaHandyJSON",
-                           .product(name: "RxSwift", package: "RxSwift")]),
         .target(
             name: "SYMoyaRxObjectMapper",
             dependencies: ["SYMoyaObjectMapper",

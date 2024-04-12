@@ -1,5 +1,5 @@
 swift build
-targets=("SYMoyaNetwork" "SYMoyaReactiveHandyJSON" "SYMoyaReactiveObjectMapper" "SYMoyaHandyJSON" "SYMoyaRxHandyJSON" "SYMoyaRxObjectMapper" "SYMoyaObjectMapper" "ReactiveSYMoyaNetwork" "RxSYMoyaNetwork") 
+targets=("SYMoyaNetwork" "SYMoyaReactiveObjectMapper" "SYMoyaRxObjectMapper" "SYMoyaObjectMapper" "ReactiveSYMoyaNetwork" "RxSYMoyaNetwork") 
 for arg in ${targets[*]}; do 
  if [ ! -d "/docs/$arg/" ]; then
   cd docs/
