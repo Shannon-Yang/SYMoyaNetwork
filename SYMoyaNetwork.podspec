@@ -71,31 +71,31 @@ Pod::Spec.new do |s|
     ss.watchos.deployment_target = '6.0'
   end
   
-  s.subspec "SYMoyaReactiveObjectMapper" do |ss|
-    ss.source_files  = 'Sources/SYMoyaReactiveObjectMapper/**/*.swift'
-    ss.dependency "SYMoyaNetwork/SYMoyaObjectMapper"
+  # s.subspec "SYMoyaReactiveObjectMapper" do |ss|
+  #   ss.source_files  = 'Sources/SYMoyaReactiveObjectMapper/**/*.swift'
+  #   ss.dependency "SYMoyaNetwork/SYMoyaObjectMapper"
 
-    # https://github.com/ReactiveCocoa/ReactiveSwift
-    ss.dependency 'ReactiveSwift', '~> 7.1.1'
+  #   # https://github.com/ReactiveCocoa/ReactiveSwift
+  #   ss.dependency 'ReactiveSwift', '~> 7.1.1'
     
-    ss.ios.deployment_target = '13.0'
-    ss.osx.deployment_target = '10.15'
-    ss.tvos.deployment_target = '13.0'
-    ss.watchos.deployment_target = '6.0'
-  end
+  #   ss.ios.deployment_target = '13.0'
+  #   ss.osx.deployment_target = '10.15'
+  #   ss.tvos.deployment_target = '13.0'
+  #   ss.watchos.deployment_target = '6.0'
+  # end
   
-  s.subspec "SYMoyaRxObjectMapper" do |ss|
-    ss.source_files  = 'Sources/SYMoyaRxObjectMapper/**/*.swift'
-    ss.dependency "SYMoyaNetwork/SYMoyaObjectMapper"
+  # s.subspec "SYMoyaRxObjectMapper" do |ss|
+  #   ss.source_files  = 'Sources/SYMoyaRxObjectMapper/**/*.swift'
+  #   ss.dependency "SYMoyaNetwork/SYMoyaObjectMapper"
     
-    # https://github.com/ReactiveX/RxSwift
-    ss.dependency 'RxSwift', '6.6.0'
+  #   # https://github.com/ReactiveX/RxSwift
+  #   ss.dependency 'RxSwift', '6.6.0'
     
-    ss.ios.deployment_target = '13.0'
-    ss.osx.deployment_target = '10.15'
-    ss.tvos.deployment_target = '13.0'
-    ss.watchos.deployment_target = '6.0'
-  end
+  #   ss.ios.deployment_target = '13.0'
+  #   ss.osx.deployment_target = '10.15'
+  #   ss.tvos.deployment_target = '13.0'
+  #   ss.watchos.deployment_target = '6.0'
+  # end
   
   s.subspec "ReactiveSYMoyaNetwork" do |ss|
     ss.source_files  = 'Sources/ReactiveSYMoyaNetwork/**/*.swift'
