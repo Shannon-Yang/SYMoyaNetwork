@@ -16,12 +16,12 @@ let package = Package(
         .library(
             name: "SYMoyaNetwork",
             targets: ["SYMoyaNetwork"]),
-        .library(
-            name: "SYMoyaReactiveObjectMapper",
-            targets: ["SYMoyaReactiveObjectMapper"]),
-        .library(
-            name: "SYMoyaRxObjectMapper",
-            targets: ["SYMoyaRxObjectMapper"]),
+//        .library(
+//            name: "SYMoyaReactiveObjectMapper",
+//            targets: ["SYMoyaReactiveObjectMapper"]),
+//        .library(
+//            name: "SYMoyaRxObjectMapper",
+//            targets: ["SYMoyaRxObjectMapper"]),
         .library(
             name: "SYMoyaObjectMapper",
             targets: ["SYMoyaObjectMapper"]),
