@@ -9,7 +9,9 @@
 import Foundation
 import Moya
 import ObjectMapper
+#if !COCOAPODS
 import SYMoyaNetwork
+#endif
 
 extension SYDataResponseActor {
     /// A data request method, depending on the data request strategy. and parses the requested data into an object that implements `BaseMappable`

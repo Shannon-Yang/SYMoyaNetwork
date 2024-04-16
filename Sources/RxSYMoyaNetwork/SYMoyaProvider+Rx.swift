@@ -8,7 +8,9 @@
 
 import Foundation
 import RxSwift
+#if !COCOAPODS
 import SYMoyaNetwork
+#endif
 
 // MARK: - SYMoyaProvider ReactiveCompatible
 

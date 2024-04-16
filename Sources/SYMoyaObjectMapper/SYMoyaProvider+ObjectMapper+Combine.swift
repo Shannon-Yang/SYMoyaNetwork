@@ -6,11 +6,13 @@
 //  Copyright © 2023 Shannon Yang. All rights reserved.
 //
 
-import Combine
 import Foundation
+import Combine
 import Moya
 import ObjectMapper
+#if !COCOAPODS
 import SYMoyaNetwork
+#endif
 
 // MARK: - ObjectMapper Provider Combine
 

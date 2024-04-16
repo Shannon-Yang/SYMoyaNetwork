@@ -8,7 +8,9 @@
 
 import Foundation
 import ObjectMapper
+#if !COCOAPODS
 import SYMoyaNetwork
+#endif
 
 // MARK: - ObjectMapperObject
 

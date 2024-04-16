@@ -10,7 +10,9 @@ import Foundation
 import Moya
 import RxSwift
 import SwiftyJSON
+#if !COCOAPODS
 import SYMoyaNetwork
+#endif
 
 extension Reactive where Base: SYMoyaProviderRequestable {
     /// Retrieve data from the cache and parses the retrieved data into an object that is `SwiftyJSON.JSON`.

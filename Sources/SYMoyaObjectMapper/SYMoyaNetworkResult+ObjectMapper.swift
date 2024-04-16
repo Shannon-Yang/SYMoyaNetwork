@@ -9,7 +9,9 @@
 import Foundation
 import Moya
 import ObjectMapper
+#if !COCOAPODS
 import SYMoyaNetwork
+#endif
 
 extension SYMoyaNetworkResult {
     /// Data parsed as `BaseMappable`

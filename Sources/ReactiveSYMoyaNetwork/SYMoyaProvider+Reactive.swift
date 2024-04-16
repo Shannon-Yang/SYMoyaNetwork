@@ -8,7 +8,9 @@
 
 import Foundation
 import ReactiveSwift
+#if !COCOAPODS
 import SYMoyaNetwork
+#endif
 
 // MARK: - SYMoyaProvider ReactiveExtensionsProvider
 
