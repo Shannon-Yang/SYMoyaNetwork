@@ -47,29 +47,34 @@ let package = Package(
             name: "SYMoyaNetwork",
             dependencies: [.product(name: "Moya", package: "Moya"),
                            .product(name: "SwiftyJSON", package: "SwiftyJSON")],
-            exclude: [
-                       "Supporting Files/Info.plist"
-                     ]),
+            path: "Sources/SYMoyaNetwork", exclude: [
+                "Supporting Files/Info.plist"
+            ]),
         .target(
             name: "SYMoyaReactiveObjectMapper",
             dependencies: ["SYMoyaObjectMapper",
-                           .product(name: "ReactiveSwift", package: "ReactiveSwift")]),
+                           .product(name: "ReactiveSwift", package: "ReactiveSwift")],
+            path: "Sources/SYMoyaReactiveObjectMapper"),
         .target(
             name: "SYMoyaRxObjectMapper",
             dependencies: ["SYMoyaObjectMapper",
-                           .product(name: "RxSwift", package: "RxSwift")]),
+                           .product(name: "RxSwift", package: "RxSwift")],
+            path: "Sources/SYMoyaRxObjectMapper"),
         .target(
             name: "SYMoyaObjectMapper",
             dependencies: ["SYMoyaNetwork",
-                           .product(name: "ObjectMapper", package: "ObjectMapper")]),
+                           .product(name: "ObjectMapper", package: "ObjectMapper")],
+            path: "Sources/SYMoyaObjectMapper"),
         .target(
             name: "ReactiveSYMoyaNetwork",
             dependencies: ["SYMoyaNetwork",
-                           .product(name: "ReactiveSwift", package: "ReactiveSwift")]),
+                           .product(name: "ReactiveSwift", package: "ReactiveSwift")],
+            path: "Sources/ReactiveSYMoyaNetwork"),
         .target(
             name: "RxSYMoyaNetwork",
             dependencies: ["SYMoyaNetwork",
-                           .product(name: "RxSwift", package: "RxSwift")]),
+                           .product(name: "RxSwift", package: "RxSwift"),],
+            path: "Sources/RxSYMoyaNetwork"),
         
         .testTarget(name: "SYMoyaNetworkTests",
                     dependencies: ["SYMoyaNetwork"])
