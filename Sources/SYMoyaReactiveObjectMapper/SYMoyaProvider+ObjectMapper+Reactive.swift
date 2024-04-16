@@ -10,8 +10,10 @@ import Foundation
 import Moya
 import ObjectMapper
 import ReactiveSwift
+#if !COCOAPODS
 import SYMoyaNetwork
 import SYMoyaObjectMapper
+#endif
 
 extension Reactive where Base: SYMoyaProviderRequestable {
     /// Retrieve data from the cache and parses the retrieved data into an object that implements `ObjectMapper`.
