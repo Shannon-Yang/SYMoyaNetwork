@@ -50,16 +50,16 @@ let package = Package(
             path: "Sources/SYMoyaNetwork", exclude: [
                 "Supporting Files/Info.plist"
             ]),
-        .target(
-            name: "SYMoyaReactiveObjectMapper",
-            dependencies: ["SYMoyaObjectMapper",
-                           .product(name: "ReactiveSwift", package: "ReactiveSwift")],
-            path: "Sources/SYMoyaReactiveObjectMapper"),
-        .target(
-            name: "SYMoyaRxObjectMapper",
-            dependencies: ["SYMoyaObjectMapper",
-                           .product(name: "RxSwift", package: "RxSwift")],
-            path: "Sources/SYMoyaRxObjectMapper"),
+//        .target(
+//            name: "SYMoyaReactiveObjectMapper",
+//            dependencies: ["SYMoyaObjectMapper",
+//                           .product(name: "ReactiveSwift", package: "ReactiveSwift")],
+//            path: "Sources/SYMoyaReactiveObjectMapper"),
+//        .target(
+//            name: "SYMoyaRxObjectMapper",
+//            dependencies: ["SYMoyaObjectMapper",
+//                           .product(name: "RxSwift", package: "RxSwift")],
+//            path: "Sources/SYMoyaRxObjectMapper"),
         .target(
             name: "SYMoyaObjectMapper",
             dependencies: ["SYMoyaNetwork",
