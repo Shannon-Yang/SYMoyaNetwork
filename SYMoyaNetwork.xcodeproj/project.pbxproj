@@ -396,6 +396,7 @@
 /* Begin PBXFileReference section */
 		20228A5F2BCE83210036867C /* Package@swift-5.8.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Package@swift-5.8.swift"; sourceTree = "<group>"; };
 		20228A602BCE83210036867C /* Package@swift-5.7.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Package@swift-5.7.swift"; sourceTree = "<group>"; };
+		202FC2CA2BD2044B006CA11D /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		20A498E52BA9434200D7FB10 /* NetworkCacheFromType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCacheFromType.swift; sourceTree = "<group>"; };
 		20A498EB2BAAEFD500D7FB10 /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		20A498ED2BAAF40100D7FB10 /* StringResponseSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringResponseSerializer.swift; sourceTree = "<group>"; };
@@ -686,6 +687,7 @@
 			children = (
 				FB8072F126F32C070042B30D /* SYMoyaNetwork.h */,
 				FB8072F226F32C070042B30D /* Info.plist */,
+				202FC2CA2BD2044B006CA11D /* PrivacyInfo.xcprivacy */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
